@@ -1,0 +1,71 @@
+.modal-custom{
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  bottom: 0 !important;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  left: 0 !important;
+  outline: 0 none;
+  position: fixed;
+  right: 0 !important;
+  top: 0 !important;
+  margin-left: 0 !important;
+  width: 100% !important;
+  background-color: transparent !important;
+  z-index: 1050;
+  overflow: hidden;
+}
+.modal-custom .modal-body{
+  max-height: 400px !important;
+}
+.modal.fade .modal-dialog {
+  -webkit-transition: -webkit-transform .3s ease-out;
+  -moz-transition:    -moz-transform .3s ease-out;
+  -o-transition:      -o-transform .3s ease-out;
+  transition:         transform .3s ease-out;
+  -webkit-transform: translate(0, -25%);
+  -ms-transform: translate(0, -25%);
+  transform: translate(0, -25%);
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 10px;
+}
+@media (min-width: 768px) {
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto;
+  }
+  .modal-content {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+  }
+  .modal-sm {
+    width: 300px;
+  }
+}
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 900px;
+  }
+}
+.modal-backdrop, .modal-backdrop.fade.in{
+  background-color: #000000 !important;
+}
+/*Progress bar*/
+.progress{
+  background-color: #C6C6C6 !important;
+  background-image: linear-gradient(to bottom, #CECECE, #D9D9D9) !important;
+  background-repeat: repeat-x !important;
+  border-radius: 4px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset !important;
+}
+.modal-custom .modal-footer{
+  border-radius: 0 !important;
+}
