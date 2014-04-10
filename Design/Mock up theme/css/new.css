@@ -1,0 +1,157 @@
+/*User chat list status*/
+.userlistchat .status {
+    color: #B21000;
+    float: right;
+    font-size: 8px;
+    line-height: 40px;
+}
+.userlistchat .status.active {
+    color: #267326;
+}
+.userlistchat .status.afk {
+    color: #F4A64B;
+}
+.span12-no-margin{
+	margin-left: 0px !important;
+}
+.userlist .name{
+	cursor: pointer;
+}
+/*Chat box*/
+.chatbox{
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width: 260px;
+	display: none;
+}
+/*Task board*/
+#task-board .span10:first-child{
+	margin-left: 17.094% !important;
+}
+#task-board .story-name{
+	color: #ffffff;
+}
+#task-board .task-name{
+	cursor: pointer;
+}
+#task-board td{
+	vertical-align: top;
+}
+#task-board .user-story{
+}
+#task-board .user-story .box-content{
+	height: 100%;
+}
+#task-board .story-tasks .box-content{
+	padding: 5px !important;
+}
+#task-board .story-tasks .span10{
+	min-height: 500px;
+}
+#task-board .progress{
+	margin-bottom: 0px !important;
+	min-height: 20px !important;
+}
+#task-board .badge{
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	font-size: 10px !important;
+	line-height: 16px !important;
+	min-height: 16px !important;
+	text-align: center;
+}
+#task-board .progress .bar{
+	color: #4D4D4D;
+	line-height: 20px;
+}
+#task-board .task-assign-name{
+	font-size: 8px !important;
+	text-align: center;
+}
+/*Datatables*/
+.dataTable{
+	width: 100% !important;
+}
+#action_bar {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E3E3E3;
+    /*border-style: solid;
+    border-width: 1px;*/
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+    margin-bottom: 6px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+#btn-download-excel{
+	margin-right: 20px;
+}
+#btn-add-project{
+	margin-left: 20px;
+}
+#advanceFilter{
+	margin-top: 7px;
+}
+#project-datatable_length{
+	min-width: 60px;
+	margin-top: 5px;
+	float: right;
+}
+#project-datatable_filter{
+	margin-top: 5px;
+}
+/*Modal with tab*/
+.modal-with-tab .box-title{
+	margin-top: 0px;
+}
+.modal-with-tab .close{
+	margin-right: 15px;
+	margin-top: 3px;
+}
+.modal-with-tab .box-title h3 i{
+	margin-right: 2px;
+}
+.modal-with-tab .box-content{
+	padding: 0px;
+}
+.no-border .box-content{
+	border-radius: 0px;
+}
+/*Date range picker*/
+.daterangepicker{
+	z-index: 1500;
+}
+.ui-datepicker{
+	z-index: 2000 !important;
+}
+/*Add project modal*/
+.add-min-height{
+  min-height: 36px;
+}
+.user-info-modal .tags > a {
+    background: none repeat scroll 0 0 #EEEEEE;
+    color: #666666;
+    display: inline-block;
+    padding: 0 4px;
+    text-decoration: none;
+}
+.user-info-modal .tags > a:hover{
+	background: none repeat scroll 0 0 #C8C8C8;
+    color: #333333;
+}
+.comment-list{
+	margin-bottom: 10px;
+}
+.comment-list .media img{
+	width: 60px;
+}
+.comment-list .media-heading small{
+	margin-left: 10px;
+}
+/*Comment form*/
+.reply-comment-form-temp{
+	display: none;
+}
+.cancel-reply-comment {
+	margin-left: 6px;
+}

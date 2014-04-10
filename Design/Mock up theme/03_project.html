@@ -1,0 +1,1411 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <!-- Apple devices fullscreen -->
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <!-- Apple devices fullscreen -->
+        <!--<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />-->
+        <title>SCRUM REAL - Project management</title>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!--Bootstrap modal-->
+        <link rel="stylesheet" href="css/plugins/bootstrap-modal/bootstrap-modal.css">
+        <!-- Bootstrap responsive -->
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+        <!-- jQuery UI -->
+        <link rel="stylesheet" href="css/plugins/jquery-ui/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="css/plugins/jquery-ui/smoothness/jquery.ui.theme.css">
+        <!-- PageGuide -->
+        <link rel="stylesheet" href="css/plugins/pageguide/pageguide.css">
+        <!-- Fullcalendar -->
+        <link rel="stylesheet" href="css/plugins/fullcalendar/fullcalendar.css">
+        <link rel="stylesheet" href="css/plugins/fullcalendar/fullcalendar.print.css" media="print">
+        <!-- chosen -->
+        <link rel="stylesheet" href="css/plugins/chosen/chosen.css">
+        <!-- select2 -->
+        <link rel="stylesheet" href="css/plugins/select2/select2.css">
+        <!-- icheck -->
+        <link rel="stylesheet" href="css/plugins/icheck/all.css">
+        <!-- dataTables -->
+        <link rel="stylesheet" href="css/plugins/datatable/TableTools.css">
+        <!-- Theme CSS -->
+        <link rel="stylesheet" href="css/style__not-minified.css">
+        <!-- Color CSS -->
+        <link rel="stylesheet" href="css/themes.css">
+        <!-- Plupload -->
+        <link rel="stylesheet" href="css/plugins/plupload/jquery.plupload.queue.css">
+        <!-- Jquery Tagsinput -->
+        <!-- <link rel="stylesheet" href="css/plugins/tagsinput/jquery.tagsinput.css"> -->
+        <!-- Boostrap taginput -->
+        <!--<link rel="stylesheet" href="css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">-->
+        <!-- multi select -->
+        <link rel="stylesheet" href="css/plugins/multiselect/multi-select.css">
+        <!-- Daterangepicker -->
+        <link rel="stylesheet" href="css/plugins/daterangepicker/daterangepicker.css">
+        <!-- New CSS (supplement) -->
+        <link rel="stylesheet" href="css/new.css">
+        <!-- Update bootstrap -->
+        <link rel="stylesheet" href="css/bootstrap_update.css">
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <!-- Nice Scroll -->
+        <script src="js/plugins/nicescroll/jquery.nicescroll.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="js/plugins/jquery-ui/jquery.ui.core.min.js"></script>
+        <script src="js/plugins/jquery-ui/jquery.ui.widget.min.js"></script>
+        <script src="js/plugins/jquery-ui/jquery.ui.mouse.min.js"></script>
+        <script src="js/plugins/jquery-ui/jquery.ui.draggable.min.js"></script>
+        <script src="js/plugins/jquery-ui/jquery.ui.resizable.min.js"></script>
+        <script src="js/plugins/jquery-ui/jquery.ui.sortable.min.js"></script>
+        <script src="js/plugins/jquery-ui/jquery.ui.datepicker.min.js"></script>
+        <!-- Touch enable for jquery UI -->
+        <script src="js/plugins/touch-punch/jquery.touch-punch.min.js"></script>
+        <!-- slimScroll -->
+        <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Bootstrap modal -->
+        <script src="js/plugins/bootstrap-modal/bootstrap-modal.js"></script>
+        <script src="js/plugins/bootstrap-modal/bootstrap-modalmanager.js"></script>
+        <!-- vmap -->
+        <script src="js/plugins/vmap/jquery.vmap.min.js"></script>
+        <script src="js/plugins/vmap/jquery.vmap.world.js"></script>
+        <script src="js/plugins/vmap/jquery.vmap.sampledata.js"></script>
+        <!-- Bootbox -->
+        <script src="js/plugins/bootbox/jquery.bootbox.js"></script>
+        <!-- Notify -->
+        <script src="js/plugins/gritter/jquery.gritter.min.js"></script>
+        <!-- Flot -->
+        <script src="js/plugins/flot/jquery.flot.min.js"></script>
+        <script src="js/plugins/flot/jquery.flot.bar.order.min.js"></script>
+        <script src="js/plugins/flot/jquery.flot.pie.min.js"></script>
+        <script src="js/plugins/flot/jquery.flot.resize.min.js"></script>
+        <!-- imagesLoaded -->
+        <script src="js/plugins/imagesLoaded/jquery.imagesloaded.min.js"></script>
+        <!-- PageGuide -->
+        <script src="js/plugins/pageguide/jquery.pageguide.js"></script>
+        <!-- FullCalendar -->
+        <script src="js/plugins/fullcalendar/fullcalendar.min.js"></script>
+        <!-- Chosen -->
+        <script src="js/plugins/chosen/chosen.jquery.min.js"></script>
+        <!-- select2 -->
+        <script src="js/plugins/select2/select2.min.js"></script>
+        <!-- icheck -->
+        <script src="js/plugins/icheck/jquery.icheck.min.js"></script>
+        <!-- Bootbox -->
+        <script src="js/plugins/bootbox/jquery.bootbox.js"></script>
+        <!-- Bootbox -->
+        <script src="js/plugins/form/jquery.form.min.js"></script>
+        <!-- Validation -->
+        <script src="js/plugins/validation/jquery.validate.min.js"></script>
+        <script src="js/plugins/validation/additional-methods.min.js"></script>
+        <!-- Sparkline -->
+        <script src="js/plugins/sparklines/jquery.sparklines.min.js"></script>
+        <!-- dataTables -->
+        <script src="js/plugins/datatable/jquery.dataTables.min.js"></script>
+        <script src="js/plugins/datatable/TableTools.min.js"></script>
+        <script src="js/plugins/datatable/ColReorderWithResize.js"></script>
+        <script src="js/plugins/datatable/ColVis.min.js"></script>
+        <script src="js/plugins/datatable/jquery.dataTables.columnFilter.js"></script>
+        <script src="js/plugins/datatable/jquery.dataTables.grouping.js"></script>
+        <!-- Jquery form -->
+        <script src="js/plugins/form/jquery.form.min.js"></script>
+        <!-- Validation -->
+        <script src="js/plugins/validation/jquery.validate.min.js"></script>
+        <script src="js/plugins/validation/additional-methods.min.js"></script>
+        <!-- Daterangepicker -->
+        <script src="js/plugins/daterangepicker/daterangepicker.js"></script>
+        <script src="js/plugins/daterangepicker/moment.min.js"></script>
+        <!-- TagsInput -->
+        <!--<script src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>-->
+        <!-- Bootstrap taginput -->
+        <!--<script src="js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>-->
+        <!-- PLUpload -->
+        <script src="js/plugins/plupload/plupload.full.js"></script>
+        <script src="js/plugins/plupload/jquery.plupload.queue.js"></script>
+        <!-- Custom file upload -->
+        <script src="js/plugins/fileupload/bootstrap-fileupload.min.js"></script>
+        <!-- MultiSelect -->
+        <script src="js/plugins/multiselect/jquery.multi-select.js"></script>
+        <!-- Theme framework -->
+        <script src="js/eakroko.min.js"></script>
+        <!-- Theme scripts -->
+        <script src="js/application.js"></script>
+        <!-- For chatting -->
+        <script src="js/chat.js"></script>
+        <!-- Project management page -->
+        <script src="js/theme.js"></script>
+        <!-- Just for demonstration -->
+        <script src="js/demonstration.js"></script>
+        <!-- Data table  -->
+        <script src="js/table.js"></script>
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="img/favicon.ico" />
+        <!-- Apple devices Homescreen icon -->
+        <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-precomposed.png" />
+    </head>
+    <body data-layout-topbar="fixed">
+        <!-- Start modal edit project -->
+        <div id="modal-edit-project" class="modal modal-custom hide fade box box-color modal-with-tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+            <div class="modal-dialog modal-lg">
+                <div class="box-title">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel"><i class="icon-edit"></i>Edit project</h3>
+                    <ul class="tabs">
+                        <li class="active">
+                            <a href="#tab-proj-info-edit" data-toggle="tab">Project infomations</a>
+                        </li>
+                        <li>
+                            <a href="#tab-proj-settings-edit" data-toggle="tab">Project settings</a>
+                        </li>
+                        <li>
+                            <a href="#tab-proj-activity" data-toggle="tab">Activity</a>
+                        </li>
+                        <li>
+                            <a href="#tab-proj-comment" data-toggle="tab">Comment</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="box-content">
+                    <div class="tab-content row-fluid">
+                        <div class="tab-pane active" id="tab-proj-info-edit">
+                            <form action="#" method="POST" class="form-horizontal form-validate" id="form-edit-project">
+                                <div class="modal-body">
+                                    <div class="control-group">
+                                        <label for="project-name" class="control-label">Project name <small>Min length: 50</small></label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="Input project name here" name="project-name" id="project-name" data-rule-minlength="50" data-rule-required="true" class="span8">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="project-date-range" class="control-label">Start date - End date</label>
+                                        <div class="controls">
+                                            <input type="text" name="project-date-range" id="project-date-range" class="span8 daterangepick" data-rule-required="true" data-msg-required="Please pick project's start date and project's end date">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="project-project-leader" class="control-label">Project Leader</label>
+                                        <div class="controls">
+                                            <input type="text" name="project-project-leader" id="project-project-leader" class="span8" disabled="">
+                                            <span class="help-block">Project leader is the one who initialize project</span>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="textfield" class="control-label">Select product owner</label>
+                                        <div class="controls">
+                                            <div class="add-min-height"><select name="project-product-owner" id="project-product-owner" class="select2-me span8" data-placeholder="Please select">
+                                                <option value=""></option>
+                                                <option value="01">Option-01</option>
+                                                <option value="02">Option-02</option>
+                                                <option value="03">Option-03</option>
+                                                <option value="04">Option-04</option>
+                                                <option value="05">Option-05</option>
+                                                <option value="06">Option-06</option>
+                                                <option value="07">Option-07</option>
+                                                <option value="08">Option-08</option>
+                                                <option value="09">Option-09</option>
+                                                <option value="10">Option-10</option>
+                                            </select></div>
+                                            <span class="help-block"><a href="#modal-add-user" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="" data-toggle="modal"><i class="icon-plus"></i> Or add product owner here</a></span>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="project-description" class="control-label">Description</label>
+                                        <div class="controls">
+                                            <textarea name="project-description" id="project-description" class="input-block-level span11" placeholder="Input project's description here"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="project-note" class="control-label">Note</label>
+                                        <div class="controls">
+                                            <textarea name="project-note" id="project-note" class="input-block-level span11" placeholder="Input project's note here"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-primary" value="Save project infomation">
+                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="tab-proj-settings-edit">
+                            <form action="#" method="POST" class='form-horizontal'>
+                                <div class="modal-body">
+                                    <div class="control-group">
+                                        <!-- <div class="controls"> -->
+                                        <div class="check-demo-col">
+                                            <div class="check-line">
+                                                <input type="checkbox" id="c5" class='icheck-me' data-skin="square" data-color="blue"> <label class='inline' for="c5">Default</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" id="c6" class='icheck-me' data-skin="square" data-color="blue" checked> <label class='inline' for="c6">Checked</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" disabled> <label class='inline'>Disabled</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" checked disabled> <label class='inline'>Disabled &amp; checked</label>
+                                            </div>
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-primary" value="Save project settings">
+                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="tab-proj-activity">
+                            <div class="modal-body">
+                                <ul class="timeline">
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                    <li class="timeline-separated">
+                                        Sunday
+                                    </li>
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-content row-fluid">
+                                            <div class="left">
+                                                <div class="icon">
+                                                    <!-- <i class="icon-picture"></i> -->
+                                                    <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
+                                                </div>
+                                                <div class="username">Jane Leo Doe</div>
+                                            </div>
+                                            <div class="activity span11">
+                                                <p>
+                                                <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
+                                                </p>
+                                                <div class="datetime">14 hours ago</div>
+                                            </div>
+                                        </div>
+                                        <div class="line"></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-proj-comment">
+                            <div class="modal-body comment-list">
+                                <div class="media" id="1">
+                                    <a class="pull-left" href="#">
+                                    <img src="img/demo/user-1.jpg">
+                                    </a>
+                                    <div class="media-body">
+                                        <h6 class="media-heading">Jane Doe <small>15 days ago</small></h6>
+                                        <p>Lorem ipsum Consectetur voluptate dolore sint dolor esse anim. Lorem ipsum Eiusmod non dolor in adipisicing quis ullamco cillum anim mollit proident.</p>
+                                        <div class="media-actions">
+                                            <a href="#" class='btn btn-small btn-reply-comment'><i class="icon-reply"></i> Reply</a>
+                                        </div>
+                                        <div class="media" id="2">
+                                            <a class="pull-left" href="#">
+                                            <img src="img/demo/user-2.jpg">
+                                            </a>
+                                            <div class="media-body">
+                                                <h6 class="media-heading">Max Mustermann <small>16 days ago</small></h6>
+                                                <p>Lorem ipsum Et consequat cupidatat nulla aliqua exercitation consequat aute ea veniam ut.</p>
+                                                <div class="media-actions">
+                                                    <a href="#" class='btn btn-small btn-reply-comment'><i class="icon-reply"></i> Reply</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="media" id="3">
+                                            <a class="pull-left" href="#">
+                                            <img src="img/demo/user-3.jpg">
+                                            </a>
+                                            <div class="media-body">
+                                                <h6 class="media-heading">Max Mustermann <small>16 days ago</small></h6>
+                                                <p>Lorem ipsum Et consequat cupidatat nulla aliqua exercitation consequat aute ea veniam ut.</p>
+                                                <div class="media-actions">
+                                                    <a href="#" class='btn btn-small btn-reply-comment'><i class="icon-reply"></i> Reply</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media" id="4">
+                                    <a class="pull-left" href="#">
+                                    <img src="img/demo/user-4.jpg">
+                                    </a>
+                                    <div class="media-body">
+                                        <h6 class="media-heading">Jane Doe<small>14 days ago</small></h6>
+                                        <p>Lorem ipsum Consectetur voluptate dolore sint dolor esse anim. Lorem ipsum Eiusmod non dolor in adipisicing quis ullamco cillum anim mollit proident.</p>
+                                        <div class="media-actions">
+                                            <a href="#" class='btn btn-small btn-reply-comment'><i class="icon-reply"></i> Reply</a>
+                                        </div>
+                                        <div class="media" id="5">
+                                            <a class="pull-left" href="#">
+                                            <img src="img/demo/user-5.jpg">
+                                            </a>
+                                            <div class="media-body">
+                                                <h6 class="media-heading">Username #1<small>15 days ago</small></h6>
+                                                <p>Lorem ipsum Pariatur ut consectetur commodo fugiat quis cupidatat ut consectetur sed ullamco ea incididunt. Lorem ipsum Eiusmod sit magna officia magna in aliquip pariatur. Lorem ipsum Nostrud in veniam anim quis quis nulla incididunt amet elit ad esse do. Lorem ipsum Magna fugiat enim ex tempor cupidatat est consequat qui Excepteur.</p>
+                                                <div class="media-actions">
+                                                    <a href="#" class='btn btn-small btn-reply-comment'><i class="icon-reply"></i> Reply</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media" id="6">
+                                    <a class="pull-left" href="#">
+                                    <img src="img/demo/user-6.jpg">
+                                    </a>
+                                    <div class="media-body">
+                                        <h6 class="media-heading">Username #2<small>13 days ago</small></h6>
+                                        <p>Lorem ipsum Dolore id anim Duis exercitation exercitation in aliqua incididunt commodo. Lorem ipsum Adipisicing sunt ex ad esse fugiat laborum voluptate aute proident.</p>
+                                        <div class="media-actions">
+                                            <a href="#" class='btn btn-small btn-reply-comment'><i class="icon-reply"></i> Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media" id="7">
+                                    <a class="pull-left" href="#">
+                                    <img src="img/demo/user-1.jpg">
+                                    </a>
+                                    <div class="media-body">
+                                        <h6 class="media-heading">Username #3<small>5 days ago</small></h6>
+                                        <p>Lorem ipsum Cillum Ut voluptate tempor Ut consectetur qui.</p>
+                                        <div class="media-actions">
+                                            <a href="#" class='btn btn-small btn-reply-comment'><i class="icon-reply"></i> Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="new-comment-form">
+                                    <h6>Add a new comment</h6>
+                                    <form action="#" method="POST" class='form-vertical'>
+                                        <div class="control-group">
+                                            <label for="ta" class="control-label">Message</label>
+                                            <div class="controls">
+                                                <textarea name="comment-message" id="comment-message" class='span12' rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary pull-right">Post comment</button>
+                                    </form>
+                                </div>
+                                <div class="reply-comment-form-temp">
+                                    <h6>Reply to this comment</h6>
+                                    <form action="#" method="POST" class='form-vertical'>
+                                        <div class="control-group">
+                                            <label for="ta" class="control-label">Message</label>
+                                            <div class="controls">
+                                                <textarea name="comment-message" id="comment-message" class='span12' rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                        <a class="btn cancel-reply-comment pull-right">Cancel</a>
+                                        <input type="submit" class="btn btn-primary pull-right" value="Post comment">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End modal edit project -->
+        <!-- Start modal add project -->
+        <div id="modal-add-project" class="modal modal-custom hide fade box box-color modal-with-tab no-border" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+            <div class="modal-dialog modal-lg">
+                <form action="#" method="POST" class="form-horizontal form-validate" id="form-add-project">
+                    <div class="box-title">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel"><i class="icon-plus-sign-alt"></i>Add new project</h3>
+                        <ul class="tabs">
+                            <li class="active">
+                                <a href="#tab-proj-info-add" data-toggle="tab">Project infomations</a>
+                            </li>
+                            <li>
+                                <a href="#tab-proj-settings-add" data-toggle="tab">Project settings</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box-content">
+                        <div class="tab-content row-fluid">
+                            <div class="tab-pane active" id="tab-proj-info-add">
+                                <div class="modal-body">
+                                    <div class="control-group">
+                                        <label for="project-name" class="control-label">Project name <small>Min length: 50</small></label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="Input project name here" name="project-name" id="project-name" data-rule-minlength="50" data-rule-required="true" class="span8">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="project-date-range" class="control-label">Start date - End date</label>
+                                        <div class="controls">
+                                            <input type="text" name="project-date-range" id="project-date-range" class="span8 daterangepick" data-rule-required="true" data-msg-required="Please pick project's start date and project's end date">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="project-project-leader" class="control-label">Project Leader</label>
+                                        <div class="controls">
+                                            <input type="text" name="project-project-leader" id="project-project-leader" class="span8" disabled="">
+                                            <span class="help-block">Project leader is the one who initialize project</span>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="textfield" class="control-label">Select product owner</label>
+                                        <div class="controls">
+                                            <div class="add-min-height"><select name="project-product-owner" id="project-product-owner" class="select2-me span8" data-placeholder="Please select">
+                                                <option value=""></option>
+                                                <option value="01">Option-01</option>
+                                                <option value="02">Option-02</option>
+                                                <option value="03">Option-03</option>
+                                                <option value="04">Option-04</option>
+                                                <option value="05">Option-05</option>
+                                                <option value="06">Option-06</option>
+                                                <option value="07">Option-07</option>
+                                                <option value="08">Option-08</option>
+                                                <option value="09">Option-09</option>
+                                                <option value="10">Option-10</option>
+                                            </select></div>
+                                            <span class="help-block"><a href="#modal-add-user" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="" data-toggle="modal"><i class="icon-plus"></i> Or add product owner here</a></span>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="project-description" class="control-label">Description</label>
+                                        <div class="controls">
+                                            <textarea name="project-description" id="project-description" class="input-block-level span11" placeholder="Input project's description here"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="project-note" class="control-label">Note</label>
+                                        <div class="controls">
+                                            <textarea name="project-note" id="project-note" class="input-block-level span11" placeholder="Input project's note here"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab-proj-settings-add">
+                                <div class="modal-body">
+                                    <!-- <form action="#" method="POST" class='form-horizontal'> -->
+                                    <div class="control-group">
+                                        <!-- <div class="controls"> -->
+                                        <div class="check-demo-col">
+                                            <div class="check-line">
+                                                <input type="checkbox" id="c5" class='icheck-me' data-skin="square" data-color="blue"> <label class='inline' for="c5">Default</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" id="c6" class='icheck-me' data-skin="square" data-color="blue" checked> <label class='inline' for="c6">Checked</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" disabled> <label class='inline'>Disabled</label>
+                                            </div>
+                                            <div class="check-line">
+                                                <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" checked disabled> <label class='inline'>Disabled &amp; checked</label>
+                                            </div>
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                    <!-- </form> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Add project">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="modal-add-user" class="modal modal-custom hide fade box box-color lime modal-with-tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <form action="#" method="POST" class='form-horizontal form-validate' id="form-add-user">
+                    <div class="box-title">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel"><i class="user_add"></i>Modal header</h3>
+                    </div>
+                    <div class="box-content row-fluid">
+                        <div class="modal-body">
+                            <div class="control-group">
+                                <label for="user-name" class="control-label">User name <small>Require</small></label>
+                                <div class="controls">
+                                    <input type="text" placeholder="Input user name here" name="user-name" id="user-name" class="span8">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="user-skill" class="control-label">Skill</label>
+                                <div class="controls">
+                                    <div class="add-min-height"><select data-placeholder="Choose a skill..." name="user-skill" id="user-skill" multiple class="chosen-select">
+                                        <option value="1">abc</option>
+                                        <option value="2">sdfs</option>
+                                        <option value="3">asd3</option>
+                                        <option value="4">44df4</option>
+                                        <option value="5">ttdf5</option>
+                                        <option value="6">rt6</option>
+                                        <option value="7">yuy7</option>
+                                        <option value="1">abc</option>
+                                        <option value="2">sdfs</option>
+                                        <option value="3">asd3</option>
+                                        <option value="4">44df4</option>
+                                        <option value="5">ttdf5</option>
+                                    </select></div>
+                                    <span class="help-block"><a href="#modal-add-tag" data-backdrop="static" data-keyboard="true" id="btn-add-tag" role="button" class="" data-toggle="modal"><i class="icon-plus"></i> Or add tag here</a></span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="user-birthday" class="control-label">Birthday</label>
+                                <div class="controls">
+                                    <input type="text" placeholder="Pick user's birthday" name="user-birthday" id="user-birthday" class="span8 datepick" data-msg-required="Please pick user's birthday" data-rule-required="true">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="user-email" class="control-label">Email</label>
+                                <div class="controls">
+                                    <input type="text" name="user-email" id="user-email" class="span8" data-rule-email="true" data-rule-required="true">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="user-role" class="control-label">Role</label>
+                                <div class="controls">
+                                    <select name="user-role" id="user-role" data-rule-required="true" class="span8">
+                                        <option value="">-- Please select user role --</option>
+                                        <option value="1">Project leader</option>
+                                        <option value="2">Product Owner</option>
+                                        <option value="3">Scrum Master</option>
+                                        <option value="4">Team member</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="textfield" class="control-label">Select user's avatar</label>
+                                <div class="controls">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="img/no-image.gif" /></div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" name='imagefile' /></span>
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Add user">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="modal-user" class="modal hide user-info-modal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="user-infos">Jane Doe</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid">
+                    <div class="span2">
+                        <img src="img/demo/user-1.jpg" alt="">
+                    </div>
+                    <div class="span10">
+                        <dl class="dl-horizontal" style="margin-top:0;">
+                            <dt>Full name:</dt>
+                            <dd>Jane Doe</dd>
+                            <dt>Email:</dt>
+                            <dd>jane.doe@janedoesemail.com</dd>
+                            <dt>Birthday:</dt>
+                            <dd>15/10/1991</dd>
+                            <dt>Role:</dt>
+                            <dd>Scrum Master</dd>
+                            <dt>Skill:</dt>
+                            <dd>
+                            <span class="tags">
+                            <i class="icon-tag"></i>
+                            <a href="#">UI</a>
+                            <a href="#">PHP</a>
+                            <a href="#">CSS</a>
+                            </span>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <div id="navigation">
+            <div class="container-fluid">
+                <a href="#" id="brand">CONNECT</a>
+                <a href="#" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Toggle navigation"><i class="icon-reorder"></i></a>
+                <ul class='main-nav'>
+                    <li>
+                        <a href="index.html">
+                        <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class='active'>
+                        <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
+                        <span>Project</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
+                        <span>Backlog</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
+                        <span>People</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
+                        <span>Sprint</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
+                        <span>Taskboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
+                        <span>Event</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
+                        <span>Report</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="user">
+                    <ul class="icon-nav">
+                        <li class='dropdown'>
+                            <a href="#" class='dropdown-toggle' data-toggle="dropdown"><i class="icon-envelope"></i><span class="label label-lightred">4</span></a>
+                            <ul class="dropdown-menu pull-right message-ul">
+                                <li>
+                                    <a href="#">
+                                    <img src="img/demo/user-1.jpg" alt="">
+                                    <div class="details">
+                                        <div class="name">Jane Doe</div>
+                                        <div class="message">
+                                            Lorem ipsum Commodo quis nisi ...
+                                        </div>
+                                    </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                    <img src="img/demo/user-2.jpg" alt="">
+                                    <div class="details">
+                                        <div class="name">John Doedoe</div>
+                                        <div class="message">
+                                            Ut ad laboris est anim ut ...
+                                        </div>
+                                    </div>
+                                    <div class="count">
+                                        <i class="icon-comment"></i>
+                                        <span>3</span>
+                                    </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                    <img src="img/demo/user-3.jpg" alt="">
+                                    <div class="details">
+                                        <div class="name">Bob Doe</div>
+                                        <div class="message">
+                                            Excepteur Duis magna dolor!
+                                        </div>
+                                    </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="components-messages.html" class='more-messages'>Go to Message center <i class="icon-arrow-right"></i></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class='dropdown language-select'>
+                            <a href="#" class='dropdown-toggle' data-toggle="dropdown"><img src="img/demo/flags/us.gif" alt=""><span>US</span></a>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="#"><img src="img/demo/flags/vn.gif" alt=""><span>Vietnamese</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="dropdown">
+                        <a href="#" class='dropdown-toggle' data-toggle="dropdown">John Doe <img src="img/demo/user-avatar.jpg" alt=""></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="more-userprofile.html">Edit profile</a>
+                            </li>
+                            <li>
+                                <a href="#">Account settings</a>
+                            </li>
+                            <li>
+                                <a href="more-login.html">Sign out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" id="content">
+            <div id="left" class='force-full no-resize'>
+                <div class="subnav">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="box">
+                                <div class="box-content nopadding scrollable" data-height="250" data-visible="true">
+                                    <table class="table table-nohead" id="randomFeed">
+                                        <tbody>
+                                            <tr>
+                                                <td><span class="label"><i class="icon-plus"></i></span> <a href="#">John Doe</a> added a new photo</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="label label-success"><i class="icon-user"></i></span> New user registered</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="label label-info"><i class="icon-shopping-cart"></i></span> New order received</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="label label-warning"><i class="icon-comment"></i></span> <a href="#">John Doe</a> commented on <a href="#">News #123</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="label label-success"><i class="icon-user"></i></span> New user registered</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="label label-info"><i class="icon-shopping-cart"></i></span> New order received</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="label label-warning"><i class="icon-comment"></i></span> <a href="#">John Doe</a> commented on <a href="#">News #123</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box" style="border-top: 1px solid #333333">
+                        <div class="box-content nopadding scrollable" data-height="300" data-visible="true">
+                            <ul class="userlist">
+                                <li id="id1">
+                                    <a href="#"><img src="img/demo/user-1.jpg" class="img-user-info" alt=""></a>
+                                    <div class="user">
+                                        <span class="name">
+                                        Jane Doe a
+                                        </span>
+                                        <span class="position">
+                                        Team manager sdf
+                                        </span>
+                                    </div>
+                                    <div class="status active">
+                                        <i class="icon-circle"></i>
+                                    </div>
+                                </li>
+                                <li id="id2">
+                                    <a href="#"><img src="img/demo/user-2.jpg" class="img-user-info" alt=""></a>
+                                    <div class="user">
+                                        <span class="name">
+                                        John Doe 4
+                                        </span>
+                                        <span class="position">
+                                        Webdesign 45
+                                        </span>
+                                    </div>
+                                    <div class="status">
+                                        <i class="icon-circle"></i>
+                                    </div>
+                                </li>
+                                <li id="id3">
+                                    <a href="#"><img src="img/demo/user-3.jpg" class="img-user-info" alt=""></a>
+                                    <div class="user">
+                                        <span class="name">
+                                        John Doe 67
+                                        </span>
+                                        <span class="position">
+                                        UI Design 345
+                                        </span>
+                                    </div>
+                                    <div class="status afk">
+                                        <i class="icon-circle"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#"><img src="img/demo/user-4.jpg" class="img-user-info" alt=""></a>
+                                    <div class="user">
+                                        <span class="name">
+                                        Jane Doe 345
+                                        </span>
+                                        <span class="position">
+                                        Mobile Design drt
+                                        </span>
+                                    </div>
+                                    <div class="status active">
+                                        <i class="icon-circle"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#"><img src="img/demo/user-5.jpg" class="img-user-info" alt=""></a>
+                                    <div class="user">
+                                        <span class="name">
+                                        John Doe
+                                        </span>
+                                        <span class="position">
+                                        Webdesign
+                                        </span>
+                                    </div>
+                                    <div class="status">
+                                        <i class="icon-circle"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#"><img src="img/demo/user-1.jpg" class="img-user-info" alt=""></a>
+                                    <div class="user">
+                                        <span class="name">
+                                        Jane Doe
+                                        </span>
+                                        <span class="position">
+                                        Team manager
+                                        </span>
+                                    </div>
+                                    <div class="status active">
+                                        <i class="icon-circle"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#"><img src="img/demo/user-2.jpg" class="img-user-info" alt=""></a>
+                                    <div class="user">
+                                        <span class="name">
+                                        John Doe
+                                        </span>
+                                        <span class="position">
+                                        Webdesign
+                                        </span>
+                                    </div>
+                                    <div class="status">
+                                        <i class="icon-circle"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#"><img src="img/demo/user-3.jpg" class="img-user-info" alt=""></a>
+                                    <div class="user">
+                                        <span class="name">
+                                        John Doe
+                                        </span>
+                                        <span class="position">
+                                        UI Design
+                                        </span>
+                                    </div>
+                                    <div class="status afk">
+                                        <i class="icon-circle"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#"><img src="img/demo/user-4.jpg" class="img-user-info" alt=""></a>
+                                    <div class="user">
+                                        <span class="name">
+                                        Jane Doe
+                                        </span>
+                                        <span class="position">
+                                        Mobile Design
+                                        </span>
+                                    </div>
+                                    <div class="status active">
+                                        <i class="icon-circle"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#"><img src="img/demo/user-5.jpg" class="img-user-info" alt=""></a>
+                                    <div class="user">
+                                        <span class="name">
+                                        John Doe
+                                        </span>
+                                        <span class="position">
+                                        Webdesign
+                                        </span>
+                                    </div>
+                                    <div class="status">
+                                        <i class="icon-circle"></i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <form action="search-results.html" method="GET" class='search-form'>
+                        <div class="search-pane">
+                            <input type="text" name="search" placeholder="Search user...">
+                            <button type="submit"><i class="icon-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="main">
+                <div class="container-fluid">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="box box-color box-bordered">
+                                <div class="box-title">
+                                    <h3>
+                                    Projects
+                                    </h3>
+                                </div>
+                                <div class="box-content nopadding">
+                                    <div id="action_bar" class="row-fluid">
+                                        <div class="span12">
+                                            <!-- <button id="btn-add-project" class="btn btn-primary pull-left btn-lightred mr10" onClick="jumpToOtherPage('027_02_card_payment_details_add.html')"><i class="icon-plus"></i> Add Project</button> -->
+                                            <a href="#modal-add-project" data-backdrop="static" data-keyboard="false" id="btn-add-project" role="button" class="btn btn-primary pull-left btn-lightred mr10" data-toggle="modal"><i class="icon-plus"></i> Add Project</a>
+                                            <button id="btn-download-excel" class="btn btn-primary pull-right mr10"><i class="icon-download-alt"></i> Excel</button>
+                                        </div>
+                                    </div>
+                                    <table class="table table-hover table-nomargin table-bordered usertable" id="project-datatable">
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col width="12%" />
+                                        <thead>
+                                            <tr class='thefilter'>
+                                                <!-- <th class='with-checkbox'></th> -->
+                                                <th>Project id</th>
+                                                <th>Project name</th>
+                                                <th>Product Owner</th>
+                                                <th>Project Leader</th>
+                                                <th class='hidden-1024'>Start date</th>
+                                                <th class='hidden-1024'>End date</th>
+                                                <th class='hidden-350'>Status</th>
+                                                <th class='hidden-480'>Options</th>
+                                            </tr>
+                                            <tr>
+                                                <!-- <th class='with-checkbox'><input type="checkbox" name="check_all" id="check_all"></th> -->
+                                                <th>Project id</th>
+                                                <th>Project name</th>
+                                                <th>Product Owner</th>
+                                                <th>Project Leader</th>
+                                                <th class='hidden-1024'>Start date</th>
+                                                <th class='hidden-1024'>End date</th>
+                                                <th class='hidden-350'>Status</th>
+                                                <th class='hidden-480'>Options</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project name</td>
+                                                <td>John owner</td>
+                                                <td>Doe leader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-satgreen">Completed</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project name</td>
+                                                <td>John owner</td>
+                                                <td>Doe leader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-satgreen">Cancled</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project name</td>
+                                                <td>John owner</td>
+                                                <td>Doe leader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-success">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project name</td>
+                                                <td>John sd234</td>
+                                                <td>Doe l234eader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-success">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PR234OJ1</td>
+                                                <td>Project n234ame</td>
+                                                <td>John ow56ner</td>
+                                                <td>Doe le567ader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-warning">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#modal-edit-project" class="btn" rel="tooltip" title="Edit this project" data-backdrop="static" data-keyboard="false" data-toggle="modal"><i class="icon-edit"></i></a>
+                                                    <!-- <a href="#"  id="btn-add-project" role="button" class="btn btn-primary pull-left btn-lightred mr10" ><i class="icon-plus"></i> Add Project</a> -->
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project na678me</td>
+                                                <td>John own78er</td>
+                                                <td>Doe leadgher</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project na45me</td>
+                                                <td>John56 owner</td>
+                                                <td>Doe l6eader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-warning">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Pr456oject name</td>
+                                                <td>John ow456ner</td>
+                                                <td>Doe lead56er</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project name</td>
+                                                <td>John owner</td>
+                                                <td>Doe leader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project name</td>
+                                                <td>John owner</td>
+                                                <td>Doe leader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project name</td>
+                                                <td>John owner</td>
+                                                <td>Doe leader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project name</td>
+                                                <td>John owner</td>
+                                                <td>Doe leader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project name</td>
+                                                <td>John owner</td>
+                                                <td>Doe leader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project name</td>
+                                                <td>John owner</td>
+                                                <td>Doe leader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PROJ1</td>
+                                                <td>Project name</td>
+                                                <td>John owner</td>
+                                                <td>Doe leader</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-1024'>03-07-2013</td>
+                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
+                                                <td class='hidden-480'>
+                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
+                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
