@@ -546,7 +546,7 @@
                                 <tr>
                                     <td class="user-story">
                                         <div class="span12">
-                                            <div class="box box-color box-bordered red">
+                                            <div id="div-story-name" class="box box-color box-bordered red">
                                                 <div class="box-title story-name">
                                                     <i class="icon-user"></i> 40 points
                                                 </div>
@@ -897,5 +897,11 @@
                 </div>
             </div>
         </div>
+		<script>
+			self.setInterval(function(){ 
+				var height_user_story = $('td.user-story').height() - 100;console.log(height_user_story);
+				$('#div-story-name').css('height', height_user_story);
+			}, 200);
+		</script>
     </body>
 </html>

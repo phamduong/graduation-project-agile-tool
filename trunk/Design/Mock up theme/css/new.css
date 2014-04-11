@@ -155,3 +155,6 @@
 .cancel-reply-comment {
 	margin-left: 6px;
 }
+.row_selected {
+	 background-color: #D9EDF7 !important;
+}

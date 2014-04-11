@@ -7,7 +7,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <!-- Apple devices fullscreen -->
         <!--<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />-->
-        <title>SCRUM REAL - Project management</title>
+        <title>SCRUM REAL - Staff management</title>
         <!-- Bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <!--Bootstrap modal-->
@@ -603,111 +603,6 @@
             </div>
         </div>
         <!-- End modal edit project -->
-        <!-- Start modal add project -->
-        <div id="modal-add-project" class="modal modal-custom hide fade box box-color modal-with-tab no-border" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-            <div class="modal-dialog modal-lg">
-                <form action="#" method="POST" class="form-horizontal form-validate" id="form-add-project">
-                    <div class="box-title">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="myModalLabel"><i class="icon-plus-sign-alt"></i>Add new project</h3>
-                        <ul class="tabs">
-                            <li class="active">
-                                <a href="#tab-proj-info-add" data-toggle="tab">Project infomations</a>
-                            </li>
-                            <li>
-                                <a href="#tab-proj-settings-add" data-toggle="tab">Project settings</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="box-content">
-                        <div class="tab-content row-fluid">
-                            <div class="tab-pane active" id="tab-proj-info-add">
-                                <div class="modal-body">
-                                    <div class="control-group">
-                                        <label for="project-name" class="control-label">Project name <small>Min length: 50</small></label>
-                                        <div class="controls">
-                                            <input type="text" placeholder="Input project name here" name="project-name" id="project-name" data-rule-minlength="50" data-rule-required="true" class="span8">
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
-                                        <label for="project-date-range" class="control-label">Start date - End date</label>
-                                        <div class="controls">
-                                            <input type="text" name="project-date-range" id="project-date-range" class="span8 daterangepick" data-rule-required="true" data-msg-required="Please pick project's start date and project's end date">
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
-                                        <label for="project-project-leader" class="control-label">Project Leader</label>
-                                        <div class="controls">
-                                            <input type="text" name="project-project-leader" id="project-project-leader" class="span8" disabled="">
-                                            <span class="help-block">Project leader is the one who initialize project</span>
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
-                                        <label for="textfield" class="control-label">Select product owner</label>
-                                        <div class="controls">
-                                            <div class="add-min-height"><select name="project-product-owner" id="project-product-owner" class="select2-me span8" data-placeholder="Please select">
-                                                <option value=""></option>
-                                                <option value="01">Option-01</option>
-                                                <option value="02">Option-02</option>
-                                                <option value="03">Option-03</option>
-                                                <option value="04">Option-04</option>
-                                                <option value="05">Option-05</option>
-                                                <option value="06">Option-06</option>
-                                                <option value="07">Option-07</option>
-                                                <option value="08">Option-08</option>
-                                                <option value="09">Option-09</option>
-                                                <option value="10">Option-10</option>
-                                            </select></div>
-                                            <span class="help-block"><a href="#modal-add-user" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="" data-toggle="modal"><i class="icon-plus"></i> Or add product owner here</a></span>
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
-                                        <label for="project-description" class="control-label">Description</label>
-                                        <div class="controls">
-                                            <textarea name="project-description" id="project-description" class="input-block-level span11" placeholder="Input project's description here"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
-                                        <label for="project-note" class="control-label">Note</label>
-                                        <div class="controls">
-                                            <textarea name="project-note" id="project-note" class="input-block-level span11" placeholder="Input project's note here"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="tab-proj-settings-add">
-                                <div class="modal-body">
-                                    <!-- <form action="#" method="POST" class='form-horizontal'> -->
-                                    <div class="control-group">
-                                        <!-- <div class="controls"> -->
-                                        <div class="check-demo-col">
-                                            <div class="check-line">
-                                                <input type="checkbox" id="c5" class='icheck-me' data-skin="square" data-color="blue"> <label class='inline' for="c5">Default</label>
-                                            </div>
-                                            <div class="check-line">
-                                                <input type="checkbox" id="c6" class='icheck-me' data-skin="square" data-color="blue" checked> <label class='inline' for="c6">Checked</label>
-                                            </div>
-                                            <div class="check-line">
-                                                <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" disabled> <label class='inline'>Disabled</label>
-                                            </div>
-                                            <div class="check-line">
-                                                <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" checked disabled> <label class='inline'>Disabled &amp; checked</label>
-                                            </div>
-                                        </div>
-                                        <!-- </div> -->
-                                    </div>
-                                    <!-- </form> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="Add project">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
         <div id="modal-add-user" class="modal modal-custom hide fade box box-color lime modal-with-tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <form action="#" method="POST" class='form-horizontal form-validate' id="form-add-user">
@@ -836,7 +731,7 @@
                         <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class='active'>
+                    <li>
                         <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
                         <span>Project</span>
                         </a>
@@ -846,7 +741,7 @@
                         <span>Backlog</span>
                         </a>
                     </li>
-                    <li>
+                    <li class='active'>
                         <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
                         <span>People</span>
                         </a>
@@ -1138,268 +1033,50 @@
             <div id="main">
                 <div class="container-fluid">
                     <div class="row-fluid">
-                        <div class="span12">
-                            <div class="box box-color box-bordered">
+                        <div class="span8">
+                             <div class="box box-color box-bordered satblue">
                                 <div class="box-title">
                                     <h3>
-                                    Projects
+                                        <i class="icon-group"></i>
+                                        Bordered &amp; Colored
                                     </h3>
+                                    <div class="actions">
+                                    </div>
                                 </div>
-                                <div class="box-content nopadding">
-                                    <div id="action_bar" class="row-fluid">
-                                        <div class="span12">
-                                            <!-- <button id="btn-add-project" class="btn btn-primary pull-left btn-lightred mr10" onClick="jumpToOtherPage('027_02_card_payment_details_add.html')"><i class="icon-plus"></i> Add Project</button> -->
-                                            <a href="#modal-add-project" data-backdrop="static" data-keyboard="false" id="btn-add-project" role="button" class="btn btn-primary pull-left btn-lightred mr10" data-toggle="modal"><i class="icon-plus"></i> Add Project</a>
-                                            <button id="btn-download-excel" class="btn btn-primary pull-right mr10"><i class="icon-download-alt"></i> Excel</button>
+                                <div class="box-content scrollable" data-height="500">
+                                    <div class="span12">
+                                        <div class="box box-color orange box-small box-bordered">
+                                            <div class="box-title">
+                                                <h3>
+                                                    <i class="icon-reorder"></i>
+                                                    Small widget
+                                                </h3>
+                                                <div class="actions">
+                                                    <a href="#" class="btn btn-mini content-refresh"><i class="icon-refresh"></i></a>
+                                                    <a href="#" class="btn btn-mini content-remove"><i class="icon-remove"></i></a>
+                                                    <a href="#" class="btn btn-mini content-slideUp"><i class="icon-angle-down"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="box-content">
+                                                Lorem ipsum velit dolor veniam occaecat do eiusmod velit cillum sit. Lorem ipsum laborum sed Duis in in dolor in exercitation irure. Lorem ipsum ad proident ut in mollit id ullamco Ut. Lorem ipsum magna eiusmod in anim deserunt adipisicing. Lorem ipsum ex dolore sint consectetur eu non mollit Ut dolore aliquip anim. Lorem ipsum labore ad Ut Duis Excepteur consequat non. Lorem ipsum ut quis ea dolore esse Duis cillum amet eu officia nostrud. Lorem ipsum dolor aliquip cillum ea ut id pariatur ad aute mollit in qui. Lorem ipsum magna ut consectetur incididunt sed consectetur ut ullamco dolore Excepteur deserunt. Lorem ipsum mollit ad Excepteur dolore non dolor occaecat reprehenderit eiusmod mollit ut Excepteur dolore dolor ex. Lorem ipsum nisi exercitation cillum velit tempor aliqua nisi non. Lorem ipsum enim magna adipisicing do adipisicing aliquip ex pariatur dolore proident fugiat mollit dolor. 
+                                            </div>
                                         </div>
                                     </div>
-                                    <table class="table table-hover table-nomargin table-bordered usertable" id="project-datatable">
-                                        <col />
-                                        <col />
-                                        <col />
-                                        <col />
-                                        <col />
-                                        <col />
-                                        <col />
-                                        <col width="12%" />
-                                        <thead>
-                                            <tr class='thefilter'>
-                                                <!-- <th class='with-checkbox'></th> -->
-                                                <th>Project id</th>
-                                                <th>Project name</th>
-                                                <th>Product Owner</th>
-                                                <th>Project Leader</th>
-                                                <th class='hidden-1024'>Start date</th>
-                                                <th class='hidden-1024'>End date</th>
-                                                <th class='hidden-350'>Status</th>
-                                                <th class='hidden-480'>Options</th>
-                                            </tr>
-                                            <tr>
-                                                <!-- <th class='with-checkbox'><input type="checkbox" name="check_all" id="check_all"></th> -->
-                                                <th>Project id</th>
-                                                <th>Project name</th>
-                                                <th>Product Owner</th>
-                                                <th>Project Leader</th>
-                                                <th class='hidden-1024'>Start date</th>
-                                                <th class='hidden-1024'>End date</th>
-                                                <th class='hidden-350'>Status</th>
-                                                <th class='hidden-480'>Options</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project name</td>
-                                                <td>John owner</td>
-                                                <td>Doe leader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-satgreen">Completed</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project name</td>
-                                                <td>John owner</td>
-                                                <td>Doe leader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-satgreen">Cancled</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project name</td>
-                                                <td>John owner</td>
-                                                <td>Doe leader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-success">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project name</td>
-                                                <td>John sd234</td>
-                                                <td>Doe l234eader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-success">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PR234OJ1</td>
-                                                <td>Project n234ame</td>
-                                                <td>John ow56ner</td>
-                                                <td>Doe le567ader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-warning">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#modal-edit-project" class="btn" rel="tooltip" title="Edit this project" data-backdrop="static" data-keyboard="false" data-toggle="modal"><i class="icon-edit"></i></a>
-                                                    <!-- <a href="#"  id="btn-add-project" role="button" class="btn btn-primary pull-left btn-lightred mr10" ><i class="icon-plus"></i> Add Project</a> -->
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project na678me</td>
-                                                <td>John own78er</td>
-                                                <td>Doe leadgher</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project na45me</td>
-                                                <td>John56 owner</td>
-                                                <td>Doe l6eader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-warning">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Pr456oject name</td>
-                                                <td>John ow456ner</td>
-                                                <td>Doe lead56er</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project name</td>
-                                                <td>John owner</td>
-                                                <td>Doe leader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project name</td>
-                                                <td>John owner</td>
-                                                <td>Doe leader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project name</td>
-                                                <td>John owner</td>
-                                                <td>Doe leader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project name</td>
-                                                <td>John owner</td>
-                                                <td>Doe leader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project name</td>
-                                                <td>John owner</td>
-                                                <td>Doe leader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project name</td>
-                                                <td>John owner</td>
-                                                <td>Doe leader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>PROJ1</td>
-                                                <td>Project name</td>
-                                                <td>John owner</td>
-                                                <td>Doe leader</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-1024'>03-07-2013</td>
-                                                <td class='hidden-350'><span class="label label-satgreen">Active</span></td>
-                                                <td class='hidden-480'>
-                                                    <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                                                    <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="box box-color box-bordered green">
+                                <div class="box-title">
+                                    <h3>
+                                        <i class="glyphicon-user"></i>
+                                        Bordered &amp; Colored
+                                    </h3>
+                                    <div class="actions">
+                                    </div>
+                                </div>
+                                <div class="box-content">
+                                    Lorem ipsum ut in consectetur non sunt laboris minim tempor. Lorem ipsum Duis occaecat labore eu reprehenderit tempor nisi ea. Lorem ipsum adipisicing fugiat dolor voluptate aliquip id ut commodo magna dolor eu aute dolor in velit minim. Lorem ipsum mollit nostrud aliqua ut culpa dolor. Lorem ipsum commodo consectetur aute ullamco Duis nisi quis cupidatat. Lorem ipsum incididunt amet dolor voluptate est irure. Lorem ipsum magna amet anim aliquip aute sit voluptate minim enim magna. 
                                 </div>
                             </div>
                         </div>
