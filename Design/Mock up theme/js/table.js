@@ -8,17 +8,12 @@ $(document).ready(function() {
 				"sInfo": "Showing <span>_START_</span> to <span>_END_</span> of <span>_TOTAL_</span> entries",
 				"sLengthMenu": "_MENU_ <span>entries per page</span>"
 			},
-			// 'sDom': "lfrtip",
 			'aoColumnDefs' : [
 				{
 					'bSortable': false,
 					'aTargets': [7]
 				}
 			],
-			"oTableTools": {
-				"sRowSelect": "single",
-				"sSelectedClass": 'row_selected',
-			},
 			"oLanguage": {
 				"sLengthMenu": "_MENU_",
 				"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries <span class='selected_rows'></span>",
@@ -37,7 +32,9 @@ $(document).ready(function() {
 				"buttonText": "Change columns <i class='icon-angle-down'></i>"
 			},
 			'oTableTools' : {
-				"sSwfPath": "js/plugins/datatable/swf/copy_csv_xls_pdf.swf"
+				//"sRowSelect": "single",
+				"aButtons": [],
+				//"sSelectedClass": 'row_selected',
 			}
 		};
 		var oTable = $('#project-datatable').dataTable(opt);
