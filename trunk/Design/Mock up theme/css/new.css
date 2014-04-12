@@ -251,3 +251,7 @@
 .span2-5{
 	width: 18.162375% !important;
 }
+/*User story management*/
+#btn-add-story{
+	margin-left: 20px;
+}
