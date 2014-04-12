@@ -1,8 +1,8 @@
 $(document).ready(function() {
     //User skill tag in add user modal
-    $("#user_skill_chosen").removeAttr('style').addClass('span8');
-    $("#user_skill_chosen").css('margin-left', '0px');
-    $("#user_skill_chosen .search-field input").removeAttr('style').addClass('span10');
+    $(".chosen-container").removeAttr('style').addClass('span8');
+    $(".chosen-container").css('margin-left', '0px');
+    $(".chosen-container .search-field input").removeAttr('style').addClass('span10');
     //Reply to a comment
     $(".comment-list").on("click", ".btn-reply-comment", function() {
         if ($(".comment-list .reply-comment-form").length > 0) {
@@ -26,6 +26,10 @@ $(document).ready(function() {
         var parent_id = $(this).parent().parent().attr("id");
         $(".comment-list #" + parent_id).remove();
     });
+
+    //Init project datatable
+    initProjectDatatable();
+    initUserStoryDatatable();
 });
 
 function showStatus(id, status_type, content) {

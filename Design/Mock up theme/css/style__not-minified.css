@@ -7818,7 +7818,7 @@ span.ColVis_radio {
 }
 .dataTables_wrapper .dataTables_length {
   float: left;
-  min-width: 200px;
+  /*min-width: 200px;*/
   margin: 10px 10px 5px 10px;
 }
 .dataTables_wrapper .dataTables_length .input-mini {
