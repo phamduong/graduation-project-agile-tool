@@ -7,7 +7,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <!-- Apple devices fullscreen -->
         <!--<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />-->
-        <title>SCRUM REAL - Staff management</title>
+        <title>SCRUM REAL - Sprint management</title>
         <!-- Bootstrap -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <!--Bootstrap modal-->
@@ -138,78 +138,142 @@
         <script src="js/application.js"></script>
         <!-- For chatting -->
         <script src="js/chat.js"></script>
+        <!-- Project management page -->
+        <script src="js/theme.js"></script>
         <!-- Just for demonstration -->
         <script src="js/demonstration.js"></script>
         <!-- People  -->
-        <script src="js/people.js"></script>
-        <!-- Main js -->
-        <script src="js/theme.js"></script>
+        <script src="js/sprint.js"></script>
         <!-- Favicon -->
         <link rel="shortcut icon" href="img/favicon.ico" />
         <!-- Apple devices Homescreen icon -->
         <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-precomposed.png" />
     </head>
     <body data-layout-topbar="fixed">
-        <!-- Start modal add team -->
-        <div id="modal-add-team" class="modal modal-custom hide fade box box-color teal modal-with-tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="modal-add-story" class="modal modal-custom hide fade box box-color lime modal-with-tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-                <form action="#" method="POST" class='form-horizontal form-validate' id="form-add-team">
+                <form action="#" method="POST" class='form-horizontal form-validate' id="form-add-user">
                     <div class="box-title">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="myModalLabel"><i class="user_add"></i>Add new team</h3>
+                        <h3 id="myModalLabel"><i class="user_add"></i>Add story</h3>
                     </div>
                     <div class="box-content row-fluid">
                         <div class="modal-body">
                             <div class="control-group">
-                                <label for="team-name" class="control-label">Team name <small>Require</small></label>
+                                <label for="story-name" class="control-label">Story name <small>Require</small></label>
                                 <div class="controls">
-                                    <input type="text" placeholder="Input team name here" name="team-name" id="team-name" class="span8">
+                                    <input type="text" placeholder="Input story name here" name="story-name" id="story-name" class="span8">
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label for="team-timezone" class="control-label">Select Time zone</label>
+                                <label for="story-priority" class="control-label">Priority</label>
                                 <div class="controls">
-                                    <div class="add-min-height"><select name="team-timezone" id="team-timezone" class="select2-me span8" data-placeholder="Please select">
-                                        <option value=""></option>
-                                        <option value="-12.0">(GMT -12:00) Eniwetok, Kwajalein</option>
-                                        <option value="-11.0">(GMT -11:00) Midway Island, Samoa</option>
-                                        <option value="-10.0">(GMT -10:00) Hawaii</option>
-                                        <option value="-9.0">(GMT -9:00) Alaska</option>
-                                        <option value="-8.0">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
-                                        <option value="-7.0">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
-                                        <option value="-6.0">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
-                                        <option value="-5.0">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
-                                        <option value="-4.0">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
-                                        <option value="-3.5">(GMT -3:30) Newfoundland</option>
-                                        <option value="-3.0">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
-                                        <option value="-2.0">(GMT -2:00) Mid-Atlantic</option>
-                                        <option value="-1.0">(GMT -1:00 hour) Azores, Cape Verde Islands</option>
-                                        <option value="0.0">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
-                                        <option value="1.0">(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris</option>
-                                        <option value="2.0">(GMT +2:00) Kaliningrad, South Africa</option>
-                                        <option value="3.0">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
-                                        <option value="3.5">(GMT +3:30) Tehran</option>
-                                        <option value="4.0">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
-                                        <option value="4.5">(GMT +4:30) Kabul</option>
-                                        <option value="5.0">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
-                                        <option value="5.5">(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
-                                        <option value="5.75">(GMT +5:45) Kathmandu</option>
-                                        <option value="6.0">(GMT +6:00) Almaty, Dhaka, Colombo</option>
-                                        <option value="7.0">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
-                                        <option value="8.0">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
-                                        <option value="9.0">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
-                                        <option value="9.5">(GMT +9:30) Adelaide, Darwin</option>
-                                        <option value="10.0">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
-                                        <option value="11.0">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
-                                        <option value="12.0">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+                                    <select name="story-priority" id="story-priority" data-rule-required="true" class="span8">
+                                        <option value="0"></option>
+                                        <option value="1">Urgent</option>
+                                        <option value="2">High</option>
+                                        <option value="3">Medium</option>
+                                        <option value="4">Low</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="story-status" class="control-label">Priority</label>
+                                <div class="controls">
+                                    <select name="story-status" id="story-status" data-rule-required="true" class="span8">
+                                        <option value="0"></option>
+                                        <option value="1">New</option>
+                                        <option value="2">Estimated</option>
+                                        <option value="3">Assigned to sprint</option>
+                                        <option value="4">To do</option>
+                                        <option value="5">In progress</option>
+                                        <option value="6">To test</option>
+                                        <option value="7">Done</option>
+                                        <option value="8">Sprint completed</option>
+                                        <option value="9">Release</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="story-estimate-time" class="control-label">Estimate time <small>Require</small></label>
+                                <div class="controls">
+                                    <input type="text" placeholder="Input story name here" name="story-estimate-time" id="story-estimate-time" class="span8">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="story-sprint" class="control-label">Sprint</label>
+                                <div class="controls">
+                                    <div class="add-min-height"><select name="story-sprint" id="story-sprint" class="select2-me span8" data-placeholder="Please select">
+                                        <option value="0"></option>
+                                        <option value="1">Sprint 1</option>
+                                        <option value="2">Sprint 2</option>
+                                        <option value="3">Sprint 3</option>
+                                        <option value="4">Sprint 4</option>
                                     </select></div>
-                                    <span class="help-block"><a href="#modal-add-user" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="" data-toggle="modal"><i class="icon-plus"></i> Or add product owner here</a></span>
+                                    <span class="help-block">Sprint</span>
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label for="team-description" class="control-label">Description</label>
+                                <label for="story-team" class="control-label">Team</label>
                                 <div class="controls">
-                                    <textarea name="team-description" id="team-description" class="input-block-level span11" placeholder="Input team's description here"></textarea>
+                                    <div class="add-min-height"><select name="story-team" id="story-team" class="select2-me span8" data-placeholder="Please select">
+                                        <option value="0"></option>
+                                        <option value="1">Team 1</option>
+                                        <option value="2">Team 2</option>
+                                        <option value="3">Team 3</option>
+                                        <option value="4">Team 4</option>
+                                    </select></div>
+                                    <span class="help-block">Team</span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="story-release" class="control-label">Release</label>
+                                <div class="controls">
+                                    <div class="add-min-height"><select name="story-release" id="story-release" class="select2-me span8" data-placeholder="Please select">
+                                        <option value="0"></option>
+                                        <option value="1">Realease 1</option>
+                                        <option value="2">Realease 2</option>
+                                        <option value="3">Realease 3</option>
+                                        <option value="4">Realease 4</option>
+                                    </select></div>
+                                    <span class="help-block">Release version</span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="story-requester" class="control-label">Requester name <small>Require</small></label>
+                                <div class="controls">
+                                    <input type="text" placeholder="Input story name here" name="story-requester" id="story-requester" class="span8">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="story-technical-component" class="control-label">Technical components</label>
+                                <div class="controls">
+                                    <div class="add-min-height"><select data-placeholder="Technical components..." name="story-technical-component" id="story-technical-component" multiple class="chosen-select">
+                                        <option value="1">UI</option>
+                                        <option value="2">Database</option>
+                                        <option value="3">CSS</option>
+                                        <option value="4">HTML</option>
+                                        <option value="5">Reapi</option>
+                                    </select></div>
+                                    <span class="help-block"><a href="#modal-add-tag" data-backdrop="static" data-keyboard="true" id="btn-add-tag" role="button" class="" data-toggle="modal"><i class="icon-plus"></i> Or add tag here</a></span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="story-rough-estimate" class="control-label">Rough estimate <small>Require</small></label>
+                                <div class="controls">
+                                    <input type="text" placeholder="Story points" name="story-rough-estimate" id="story-rough-estimate" class="span8">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="story-demo-way" class="control-label">How to demo</label>
+                                <div class="controls">
+                                    <textarea name="story-demo-way" id="story-demo-way" class="input-block-level span11" placeholder="Describe how to demo story"></textarea>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="story-description" class="control-label">Description</label>
+                                <div class="controls">
+                                    <textarea name="story-description" id="story-description" class="input-block-level span11" placeholder="Describe story"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -221,123 +285,37 @@
                 </form>
             </div>
         </div>
-        <!-- End modal add team -->
-        <div id="modal-add-user" class="modal modal-custom hide fade box box-color lime modal-with-tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="modal-add-sprint" class="modal modal-custom hide fade box box-color teal modal-with-tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-                <form action="#" method="POST" class='form-horizontal form-validate' id="form-add-user">
+                <form action="#" method="POST" class='form-horizontal form-validate' id="form-add-sprint">
                     <div class="box-title">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="myModalLabel"><i class="user_add"></i>Add new user</h3>
+                        <h3 id="myModalLabel"><i class="user_add"></i>Add new sprint</h3>
                     </div>
                     <div class="box-content row-fluid">
                         <div class="modal-body">
                             <div class="control-group">
-                                <label for="user-name" class="control-label">User name <small>Require</small></label>
+                                <label for="sprint-name" class="control-label">Sprint name <small>Require</small></label>
                                 <div class="controls">
-                                    <input type="text" placeholder="Input user name here" name="user-name" id="user-name" class="span8">
+                                    <input type="text" placeholder="Input sprint name here" name="sprint-name" id="sprint-name" class="span8">
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label for="user-skill" class="control-label">Skill</label>
+                                <label for="sprint-time" class="control-label">Time</label>
                                 <div class="controls">
-                                    <div class="add-min-height"><select data-placeholder="Choose a skill..." name="user-skill" id="user-skill" multiple class="chosen-select">
-                                        <option value="1">abc</option>
-                                        <option value="2">sdfs</option>
-                                        <option value="3">asd3</option>
-                                        <option value="4">44df4</option>
-                                        <option value="5">ttdf5</option>
-                                        <option value="6">rt6</option>
-                                        <option value="7">yuy7</option>
-                                        <option value="1">abc</option>
-                                        <option value="2">sdfs</option>
-                                        <option value="3">asd3</option>
-                                        <option value="4">44df4</option>
-                                        <option value="5">ttdf5</option>
-                                    </select></div>
-                                    <span class="help-block"><a href="#modal-add-tag" data-backdrop="static" data-keyboard="true" id="btn-add-tag" role="button" class="" data-toggle="modal"><i class="icon-plus"></i> Or add tag here</a></span>
+                                    <input type="text" name="sprint-time" id="sprint-time" class="span8 daterangepick">
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label for="user-birthday" class="control-label">Birthday</label>
+                                <label for="team-description" class="control-label">Description</label>
                                 <div class="controls">
-                                    <input type="text" placeholder="Pick user's birthday" name="user-birthday" id="user-birthday" class="span8 datepick" data-msg-required="Please pick user's birthday" data-rule-required="true">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label for="user-timezone" class="control-label">Select Time zone</label>
-                                <div class="controls">
-                                    <div class="add-min-height"><select name="user-timezone" id="user-timezone" class="select2-me span8" data-placeholder="Please select">
-                                        <option value=""></option>
-                                        <option value="-12.0">(GMT -12:00) Eniwetok, Kwajalein</option>
-                                        <option value="-11.0">(GMT -11:00) Midway Island, Samoa</option>
-                                        <option value="-10.0">(GMT -10:00) Hawaii</option>
-                                        <option value="-9.0">(GMT -9:00) Alaska</option>
-                                        <option value="-8.0">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
-                                        <option value="-7.0">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
-                                        <option value="-6.0">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
-                                        <option value="-5.0">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
-                                        <option value="-4.0">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
-                                        <option value="-3.5">(GMT -3:30) Newfoundland</option>
-                                        <option value="-3.0">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
-                                        <option value="-2.0">(GMT -2:00) Mid-Atlantic</option>
-                                        <option value="-1.0">(GMT -1:00 hour) Azores, Cape Verde Islands</option>
-                                        <option value="0.0">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
-                                        <option value="1.0">(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris</option>
-                                        <option value="2.0">(GMT +2:00) Kaliningrad, South Africa</option>
-                                        <option value="3.0">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
-                                        <option value="3.5">(GMT +3:30) Tehran</option>
-                                        <option value="4.0">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
-                                        <option value="4.5">(GMT +4:30) Kabul</option>
-                                        <option value="5.0">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
-                                        <option value="5.5">(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
-                                        <option value="5.75">(GMT +5:45) Kathmandu</option>
-                                        <option value="6.0">(GMT +6:00) Almaty, Dhaka, Colombo</option>
-                                        <option value="7.0">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
-                                        <option value="8.0">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
-                                        <option value="9.0">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
-                                        <option value="9.5">(GMT +9:30) Adelaide, Darwin</option>
-                                        <option value="10.0">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
-                                        <option value="11.0">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
-                                        <option value="12.0">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
-                                    </select></div>
-                                    <span class="help-block">Time zone</span>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label for="user-email" class="control-label">Email</label>
-                                <div class="controls">
-                                    <input type="text" name="user-email" id="user-email" class="span8" data-rule-email="true" data-rule-required="true">
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label for="user-role" class="control-label">Role</label>
-                                <div class="controls">
-                                    <select name="user-role" id="user-role" data-rule-required="true" class="span8">
-                                        <option value="">-- Please select user role --</option>
-                                        <option value="1">Project leader</option>
-                                        <option value="2">Product Owner</option>
-                                        <option value="3">Scrum Master</option>
-                                        <option value="4">Team member</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label for="textfield" class="control-label">Select user's avatar</label>
-                                <div class="controls">
-                                    <div class="fileupload fileupload-new" data-provides="fileupload">
-                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="img/no-image.gif" /></div>
-                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                        <div>
-                                            <span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" name='imagefile' /></span>
-                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-                                        </div>
-                                    </div>
+                                    <textarea name="team-description" id="team-description" class="input-block-level span11" placeholder="Input sprint's description here"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="Add user">
+                        <input type="submit" class="btn btn-primary" value="Add release">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                     </div>
                 </form>
@@ -397,15 +375,20 @@
                     </li>
                     <li>
                         <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
+                        <span>Release</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
                         <span>Backlog</span>
                         </a>
                     </li>
-                    <li class='active'>
+                    <li>
                         <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
                         <span>People</span>
                         </a>
                     </li>
-                    <li>
+                    <li class='active'>
                         <a href="#" data-toggle="dropdown" class='dropdown-toggle'>
                         <span>Sprint</span>
                         </a>
@@ -692,62 +675,63 @@
             <div id="main">
                 <div class="container-fluid">
                     <div class="row-fluid">
-                        <div class="span8">
-                            <div class="box box-color box-bordered blue team-list">
+                        <div class="span9">
+                            <div class="box box-color box-bordered teal sprint-list">
                                 <div class="box-title">
                                     <h3>
-                                    <i class="icon-group"></i>
-                                    List teams
+                                    <i class="glyphicon-folder_open"></i>
+                                    Sprint
                                     </h3>
                                     <div class="actions">
-                                        <a href="#modal-add-team" data-backdrop="static" data-keyboard="false" id="btn-add-team" role="button" class="btn btn-primary mr10" data-toggle="modal"><i class="icon-plus"></i> Add team</a>
+                                        <a href="#modal-add-sprint" data-backdrop="static" data-keyboard="false" id="btn-add-sprint" role="button" class="btn btn-primary mr10" data-toggle="modal"><i class="icon-plus"></i> Add sprint</a>
                                     </div>
                                 </div>
                                 <div class="box-content scrollable" data-height="520">
-                                    <div class="span12 team" id="team1">
+                                    <div class="span12 sprint" id="sprint1">
                                         <div class="box box-color teal box-small box-bordered">
                                             <div class="box-title">
                                                 <h3>
-                                                <i class="glyphicon-group"></i>
-                                                Team 1
+                                                <i class="glyphicon-folder_flag"></i>
+                                                Sprint 1
                                                 </h3>
                                                 <div class="actions">
+                                                    <div class="sprint-status badge badge-warning">In Progress</div>
                                                 </div>
                                             </div>
                                             <div class="box-content">
-                                                <div class="team-members">
+                                                <div class="sprint-teams">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="span12 team" id="team2">
+                                    <div class="span12 sprint" id="sprint2">
                                         <div class="box box-color teal box-small box-bordered">
                                             <div class="box-title">
                                                 <h3>
-                                                <i class="glyphicon-group"></i>
-                                                Team 2
+                                                <i class="glyphicon-folder_flag"></i>
+                                                Sprint 2
                                                 </h3>
                                                 <div class="actions">
                                                 </div>
                                             </div>
                                             <div class="box-content">
-                                                <div class="team-members">
+                                                <div class="sprint-teams">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="span12 team" id="team3">
+                                    <div class="span12 sprint" id="sprint3">
                                         <div class="box box-color teal box-small box-bordered">
                                             <div class="box-title">
                                                 <h3>
-                                                <i class="glyphicon-group"></i>
-                                                Team 3
+                                                <i class="glyphicon-folder_flag"></i>
+                                                Sprint 3
                                                 </h3>
                                                 <div class="actions">
                                                 </div>
                                             </div>
                                             <div class="box-content">
-                                                <div class="team-members">
+                                                <div class="sprint-teams">
                                                 </div>
                                             </div>
                                         </div>
@@ -755,45 +739,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="span4">
-                            <div class="box box-color box-bordered blue people-list">
+                        <div class="span3">
+                            <div class="box box-color box-bordered teal story-list">
                                 <div class="box-title">
                                     <h3>
-                                    <i class="glyphicon-user"></i>
-                                    List staffs
+                                    <i class="glyphicon-notes"></i>
+                                    Stories
                                     </h3>
                                     <div class="actions">
-                                        <a href="#modal-add-user" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="btn btn-primary mr10" data-toggle="modal"><i class="glyphicon-user_add"></i> Add memebers</a>
+                                        <a href="#modal-add-story" data-backdrop="static" data-keyboard="false" id="btn-add-story" role="button" class="btn btn-primary mr10" data-toggle="modal"><i class="icon-plus"></i> Add story</a>
                                     </div>
                                 </div>
                                 <div class="box-content scrollable" data-height="520">
-                                    <div class="person" data-value="a">
-                                        <img alt="" src="img/demo/user-1.jpg">
-                                        <p class="person-name">a</p>
-                                    </div>
-                                    <div class="person" data-value="b">
-                                        <img alt="" src="img/demo/user-1.jpg">
-                                        <p class="person-name">b</p>
-                                    </div>
-                                    <div class="person" data-value="c">
-                                        <img alt="" src="img/demo/user-1.jpg">
-                                        <p class="person-name">c</p>
-                                    </div>
-                                    <div class="person" data-value="d">
-                                        <img alt="" src="img/demo/user-1.jpg">
-                                        <p class="person-name">d</p>
-                                    </div>
-                                    <div class="person" data-value="e">
-                                        <img alt="" src="img/demo/user-1.jpg">
-                                        <p class="person-name">e</p>
-                                    </div>
-                                    <div class="person" data-value="f">
-                                        <img alt="" src="img/demo/user-1.jpg">
-                                        <p class="person-name">f</p>
-                                    </div>
-                                    <div class="person" data-value="g">
-                                        <img alt="" src="img/demo/user-1.jpg">
-                                        <p class="person-name">h</p>
+                                    <div class="story">
+                                        <div class="story-name">Story login</div>
+                                        <div class="story-points badge badge-info">100 points</div>
+                                        <div class="story-status badge badge-warning">In Progress</div>
                                     </div>
                                 </div>
                             </div>

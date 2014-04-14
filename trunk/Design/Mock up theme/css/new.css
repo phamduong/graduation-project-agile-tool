@@ -214,6 +214,9 @@
 	background: none repeat scroll 0 0 #EEEEEE;
 	color: #444444;
 }
+.team-list .alert{
+	margin-bottom: 10px;
+}
 .people-list .slimScrollDiv{
 	overflow: visible !important;
 }
@@ -245,13 +248,148 @@
     margin-top: 3px;
     display: inline-block;
 }
-.team-list .alert{
-	margin-bottom: 10px;
-}
 .span2-5{
 	width: 18.162375% !important;
 }
 /*User story management*/
 #btn-add-story{
 	margin-left: 20px;
+}
+/*Release management*/
+.release-list{
+	min-height: 50px !important;
+}
+.release-list .box-content {
+	padding: 0 !important;
+}
+.release-list .release-stories{
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	clear: both;
+	padding-bottom: 15px;
+	overflow: auto;
+	min-height: 110px;
+}
+.release-list .release{
+	margin-left: 0px;
+	padding-left: 5px;
+    padding-right: 10px;
+}
+.release-list .release:last-child{
+	margin-bottom: 20px;
+}
+.release-list .slimScrollDiv{
+	overflow: visible !important;
+}
+.release-list .box-title{
+	background: none repeat scroll 0 0 #EEEEEE;
+	color: #444444;
+}
+.release-list .alert{
+	margin-bottom: 10px;
+}
+.story .badge{
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+	/*display: block;*/
+	margin-top: 3px;
+	margin-right: 5px;
+	float: right;
+}
+.story{
+	background-color: #A4CCF1;
+	border: 1px solid #A4CCF1;
+	border-radius: 5px;
+	line-height: 30px;
+	min-width: 399px;
+	z-index: 4000;
+}
+.story div{
+	display: inline-block;
+}
+.story .story-name{
+	font-weight: bold;
+	color: #ffffff;
+	margin-left: 5px;
+}
+.release-list .slimScrollDiv{
+	overflow: visible !important;
+}
+.story-list .slimScrollDiv{
+	overflow: visible !important;
+}
+.story-list .slimScrollDiv .box-content{
+	overflow: visible !important;
+}
+/*Sprint management page*/
+.sprint-list{
+	min-height: 50px !important;
+}
+.sprint-list .box-content {
+	padding: 0 !important;
+}
+.sprint-list .sprint-teams{
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	clear: both;
+	padding-bottom: 15px;
+	overflow: auto;
+	min-height: 110px;
+}
+.sprint-list .sprint{
+	margin-left: 0px;
+	padding-left: 5px;
+    padding-right: 10px;
+}
+.sprint-list .sprint:last-child{
+	margin-bottom: 20px;
+}
+.sprint-list .slimScrollDiv{
+	overflow: visible !important;
+}
+.sprint-list .box-title{
+	background: none repeat scroll 0 0 #EEEEEE;
+	color: #444444;
+}
+.sprint-list .alert{
+	margin-bottom: 10px;
+}
+.story .badge{
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+	/*display: block;*/
+	margin-top: 3px;
+	margin-right: 5px;
+	float: right;
+}
+.story{
+	background-color: #A4CCF1;
+	border: 1px solid #A4CCF1;
+	border-radius: 5px;
+	line-height: 30px;
+	min-width: 200px;
+	z-index: 4000;
+}
+.story div{
+	display: inline-block;
+}
+.story .story-name{
+	font-weight: bold;
+	color: #ffffff;
+	margin-left: 5px;
+}
+.sprint-list .slimScrollDiv{
+	overflow: visible !important;
+}
+.story-list .slimScrollDiv{
+	overflow: visible !important;
+}
+.story-list .slimScrollDiv .box-content{
+	overflow: visible !important;
+}
+.sprint-status{
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
