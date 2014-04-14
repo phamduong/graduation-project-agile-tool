@@ -26,10 +26,6 @@ $(document).ready(function() {
         var parent_id = $(this).parent().parent().attr("id");
         $(".comment-list #" + parent_id).remove();
     });
-
-    //Init project datatable
-    initProjectDatatable();
-    initUserStoryDatatable();
 });
 
 function showStatus(id, status_type, content) {
