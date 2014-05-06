@@ -1,0 +1,30 @@
+<?php $__env->startSection('content'); ?>
+<div class="wrapper">
+  <h1><a href="#"><img src="img/logo-big.png" alt="" class='retina-ready' width="59" height="49">SCRUM REAL</a></h1>
+  <div class="login-body">
+    <h2>SIGN IN</h2>
+    <form class='form-validate' id="frm_login">
+      <div class='alert_block'></div>
+      <div class="control-group">
+        <div class="email controls">
+          <input type="text" name='uname' placeholder="User name" class='input-block-level' data-rule-required="true">
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="pw controls">
+          <input type="password" name="upw" placeholder="Password" class='input-block-level' data-rule-required="true">
+        </div>
+      </div>
+      <div class="submit">
+        <div class="remember">
+        </div>
+        <input type="submit" value="Sign me in" class='btn btn-primary'>
+      </div>
+    </form>
+    <div class="forget">
+      <a href="#"><span></span></a>
+    </div>
+  </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.login_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

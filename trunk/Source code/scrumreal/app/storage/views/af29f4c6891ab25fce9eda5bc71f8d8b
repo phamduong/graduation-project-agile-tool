@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Apple devices fullscreen -->
+    <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>SCRUM REAL - Login</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="<?php echo asset("css/bootstrap.min.css"); ?>">
+    <!-- Bootstrap responsive -->
+    <link rel="stylesheet" href="<?php echo asset("css/bootstrap-responsive.min.css"); ?>">
+    <!-- icheck -->
+    <link rel="stylesheet" href="<?php echo asset("css/plugins/icheck/all.css"); ?>">
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="<?php echo asset("css/style__not-minified.css"); ?>">
+    <!-- Color CSS -->
+    <link rel="stylesheet" href="<?php echo asset("css/themes.css"); ?>">
+    <link rel="stylesheet" href="<?php echo asset("css/new.css"); ?>">
+    <link rel="stylesheet" href="<?php echo asset("css/font.css"); ?>">
+
+    <!-- jQuery -->
+    <script src="<?php echo asset("js/jquery.min.js"); ?>"></script>
+
+    <!-- Nice Scroll -->
+    <script src="<?php echo asset("js/plugins/nicescroll/jquery.nicescroll.min.js"); ?>"></script>
+    <!-- Validation -->
+    <script src="<?php echo asset("js/plugins/validation/jquery.validate.min.js"); ?>"></script>
+    <script src="<?php echo asset("js/plugins/validation/additional-methods.min.js"); ?>"></script>
+    <!-- icheck -->
+    <script src="<?php echo asset("js/plugins/icheck/jquery.icheck.min.js"); ?>"></script>
+    <!-- Bootstrap -->
+    <script src="<?php echo asset("js/bootstrap.min.js"); ?>"></script>
+    <script src="<?php echo asset("js/eakroko.js"); ?>"></script>
+    <script src="<?php echo asset("js/theme.js"); ?>"></script>
+    <script src="<?php echo asset("js/login.js"); ?>"></script>
+    <?php echo $__env->yieldContent('keylang'); ?>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <!-- Apple devices Homescreen icon -->
+    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-precomposed.png" />
+
+  </head>
+
+  <body class='login'>
+    <noscript>Sorry, your browser does not support JavaScript!</noscript>
+    <?php echo $__env->yieldContent('content'); ?>
+  </body>
+
+</html>
