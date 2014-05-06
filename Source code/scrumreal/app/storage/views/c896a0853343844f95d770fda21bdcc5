@@ -1,0 +1,34 @@
+<?php $__env->startSection('keylang'); ?>
+<script>
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<div class="wrapper">
+  <h1><a href="#"><img src="img/logo-big.png" alt="" class='retina-ready' width="59" height="49">SCRUM REAL</a></h1>
+  <div class="login-body">
+    <h2><?php echo e(Lang::get('layout.sign_in_title')); ?></h2>
+    <form class='form-validate' id="frm_login">
+      <div class='alert_block'></div>
+      <div class="control-group">
+        <div class="email controls">
+          <input type="text" name='uname' placeholder="<?php echo e(Lang::get('layout.user_name_holder')); ?>" class='input-block-level' data-rule-required="true" data-msg-required="<?php echo e(Lang::get('message.require_mes')); ?>">
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="pw controls">
+          <input type="password" name="upw" placeholder="<?php echo e(Lang::get('layout.user_pw_holder')); ?>" class='input-block-level' data-rule-required="true" data-msg-required="<?php echo e(Lang::get('message.require_mes')); ?>">
+        </div>
+      </div>
+      <div class="submit">
+        <div class="remember">
+        </div>
+        <input type="submit" value="<?php echo e(Lang::get('layout.sign_in_submit')); ?>" class='btn btn-primary'>
+      </div>
+    </form>
+    <div class="forget">
+      <a href="#"><span></span></a>
+    </div>
+  </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.login_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

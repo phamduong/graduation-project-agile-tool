@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url(font/open_san_300.woff) format('woff');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(font/open_san_400.woff) format('woff');
+}
+@font-face {
+  font-family: 'UVN Tin Tuc Hep';
+  src: url('font/uvn_tin_tuc_hep_regular-webfont.eot');
+  src: url('font/uvn_tin_tuc_hep_regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('font/uvn_tin_tuc_hep_regular-webfont.woff') format('woff'),
+    url('font/uvn_tin_tuc_hep_regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
