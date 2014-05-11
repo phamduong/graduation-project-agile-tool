@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="{{ asset("css/plugins/icheck/all.css" ) }}">
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{ asset("css/style__not-minified.css" ) }}">
+    <!-- Update bootstrap -->
+    <link rel="stylesheet" href="{{ asset("css/bootstrap_update.css") }}">
     <!-- Color CSS -->
     <link rel="stylesheet" href="{{ asset("css/themes.css" ) }}">
     <!-- Plupload -->
@@ -83,13 +85,17 @@
     <!-- Validation -->
     <script src="{{ asset("js/plugins/validation/jquery.validate.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/validation/additional-methods.min.js" ) }}"></script>
+    <!-- icheck -->
+    <script src="{{ asset("js/plugins/icheck/jquery.icheck.min.js") }}"></script>
     <!-- Sparkline -->
     <script src="{{ asset("js/plugins/sparklines/jquery.sparklines.min.js" ) }}"></script>
+    <!-- Custom file upload -->
+    <script src="{{ asset("js/plugins/fileupload/bootstrap-fileupload.min.js" ) }}"></script>
     <!-- PLUpload -->
     <!--<script src="{{ asset("js/plugins/plupload/plupload.full.js" ) }}"></script>
     <script src="{{ asset("js/plugins/plupload/jquery.plupload.queue.js" ) }}"></script>-->
     <!-- Theme framework -->
-    <script src="{{ asset("js/eakroko.min.js" ) }}"></script>
+    <script src="{{ asset("js/eakroko.js" ) }}"></script>
     <!-- Theme scripts -->
     <script src="{{ asset("js/application.js" ) }}"></script>
     <!-- For chatting -->
@@ -98,6 +104,8 @@
     <script src="{{ asset("js/demonstration.js" ) }}"></script>
     <!-- Dashboard javascript -->
     <script src="{{ asset("js/dash_board.js" ) }}"></script>
+    <!--Scrumreal common-->
+    <script src="{{ asset("js/theme.js" ) }}"></script>
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon.ico" />
     <!-- Apple devices Homescreen icon -->

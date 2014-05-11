@@ -1,5 +1,6 @@
 $(document).ready(function() {
     initCalendar();
+    initContextMenu();
 })
 
 function initCalendar() {
@@ -72,7 +73,6 @@ function initCalendar() {
                 // calendar.fullCalendar('unselect');
             },
             dayClick: function(date, allDay, jsEvent, view) {
-
                 // if (allDay) {
                 //     alert('Clicked on the entire day: ' + date);
                 // } else {
@@ -84,13 +84,13 @@ function initCalendar() {
                 // $(this).css('background-color', 'red');
             },
             eventRender: function(event, element) {
-		        // console.log(element);
-		    },
-			dayRender: function(date, cell){
-				if(date.getDay() == 0 || date.getDay() == 6){
-					cell.css("background-color", "#FFFF75");
-				}
-			}
+                // console.log(element);
+            },
+            dayRender: function(date, cell) {
+                if (date.getDay() == 0 || date.getDay() == 6) {
+                    cell.css("background-color", "#FFFF75");
+                }
+            }
         });
         $(".fc-button-effect").remove();
         $(".fc-button-next .fc-button-content").html("<i class='icon-chevron-right'></i>");
@@ -100,6 +100,36 @@ function initCalendar() {
     }
 }
 
-function viewDateDetail(date){
-	// $('.calendar').fullCalendar('gotoDate', 2015, 0, 1);
+function viewDateDetail(date) {
+    // $('.calendar').fullCalendar('gotoDate', 2015, 0, 1);
+}
+
+function initContextMenu() {
+    $('#user-calendar').contextMenu({
+        selector: '.fc-day',
+        callback: function(key, options) {
+            // var m = "clicked: " + key + " on " + $(this).text();
+            // window.console && console.log(m) || alert(m);
+            console.log(key);
+            console.log($(this).context.attributes["data-date"].nodeValue);
+        },
+        items: {
+            "goto_date": {
+                name: "Go to date",
+                // icon: "edit"
+            },
+            "add_event": {
+                name: "Add event",
+                // icon: "cut"
+            },
+            "request_day_off": {
+                name: "Request day off",
+                // icon: "copy"
+            },
+            "cancel": {
+                name: "Cancel",
+                // icon: "cancel"
+            }
+        }
+    });
 }
