@@ -1,38 +1,4 @@
-
 <div class="subnav">
-  <div class="row-fluid">
-    <div class="span12">
-      <div class="box">
-        <div class="box-content nopadding scrollable" data-height="250" data-visible="true">
-          <table class="table table-nohead" id="randomFeed">
-            <tbody>
-              <tr>
-                <td><span class="label"><i class="icon-plus"></i></span> <a href="#">John Doe</a> added a new photo</td>
-              </tr>
-              <tr>
-                <td><span class="label label-success"><i class="icon-user"></i></span> New user registered</td>
-              </tr>
-              <tr>
-                <td><span class="label label-info"><i class="icon-shopping-cart"></i></span> New order received</td>
-              </tr>
-              <tr>
-                <td><span class="label label-warning"><i class="icon-comment"></i></span> <a href="#">John Doe</a> commented on <a href="#">News #123</a></td>
-              </tr>
-              <tr>
-                <td><span class="label label-success"><i class="icon-user"></i></span> New user registered</td>
-              </tr>
-              <tr>
-                <td><span class="label label-info"><i class="icon-shopping-cart"></i></span> New order received</td>
-              </tr>
-              <tr>
-                <td><span class="label label-warning"><i class="icon-comment"></i></span> <a href="#">John Doe</a> commented on <a href="#">News #123</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="box" style="border-top: 1px solid #333333">
     <div class="box-content nopadding scrollable" data-height="300" data-visible="true">
       <ul class="userlist">

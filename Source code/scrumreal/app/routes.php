@@ -16,25 +16,46 @@
 //});
 
 Route::any('/', [
-  "uses" => "UserController@login"
+    'uses' => 'UserController@login'
 ]);
 
 Route::any('/login', [
-  "uses" => "UserController@login"
+    'uses' => 'UserController@login'
 ]);
 
 Route::any('/logout', [
-  "uses" => "UserController@logout"
+    'uses' => 'UserController@logout'
 ]);
 
 Route::any('/user-profile', [
-  "uses" => "UserController@profile"
+    'uses' => 'UserController@profile'
 ]);
 
 Route::any('/user-settings', [
-  "uses" => "UserController@profile"
+    'uses' => 'UserController@profile'
+]);
+
+Route::get('/language/{lang}', [
+    'as' => 'language.select',
+    'uses' => 'LanguageController@select'
+]);
+
+Route::post('/user/save', [
+    'uses' => 'UserController@save'
+]);
+
+Route::post('/user/change-pass', [
+    'uses' => 'UserController@changePass'
+]);
+
+Route::get('/project', [
+    'uses' => 'ProjectController@index'
 ]);
 
 Route::get('/dashboard', function() {
   return View::make('dashboard');
 });
+
+Route::get('/test', [
+    'uses' => 'LanguageController@index'
+]);

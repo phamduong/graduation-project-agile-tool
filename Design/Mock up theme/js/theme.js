@@ -1,6 +1,6 @@
 $(document).ready(function() {
     //User skill tag in add user modal
-    $(".chosen-container").removeAttr('style').addClass('span8');
+    $(".chosen-container").removeAttr('style').addClass('span12');
     $(".chosen-container").css('margin-left', '0px');
     $(".chosen-container .search-field input").removeAttr('style').addClass('span10');
     //Reply to a comment

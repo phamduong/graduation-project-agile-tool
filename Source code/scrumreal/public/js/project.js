@@ -58,8 +58,6 @@ function initProjectDatatable() {
                 }, {
                     type: "text",
                 }, {
-                    type: "text",
-                }, {
                     type: "date-range",
                     sRangeFormat: "{from} {to}",
                 }, {

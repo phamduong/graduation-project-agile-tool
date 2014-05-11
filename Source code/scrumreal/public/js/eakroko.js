@@ -164,9 +164,9 @@ $(document).ready(function() {
 	}
 
 	// datepicker
-	if($('.datepick').length > 0){
-		$('.datepick').datepicker();
-	}
+//	if($('.datepick').length > 0){
+//		$('.datepick').datepicker("option", "dateFormat", "yy-mm-dd");
+//	}
 
 	// daterangepicker
 	if($('.daterangepick').length > 0){

@@ -2,6 +2,10 @@
 h1, h2, h3, h4, h5, h6{
   font-family: 'UVN Tin Tuc Hep' !important;
 }
+.uimage-small{
+  height: 27px;
+  width: 27px;
+}
 
 /*User chat list status*/
 

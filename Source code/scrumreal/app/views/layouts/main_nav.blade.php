@@ -4,47 +4,47 @@
   <ul class='main-nav'>
     <li class='active'>
       <a href="index.html">
-        <span>Dashboard</span>
+        <span>{{{Lang::get('layout.dashboard')}}}</span>
       </a>
     </li>
     <li>
       <a href="03_project.html">
-        <span>Project</span>
+        <span>{{{Lang::get('layout.project')}}}</span>
       </a>
     </li>
     <li>
       <a href="04_backlog.html">
-        <span>Backlog</span>
+        <span>{{{Lang::get('layout.backlog')}}}</span>
       </a>
     </li>
     <li>
       <a href="05_release.html">
-        <span>Release</span>
+        <span>{{{Lang::get('layout.release')}}}</span>
       </a>
     </li>
     <li>
       <a href="06_people.html">
-        <span>People</span>
+        <span>{{{Lang::get('layout.people')}}}</span>
       </a>
     </li>
     <li>
       <a href="07_sprint.html">
-        <span>Sprint</span>
+        <span>{{{Lang::get('layout.sprint')}}}</span>
       </a>
     </li>
     <li>
       <a href="08_taskboard.html">
-        <span>Taskboard</span>
+        <span>{{{Lang::get('layout.taskboard')}}}</span>
       </a>
     </li>
     <li>
       <a href="09_calendar.html">
-        <span>Event</span>
+        <span>{{{Lang::get('layout.event')}}}</span>
       </a>
     </li>
     <li>
       <a href="10_report.html">
-        <span>Report</span>
+        <span>{{{Lang::get('layout.report')}}}</span>
       </a>
     </li>
   </ul>
@@ -95,78 +95,31 @@
           </li>
         </ul>
       </li>
-      <li class="dropdown sett">
-        <a href="#" class='dropdown-toggle' data-toggle="dropdown"><i class="icon-cog"></i></a>
-        <ul class="dropdown-menu pull-right theme-settings">
-          <li>
-            <span>Layout-width</span>
-            <div class="version-toggle">
-              <a href="#" class='set-fixed'>Fixed</a>
-              <a href="#" class="active set-fluid">Fluid</a>
-            </div>
-          </li>
-          <li>
-            <span>Topbar</span>
-            <div class="topbar-toggle">
-              <a href="#" class='set-topbar-fixed'>Fixed</a>
-              <a href="#" class="active set-topbar-default">Default</a>
-            </div>
-          </li>
-          <li>
-            <span>Sidebar</span>
-            <div class="sidebar-toggle">
-              <a href="#" class='set-sidebar-fixed'>Fixed</a>
-              <a href="#" class="active set-sidebar-default">Default</a>
-            </div>
-          </li>
-        </ul>
-      </li>
-      <li class='dropdown colo'>
-        <a href="#" class='dropdown-toggle' data-toggle="dropdown"><i class="icon-tint"></i></a>
-        <ul class="dropdown-menu pull-right theme-colors">
-          <li class="subtitle">
-            Predefined colors
-          </li>
-          <li>
-            <span class='red'></span>
-            <span class='orange'></span>
-            <span class='green'></span>
-            <span class="brown"></span>
-            <span class="blue"></span>
-            <span class='lime'></span>
-            <span class="teal"></span>
-            <span class="purple"></span>
-            <span class="pink"></span>
-            <span class="magenta"></span>
-            <span class="grey"></span>
-            <span class="darkblue"></span>
-            <span class="lightred"></span>
-            <span class="lightgrey"></span>
-            <span class="satblue"></span>
-            <span class="satgreen"></span>
-          </li>
-        </ul>
-      </li>
       <li class='dropdown language-select'>
-        <a href="#" class='dropdown-toggle' data-toggle="dropdown"><img src="img/demo/flags/us.gif" alt=""><span>US</span></a>
+        <?php
+//          print_r($lang);
+        ?>
+        <a href="#" class='dropdown-toggle' data-toggle="dropdown"><img src="<?php echo 'img/demo/flags/'. $lang['current']['lang_icon']?>" alt=""><span>{{{strtoupper($lang['current']['lang_cd'])}}}</span></a>
         <ul class="dropdown-menu pull-right">
+          @foreach($lang['lang_list'] as $lg)
           <li>
-            <a href="#"><img src="img/demo/flags/vn.gif" alt=""><span>Viet Nam</span></a>
+            <a href="{{{route('language.select', $lg['lang_cd'])}}}" class="lang-select"><img src="<?php echo 'img/demo/flags/'. $lg['lang_icon']; ?>" alt=""><span>{{{$lg['lang_text']}}}</span></a>
           </li>
+          @endforeach
         </ul>
       </li>
     </ul>
     <div class="dropdown">
-      <a href="#" class='dropdown-toggle' data-toggle="dropdown">John Doe <img src="img/demo/user-avatar.jpg" alt=""></a>
+      <a href="#" class='dropdown-toggle' data-toggle="dropdown">{{{$user['name']}}} <img src="<?php echo 'data/image/user/' . $user['image']; ?>" class="uimage-small" alt=""></a>
       <ul class="dropdown-menu pull-right">
         <li>
-          <a href="/user-profile">Edit profile</a>
+          <a href="/user-profile">{{{Lang::get('layout.edit_profile')}}}</a>
         </li>
         <li>
-          <a href="/user-settings">Account settings</a>
+          <a href="/user-settings">{{{Lang::get('layout.account_settings')}}}</a>
         </li>
         <li>
-          <a href="/logout">Sign out</a>
+          <a href="/logout">{{{Lang::get('layout.sign_out')}}}</a>
         </li>
       </ul>
     </div>

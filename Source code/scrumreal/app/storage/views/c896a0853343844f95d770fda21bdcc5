@@ -11,18 +11,19 @@
       <div class='alert_block'></div>
       <div class="control-group">
         <div class="email controls">
-          <input type="text" name='uname' placeholder="<?php echo e(Lang::get('layout.user_name_holder')); ?>" class='input-block-level' data-rule-required="true" data-msg-required="<?php echo e(Lang::get('message.require_mes')); ?>">
+          <input type="text" name='uname' placeholder="<?php echo e(Lang::get('layout.user_name')); ?>" class='input-block-level' data-rule-required="true" data-msg-required="<?php echo e(Lang::get('message.require_mes')); ?>">
         </div>
       </div>
       <div class="control-group">
         <div class="pw controls">
-          <input type="password" name="upw" placeholder="<?php echo e(Lang::get('layout.user_pw_holder')); ?>" class='input-block-level' data-rule-required="true" data-msg-required="<?php echo e(Lang::get('message.require_mes')); ?>">
+          <input type="password" name="upw" placeholder="<?php echo e(Lang::get('layout.password')); ?>" class='input-block-level' data-rule-required="true" data-msg-required="<?php echo e(Lang::get('message.require_mes')); ?>">
         </div>
       </div>
       <div class="submit">
         <div class="remember">
         </div>
-        <input type="submit" value="<?php echo e(Lang::get('layout.sign_in_submit')); ?>" class='btn btn-primary'>
+        <input type="submit" value="<?php echo e(Lang::get('layout.sign_me_in')); ?>" class='btn btn-primary'>
+        <span class="loader"><img src="img/loading.gif" /></span>
       </div>
     </form>
     <div class="forget">
