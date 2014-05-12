@@ -193,5 +193,10 @@ class BaseController extends Controller {
     $data['message'] = $NewImageName;
     return $data;
   }
+  
+  public function getRole(){
+    $role= Role::all();
+    return $role->toArray();
+  }
 
 }

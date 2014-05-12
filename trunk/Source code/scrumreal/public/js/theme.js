@@ -36,8 +36,24 @@ $(document).ready(function() {
           .ajaxStop(function() {
             $loading.hide();
           });
-
-
+  //Add new user
+  $("#form-add-user").submit(function(event) {
+    if ($(this).valid() === true) {
+      $.ajax({
+        url: 'user/add',
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function(response) {
+          if (response.status === 800) { //error
+            showAlert(0, true, response.message);
+          } else if (response.status === 200) {
+            showAlert(1, true, response.message);
+          }
+        }
+      });
+    }
+    event.preventDefault();
+  });
 });
 
 function showStatus(id, status_type, content) {
@@ -63,8 +79,9 @@ function showMessage(id, mes_type, content) {
 }
 
 function showAlert(type, valid, msg) {
+  var alert_block = $(".alert_block");
   if (valid === false) {
-    $(".alert_block").hide();
+    alert_block.hide();
   } else {
     var cls = "";
     var header = "";
@@ -92,8 +109,12 @@ function showAlert(type, valid, msg) {
     alertmsg += "<strong>" + header + " </strong>";
     alertmsg += msg;
     alertmsg += "</div>";
-    $(".alert_block").html(alertmsg);
-    $(".alert_block").show();
+    alert_block.html(alertmsg);
+    alert_block.show(function(){
+      setTimeout(function(){
+        alert_block.hide();
+      }, 5000);
+    });
   }
 }
 

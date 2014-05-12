@@ -95,5 +95,21 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
   public function getUid(){
     return $this->uid;
   }
+  
+  public function getNotInProject(){
+    $query = <<<SQL
+SELECT user.uid, user.fullname
+FROM user
+WHERE user.uid NOT IN
+ (
+		SELECT user.uid
+		FROM user INNER JOIN project_user ON user.uid = project_user.uid 
+							INNER JOIN project ON project_user.pid = project.pid
+		WHERE project.status = 1
+	)            
+SQL;
+    $result = DB::select($query);
+    return $result;
+  }
 
 }

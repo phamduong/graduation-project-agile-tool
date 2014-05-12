@@ -44,12 +44,20 @@ Route::post('/user/save', [
     'uses' => 'UserController@save'
 ]);
 
+Route::post('/user/add', [
+    'uses' => 'UserController@add'
+]);
+
 Route::post('/user/change-pass', [
     'uses' => 'UserController@changePass'
 ]);
 
 Route::get('/project', [
     'uses' => 'ProjectController@index'
+]);
+
+Route::get('/project/datatables', [
+    'uses' => 'ProjectController@getDatatables'
 ]);
 
 Route::get('/dashboard', function() {

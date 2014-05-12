@@ -49,7 +49,7 @@ class UserController extends \BaseController {
       );
     }
     $data['lang'] = parent::getLanguage();
-    $data['user'] = parent::getCurrentUser();
+    $data['cur_user'] = parent::getCurrentUser();
     $user_data = User::find(Auth::user()->getUid());
     $data['data'] = $user_data->toArray();
     $data['data']['birthday'] = date('d/m/Y', strtotime($data['data']['birthday']));
@@ -295,7 +295,7 @@ class UserController extends \BaseController {
 
   public function save() {
     $input = Input::all();
-    $user = User::find(Auth::user()->getUid());
+    $user = Auth::user();
     if (isset($input['uimage'])) {
       $result = parent::saveImage('data/image/user/', 'uimage');
       if ($result['status'] == 800) {
@@ -323,10 +323,6 @@ class UserController extends \BaseController {
   public function changePass() {
     $data = array('status' => 800, 'message' => 'Error!');
     $input = Input::all();
-//    print_r($input);
-//    print_r(Hash::make('123'));
-//    print("------------");
-//    print_r(Hash::make(strval($input['current_pw'])));
     if (isset($input['current_pw']) || isset($input['new_pw']) || isset($input['confirm_pw'])) {
       $user = Auth::user();
       if (Hash::check($input['current_pw'], $user->password)) {
@@ -339,6 +335,23 @@ class UserController extends \BaseController {
           }
         }
       }
+    }
+    return $data;
+  }
+
+  public function add() {
+    $data = array('status' => 800, 'message' => 'Error!');
+    $input = Input::all();
+    $user = new User;
+    $user->fullname = $input['fullname'];
+    $user->login_nm = $input['login_nm'];
+    $date = date('Y-m-d', strtotime($input['birthday']));
+    $user->birthday = $date;
+    $user->timezone = $input['timezone'];
+    $user->rid = $input['role'];
+    if ($user->save() == 1) {
+      $data['status'] = 200;
+      $data['message'] = 'Create user successfully';
     }
     return $data;
   }
