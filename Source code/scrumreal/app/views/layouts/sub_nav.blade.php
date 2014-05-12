@@ -1,6 +1,6 @@
 <div class="subnav">
   <div class="box" style="border-top: 1px solid #333333">
-    <div class="box-content nopadding scrollable" data-height="300" data-visible="true">
+    <div class="box-content nopadding scrollable" data-height="570" data-visible="true">
       <ul class="userlist">
         <li id="id1">
           <a href="#"><img src="img/demo/user-1.jpg" class="img-user-info" alt=""></a>
@@ -125,6 +125,62 @@
             </span>
           </div>
           <div class="status active">
+            <i class="icon-circle"></i>
+          </div>
+        </li>
+        <li>
+          <a href="#"><img src="img/demo/user-5.jpg" class="img-user-info" alt=""></a>
+          <div class="user">
+            <span class="name">
+              John Doe
+            </span>
+            <span class="position">
+              Webdesign
+            </span>
+          </div>
+          <div class="status">
+            <i class="icon-circle"></i>
+          </div>
+        </li>
+        <li>
+          <a href="#"><img src="img/demo/user-5.jpg" class="img-user-info" alt=""></a>
+          <div class="user">
+            <span class="name">
+              John Doe
+            </span>
+            <span class="position">
+              Webdesign
+            </span>
+          </div>
+          <div class="status">
+            <i class="icon-circle"></i>
+          </div>
+        </li>
+        <li>
+          <a href="#"><img src="img/demo/user-5.jpg" class="img-user-info" alt=""></a>
+          <div class="user">
+            <span class="name">
+              John Doe
+            </span>
+            <span class="position">
+              Webdesign
+            </span>
+          </div>
+          <div class="status">
+            <i class="icon-circle"></i>
+          </div>
+        </li>
+        <li>
+          <a href="#"><img src="img/demo/user-5.jpg" class="img-user-info" alt=""></a>
+          <div class="user">
+            <span class="name">
+              John Doe
+            </span>
+            <span class="position">
+              Webdesign
+            </span>
+          </div>
+          <div class="status">
             <i class="icon-circle"></i>
           </div>
         </li>

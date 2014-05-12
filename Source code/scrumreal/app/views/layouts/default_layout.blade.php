@@ -7,9 +7,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <!-- Apple devices fullscreen -->
     <!--<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />-->
-    <title>SCRUM REAL - Dashboard</title>
+    <title>@yield('title', 'Scrumreal')</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css" ) }}">
+    <!--Bootstrap modal-->
+    <link rel="stylesheet" href="css/plugins/bootstrap-modal/bootstrap-modal.css">
     <!-- Bootstrap responsive -->
     <link rel="stylesheet" href="{{ asset("css/bootstrap-responsive.min.css" ) }}">
     <!-- jQuery UI -->
@@ -30,6 +32,8 @@
     <link rel="stylesheet" href="{{ asset("css/style__not-minified.css" ) }}">
     <!-- Update bootstrap -->
     <link rel="stylesheet" href="{{ asset("css/bootstrap_update.css") }}">
+    <!-- Daterangepicker -->
+    <link rel="stylesheet" href="css/plugins/daterangepicker/daterangepicker.css">
     <!-- Color CSS -->
     <link rel="stylesheet" href="{{ asset("css/themes.css" ) }}">
     <!-- Plupload -->
@@ -55,12 +59,17 @@
     <script src="{{ asset("js/plugins/slimscroll/jquery.slimscroll.min.js" ) }}"></script>
     <!-- Bootstrap -->
     <script src="{{ asset("js/bootstrap.min.js" ) }}"></script>
+    <!-- Bootstrap modal -->
+    <script src="js/plugins/bootstrap-modal/bootstrap-modal.js"></script>
+    <script src="js/plugins/bootstrap-modal/bootstrap-modalmanager.js"></script>
     <!-- vmap -->
     <script src="{{ asset("js/plugins/vmap/jquery.vmap.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/vmap/jquery.vmap.world.js" ) }}"></script>
     <script src="{{ asset("js/plugins/vmap/jquery.vmap.sampledata.js" ) }}"></script>
     <!-- Bootbox -->
     <script src="{{ asset("js/plugins/bootbox/jquery.bootbox.js" ) }}"></script>
+    <!-- Notify -->
+    <script src="js/plugins/gritter/jquery.gritter.min.js"></script>
     <!-- Flot -->
     <script src="{{ asset("js/plugins/flot/jquery.flot.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/flot/jquery.flot.bar.order.min.js" ) }}"></script>
@@ -78,13 +87,14 @@
     <script src="{{ asset("js/plugins/select2/select2.min.js" ) }}"></script>
     <!-- icheck -->
     <script src="{{ asset("js/plugins/icheck/jquery.icheck.min.js" ) }}"></script>
-    <!-- Bootbox -->
-    <script src="{{ asset("js/plugins/bootbox/jquery.bootbox.js" ) }}"></script>
-    <!-- Bootbox -->
+    <!-- Jquery form -->
     <script src="{{ asset("js/plugins/form/jquery.form.min.js" ) }}"></script>
     <!-- Validation -->
     <script src="{{ asset("js/plugins/validation/jquery.validate.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/validation/additional-methods.min.js" ) }}"></script>
+    <!-- Daterangepicker -->
+    <script src="{{ asset("js/plugins/daterangepicker/daterangepicker.js" ) }}"></script>
+    <script src="{{ asset("js/plugins/daterangepicker/moment.min.js" ) }}"></script>
     <!-- icheck -->
     <script src="{{ asset("js/plugins/icheck/jquery.icheck.min.js") }}"></script>
     <!-- Sparkline -->
