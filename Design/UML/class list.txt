@@ -1,0 +1,19 @@
+Role
+Product Owner
+Project Leader
+Scrum Master
+Development Team
+Administrator 
+Project
+Member
+User Story
+Permission
+Sprint
+Task
+Issue
+Notification
+Message
+Event
+Activity
+Comment
+
