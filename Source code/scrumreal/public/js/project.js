@@ -1,6 +1,77 @@
 $(document).ready(function() {
   initProjectDatatable();
+  //Add user in project add modal
+  $("#modal-add-project a.btn-add-user").click(function() {
+    $("#selected-role").val($(this).attr('data-selected'));
+    $("#modal-add-user").modal('show');
+  });
+
+  //Add new project
+  $("#form-add-project").submit(function(event) {
+    if ($(this).valid() === true) {
+      $.ajax({
+        url: "project/add",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(response) {
+          if (response.status === 800) { //error
+            showAlert(0, true, response.message);
+          } else if (response.status === 200) {
+            showAlert(1, true, response.message);
+            setTimeout(function() {
+              $("#modal-add-project").modal('hide');
+            }, 1000);
+          }
+        }
+      });
+    }
+    event.preventDefault();
+  });
+
+  //Edit project 
+  $("#project-datatable").on("click", ".view_prj", function(event) {
+    var pid = $(this).attr('href');
+    $('body').modalmanager('loading');
+    $.ajax({
+      url: "project/edit",
+      type: "POST",
+      data: {pid: pid},
+      global: false,
+      success: function(response) {
+        if (response.status === 200) {
+          //Set project info content
+          var parent = "#modal-edit-project #form-edit-project ";
+          var project_info = response.project_info;
+          $(parent + "#pid").val(project_info.pid);
+          $(parent + "#name").val(project_info.name);
+          $(parent + "#project_date_range").val(project_info.start_date + ' - ' + project_info.end_date);
+          $(parent + "#leader").val(project_info.leader_id);
+          //Because project owner is not on the list
+          var temp = '<option value="' + project_info.owner_name + '">' + project_info.owner_name + '</option>';
+          $(parent + "#owner").append(temp);
+          $(parent + "#owner").select2("data", {id: project_info.owner_id, text: project_info.owner_name});
+          $(parent + "#description").val(project_info.description);
+          $(parent + "#note").val(project_info.note);
+          $("#modal-edit-project").modal('show');
+          //Set project comment
+          var comment = response.comment;
+          getComment("#modal-edit-project", comment);
+        }
+      },error: function(response){
+//        console.log(response);
+        var err = jQuery.parseJSON(response.responseText);
+        $("#modal-error-notice .error-content").html(err.error.message);
+        $("#modal-error-notice").modal('show');
+      }
+    });
+    event.preventDefault();
+  });
 })
+
+/**
+ * Initialize datatables for project
+ * @returns {undefined}
+ */
 function initProjectDatatable() {
   if ($("#project-datatable").length > 0) {
     var sAjaxSource = "/project/datatables";
@@ -40,7 +111,7 @@ function initProjectDatatable() {
                 return "<span class='label label-info'>Completed</span>";
                 break;
               case 3:
-                return "<span class='label label-important'>Delay</span>";
+                return "<span class='label label-warning'>Initially</span>";
                 break;
             }
           },
@@ -48,8 +119,8 @@ function initProjectDatatable() {
         },
         {
           "mRender": function(data, type, row) {
-            $html = '<a href="'+ row['pid'] +'" class="btn view_prj" rel="tooltip" title="View"><i class="icon-edit"></i></a>' +
-                    '<a href="'+ row['pid'] +'" class="btn set_prj" rel="tooltip" title="Set current"><i class="icon-ok"></i></a>';
+            $html = '<a href="' + row['pid'] + '" class="btn view_prj" rel="tooltip" title="View"><i class="icon-edit"></i></a>' +
+                    '<a href="' + row['pid'] + '" class="btn set_prj" rel="tooltip" title="Set current"><i class="icon-ok"></i></a>';
             return $html;
           },
           'aTargets': [6]

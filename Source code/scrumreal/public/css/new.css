@@ -10,6 +10,20 @@ h1, h2, h3, h4, h5, h6{
   margin-right: 5px;
 }
 
+/*Load more*/
+.load-more{
+  background-color: #eee;
+  color: #929292;
+  font-weight: bold;
+  text-align: center;
+  padding: 6px 0;
+  cursor: pointer;
+  display: none;
+}
+.load-more:hover{
+  background-color: #D8D8D8;
+}
+
 /*User chat list status*/
 
 .userlistchat .status {
@@ -191,6 +205,9 @@ h1, h2, h3, h4, h5, h6{
 }
 .cancel-reply-comment {
   margin-left: 6px;
+}
+.btn-new-comment{
+  margin-bottom: 10px;
 }
 .row_selected {
   background-color: #D9EDF7 !important;
