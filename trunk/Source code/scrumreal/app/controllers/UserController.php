@@ -2,6 +2,10 @@
 
 class UserController extends \BaseController {
 
+  /**
+   * Login function
+   * @return array(status, message)
+   */
   public function login() {
     if (Input::server("REQUEST_METHOD") == "POST") {  //If login action
       $input = Input::all();
@@ -13,7 +17,7 @@ class UserController extends \BaseController {
             "password" => Input::get("upw")
         );
         if (Auth::attempt($credentials)) {
-          $lang = Auth::user()->getLang();
+          $lang = Auth::user()->lang;
           Session::put('lang', $lang);
           $data['status'] = 200;
         } else {
@@ -36,6 +40,10 @@ class UserController extends \BaseController {
     return Redirect::to('/');
   }
 
+  /**
+   * User view profile
+   * @return type
+   */
   public function profile() {
     if (Request::segment(1) == 'user-profile') {
       $data = array(
@@ -50,7 +58,7 @@ class UserController extends \BaseController {
     }
     $data['lang'] = parent::getLanguage();
     $data['cur_user'] = parent::getCurrentUser();
-    $user_data = User::find(Auth::user()->getUid());
+    $user_data = User::find(Auth::user()->uid);
     $data['data'] = $user_data->toArray();
     $data['data']['birthday'] = date('d/m/Y', strtotime($data['data']['birthday']));
     $data['country'] = array(
@@ -293,9 +301,14 @@ class UserController extends \BaseController {
     return View::make('user.profile', $data);
   }
 
+  /**
+   * Save general info
+   * @return array
+   */
   public function save() {
     $input = Input::all();
     $user = Auth::user();
+    $data = array();
     if (isset($input['uimage'])) {
       $result = parent::saveImage('data/image/user/', 'uimage');
       if ($result['status'] == 800) {
@@ -320,6 +333,10 @@ class UserController extends \BaseController {
     return $data;
   }
 
+  /**
+   * Change user password
+   * @return array
+   */
   public function changePass() {
     $data = array('status' => 800, 'message' => 'Error!');
     $input = Input::all();
@@ -339,19 +356,29 @@ class UserController extends \BaseController {
     return $data;
   }
 
+  /**
+   * Add new user
+   * @return string
+   */
   public function add() {
     $data = array('status' => 800, 'message' => 'Error!');
     $input = Input::all();
+    $count = User::where("login_nm", "=", $input['login_nm'])->count();
+    if($count > 0){
+      $data['message'] = 'User login name exist!';
+      return $data;
+    }
     $user = new User;
     $user->fullname = $input['fullname'];
     $user->login_nm = $input['login_nm'];
     $date = date('Y-m-d', strtotime($input['birthday']));
     $user->birthday = $date;
     $user->timezone = $input['timezone'];
-    $user->rid = $input['role'];
     if ($user->save() == 1) {
       $data['status'] = 200;
       $data['message'] = 'Create user successfully';
+      $data['user']['uid'] = $user->uid;
+      $data['user']['full_name'] = $user->fullname;
     }
     return $data;
   }

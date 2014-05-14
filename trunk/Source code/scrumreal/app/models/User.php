@@ -79,23 +79,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
   public function getReminderEmail() {
     return $this->email;
   }
-
-  public function getLang() {
-    return $this->lang;
-  }
-
-  public function getFullname() {
-    return $this->fullname;
-  }
-
-  public function getImage() {
-    return $this->image;
-  }
   
-  public function getUid(){
-    return $this->uid;
-  }
-  
+  /**
+   * Get user who are not in any project or project which are not started
+   * @return type
+   */
   public function getNotInProject(){
     $query = <<<SQL
 SELECT user.uid, user.fullname
@@ -112,4 +100,31 @@ SQL;
     return $result;
   }
 
+  /**
+   * Get people who could be project leader
+   * Any free user and project leader in active or initial project
+   * @return type
+   */
+  public function getCandicate(){
+    $query = <<<SQL
+SELECT user.uid, user.fullname
+FROM user
+WHERE user.uid NOT IN
+ (
+		SELECT user.uid
+		FROM user INNER JOIN project_user ON user.uid = project_user.uid 
+							INNER JOIN project ON project_user.pid = project.pid
+		WHERE project.status = 1
+	)
+	OR user.uid IN
+	(
+		SELECT user.uid
+		FROM user INNER JOIN project_user ON user.uid = project_user.uid 
+							INNER JOIN project ON project_user.pid = project.pid
+		WHERE project.status = 1 AND project_user.rid = 1
+	)
+SQL;
+    $result = DB::select($query);
+    return $result;
+  }
 }

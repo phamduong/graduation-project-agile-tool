@@ -123,6 +123,7 @@
   </head>
   <body data-layout-topbar="fixed">
     <noscript>Sorry, your browser does not support JavaScript!</noscript>
+    @include('modal/error_notice')
     <div id="navigation">
       @include('layouts/main_nav')
     </div>

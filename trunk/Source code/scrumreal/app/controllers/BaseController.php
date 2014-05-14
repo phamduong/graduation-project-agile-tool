@@ -13,6 +13,10 @@ class BaseController extends Controller {
     }
   }
 
+  /**
+   * Get list language and current user language
+   * @return type
+   */
   public function getLanguage() {
     $lang = Language::all();
     $lang = $lang->toArray();
@@ -32,10 +36,14 @@ class BaseController extends Controller {
     return $data;
   }
 
+  /**
+   * Get current login user infomation
+   * @return type
+   */
   public function getCurrentUser() {
     $user = array(
-        'name' => Auth::user()->getFullname(),
-        'image' => Auth::user()->getImage()
+        'name' => Auth::user()->fullname,
+        'image' => Auth::user()->image
     );
     return $user;
   }
@@ -194,6 +202,10 @@ class BaseController extends Controller {
     return $data;
   }
   
+  /**
+   * Get all roles
+   * @return type
+   */
   public function getRole(){
     $role= Role::all();
     return $role->toArray();

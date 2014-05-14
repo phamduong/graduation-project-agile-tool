@@ -60,9 +60,18 @@ Route::get('/project/datatables', [
     'uses' => 'ProjectController@getDatatables'
 ]);
 
+Route::post('/project/edit', [
+    'uses' => 'ProjectController@edit'
+]);
+
 Route::get('/dashboard', function() {
   return View::make('dashboard');
 });
+
+Route::post('/project/add', [
+    'uses' => 'ProjectController@add'
+]);
+
 
 Route::get('/test', [
     'uses' => 'LanguageController@index'
