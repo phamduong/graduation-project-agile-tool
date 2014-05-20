@@ -21,6 +21,7 @@ $(document).ready(function() {
             setTimeout(function() {
               $("#modal-add-project").modal('hide');
             }, 1000);
+            clearFormInput("#form-add-story");
           }
         }
       });
@@ -57,8 +58,7 @@ $(document).ready(function() {
           var comment = response.comment;
           getComment("#modal-edit-project", comment);
         }
-      },error: function(response){
-//        console.log(response);
+      }, error: function(response) {
         var err = jQuery.parseJSON(response.responseText);
         $("#modal-error-notice .error-content").html(err.error.message);
         $("#modal-error-notice").modal('show');
@@ -66,7 +66,52 @@ $(document).ready(function() {
     });
     event.preventDefault();
   });
-})
+
+  //Set current project
+  $("#project-datatable").on("click", ".set_prj", function(event) {
+    var pid = $(this).attr('href');
+    var wrapper = "#project_" + pid + "_ac";
+    showLoading(wrapper);
+    $.ajax({
+      url: "project/set_current",
+      type: "POST",
+      data: {pid: pid},
+      global: false,
+      success: function(response) {
+        if (response.status === 200) {
+          showAlert(1, true, response.message);
+          $(".row_selected").removeClass("row_selected");
+          $(wrapper).parent().parent().addClass("row_selected");
+        }
+      }, error: function(response) {
+        var err = jQuery.parseJSON(response.responseText);
+        $("#modal-error-notice .error-content").html(err.error.message);
+        $("#modal-error-notice").modal('show');
+      },
+      complete: function() {
+        hideLoading(wrapper);
+      }
+    });
+    event.preventDefault();
+  });
+
+  //User select to go to StoryPage -> check select project
+  $("#story a").click(function(event) {
+    $.ajax({
+      url: "project/check_current",
+      type: "GET",
+      success: function(response) {
+        if (response.status === 200) {
+          window.location = "/story";
+        } else {
+          $("#modal-error-notice .error-content").html(response.message);
+          $("#modal-error-notice").modal('show');
+        }
+      }
+    });
+    event.preventDefault();
+  });
+});
 
 /**
  * Initialize datatables for project
@@ -110,17 +155,15 @@ function initProjectDatatable() {
               case 2:
                 return "<span class='label label-info'>Completed</span>";
                 break;
-              case 3:
-                return "<span class='label label-warning'>Initially</span>";
-                break;
             }
           },
           'aTargets': [5]
         },
         {
           "mRender": function(data, type, row) {
-            $html = '<a href="' + row['pid'] + '" class="btn view_prj" rel="tooltip" title="View"><i class="icon-edit"></i></a>' +
-                    '<a href="' + row['pid'] + '" class="btn set_prj" rel="tooltip" title="Set current"><i class="icon-ok"></i></a>';
+            $html = '<div id="project_' + row['pid'] + '_ac"><a href="' + row['pid'] + '" class="btn view_prj" rel="tooltip" title="View"><i class="icon-edit"></i></a>' +
+                    '<a href="' + row['pid'] + '" class="btn set_prj" rel="tooltip" title="Set current"><i class="icon-ok"></i></a>' +
+                    '<span class="loader"><img src="img/loading.gif" /></span></div>';
             return $html;
           },
           'aTargets': [6]
@@ -140,13 +183,22 @@ function initProjectDatatable() {
         "sLoadingRecords": "Loading...",
         "sProcessing": "<i class='icon-spinner icon-spin icon-large'></i> Processing..."
       },
-      'oColVis': {
+      "oColVis": {
         "buttonText": "Change columns <i class='icon-angle-down'></i>"
       },
-      'oTableTools': {
-        //"sRowSelect": "single",
-        "aButtons": [],
-        //"sSelectedClass": 'row_selected',
+      "oTableTools": {
+        "aButtons": []
+//        "sRowSelect": "single",
+//        "sSelectedClass": "row_selected"
+      },
+      "fnDrawCallback": function(oSettings) {
+        //alert(current_project);
+        if (typeof current_project != "undefined") {
+          var wrapper = "#project_" + current_project + "_ac";
+          if (typeof $(wrapper)[0] != "undefined") {
+            $(wrapper).parent().parent().addClass("row_selected");
+          }
+        }
       }
     };
     var oTable = $('#project-datatable').dataTable(opt);
@@ -177,7 +229,7 @@ function initProjectDatatable() {
         }, {
           type: "select",
           bCaseSensitive: false,
-          values: ['Completed', 'In progress', 'Suspend', 'Canceled']
+          values: ['Cancled', 'Active', 'Completed']
         },
         null
       ]

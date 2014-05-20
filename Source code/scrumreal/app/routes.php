@@ -64,6 +64,46 @@ Route::post('/project/edit', [
     'uses' => 'ProjectController@edit'
 ]);
 
+Route::post('/project/set_current', [
+    'uses' => 'ProjectController@setCurrentProject'
+]);
+
+Route::get('/project/check_current', [
+    'uses' => 'ProjectController@checkCurrentProject'
+]);
+
+Route::get('/story', [
+    'uses' => 'StoryController@index'
+]);
+
+Route::post('/comment/reply', [
+    'uses' => 'CommentController@reply'
+]);
+
+Route::post('/comment/add', [
+    'uses' => 'CommentController@add'
+]);
+
+Route::post('/story/add', [
+    'uses' => 'StoryController@add'
+]);
+
+Route::get('/story/datatables', [
+    'uses' => 'StoryController@getDataTables'
+]);
+
+Route::post('/story/edit', [
+    'uses' => 'StoryController@edit'
+]);
+
+Route::get('/people', [
+    'uses' => 'TeamController@index'
+]);
+
+Route::post('/team/add', [
+    'uses' => 'TeamController@addTeam'
+]);
+
 Route::get('/dashboard', function() {
   return View::make('dashboard');
 });
