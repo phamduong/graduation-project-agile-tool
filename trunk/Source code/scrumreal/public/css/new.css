@@ -9,7 +9,10 @@ h1, h2, h3, h4, h5, h6{
 #project-datatable .btn{
   margin-right: 5px;
 }
-
+/*Loading gif*/
+.loader{
+  display: none;
+}
 /*Load more*/
 .load-more{
   background-color: #eee;
@@ -114,10 +117,13 @@ h1, h2, h3, h4, h5, h6{
   font-size: 8px !important;
   text-align: center;
 }
-/*Datatables*/
 
+/*Datatables*/
 .dataTable {
   width: 100% !important;
+}
+.dataTable .row_selected{
+  background-color: #C3DDF6;
 }
 #action_bar {
   background-color: #FFFFFF;
@@ -212,6 +218,14 @@ h1, h2, h3, h4, h5, h6{
 .row_selected {
   background-color: #D9EDF7 !important;
 }
+.form-validate textarea.error{
+  border-color: #B94A48;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  color: #B94A48;
+}
+.form-validate label.error{
+  color: #B94A48;
+}
 /*Team list*/
 
 .team-list {
@@ -226,6 +240,9 @@ h1, h2, h3, h4, h5, h6{
   clear: both;
   padding-bottom: 15px;
   overflow: auto;
+}
+.team-temp{
+  display: none;
 }
 .team-list .team {
   margin-left: 0px;

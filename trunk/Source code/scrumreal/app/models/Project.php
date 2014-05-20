@@ -61,7 +61,7 @@ FROM project
 LEFT JOIN
 	(
 		SELECT user.uid, user.fullname, project.pid
-		FROM user INNER JOIN project_user ON user.uid = project_user.uid 
+		FROM user INNER JOIN project_user ON user.uid = project_user.uid
 								INNER JOIN project on project_user.pid = project.pid
 		WHERE project_user.rid = 1
 	) project_leader

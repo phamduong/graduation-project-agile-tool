@@ -20,6 +20,7 @@
     </div>
     <div class="box-content">
       <div class="tab-content row-fluid">
+        <div class="alert_block"></div>
         <div class="tab-pane active" id="tab-proj-info-edit">
           <form action="#" method="POST" class="form-horizontal form-validate" id="form-edit-project">
             <input type="hidden" id="pid" val="" />
@@ -347,33 +348,48 @@
             <input type="hidden" id="entity_id" value="" />
             <input type="hidden" id="entity_type" value="" />
             <div class="comment-list">
-              
             </div>
-            <div class="load-more" data-box-id="modal-edit-project" data-count-from="" data-count="">Load More <span class="loader"><img src="img/loading.gif" /></span></div>
-            <div class="new-comment-form">
+            
+            <div class="new-comment-form-wrapper">
               <h6>Add a new comment</h6>
-              <form action="#" method="POST" class='form-vertical'>
+              <form action="#" method="POST" class="form-vertical form-validate new-comment-form" data-container="" autocomplete=off>
                 <div class="control-group">
-                  <label for="ta" class="control-label">Message</label>
                   <div class="controls">
-                    <textarea name="comment-message" id="comment-message" class='span12' rows="3"></textarea>
+                    <textarea name="comment-message-new" class=span12" rows="3" data-rule-minlength="10" data-rule-required="true" placeholder="Message here"></textarea>
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary pull-right btn-new-comment">Post comment</button>
               </form>
             </div>
+            
             <div class="reply-comment-form-temp">
               <h6>Reply to this comment</h6>
-              <form action="#" method="POST" class='form-vertical' data-reply-to="" data-container="">
+              <form action="#" method="POST" class='form-vertical form-validate' data-reply-to="" data-container="" autocomplete=off>
                 <div class="control-group">
-                  <label for="ta" class="control-label">Message</label>
                   <div class="controls">
-                    <textarea name="comment-message" id="comment-message" class='span12' rows="3"></textarea>
+                    <textarea name="comment-message" id="comment-message" class="span12" data-rule-minlength="10" data-rule-required="true" rows="3" placeholder="Message here"></textarea>
                   </div>
                 </div>
                 <a class="btn cancel-reply-comment pull-right">Cancel</a>
-                <input type="submit" class="btn btn-primary pull-right" value="Post comment">
+                <span class="loader"><img src="img/loading.gif" /></span>
+                <span class="loader"><img src="img/loading.gif" /></span>
+                <input type="submit" class="btn btn-primary pull-right btn-reply-comment-submit" value="Post comment">
               </form>
+            </div>
+            
+            <div class="comment-temp" style="display: none">
+              <div class="media" id="id-comment">
+                  <a class="pull-left" href="#">
+                  <img src="<?php echo 'data/image/user/' . $cur_user['image']; ?>">
+                  </a>
+                  <div class="media-body">
+                    <h6 class="media-heading"><span class="user-comment">{{{$cur_user['name']}}}</span><small><span class="time-comment"></span></small></h6>
+                      <p class="content-comment"></p>
+                      <div class="media-actions">
+                          <a href="#" class="btn btn-small btn-reply-comment" data-container=""><i class="icon-reply"></i> Reply</a>
+                      </div>
+                  </div>
+              </div>
             </div>
           </div>
         </div>

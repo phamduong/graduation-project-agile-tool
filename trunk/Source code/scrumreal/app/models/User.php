@@ -86,7 +86,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
    */
   public function getNotInProject(){
     $query = <<<SQL
-SELECT user.uid, user.fullname
+SELECT user.uid, user.fullname, user.image
 FROM user
 WHERE user.uid NOT IN
  (

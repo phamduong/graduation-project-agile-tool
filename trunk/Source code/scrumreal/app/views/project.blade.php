@@ -16,6 +16,7 @@ Scrumreal - Project management
           </h3>
         </div>
         <div class="box-content nopadding">
+          <div class='alert_block'></div>
           <div id="action_bar" class="row-fluid">
             <div class="span12">
               <a href="#modal-add-project" data-backdrop="static" data-keyboard="false" id="btn-add-project" role="button" class="btn btn-primary pull-left btn-lightred mr10" data-toggle="modal"><i class="icon-plus"></i> Add Project</a>
@@ -52,29 +53,22 @@ Scrumreal - Project management
               </tr>
             </thead>
             <tbody>
-<!--              <tr>
-                <td>Project name</td>
-                <td>John owner</td>
-                <td>Doe leader</td>
-                <td>03-07-2013</td>
-                <td>03-07-2013</td>
-                <td><span class="label label-satgreen">Completed</span></td>
-                <td>
-                  <a href="#" class="btn" rel="tooltip" title="View"><i class="icon-search"></i></a>
-                  <a href="#" class="btn" rel="tooltip" title="Edit"><i class="icon-edit"></i></a>
-                  <a href="#" class="btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>
-                </td>
-              </tr>-->
             </tbody>
           </table>
         </div>
       </div>
     </div>
   </div>
+  <script>
+    @if(isset($current_project))
+      var current_project = "{{{$current_project}}}";
+    @endif
+  </script>
   <script src="{{ asset("js/project.js" ) }}"></script>
   <!-- dataTables -->
   <script src="{{ asset("js/plugins/datatable/jquery.dataTables.min.js") }}"></script>
   <script src="{{ asset("js/plugins/datatable/TableTools.min.js") }}"></script>
+  <!--<script src="//cdn.datatables.net/tabletools/2.2.1/js/dataTables.tableTools.min.js"></script>-->
   <script src="{{ asset("js/plugins/datatable/ColReorderWithResize.js") }}"></script>
   <script src="{{ asset("js/plugins/datatable/ColVis.min.js") }}"></script>
   <script src="{{ asset("js/plugins/datatable/jquery.dataTables.columnFilter.js") }}"></script>

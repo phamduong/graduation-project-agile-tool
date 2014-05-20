@@ -36,6 +36,7 @@
     <!-- Bootstrap -->
     <script src="{{ asset("js/bootstrap.min.js") }}"></script>
     <script src="{{ asset("js/eakroko.js") }}"></script>
+    <script src="{{ asset("js/comment.js") }}"></script>
     <script src="{{ asset("js/theme.js") }}"></script>
     <script src="{{ asset("js/login.js") }}"></script>
     @yield('keylang')

@@ -49,10 +49,13 @@
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.core.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.widget.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.mouse.min.js" ) }}"></script>
+    <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.position.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.draggable.min.js" ) }}"></script>
+    <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.droppable.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.resizable.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.sortable.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.datepicker.min.js" ) }}"></script>
+    <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.dialog.min.js" ) }}"></script>
     <!-- Touch enable for jquery UI -->
     <script src="{{ asset("js/plugins/touch-punch/jquery.touch-punch.min.js" ) }}"></script>
     <!-- slimScroll -->
@@ -115,6 +118,7 @@
     <!-- Dashboard javascript -->
     <script src="{{ asset("js/dash_board.js" ) }}"></script>
     <!--Scrumreal common-->
+    <script src="{{ asset("js/comment.js" ) }}"></script>
     <script src="{{ asset("js/theme.js" ) }}"></script>
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon.ico" />
