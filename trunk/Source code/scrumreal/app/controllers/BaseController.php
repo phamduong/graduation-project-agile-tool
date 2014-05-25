@@ -43,7 +43,8 @@ class BaseController extends Controller {
   public function getCurrentUser() {
     $user = array(
         'name' => Auth::user()->fullname,
-        'image' => Auth::user()->image
+        'image' => Auth::user()->image,
+        'show_nav' => Auth::user()->show_nav
     );
     return $user;
   }

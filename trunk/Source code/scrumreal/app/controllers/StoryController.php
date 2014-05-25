@@ -18,7 +18,7 @@ class StoryController extends BaseController {
 
   public function getDataTables() {
     $story = new Story;
-    $data = $story->getStoryDatatables();
+    $data = $story->getStoryDatatables(Session::get('current_project'));
     return json_encode($data);
   }
 

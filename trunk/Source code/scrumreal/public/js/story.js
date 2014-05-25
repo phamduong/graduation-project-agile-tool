@@ -1,3 +1,4 @@
+var oTable;
 $(document).ready(function() {
   initUserStoryDatatable();
   //Open modal add new user story
@@ -11,6 +12,7 @@ $(document).ready(function() {
           if (response.status === 800) { //error
             showAlert(0, true, response.message);
           } else if (response.status === 200) {
+            appendToHTML('story');
             showAlert(1, true, response.message);
             setTimeout(function() {
               $("#modal-add-story").modal('hide');
@@ -28,19 +30,28 @@ $(document).ready(function() {
     event.preventDefault();
     var sid = $(this).attr('href');
     $('body').modalmanager('loading');
-     $("#modal-edit-story").modal('show');
-      $.ajax({
-        url: "story/edit",
-        type: "POST",
-        data: {sid: sid},
-        global: false,
-        success: function(response) {
-          var comment = response.comment;
-          getComment("#modal-edit-story", comment);
-        }
-      });
+    $("#modal-edit-story").modal('show');
+    $.ajax({
+      url: "story/edit",
+      type: "POST",
+      data: {sid: sid},
+      global: false,
+      success: function(response) {
+        var comment = response.comment;
+        getComment("#modal-edit-story", comment);
+      }
+    });
   });
 })
+
+function appendToHTML(page) {
+  if (page == 'story') {
+    oTable.fnReloadAjax();
+  } else if (page == 'sprint') {
+
+  }
+}
+
 function initUserStoryDatatable() {
   if ($("#user-story-datatable").length > 0) {
     var sAjaxSource = "/story/datatables";
@@ -150,7 +161,7 @@ function initUserStoryDatatable() {
         //"sSelectedClass": 'row_selected',
       }
     };
-    var oTable = $('#user-story-datatable').dataTable(opt);
+    oTable = $('#user-story-datatable').dataTable(opt);
 
     $('.dataTables_filter input').attr("placeholder", "Search here...");
     $(".dataTables_length select").wrap("<div class='input-mini'></div>").chosen({

@@ -1,3 +1,4 @@
+var oTable;
 $(document).ready(function() {
   initProjectDatatable();
   //Add user in project add modal
@@ -18,6 +19,7 @@ $(document).ready(function() {
             showAlert(0, true, response.message);
           } else if (response.status === 200) {
             showAlert(1, true, response.message);
+            oTable.fnReloadAjax();
             setTimeout(function() {
               $("#modal-add-project").modal('hide');
             }, 1000);
@@ -90,23 +92,6 @@ $(document).ready(function() {
       },
       complete: function() {
         hideLoading(wrapper);
-      }
-    });
-    event.preventDefault();
-  });
-
-  //User select to go to StoryPage -> check select project
-  $("#story a").click(function(event) {
-    $.ajax({
-      url: "project/check_current",
-      type: "GET",
-      success: function(response) {
-        if (response.status === 200) {
-          window.location = "/story";
-        } else {
-          $("#modal-error-notice .error-content").html(response.message);
-          $("#modal-error-notice").modal('show');
-        }
       }
     });
     event.preventDefault();
@@ -201,7 +186,7 @@ function initProjectDatatable() {
         }
       }
     };
-    var oTable = $('#project-datatable').dataTable(opt);
+    oTable = $('#project-datatable').dataTable(opt);
     $('.dataTables_filter input').attr("placeholder", "Search here...");
     $(".dataTables_length select").wrap("<div class='input-mini'></div>").chosen({
       disable_search_threshold: 9999999
@@ -248,4 +233,5 @@ function initProjectDatatable() {
       }
     });
   }
+  return oTable;
 }

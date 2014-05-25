@@ -66,7 +66,7 @@ class ProjectController extends BaseController {
     $project->description = $input['description'];
     if ($project->save() == 1) {
       $pid = $project->pid;
-      if ($project->addUser($pid, 1, 1) && $project->addUser($pid, 8, 4)) {
+      if ($project->addToProject($pid, $input['leader'], 0, ROLE_LEADER) && $project->addToProject($pid, $input['owner'], 0, ROLE_OWNER)) {
         $data = array(
             'status' => 200,
             'message' => 'Create project successfully!'

@@ -43,6 +43,7 @@
       </a>
     </li>
   </ul>
+  <span class="global-loading"><img src="img/global_loading.gif" /></span>
   <div class="user">
     <ul class="icon-nav">
       <li class='dropdown'>
