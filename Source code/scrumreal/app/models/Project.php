@@ -5,12 +5,12 @@ class Project extends Eloquent {
   protected $table = 'project';
   public $timestamps = false;
   public $primaryKey = 'pid';
-  
+
   /**
    * Get data for datatables
    * @return array
    */
-  public function getAll(){
+  public function getAll() {
     $query = <<<SQL
 SELECT project.name, project_owner.owner,  project_leader.leader, project.start_date,
 IF (project.status = 2, project.end_date_real, project.end_date_es) as end_date, project.status,
@@ -37,22 +37,8 @@ SQL;
     $result["aaData"] = DB::select($query);
     return $result;
   }
-  
-  /**
-   * Add user to project
-   * @param type $pid project id
-   * @param type $uid user id
-   * @param type $rid role id in project
-   */
-  public function addUser($pid, $uid, $rid){
-    $query = <<<SQL
-INSERT INTO project_user VALUES(?, ?, ?)
-SQL;
-    $row_count = DB::insert($query, array($pid, $uid, $rid));
-    return $row_count;
-  }
-  
-  public function getProject($pid){
+
+  public function getProject($pid) {
     $query = <<<SQL
 SELECT project.pid, project.name, project.start_date, project.end_date_es, project.note, project.description,
 IF (project.status = 2, project.end_date_real, project.end_date_es) as end_date, project.status,
@@ -79,4 +65,5 @@ SQL;
     $result = DB::select($query, array($pid));
     return $result[0];
   }
+
 }

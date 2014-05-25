@@ -68,6 +68,7 @@ Scrumreal - Project management
   <!-- dataTables -->
   <script src="{{ asset("js/plugins/datatable/jquery.dataTables.min.js") }}"></script>
   <script src="{{ asset("js/plugins/datatable/TableTools.min.js") }}"></script>
+  <script src="{{ asset("js/plugins/datatable/fnReloadAjax.js") }}"></script>
   <!--<script src="//cdn.datatables.net/tabletools/2.2.1/js/dataTables.tableTools.min.js"></script>-->
   <script src="{{ asset("js/plugins/datatable/ColReorderWithResize.js") }}"></script>
   <script src="{{ asset("js/plugins/datatable/ColVis.min.js") }}"></script>

@@ -13,13 +13,6 @@ h1, h2, h3, h4, h5, h6 {
 .loader {
   display: none;
 }
-.global-loading{
-  display: none;
-}
-.global-loading img{
-  margin-top: 15px;
-  width: 150px;
-}
 /*Load more*/
 .load-more {
   background-color: #eee;
@@ -354,20 +347,32 @@ h1, h2, h3, h4, h5, h6 {
 .release-list .alert {
   margin-bottom: 10px;
 }
-/*.story .badge {
+.story .badge {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
-  display: block;
+  /*display: block;*/
 
   margin-top: 3px;
   margin-right: 5px;
   float: right;
-}*/
-/*.story .story-name {
+}
+.story {
+  margin-bottom: 10px;
+  background-color: #A4CCF1;
+  border: 1px solid #A4CCF1;
+  border-radius: 5px;
+  line-height: 30px;
+  min-width: 399px;
+  z-index: 4000;
+}
+.story div {
+  display: inline-block;
+}
+.story .story-name {
   font-weight: bold;
   color: #ffffff;
   margin-left: 5px;
-}*/
+}
 .release-list .slimScrollDiv {
   overflow: visible !important;
 }
@@ -412,9 +417,6 @@ h1, h2, h3, h4, h5, h6 {
 .sprint-list .alert {
   margin-bottom: 10px;
 }
-.sprint-name{
-  color: #FFFFFF !important;
-}
 .story .badge {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
@@ -437,7 +439,7 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 70px;
   padding-left: 5px;
   margin-bottom: 5px;
-  /*max-width: 238px;*/
+  max-width: 238px;
 }
 .sprint-story-list .story div {
   /*display: inline-block;*/
@@ -445,14 +447,11 @@ h1, h2, h3, h4, h5, h6 {
 .sprint-story-list .slimScrollDiv {
   overflow: visible !important;
 }
-.story .story-name {
+.sprint-story-list .story .story-name {
   color: #FFFFFF;
   font-size: 13px;
   font-weight: normal;
   margin-bottom: 3px;
-  display: block;
-  margin-left: 5px;
-  line-height: 17px;
 }
 .sprint-story-list .box-content {
   padding: 5px !important;
@@ -485,10 +484,6 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 35px;
   margin-bottom: 5px;
   text-align: center;
-  font-weight: bold;
-}
-.s-team .s-team-story{
-  min-height: 40px;
 }
 /*Calendar*/
 

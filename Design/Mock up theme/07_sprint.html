@@ -36,6 +36,8 @@
         <link rel="stylesheet" href="css/themes__not-minified.css">
         <!-- Plupload -->
         <link rel="stylesheet" href="css/plugins/plupload/jquery.plupload.queue.css">
+        <!-- Perfect scrollbar -->
+        <link rel="stylesheet" href="css/plugins/perfect-scrollbar/perfect-scrollbar-0.4.10.min.css">
         <!-- Jquery Tagsinput -->
         <!-- <link rel="stylesheet" href="css/plugins/tagsinput/jquery.tagsinput.css"> -->
         <!-- Boostrap taginput -->
@@ -67,6 +69,9 @@
         <script src="js/plugins/touch-punch/jquery.touch-punch.min.js"></script>
         <!-- slimScroll -->
         <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <!-- Perfect scrollbar -->
+        <script src="js/plugins/perfect-scrollbar/perfect-scrollbar-0.4.10.min.js"></script>
+        <script src="js/plugins/perfect-scrollbar/perfect-scrollbar-0.4.10.with-mousewheel.min.js"></script>
         <!-- Bootstrap -->
         <script src="js/bootstrap.min.js"></script>
         <!-- Bootstrap modal -->
@@ -686,8 +691,8 @@
                                         <a href="#modal-add-sprint" data-backdrop="static" data-keyboard="false" id="btn-add-sprint" role="button" class="btn btn-primary mr10" data-toggle="modal"><i class="icon-plus"></i> Add sprint</a>
                                     </div>
                                 </div>
-                                <div class="box-content scrollable" data-height="520">
-                                    <div class="span12 sprint" id="sprint1">
+                                <div class="box-content scrollable" data-height="520" id="sprint-team-list">
+                                    <div class="sprint" id="sprint1">
                                         <div class="box box-color teal box-small box-bordered">
                                             <div class="box-title">
                                                 <h3>
@@ -700,11 +705,82 @@
                                             </div>
                                             <div class="box-content">
                                                 <div class="sprint-teams">
+                                                    <div class="s-team" id="s-team-1">
+                                                        <div class="s-team-name">
+                                                        Team 1
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="s-team" id="s-team-2">
+                                                        <div class="s-team-name">
+                                                        Team 2
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login asdf asdf asdf asdfasdf
+                                                                asdf
+                                                                asdfa
+                                                                sf sfdasfsfs</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="s-team" id="s-team-3">
+                                                        <div class="s-team-name">
+                                                        Team 3
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="s-team" id="s-team-4">
+                                                        <div class="s-team-name">
+                                                        Team 4
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="span12 sprint" id="sprint2">
+                                    <div class="sprint" id="sprint2">
                                         <div class="box box-color teal box-small box-bordered">
                                             <div class="box-title">
                                                 <h3>
@@ -715,12 +791,83 @@
                                                 </div>
                                             </div>
                                             <div class="box-content">
-                                                <div class="sprint-teams">
+                                               <div class="sprint-teams">
+                                                    <div class="s-team" id="s-team-1">
+                                                        <div class="s-team-name">
+                                                        Team 1
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="s-team" id="s-team-2">
+                                                        <div class="s-team-name">
+                                                        Team 2
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login asdf asdf asdf asdfasdf
+                                                                asdf
+                                                                asdfa
+                                                                sf sfdasfsfs</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="s-team" id="s-team-3">
+                                                        <div class="s-team-name">
+                                                        Team 3
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="s-team" id="s-team-4">
+                                                        <div class="s-team-name">
+                                                        Team 4
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="span12 sprint" id="sprint3">
+                                    <div class="sprint" id="sprint3">
                                         <div class="box box-color teal box-small box-bordered">
                                             <div class="box-title">
                                                 <h3>
@@ -731,7 +878,78 @@
                                                 </div>
                                             </div>
                                             <div class="box-content">
-                                                <div class="sprint-teams">
+                                                <div class="sprint-teams-disabled">
+                                                    <div class="s-team" id="s-team-1">
+                                                        <div class="s-team-name">
+                                                        Team 1
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="s-team" id="s-team-2">
+                                                        <div class="s-team-name">
+                                                        Team 2
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login asdf asdf asdf asdfasdf
+                                                                asdf
+                                                                asdfa
+                                                                sf sfdasfsfs</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="s-team" id="s-team-3">
+                                                        <div class="s-team-name">
+                                                        Team 3
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="s-team" id="s-team-4">
+                                                        <div class="s-team-name">
+                                                        Team 4
+                                                        </div>
+                                                        <div class="s-team-story">
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                            <div class="story">
+                                                                <div class="story-name">Story login</div>
+                                                                <div class="story-points badge badge-info">100 points</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -751,10 +969,21 @@
                                     </div>
                                 </div>
                                 <div class="box-content scrollable" data-height="520">
-                                    <div class="story">
-                                        <div class="story-name">Story login</div>
+                                    <div class="story" data-value="login">
+                                        <div class="story-name">login</div>
                                         <div class="story-points badge badge-info">100 points</div>
-                                        <div class="story-status badge badge-warning">In Progress</div>
+                                    </div>
+                                    <div class="story" data-value="logout">
+                                        <div class="story-name">logout</div>
+                                        <div class="story-points badge badge-info">30 points</div>
+                                    </div>
+                                    <div class="story" data-value="abc">
+                                        <div class="story-name">abc</div>
+                                        <div class="story-points badge badge-info">10 points</div>
+                                    </div>
+                                    <div class="story" data-value="def">
+                                        <div class="story-name">def</div>
+                                        <div class="story-points badge badge-info">100 points</div>
                                     </div>
                                 </div>
                             </div>

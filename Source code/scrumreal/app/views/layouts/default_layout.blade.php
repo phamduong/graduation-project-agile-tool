@@ -131,13 +131,17 @@
     <div id="navigation">
       @include('layouts/main_nav')
     </div>
-    <div class="container-fluid" id="content">
+    @if ($cur_user['show_nav'] == 1)
+      <div class="container-fluid" id="content">
+    @else
+      <div class="container-fluid nav-hidden" id="content">
+    @endif
       <div id="left" class='force-full no-resize'>
-        @include('layouts/sub_nav')
+          @include('layouts/sub_nav')
+        </div>
+        <div id="main">
+          @yield('content')
+        </div>
       </div>
-      <div id="main">
-        @yield('content')
-      </div>
-    </div>
   </body>
 </html>

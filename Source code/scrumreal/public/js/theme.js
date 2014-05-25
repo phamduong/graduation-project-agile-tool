@@ -51,6 +51,25 @@ $(document).ready(function() {
     var container = $(this).attr("data-box-id");
     alert(container);
   });
+  
+  //User select to go to menu -> check select project
+  $(".main-nav li[id!='project']").click(function(event) {
+    var link = $(this).attr("id");
+    $.ajax({
+      url: "project/check_current",
+      type: "GET",
+      success: function(response) {
+        if (response.status === 200) {
+          window.location = "/" + link;
+        } else {
+          $("#modal-error-notice .error-content").html(response.message);
+          $("#modal-error-notice").modal('show');
+        }
+      }
+    });
+    event.preventDefault();
+  });
+  
 });
 
 /**
@@ -60,7 +79,7 @@ $(document).ready(function() {
  */
 function showLoading(wrapper) {
   if (typeof wrapper != "undefined") {
-    $(wrapper).find(".loader").show();
+    $(wrapper + " .loader").show();
   } else {
     $(".loader").show();
   }
@@ -74,6 +93,18 @@ function showLoading(wrapper) {
 function hideLoading(wrapper) {
   if (typeof wrapper != "undefined") {
     $(wrapper).find(".loader").hide();
+  }
+}
+
+function showGlLoad(){
+  if($(".global-loading").css("display") == "none"){
+    $(".global-loading").css("display", "inline");
+  }
+}
+
+function hideGlLoad(){
+  if($(".global-loading").css("display") == "inline"){
+    $(".global-loading").css("display", "none");
   }
 }
 

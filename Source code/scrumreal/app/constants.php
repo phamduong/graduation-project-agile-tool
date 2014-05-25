@@ -11,7 +11,7 @@ define('ROLE_OWNER', 4);
 
 define('ENTITY_PROJECT', 1);
 define('ENTITY_STORY', 2);
-define('ENTITY_PEOPLE', 3);
+define('ENTITY_TEAM', 3);
 define('ENTITY_SPRINT', 4);
 define('ENTITY_COMMENT', 5);
 define('ENTITY_TASK', 6);
@@ -30,3 +30,7 @@ define('PRIORITY_URGENT', 1);
 define('PRIORITY_HIGH', 2);
 define('PRIORITY_MEDIUM', 3);
 define('PRIORITY_LOW', 4);
+
+define('SPRINT_STATUS_IN_PLAN', 1);
+define('SPRINT_STATUS_IN_PROGRESS', 2);
+define('SPRINT_STATUS_COMPLETED', 3);

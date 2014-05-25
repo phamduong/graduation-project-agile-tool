@@ -6,4 +6,86 @@ class Sprint extends Eloquent {
   public $timestamps = false;
   public $primaryKey = 'spid';
 
+  public function getStoryNotAssign($pid) {
+    $query = <<<SQL
+SELECT story.sid, story.`name`, story.point
+FROM story
+WHERE story.sid NOT IN
+(
+	SELECT story.sid
+	FROM story INNER JOIN story_team ON story.sid = story_team.sid
+	WHERE story.pid = ?
+) AND story.pid = ?
+ORDER BY story.name
+SQL;
+    $result = DB::select($query, array($pid, $pid));
+    return $result;
+  }
+
+  public function getSprintInProject($pid) {
+    $query = <<<SQL
+SELECT *
+FROM sprint
+WHERE sprint.pid = ?
+SQL;
+    $result = DB::select($query, array($pid));
+    return $result;
+  }
+
+  public function getStoryInSprint($spid, $tid) {
+    $query = <<<SQL
+SELECT story.sid, story.`name`, story.point, story_team.order
+FROM story INNER JOIN story_team ON story.sid = story_team.sid
+WHERE story_team.tid = ? AND story_team.spid = ?
+ORDER BY story_team.order
+SQL;
+    $result = DB::select($query, array($tid, $spid));
+    return $result;
+  }
+
+  public function getSprintDetail($spid) {
+    $query = <<<SQL
+SELECT *
+FROM sprint 
+WHERE sprint.spid = ?
+SQL;
+    $result = DB::select($query, array($spid));
+    return $result[0];
+  }
+
+  public function addStoryToSprint($select_sid, $end_spid, $end_tid, $order) {
+    $query = <<<SQL
+INSERT INTO story_team VALUES(?, ?, ?, ?)
+SQL;
+    $result = DB::insert($query, array($select_sid, $end_tid, $end_spid, $order));
+    return $result;
+  }
+
+  public function removeStoryFromSprint($select_sid, $start_spid, $start_tid) {
+    $query = <<<SQL
+DELETE FROM story_team
+WHERE sid = ?
+  AND tid = ?
+  AND spid = ?
+SQL;
+    $result = DB::delete($query, array($select_sid, $start_tid, $start_spid));
+    return $result;
+  }
+
+  public function moveStoryToSrpint($select_sid, $start_spid, $start_tid, $end_spid, $end_tid, $order) {
+    $query = <<<SQL
+UPDATE story_team
+SET
+  tid = ?,
+  spid = ?,
+  order = ?
+WHERE
+  sid = ?
+  AND tid = ?
+  AND spid = ?
+SQL;
+    $result = DB::update($query, array($end_tid, $end_spid, $order, $select_sid, $start_tid, $start_spid));
+    return $result;
+  }
+
 }

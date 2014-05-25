@@ -1,27 +1,20 @@
 /*Custom theme css*/
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6{
   font-family: 'UVN Tin Tuc Hep' !important;
 }
-.uimage-small {
+.uimage-small{
   height: 27px;
   width: 27px;
 }
-#project-datatable .btn {
+#project-datatable .btn{
   margin-right: 5px;
 }
 /*Loading gif*/
-.loader {
+.loader{
   display: none;
-}
-.global-loading{
-  display: none;
-}
-.global-loading img{
-  margin-top: 15px;
-  width: 150px;
 }
 /*Load more*/
-.load-more {
+.load-more{
   background-color: #eee;
   color: #929292;
   font-weight: bold;
@@ -30,9 +23,10 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
   display: none;
 }
-.load-more:hover {
+.load-more:hover{
   background-color: #D8D8D8;
 }
+
 /*User chat list status*/
 
 .userlistchat .status {
@@ -123,11 +117,12 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 8px !important;
   text-align: center;
 }
+
 /*Datatables*/
 .dataTable {
   width: 100% !important;
 }
-.dataTable .row_selected {
+.dataTable .row_selected{
   background-color: #C3DDF6;
 }
 #action_bar {
@@ -232,7 +227,6 @@ h1, h2, h3, h4, h5, h6 {
   color: #B94A48;
 }
 /*Team list*/
-
 .team .loader img{
   height: 18px;
   padding-left: 5px;
@@ -354,20 +348,32 @@ h1, h2, h3, h4, h5, h6 {
 .release-list .alert {
   margin-bottom: 10px;
 }
-/*.story .badge {
+.story .badge {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
-  display: block;
+  /*display: block;*/
 
   margin-top: 3px;
   margin-right: 5px;
   float: right;
-}*/
-/*.story .story-name {
+}
+.story {
+  margin-bottom: 10px;
+  background-color: #A4CCF1;
+  border: 1px solid #A4CCF1;
+  border-radius: 5px;
+  line-height: 30px;
+  min-width: 399px;
+  z-index: 4000;
+}
+.story div {
+  display: inline-block;
+}
+.story .story-name {
   font-weight: bold;
   color: #ffffff;
   margin-left: 5px;
-}*/
+}
 .release-list .slimScrollDiv {
   overflow: visible !important;
 }
@@ -379,20 +385,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 /*Sprint management page*/
 
-#sprint-team-list {
-  padding: 0px 5px 5px 5px !important;
-}
 .sprint-list {
   min-height: 50px !important;
 }
-.sprint-list .sprint-teams, .sprint-list .sprint-teams-disabled {
-  padding: 5px;
+.sprint-list .box-content {
+  padding: 0 !important;
+}
+.sprint-list .sprint-teams {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
   clear: both;
+  padding-bottom: 15px;
   overflow: auto;
   min-height: 110px;
-}
-.sprint-list .sprint-teams-disabled {
-  opacity: 0.6;
 }
 .sprint-list .sprint {
   margin-left: 0px;
@@ -412,50 +418,30 @@ h1, h2, h3, h4, h5, h6 {
 .sprint-list .alert {
   margin-bottom: 10px;
 }
-.sprint-name{
-  color: #FFFFFF !important;
-}
 .story .badge {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
+  /*display: block;*/
   margin-top: 3px;
   margin-right: 5px;
+  float: right;
 }
-.sprint .box-content {
-  border-spacing: 10px;
-  padding: 0 !important;
-}
-/*add*/
-
-.story {
+.sprint-story-list .story {
   background-color: #A4CCF1;
-  border: 1px solid #00ABA9;
+  border: 1px solid #A4CCF1;
   border-radius: 5px;
   line-height: 30px;
   min-width: 200px;
-  z-index: 9000;
-  min-height: 70px;
-  padding-left: 5px;
-  margin-bottom: 5px;
-  /*max-width: 238px;*/
+  z-index: 4000;
+  height: 300px;
 }
 .sprint-story-list .story div {
-  /*display: inline-block;*/
+  display: inline-block;
 }
-.sprint-story-list .slimScrollDiv {
-  overflow: visible !important;
-}
-.story .story-name {
-  color: #FFFFFF;
-  font-size: 13px;
-  font-weight: normal;
-  margin-bottom: 3px;
-  display: block;
-  margin-left: 5px;
-  line-height: 17px;
-}
-.sprint-story-list .box-content {
-  padding: 5px !important;
+.sprint-story-list .story .story-name {
+  color: #ffffff;
+  margin-left: 3px;
+  font-size: 10px;
 }
 .sprint-list .slimScrollDiv {
   overflow: visible !important;
@@ -469,26 +455,6 @@ h1, h2, h3, h4, h5, h6 {
 .sprint-status {
   padding-top: 5px;
   padding-bottom: 5px;
-}
-.s-team {
-  border: 1px solid;
-  border-radius: 5px;
-  padding: 5px;
-  width: 245px;
-  display: table-cell;
-  margin-right: 10px;
-  min-width: 245px;
-}
-.s-team .s-team-name {
-  border-bottom: 1px solid #FF0000;
-  font-size: 15px;
-  line-height: 35px;
-  margin-bottom: 5px;
-  text-align: center;
-  font-weight: bold;
-}
-.s-team .s-team-story{
-  min-height: 40px;
 }
 /*Calendar*/
 

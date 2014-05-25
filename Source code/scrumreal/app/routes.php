@@ -104,9 +104,49 @@ Route::post('/team/add', [
     'uses' => 'TeamController@addTeam'
 ]);
 
+Route::post('/team/edit', [
+    'uses' => 'TeamController@editTeam'
+]);
+
+Route::post('/people/remove_from_project', [
+    'uses' => 'TeamController@removeFromProject'
+]);
+
+Route::post('/people/add_to_project', [
+    'uses' => 'TeamController@addToProject'
+]);
+
+Route::post('/people/move_to_team', [
+    'uses' => 'TeamController@moveToTeam'
+]);
+
 Route::get('/dashboard', function() {
   return View::make('dashboard');
 });
+
+Route::get('/sprint', [
+    'uses' => 'SprintController@index'
+]);
+
+Route::post('/sprint/add', [
+    'uses' => 'SprintController@add'
+]);
+
+Route::post('/sprint/edit', [
+    'uses' => 'SprintController@edit'
+]);
+
+Route::post('/sprint/add_story_to_sprint', [
+    'uses' => 'SprintController@addStory'
+]);
+
+Route::post('/sprint/move_story_to_sprint', [
+    'uses' => 'SprintController@moveStory'
+]);
+
+Route::post('/sprint/remove_story_from_sprint', [
+    'uses' => 'SprintController@removeStory'
+]);
 
 Route::post('/project/add', [
     'uses' => 'ProjectController@add'

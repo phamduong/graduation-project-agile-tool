@@ -81,20 +81,15 @@ Scrumreal - User profile
             <div class="tab-pane {{{$user_settings_cls}}}" id="user-settings">
               <form action="#" class="form-horizontal form-validate">
                 <div class="control-group">
-                  <label for="asdf" class="control-label">Email notifications</label>
+                  <label for="" class="control-label">Layout options</label>
                   <div class="controls">
-                    <label class="checkbox"><input type="checkbox" name="asdf"> Send me security emails</label>
-                    <label class="checkbox"><input type="checkbox" name="asdf"> Send system emails</label>
-                  </div>
-                </div>
-                <div class="control-group">
-                  <label for="asdf" class="control-label">Email for notifications</label>
-                  <div class="controls">
-                    <select name="email" id="email">
-                      <option value="1">asdf@blasdas.com</option>
-                      <option value="2">johnDoe@asdasf.de</option>
-                      <option value="3">janeDoe@janejanejane.net</option>
-                    </select>
+                    <label class="checkbox" for="turn_on_of_nav">
+                    @if ($cur_user['show_nav'] == 1)
+                    <input type="checkbox" name="turn_on_of_nav" id="turn_on_of_nav" checked="checked">
+                    @else
+                    <input type="checkbox" name="turn_on_of_nav" id="turn_on_of_nav">
+                    @endif
+                    Always show navigation bar</label>
                   </div>
                 </div>
                 <div class="form-actions">
