@@ -72,13 +72,13 @@ SQL;
     return $result;
   }
 
-  public function moveStoryToSrpint($select_sid, $start_spid, $start_tid, $end_spid, $end_tid, $order) {
+  public function moveStoryToSrpint($end_tid, $end_spid, $order, $select_sid, $start_tid, $start_spid) {
     $query = <<<SQL
 UPDATE story_team
 SET
-  tid = ?,
-  spid = ?,
-  order = ?
+  story_team.tid = ?,
+  story_team.spid = ?,
+  story_team.order = ?
 WHERE
   sid = ?
   AND tid = ?
@@ -86,6 +86,21 @@ WHERE
 SQL;
     $result = DB::update($query, array($end_tid, $end_spid, $order, $select_sid, $start_tid, $start_spid));
     return $result;
+  }
+
+  public function updateStoryOrder($tid, $spid, $data) {
+    $query = <<<SQL
+UPDATE story_team
+SET
+  story_team.order = ?
+WHERE
+  tid = ?
+  AND spid = ?
+  AND sid = ?
+SQL;
+    foreach ($data as $key => $value) {
+      DB::update($query, array($value, $tid, $spid, $key));
+    }
   }
 
 }

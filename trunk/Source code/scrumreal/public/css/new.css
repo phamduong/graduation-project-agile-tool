@@ -17,8 +17,8 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 .global-loading img{
-  margin-top: 15px;
-  width: 150px;
+  margin-top: 4px;
+  width: 30px;
 }
 /*Load more*/
 .load-more {

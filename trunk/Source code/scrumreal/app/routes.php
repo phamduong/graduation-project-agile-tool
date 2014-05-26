@@ -64,6 +64,10 @@ Route::post('/project/edit', [
     'uses' => 'ProjectController@edit'
 ]);
 
+Route::post('/project/add', [
+    'uses' => 'ProjectController@add'
+]);
+
 Route::post('/project/set_current', [
     'uses' => 'ProjectController@setCurrentProject'
 ]);
@@ -148,10 +152,13 @@ Route::post('/sprint/remove_story_from_sprint', [
     'uses' => 'SprintController@removeStory'
 ]);
 
-Route::post('/project/add', [
-    'uses' => 'ProjectController@add'
+Route::post('/sprint/update_order', [
+    'uses' => 'SprintController@updateStoryOrder'
 ]);
 
+Route::get('/taskboard', [
+    'uses' => 'TaskController@index'
+]);
 
 Route::get('/test', [
     'uses' => 'LanguageController@index'

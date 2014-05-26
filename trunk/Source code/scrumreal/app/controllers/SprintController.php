@@ -53,9 +53,52 @@ class SprintController extends BaseController {
     if (isset($input['spid'])) {
       $spid = $input['spid'];
       $sprint = new Sprint;
+      $comment = new Comment;
       $data['status'] = 200;
       $data['sprint_info'] = $sprint->getSprintDetail($spid);
+      $data['comment'] = $comment->getComment($spid, ENTITY_SPRINT);
     }
+    return $data;
+  }
+
+  public function addStory() {
+    $input = Input::all();
+    $sprint = new Sprint;
+    $result = $sprint->addStoryToSprint($input['select_sid'], $input['end_spid'], $input['end_tid'], $input['order']);
+    if ($result != 0) {
+      $data = array('status' => 200, 'message' => 'Successfull');
+    } else {
+      $data = array('status' => 800, 'message' => 'Error!');
+    }
+  }
+
+  public function removeStory() {
+    $input = Input::all();
+    $sprint = new Sprint;
+    $result = $sprint->removeStoryFromSprint($input['select_sid'], $input['start_spid'], $input['start_tid']);
+    if ($result != 0) {
+      $data = array('status' => 200, 'message' => 'Successfull');
+    } else {
+      $data = array('status' => 800, 'message' => 'Error!');
+    }
+  }
+
+  public function moveStory() {
+    $input = Input::all();
+    $sprint = new Sprint;
+    $result = $sprint->moveStoryToSrpint($input['end_tid'], $input['end_spid'], $input['order'], $input['select_sid'], $input['start_tid'], $input['start_spid']);
+    if ($result != 0) {
+      $data = array('status' => 200, 'message' => 'Successfull');
+    } else {
+      $data = array('status' => 800, 'message' => 'Error!');
+    }
+  }
+
+  public function updateStoryOrder() {
+    $input = Input::all();
+    $sprint = new Sprint;
+    $sprint->updateStoryOrder($input['tid'], $input['spid'], $input['data']);
+    $data = array('status' => 200, 'message' => 'Successfull');
     return $data;
   }
 

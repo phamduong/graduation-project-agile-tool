@@ -1,3 +1,24 @@
+// there's the story and the release-stories
+var $story_list = $(".sprint-story-list");
+var $sprint_team = $(".sprint-teams .s-team");
+var ele;
+var parent;
+var start_id; //Drag from story list
+var start_tid = 0; //Drag from team
+var start_spid = 0; //Drag from sprint
+var select_id; //Selected story DOM'id
+var select_sid; //Selected story id
+var end_spid; //Drag to sprint
+var end_tid; //Drag to team
+var end_id;
+var current_team;
+var current_sprint;
+var order;
+
+var count;
+
+var insideMain = false;
+
 $(document).ready(function() {
   //Init dragable and dropable
   initStoryDragDrop();
@@ -41,6 +62,9 @@ $(document).ready(function() {
           $(parent + "#sprint_time").val(sprint_info.start_date + " - " + sprint_info.end_date);
           $(parent + "#description").val(sprint_info.description);
           $(parent + ".complete-sprint").attr("data-spid", response.spid);
+          //comment
+          var comment = response.comment;
+          getComment("#modal-edit-sprint", comment);
           $("#modal-edit-sprint").modal('show');
         }
       },
@@ -63,25 +87,6 @@ function sortStoryList() {
 }
 
 function initStoryDragDrop() {
-  // there's the story and the release-stories
-  var $story_list = $(".sprint-story-list");
-  var $sprint_team = $(".sprint-teams .s-team");
-  var ele;
-  var parent;
-  var start_id; //Drag from story list
-  var start_tid = 0; //Drag from team
-  var start_spid = 0; //Drag from sprint
-  var select_id; //Selected story DOM'id
-  var select_sid; //Selected story id
-  var end_spid; //Drag to sprint
-  var end_tid; //Drag to team
-  var current_team;
-  var order;
-
-  var count = 0;
-
-  var insideMain = false;
-
   //sort list story
 //  $(".sprint-teams .s-team .s-team-story").sortable({
 //    connectWith: ".s-team-story",
@@ -114,7 +119,9 @@ function initStoryDragDrop() {
         start_tid = parent.attr("data-tid");
         start_spid = parent.parent().attr("data-spid");
         select_id = "story_" + ele.attr("data-sid");
-        start_id = parent.attr("id"); //start from team ?
+        //start from team ?, from sprint ?
+        start_id = "sprint_" + start_spid + " #s_team_" + start_tid;
+        //start_id = parent.attr("id"); 
       }
     }
   });
@@ -132,11 +139,21 @@ function initStoryDragDrop() {
         start_tid = parent.attr("data-tid");
         start_spid = parent.parent().attr("data-spid");
         select_id = "story_" + ele.attr("data-sid");
-        start_id = parent.attr("id");
+        start_id = "sprint_" + start_spid + " #s_team_" + start_tid;
+//        start_id = parent.attr("id");
       } else {  //Drag from story list
         parent = ele.parent().parent().parent();
         select_id = "story_" + ele.attr("data-sid");
         start_id = "story-not-se-list";
+      }
+    },
+    stop: function() {
+      if(end_id !== "story-not-se-list"){
+        updateStoryOrder(end_id);
+      }
+      //Update story data-order on draged team
+      if (start_id !== "story-not-se-list" && end_id !== start_id) {
+        updateStoryOrder(start_id);
       }
     }
   });
@@ -145,34 +162,37 @@ function initStoryDragDrop() {
 //    activeClass: "ui-state-highlight",
     drop: function(event, ui) {
       $(this).append(ui.draggable);
+      //If not drag and drop on the same team
+//      console.log("start_id: " + start_id + " --- select_id: " + select_id);
       if ($("#" + start_id).find("#" + select_id).length == 0) {
         select_sid = $("#" + select_id).attr("data-sid");
         ele = ui.draggable;
         parent = ele.parent();
         end_tid = parent.attr("data-tid");
         end_spid = parent.parent().attr("data-spid");
-        if (start_tid == 0 && start_spid == 0) { //If add story to sprint
+        //Order
+        order = $("#" + select_id).attr("data-order");
+        if (start_tid == 0 && start_spid == 0) { //If add story to sprint from story list
           console.log("insideMain: " + insideMain);
           console.log("start_id: " + start_id + " select_id: " + select_id);
           console.log("add: " + select_sid + " to team :" + end_tid + " ,sprint: " + end_spid);
+          //Send ajax request
+          addToSprint(select_sid, end_spid, end_tid, order);
         } else {
           console.log("add: " + select_sid + " to team :" + end_tid + " ,sprint: " + end_spid + " from team: " + start_tid + " from sprint: " + start_spid);
+          //Send ajax request
+          moveToSprint(select_sid, start_spid, start_tid, end_spid, end_tid, order);
         }
       }
+      //Update story data order on droped team
+      ele = ui.draggable;
+      parent = ele.parent();
+      current_team = parent.attr("id");
+      current_sprint = "sprint_" + parent.parent().attr("data-spid");
+      end_id = current_sprint + " #" + current_team;
+
+      /*****IMPORTANT****/
       insideMain = false;
-      //Data order
-      current_team = ui.draggable.parent().attr("id");
-      count = 1
-      $("#" + current_team + " .story").each(function(index) {
-//        console.log("index: " + index + " -- " + $(this).text() + " --- " + $(this).attr("id"));
-        if (typeof $(this).attr("id") != "undefined") {
-          $(this).attr("data-order", count);
-          count++;
-        }
-      });
-      //Oder
-      order = $("#" + select_id).attr("data-order");
-//      console.log("order: " + order);
     },
     accept: function() {
       return insideMain;
@@ -187,6 +207,7 @@ function initStoryDragDrop() {
       if ($("#" + start_id).find("#" + select_id).length == 0) {
         select_sid = $("#" + select_id).attr("data-sid");
         console.log("Drop story: " + select_sid + " to story list from team: " + start_tid + " ,from sprint: " + start_spid);
+        removeFromSprint(select_sid, start_spid, start_tid);
         start_tid = 0;
         start_spid = 0;
       }
@@ -278,4 +299,39 @@ function removeFromSprint(select_sid, start_spid, start_tid) {
       hideGlLoad();
     }
   });
+}
+
+function updateStoryOrder(selector) {
+  var tid = $("#" + selector).attr("data-tid");
+  var spid = $("#" + selector).parent().attr("data-spid");
+  count = 0;  //reset counter
+  var data = {};
+  $("#" + selector + " .story").each(function() {
+//        console.log("index: " + index + " -- " + $(this).text() + " --- " + $(this).attr("id"));
+    if (typeof $(this).attr("id") != "undefined") {
+      count++;
+      $(this).attr("data-order", count);
+//      data[$(this).attr("data-order")] = $(this).attr("data-sid");
+      data[$(this).attr("data-sid")] = $(this).attr("data-order");
+
+    }
+  });
+  console.log("selector: " + selector);
+  console.log(data);
+  if (count > 0) {
+    //Send ajax update order
+    $.ajax({
+      url: "sprint/update_order",
+      type: "POST",
+      data: {tid: tid, spid: spid, data: data},
+      success: function() {
+      }
+    });
+  }
+
+//  $("#" + selector + " .story").each(function() {
+////      data[$(this).attr("data-sid")] = $(this).attr("data-order");
+//      data[$(this).attr("data-order")] = $(this).attr("data-sid");
+//  })
+
 }

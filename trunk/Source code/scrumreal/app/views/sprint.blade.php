@@ -48,7 +48,7 @@ Scrumreal - Sprint management
                   <div class="sprint-teams" data-spid="{{{$sprint->spid}}}">
                     @endif
                     @foreach($team_list as $team)
-                    <div class="s-team" id="<?php echo 's_team_' . $team->tid; ?>" data-tid="={{{$team->tid}}}">
+                    <div class="s-team" id="<?php echo 's_team_' . $team->tid; ?>" data-tid="{{{$team->tid}}}">
                       <div class="s-team-name">
                         {{{$team->name}}}
                       </div>

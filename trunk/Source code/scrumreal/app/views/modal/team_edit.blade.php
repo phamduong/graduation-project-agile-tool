@@ -5,7 +5,7 @@
       <h3 id="myModalLabel"><i class="icon-edit"></i> Edit team</h3>
       <ul class="tabs">
         <li class="active">
-          <a href="#tab-proj-info-edit" data-toggle="tab">Team infomations</a>
+          <a href="#tab-team-info-edit" data-toggle="tab">Team infomations</a>
         </li>
         <li>
           <a href="#tab-comment" data-toggle="tab">Comment</a>
@@ -18,7 +18,7 @@
     <div class="box-content">
       <div class="tab-content row-fluid">
         <div class="alert_block"></div>
-        <div class="tab-pane active" id="tab-proj-info-edit">
+        <div class="tab-pane active" id="tab-team-info-edit">
           <form action="#" method="POST" class='form-horizontal form-validate' id="form-edit-team">
             <div class="box-content row-fluid">
               <div class="modal-body">
