@@ -32,13 +32,13 @@ function initComment() {
     $(".comment-list #" + parent_id).remove();
   });
 
-//  $("#tab-comment").on('click', '.btn-reply-comment-submit', function(event){
+//  $(".tab-comment").on('click', '.btn-reply-comment-submit', function(event){
 //    alert('test');
 //    event.preventDefault();
 //  })
   //Submit reply comment form
   //$(".reply-comment-initialized").on('submit', function(event) {
-  $("#tab-comment").on('submit', '.reply-comment-initialized', function(event) {
+  $(".tab-comment").on('submit', '.reply-comment-initialized', function(event) {
     event.preventDefault();
     if ($(this).valid() === true) {
       //find entity id and entity type 
@@ -62,10 +62,15 @@ function initComment() {
             $(".comment-temp .time-comment").html(response.time);
             $(".comment-temp .btn-reply-comment").attr("data-container", container).attr("href", response.cid);
             //Append to parent comment
-            $("#" + parent_id + " .media-body:first").append($(".comment-temp").html());
-            $("#" + parent_id).find(".media-actions:first").css("display", "block"); //display reply button
+            console.log($(".comment-list #" + parent_id + " .media-body:first").html());
+
+            $(".comment-list #" + parent_id + " .media-body:first").append($(".comment-temp").html());
+
+            console.log($(".comment-list #" + parent_id + " .media-body:first").html());
+            $(".comment-list #" + parent_id).find(".media-actions:first").css("display", "block"); //display reply button
             $("#reply_to_" + parent_id).remove();
-            $("#" + parent_id + " #" + response.cid).show();
+            console.log($(".comment-list #" + parent_id + " #" + response.cid));
+            $(".comment-list #" + parent_id + " #" + response.cid).show();
           }
         }
       });
@@ -73,13 +78,16 @@ function initComment() {
   });
 
   //Submit new comment form
-  $("#tab-comment").on("submit", ".new-comment-form", function(event) {
+  $(".tab-comment").on("submit", ".new-comment-form", function(event) {
     event.preventDefault();
     if ($(this).valid() === true) {
+      //Diable submit button from submmiting multiple times
+//      $(this).find(".btn-new-comment").attr("disabled", "disabled");
       var container = $(this).attr("data-container");
+      var content = $(this).find("textarea").val();
+      $(container + " .new-comment-form textarea").val("");
       var entity_id = $(container + " #entity_id").val();
       var entity_type = $(container + " #entity_type").val();
-      var content = $(this).find("textarea").val();
       $.ajax({
         url: 'comment/add',
         type: 'POST',
@@ -99,22 +107,29 @@ function initComment() {
 //            $("#" + parent_id).find(".media-actions:first").css("display", "block"); //display reply button
 //            $("#reply_to_" + parent_id).remove();
             $(".comment-list " + "#" + response.cid).show();
-            $(container + " .new-comment-form textarea").val("");
           }
         }
       });
+      //Enable submit button
+//      $(this).find(".btn-new-comment").removeAttr("disabled");
     }
   });
+  
+  //Clear ERROR message on text input form
+  //???????????????????????????????
 }
 
-function getComment(selector, comment) {
-  var com_tab = selector + " #tab-comment";
+function getComment(selector, entity_id, comment) {
+  var com_tab = selector + " .tab-comment";
   $(com_tab + " .comment-list").html("");
-  $(com_tab + " .new-comment-form").attr("data-container", com_tab); //store container for easily get entity_id and entity_type
+  $(com_tab + " #entity_id").val(entity_id);
+  //store container for easily get entity_id and entity_type
+  //$(com_tab + " .new-comment-form").attr("data-container", com_tab); 
+
   if (typeof comment.entity_id != "undefined" && typeof comment.entity_type != "undefined") {
     var html = '';
-    $(com_tab + " #entity_id").val(comment.entity_id);
-    $(com_tab + " #entity_type").val(comment.entity_type);
+//    $(com_tab + " #entity_id").val(comment.entity_id);
+//    $(com_tab + " #entity_type").val(comment.entity_type);
     $.each(comment.list, function(index, value) {
       if (typeof value != "undefined") {
         if (value.parent_id == null) {

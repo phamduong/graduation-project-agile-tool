@@ -8,7 +8,7 @@ class Sprint extends Eloquent {
 
   public function getStoryNotAssign($pid) {
     $query = <<<SQL
-SELECT story.sid, story.`name`, story.point
+SELECT story.*
 FROM story
 WHERE story.sid NOT IN
 (

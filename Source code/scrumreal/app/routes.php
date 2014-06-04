@@ -80,6 +80,10 @@ Route::get('/story', [
     'uses' => 'StoryController@index'
 ]);
 
+Route::post('/story/approve', [
+    'uses' => 'StoryController@approve'
+]);
+
 Route::post('/comment/reply', [
     'uses' => 'CommentController@reply'
 ]);
@@ -99,6 +103,11 @@ Route::get('/story/datatables', [
 Route::post('/story/edit', [
     'uses' => 'StoryController@edit'
 ]);
+
+Route::post('/story/save', [
+    'uses' => 'StoryController@save'
+]);
+
 
 Route::get('/people', [
     'uses' => 'TeamController@index'
@@ -140,6 +149,11 @@ Route::post('/sprint/edit', [
     'uses' => 'SprintController@edit'
 ]);
 
+Route::post('/sprint/save', [
+    'uses' => 'SprintController@save'
+]);
+
+
 Route::post('/sprint/add_story_to_sprint', [
     'uses' => 'SprintController@addStory'
 ]);
@@ -155,6 +169,12 @@ Route::post('/sprint/remove_story_from_sprint', [
 Route::post('/sprint/update_order', [
     'uses' => 'SprintController@updateStoryOrder'
 ]);
+
+Route::post('/task/add', [
+    'uses' => 'TaskController@add'
+]);
+
+Route::get('/task/get_datatables/{sid}', 'TaskController@getDatatables');
 
 Route::get('/taskboard', [
     'uses' => 'TaskController@index'

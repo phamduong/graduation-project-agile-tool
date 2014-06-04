@@ -1,56 +1,71 @@
 var oTable;
 $(document).ready(function() {
   initUserStoryDatatable();
-  //Open modal add new user story
-  $("#form-add-story").submit(function(event) {
-    if ($(this).valid() === true) {
-      $.ajax({
-        url: "/story/add",
-        type: "POST",
-        data: $(this).serialize(),
-        success: function(response) {
-          if (response.status === 800) { //error
-            showAlert(0, true, response.message);
-          } else if (response.status === 200) {
-            appendToHTML('story');
-            showAlert(1, true, response.message);
-            setTimeout(function() {
-              $("#modal-add-story").modal('hide');
-            }, 1000);
-            clearFormInput("#form-add-story");
-          }
-        }
-      });
-    }
-    event.preventDefault();
-  });
-
   //Choose edit and user story
   $("#user-story-datatable").on("click", ".view_story", function(event) {
     event.preventDefault();
-    var sid = $(this).attr('href');
     $('body').modalmanager('loading');
-    $("#modal-edit-story").modal('show');
+    var sid = $(this).attr('href');
+    window.current_story = sid;
     $.ajax({
       url: "story/edit",
       type: "POST",
       data: {sid: sid},
       global: false,
       success: function(response) {
-        var comment = response.comment;
-        getComment("#modal-edit-story", comment);
+        if (response.status === 200) {
+          initTaskDatatable(sid);
+          var parent = "#modal-edit-story #form-edit-story";
+          var story_info = response.story_info;
+          $(parent + " #sid").val(story_info.sid);
+          $(parent + " #name").val(story_info.name);
+          $(parent + " #priority").val(story_info.priority);
+          $(parent + " #status").val(story_info.status);
+          $(parent + " #time_estimate").val(story_info.time_estimate);
+          $(parent + " #create_user").val(story_info.create_user);
+          $(parent + " #point").val(story_info.point);
+          $(parent + " #demo").val(story_info.demo);
+          $(parent + " #description").val(story_info.description);
+          $(parent + " .approve-story").attr("data-sid", story_info.sid);
+          $(parent + " .approve-story").attr("data-status", story_info.status);
+          if (story_info.status > 1) {
+            $(parent + " .approve-story").css("display", "none");
+          }
+          //comment info
+          var comment = response.comment;
+          getComment("#modal-edit-story", sid, comment);
+          $("#modal-edit-story").modal("show");
+        }
       }
     });
   });
-})
 
-function appendToHTML(page) {
-  if (page == 'story') {
-    oTable.fnReloadAjax();
-  } else if (page == 'sprint') {
+  $("#form-edit-story").on("click", ".approve-story", function(e) {
+    //If status === New -> allow to appoved it
+    e.preventDefault();
+    if ($(this).attr("status") === 1) {
+      var sid = $(this).attr("data-sid");
+      $.ajax({
+        url: "/story/approve",
+        type: "POST",
+        data: {sid: sid},
+        success: function(response) {
+          if (response.status === 200) {
+            showAlert(1, true, response.message);
+            setTimeout(function() {
+              $("#modal-edit-story").modal("hide");
+            }, 1000);
+            appendStoryToHTML();
+          } else if (response.status === 200) {
+            showAlert(0, true, response.message);
+          }
+        }
+      });
+    }
+  });
 
-  }
-}
+});
+
 
 function initUserStoryDatatable() {
   if ($("#user-story-datatable").length > 0) {
@@ -105,24 +120,27 @@ function initUserStoryDatatable() {
                 return "New";
                 break;
               case 2:
-                return "Estimated";
+                return "Approved";
                 break;
               case 3:
-                return "Asigned to sprint";
+                return "Estimated";
                 break;
               case 4:
-                return "To do";
+                return "Asigned to sprint";
                 break;
               case 5:
-                return "In progress";
+                return "To do";
                 break;
               case 6:
-                return "To test";
+                return "In progress";
                 break;
               case 7:
-                return "Done";
+                return "To test";
                 break;
               case 8:
+                return "Done";
+                break;
+              case 9:
                 return "Sprint completed";
                 break;
             }

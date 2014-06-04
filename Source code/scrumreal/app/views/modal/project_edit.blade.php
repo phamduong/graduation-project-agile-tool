@@ -11,7 +11,7 @@
           <a href="#tab-proj-settings-edit" data-toggle="tab">Project settings</a>
         </li>
         <li>
-          <a href="#tab-comment" data-toggle="tab">Comment</a>
+          <a href="#tab-proj-comment" data-toggle="tab">Comment</a>
         </li>
         <li>
           <a href="#tab-proj-activity" data-toggle="tab">Activity</a>
@@ -343,16 +343,16 @@
             </ul>
           </div>
         </div>
-        <div class="tab-pane" id="tab-comment">
+        <div class="tab-pane tab-comment" id="tab-proj-comment">
           <div class="modal-body">
             <input type="hidden" id="entity_id" value="" />
-            <input type="hidden" id="entity_type" value="" />
+            <input type="hidden" id="entity_type" value="{{{ENTITY_PROJECT}}}" />
             <div class="comment-list">
             </div>
             
             <div class="new-comment-form-wrapper">
               <h6>Add a new comment</h6>
-              <form action="#" method="POST" class="form-vertical form-validate new-comment-form" data-container="" autocomplete=off>
+              <form action="#" method="POST" class="form-vertical form-validate new-comment-form" data-container="#modal-edit-project .tab-comment" autocomplete=off>
                 <div class="control-group">
                   <div class="controls">
                     <textarea name="comment-message-new" class=span12" rows="3" data-rule-minlength="10" data-rule-required="true" placeholder="Message here"></textarea>
@@ -364,7 +364,7 @@
             
             <div class="reply-comment-form-temp">
               <h6>Reply to this comment</h6>
-              <form action="#" method="POST" class='form-vertical form-validate' data-reply-to="" data-container="" autocomplete=off>
+              <form action="#" method="POST" class='form-vertical form-validate' data-reply-to="" data-container="#modal-edit-project .tab-comment" autocomplete=off>
                 <div class="control-group">
                   <div class="controls">
                     <textarea name="comment-message" id="comment-message" class="span12" data-rule-minlength="10" data-rule-required="true" rows="3" placeholder="Message here"></textarea>

@@ -40,6 +40,7 @@ class SprintController extends BaseController {
     $date = explode(" - ", $input['sprint_time']);
     $sprint->start_date = date('Y-m-d', strtotime($date[0]));
     $sprint->end_date = date('Y-m-d', strtotime($date[1]));
+    $sprint->status = SPRINT_STATUS_IN_PLAN;
     if ($sprint->save() == 1) {
       $data = array('status' => 200, 'message' => 'Add sprint successfully!');
     } else {
@@ -99,6 +100,23 @@ class SprintController extends BaseController {
     $sprint = new Sprint;
     $sprint->updateStoryOrder($input['tid'], $input['spid'], $input['data']);
     $data = array('status' => 200, 'message' => 'Successfull');
+    return $data;
+  }
+
+  public function save() {
+    $input = Input::all();
+    $sprint = Sprint::find($input['spid']);
+    $sprint->pid = Session::get('current_project');
+    $sprint->name = $input['name'];
+    $sprint->description = $input['description'];
+    $date = explode(" - ", $input['sprint_time']);
+    $sprint->start_date = date('Y-m-d', strtotime($date[0]));
+    $sprint->end_date = date('Y-m-d', strtotime($date[1]));
+    if ($sprint->save() == 1) {
+      $data = array('status' => 200, 'message' => 'Save sprint successfully!');
+    } else {
+      $data = array('status' => 800, 'message' => 'Error!');
+    }
     return $data;
   }
 

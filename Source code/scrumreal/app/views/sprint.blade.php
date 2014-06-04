@@ -7,6 +7,7 @@ Scrumreal - Sprint management
 @include('modal/sprint_edit')
 @include('modal/story_add')
 @include('modal/story_edit')
+@include('modal/task_add')
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span9">
@@ -53,12 +54,12 @@ Scrumreal - Sprint management
                         {{{$team->name}}}
                       </div>
                       <!--<div class="s-team-story">-->
-                        @foreach($story_list[$sprint->spid][$team->tid] as $story)
-                        <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story" data-name="{{{$story->name}}}" data-order="{{{$story->order}}}">
-                          <div class="story-name">{{{$story->name}}}</div>
-                          <div class="story-points badge badge-info">{{{$story->point}}} points</div>
-                        </div>
-                        @endforeach
+                      @foreach($story_list[$sprint->spid][$team->tid] as $story)
+                      <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-addable" data-name="{{{$story->name}}}" data-order="{{{$story->order}}}">
+                        <div class="story-name"><a href="{{{$story->sid}}}" class="edit-story">{{{$story->name}}}</a></div>
+                        <div class="story-points badge badge-info">{{{$story->point}}} points</div>
+                      </div>
+                      @endforeach
                       <!--</div>-->
                     </div>
                     @endforeach
@@ -83,15 +84,30 @@ Scrumreal - Sprint management
           </div>
           <div class="box-content scrollable" data-height="520">
             @foreach($story_not_asign as $story)
-            <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story" data-name="{{{$story->name}}}" data-order="">
-              <div class="story-name">{{{$story->name}}}</div>
-              <div class="story-points badge badge-info">{{{$story->point}}} points</div>
+            @if($story->time_estimate == null)
+            <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-unaddable" data-name="{{{$story->name}}}" data-order="">
+              @else
+              <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-addable" data-name="{{{$story->name}}}" data-order="">
+                @endif
+                <div class="story-name"><a href="{{{$story->sid}}}" class="edit-story">{{{$story->name}}}</a></div>
+                <div class="story-points badge badge-info">{{{$story->point}}} points</div>
+              </div>
+              @endforeach
             </div>
-            @endforeach
           </div>
         </div>
-      </div>
-      <script src="{{ asset("js/sprint.js" ) }}"></script>
+        <script src="{{ asset("js/sprint.js" ) }}"></script>
+      </div>    
     </div>
   </div>
-  @stop
+  <!-- dataTables -->
+  <script src="{{ asset("js/plugins/datatable/jquery.dataTables.min.js") }}"></script>
+  <script src="{{ asset("js/plugins/datatable/TableTools.min.js") }}"></script>
+  <script src="{{ asset("js/plugins/datatable/fnReloadAjax.js") }}"></script>
+  <!--<script src="//cdn.datatables.net/tabletools/2.2.1/js/dataTables.tableTools.min.js"></script>-->
+  <script src="{{ asset("js/plugins/datatable/ColReorderWithResize.js") }}"></script>
+  <script src="{{ asset("js/plugins/datatable/ColVis.min.js") }}"></script>
+  <script src="{{ asset("js/plugins/datatable/jquery.dataTables.columnFilter.js") }}"></script>
+  <script src="{{ asset("js/plugins/datatable/jquery.dataTables.grouping.js") }}"></script>
+</div>
+@stop

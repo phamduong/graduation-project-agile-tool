@@ -10,7 +10,7 @@ $(document).ready(function() {
           if (response.status == 800) { //error
             showAlert(0, true, response.message);
           } else if (response.status === 200) {
-            window.location = "/user-profile";
+            window.location = "/project";
           }
         }
       });
