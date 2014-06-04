@@ -8,10 +8,7 @@
           <a href="#tab-sprint-info-edit" data-toggle="tab">Srpint infomations</a>
         </li>
         <li>
-          <a href="#tab-add-task" data-toggle="tab">Add task</a>
-        </li>
-        <li>
-          <a href="#tab-comment" data-toggle="tab">Comment</a>
+          <a href="#tab-sprint-comment" data-toggle="tab">Comment</a>
         </li>
         <li>
           <a href="#tab-proj-activity" data-toggle="tab">Activity</a>
@@ -19,15 +16,13 @@
       </ul>
     </div>        
     <div class="box-content">
-      
       <div class="tab-content row-fluid">
       <div class="alert_block"></div>
-      
         <div class="tab-pane active" id="tab-sprint-info-edit">
           <form action="#" class='form-horizontal form-validate' id="form-edit-sprint">
             <div class="box-content row-fluid">
               <div class="modal-body">
-                <div class='alert_block'></div>
+                <input type="hidden" id="spid" name="spid" value="" />
                 <div class="control-group">
                   <label for="name" class="control-label">Sprint name <small>Require</small></label>
                   <div class="controls">
@@ -57,49 +52,15 @@
           </form>
         </div>
         
-        <div class="tab-pane" id="tab-add-task">
-          <form action="#" class='form-horizontal form-validate' id="form-edit-sprint">
-            <div class="box-content row-fluid">
-              <div class="modal-body">
-                <div class='alert_block'></div>
-                <div class="control-group">
-                  <label for="name" class="control-label">Sprint name <small>Require</small></label>
-                  <div class="controls">
-                    <input type="text" placeholder="Input sprint name here" name="name" id="name" class="span8" data-rule-required="true">
-                  </div>
-                </div>
-                <div class="control-group">
-                  <label for="sprint_time" class="control-label">Time <small>Require</small></label>
-                  <div class="controls">
-                    <input type="text" name="sprint_time" id="sprint_time" class="span8 daterangepick" data-rule-required="true">
-                  </div>
-                </div>
-                <div class="control-group">
-                  <label for="description" class="control-label">Description</label>
-                  <div class="controls">
-                    <textarea name="description" id="description" class="input-block-level span11" placeholder="Input sprint's description here"></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <span class="loader"><img src="img/loading.gif" /></span>
-              <input type="submit" class="btn btn-primary" value="Save sprint">
-              <button class="btn btn-red complete-sprint" aria-hidden="true" data-spid="">Complete this sprint</button>
-              <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            </div>
-          </form>
-        </div>
-        
-        <div class="tab-pane" id="tab-comment">
+        <div class="tab-pane tab-comment" id="tab-sprint-comment">
           <div class="modal-body">
             <input type="hidden" id="entity_id" value="" />
-            <input type="hidden" id="entity_type" value="" />
+            <input type="hidden" id="entity_type" value="{{{ENTITY_SPRINT}}}" />
             <div class="comment-list">
             </div>
             <div class="new-comment-form-wrapper">
               <h6>Add a new comment</h6>
-              <form action="#" method="POST" class="form-vertical form-validate new-comment-form" data-container="" autocomplete=off>
+              <form action="#" method="POST" class="form-vertical form-validate new-comment-form" data-container="#modal-edit-sprint .tab-comment" autocomplete=off>
                 <div class="control-group">
                   <div class="controls">
                     <textarea name="comment-message-new" class=span12" rows="3" data-rule-minlength="10" data-rule-required="true" placeholder="Message here"></textarea>
@@ -110,7 +71,7 @@
             </div>
             <div class="reply-comment-form-temp">
               <h6>Reply to this comment</h6>
-              <form action="#" method="POST" class='form-vertical form-validate' data-reply-to="" data-container="" autocomplete=off>
+              <form action="#" method="POST" class='form-vertical form-validate' data-reply-to="" data-container="#modal-edit-sprint .tab-comment" autocomplete=off>
                 <div class="control-group">
                   <div class="controls">
                     <textarea name="comment-message" id="comment-message" class="span12" data-rule-minlength="10" data-rule-required="true" rows="3" placeholder="Message here"></textarea>

@@ -9,6 +9,29 @@ h1, h2, h3, h4, h5, h6 {
 #project-datatable .btn {
   margin-right: 5px;
 }
+#task-control-bar{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  min-height: 30px;
+  border-top: 2px solid #00ABA9;
+}
+#task-control-bar form{
+  margin: 0px;
+}
+#task-control-bar .form-horizontal .controls {
+  margin-left: 0px !important;
+}
+#task-control-bar .form-horizontal.form-column [class*="span"] .control-group .control-label {
+    width: inherit !important;
+}
+.other_filter_wrapper{
+  width: 20%;
+}
+#other_filter{
+  width: 200px;
+}
 /*Loading gif*/
 .loader {
   display: none;
@@ -429,7 +452,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .story {
   background-color: #A4CCF1;
-  border: 1px solid #00ABA9;
   border-radius: 5px;
   line-height: 30px;
   min-width: 200px;
@@ -438,6 +460,15 @@ h1, h2, h3, h4, h5, h6 {
   padding-left: 5px;
   margin-bottom: 5px;
   /*max-width: 238px;*/
+}
+.edit-story{
+  color: #FFFFFF;
+}
+.story-addable{
+  border: 2px solid #00ABA9;
+}
+.story-unaddable{
+  border: 2px solid #FF1919;
 }
 .sprint-story-list .story div {
   /*display: inline-block;*/

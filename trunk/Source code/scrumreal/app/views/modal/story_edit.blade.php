@@ -8,7 +8,10 @@
           <a href="#tab-story-info-edit" data-toggle="tab">Story infomations</a>
         </li>
         <li>
-          <a href="#tab-comment" data-toggle="tab">Comment</a>
+          <a href="#tab-task" data-toggle="tab">Tasks</a>
+        </li>
+        <li>
+          <a href="#tab-story-comment" data-toggle="tab">Comment</a>
         </li>
         <li>
           <a href="#tab-story-activity" data-toggle="tab">Activity</a>
@@ -19,13 +22,14 @@
       <div class="tab-content row-fluid">
         <div class="alert_block"></div>
         <div class="tab-pane active" id="tab-story-info-edit">
-          <form action="#" method="POST" class='form-horizontal form-validate' id="form-add-story">
+          <form action="#" method="POST" class='form-horizontal form-validate' id="form-edit-story" autocomplete="off">
             <div class="box-content row-fluid">
               <div class="modal-body">
+                <input type="hidden" id="sid" name="sid" value="" />
                 <div class="control-group">
                   <label for="name" class="control-label">Story name <small>Require</small></label>
                   <div class="controls">
-                    <input type="text" placeholder="Input story name here" name="name" id="name" class="span8">
+                    <input type="text" placeholder="Input story name here" name="name" id="name" class="span8" data-rule-required="true">
                   </div>
                 </div>
                 <div class="control-group">
@@ -43,90 +47,105 @@
                 <div class="control-group">
                   <label for="status" class="control-label">Status</label>
                   <div class="controls">
-                    <select name="status" id="status" data-rule-required="true" class="span8">
+                    <select id="status" data-rule-required="true" class="span8" disabled="disabled">
                       <option value=""></option>
                       <option value="1">New</option>
-                      <option value="2">Estimated</option>
-                      <option value="3">Assigned to sprint</option>
-                      <option value="4">To do</option>
-                      <option value="5">In progress</option>
-                      <option value="6">To test</option>
-                      <option value="7">Done</option>
-                      <option value="8">Sprint completed</option>
+                      <option value="2">Approved</option>
+                      <option value="3">Estimated</option>
+                      <option value="4">Assigned to sprint</option>
+                      <option value="5">To do</option>
+                      <option value="6">In progress</option>
+                      <option value="7">To test</option>
+                      <option value="8">Done</option>
+                      <option value="9">Sprint completed</option>
                     </select>
                   </div>
                 </div>
                 <div class="control-group">
-                  <label for="time_estimate" class="control-label">Estimate time <small>Require</small></label>
+                  <label for="time_estimate" class="control-label">Estimate time <small>Day(s)</small></label>
                   <div class="controls">
-                    <input type="text" placeholder="Input story name here" name="time_estimate" id="time_estimate" class="span8">
+                    <input type="text" placeholder="Input time estimate here" name="time_estimate" data-rule-number="true" id="time_estimate" class="span8" data-rule-required="true" >
                   </div>
                 </div>
                 <div class="control-group">
-                  <label for="sprint" class="control-label">Sprint</label>
+                  <label for="create_user" class="control-label">Create user</label>
                   <div class="controls">
-                    <div class="add-min-height"><select name="sprint" id="sprint" class="select2-me span8" data-placeholder="Please select">
-                        <option value=""></option>
-                        <option value="1">Sprint 1</option>
-                        <option value="2">Sprint 2</option>
-                        <option value="3">Sprint 3</option>
-                        <option value="4">Sprint 4</option>
-                      </select></div>
-                    <span class="help-block">Add sprint</span>
+                    <input type="text" placeholder="Create user" name="create_user" id="create_user" class="span8" disabled="disabled">
                   </div>
                 </div>
                 <div class="control-group">
-                  <label for="team" class="control-label">Team</label>
+                  <label for="point" class="control-label">Points <small>Points</small></label>
                   <div class="controls">
-                    <div class="add-min-height"><select name="team" id="team" class="select2-me span8" data-placeholder="Please select">
-                        <option value=""></option>
-                        <option value="1">Team 1</option>
-                        <option value="2">Team 2</option>
-                        <option value="3">Team 3</option>
-                        <option value="4">Team 4</option>
-                      </select></div>
-                    <span class="help-block">Add team</span>
+                    <input type="text" placeholder="Story points" name="point" id="point" class="span8" data-rule-number="true" data-rule-required="true" >
                   </div>
                 </div>
                 <div class="control-group">
-                  <label for="story-rough-estimate" class="control-label">Rough estimate <small>Require</small></label>
+                  <label for="demo" class="control-label">How to demo <small>Require</small></label>
                   <div class="controls">
-                    <input type="text" placeholder="Story points" name="story-rough-estimate" id="story-rough-estimate" class="span8">
+                    <textarea name="demo" id="demo" class="input-block-level span11" placeholder="Describe how to demo story" data-rule-required="true" ></textarea>
                   </div>
                 </div>
                 <div class="control-group">
-                  <label for="story-demo-way" class="control-label">How to demo <small>Require</small></label>
+                  <label for="description" class="control-label">Description <small>Require</small></label>
                   <div class="controls">
-                    <textarea name="story-demo-way" id="story-demo-way" class="input-block-level span11" placeholder="Describe how to demo story"></textarea>
-                  </div>
-                </div>
-                <div class="control-group">
-                  <label for="story-description" class="control-label">Description <small>Require</small></label>
-                  <div class="controls">
-                    <textarea name="story-description" id="story-description" class="input-block-level span11" placeholder="Describe story"></textarea>
+                    <textarea name="description" id="description" class="input-block-level span11" placeholder="Describe story" data-rule-required="true" ></textarea>
                   </div>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
               <span class="loader"><img src="img/loading.gif" /></span>
-              <input type="submit" class="btn btn-primary" value="Add story">
-              <button class="btn btn-red" aria-hidden="true">Approve</button>
+              <input type="submit" class="btn btn-primary" value="Save story">
+              <button class="btn btn-red approve-story" data-sid="" data-status="" aria-hidden="true">Approve</button>
               <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             </div>
           </form>
         </div>
 
-        <div class="tab-pane" id="tab-comment">
+        <div class="tab-pane" id="tab-task">
+          <div class="modal-body">
+            <table class="table table-hover table-nomargin table-bordered usertable" id="task-datatable">
+              <thead>
+                <tr class="thefilter">
+                  <th>Task name</th>
+                  <th>Time estimate</th>
+                  <th>Status</th>
+                  <th>Create time</th>
+                  <th>Create user</th>
+                  <th>Description</th>
+                  <th>Assign to</th>
+                  <th>Options</th>
+                </tr>
+                <tr>
+                  <th>Task name</th>
+                  <th>Time estimate</th>
+                  <th></th>
+                  <th>Create time</th>
+                  <th>Create user</th>
+                  <th>Description</th>
+                  <th>Assign to</th>
+                  <th>Options</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <a href="#modal-add-task" data-backdrop="static" data-toggle="modal" role="button" class="btn btn-primary mr10" data-sid="" data-status="" aria-hidden="true">Add task</a>
+          </div>
+        </div>
+
+        <div class="tab-pane tab-comment" id="tab-story-comment">
           <div class="modal-body">
             <input type="hidden" id="entity_id" value="" />
-            <input type="hidden" id="entity_type" value="" />
+            <input type="hidden" id="entity_type" value="{{{ENTITY_STORY}}}" />
             <div class="comment-list">
             </div>
 
             <div class="new-comment-form-wrapper">
               <h6>Add a new comment</h6>
-              <form action="#" method="POST" class="form-vertical form-validate new-comment-form" data-container="" autocomplete=off>
+              <form action="#" method="POST" class="form-vertical form-validate new-comment-form" data-container="#modal-edit-story .tab-comment" autocomplete=off>
                 <div class="control-group">
                   <div class="controls">
                     <textarea name="comment-message-new" class=span12" rows="3" data-rule-minlength="10" data-rule-required="true" placeholder="Message here"></textarea>
@@ -138,7 +157,7 @@
 
             <div class="reply-comment-form-temp">
               <h6>Reply to this comment</h6>
-              <form action="#" method="POST" class='form-vertical form-validate' data-reply-to="" data-container="" autocomplete=off>
+              <form action="#" method="POST" class='form-vertical form-validate' data-reply-to="" data-container="#modal-edit-story .tab-comment" autocomplete=off>
                 <div class="control-group">
                   <div class="controls">
                     <textarea name="comment-message" id="comment-message" class="span12" data-rule-minlength="10" data-rule-required="true" rows="3" placeholder="Message here"></textarea>
@@ -167,6 +186,7 @@
             </div>
           </div>
         </div>
+
         <div class="tab-pane" id="tab-story-activity">
           <div class="modal-body">
             <ul class="timeline">

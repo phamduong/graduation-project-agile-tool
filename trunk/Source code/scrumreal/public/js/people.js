@@ -30,10 +30,11 @@ $(document).ready(function() {
 
   $(".team-list").on("click", ".team-name", function(event) {
     $('body').modalmanager('loading');
+    var tid = $(this).attr("href");
     $.ajax({
       url: "team/edit",
       type: "POST",
-      data: {tid: $(this).attr("href")},
+      data: {tid: tid},
       global: false,
       success: function(response) {
         if (response.status === 200) {
@@ -46,7 +47,7 @@ $(document).ready(function() {
           $(parent + "#description").val(team_info.description);
           //comment
           var comment = response.comment;
-          getComment("#modal-edit-team", comment);
+          getComment("#modal-edit-team", tid, comment);
           $("#modal-edit-team").modal('show');
         }
       }, error: function(response) {

@@ -55,10 +55,10 @@ $(document).ready(function() {
           $(parent + "#owner").select2("data", {id: project_info.owner_id, text: project_info.owner_name});
           $(parent + "#description").val(project_info.description);
           $(parent + "#note").val(project_info.note);
-          $("#modal-edit-project").modal('show');
+          $("#modal-edit-project").modal("show");
           //Set project comment
           var comment = response.comment;
-          getComment("#modal-edit-project", comment);
+          getComment("#modal-edit-project", pid, comment);
         }
       }, error: function(response) {
         var err = jQuery.parseJSON(response.responseText);

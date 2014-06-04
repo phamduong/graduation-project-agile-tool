@@ -49,11 +49,40 @@ class StoryController extends BaseController {
       $sid = $input['sid'];
       $story = new Story;
       $comment = new Comment;
-//      $data['story_info'] = $story->getStory();
+      $data['story_info'] = $story->getStory($sid);
       //Get comment
       $data['comment'] = $comment->getComment($sid, ENTITY_STORY);
       $data['status'] = 200;
       $data['message'] = '';
+    }
+    return $data;
+  }
+
+  public function approve() {
+    $input = Input::all();
+    $data = array('status' => 800, 'message' => 'Appoved unsucessfully');
+    if (isset($input['sid'])) {
+      $sid = $input['sid'];
+      $story = new Story;
+      if ($story->approveStory($sid)) {
+        $data = array('status' => 200, 'message' => 'Appoved sucessfully');
+      }
+    }
+    return $data;
+  }
+
+  public function save() {
+    $input = Input::all();
+    $data = array('status' => 800, 'message' => 'Save unsucessfully');
+    $story = Story::find($input['sid']);
+    $story->name = $input['name'];
+    $story->priority = $input['priority'];
+    $story->time_estimate = $input['time_estimate'];
+    $story->point = $input['point'];
+    $story->demo = $input['demo'];
+    $story->description = $input['description'];
+    if ($story->save()) {
+      $data = array('status' => 200, 'message' => 'Save sucessfully');
     }
     return $data;
   }

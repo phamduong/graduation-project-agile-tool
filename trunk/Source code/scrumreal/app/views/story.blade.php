@@ -5,7 +5,7 @@ Scrumreal - User story management
 @section('content')
 @include('modal/story_add')
 @include('modal/story_edit')
-@include('modal/tag_add')
+@include('modal/task_add')
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span12">
@@ -18,7 +18,7 @@ Scrumreal - User story management
         <div class="box-content nopadding">
           <div id="action_bar" class="row-fluid">
             <div class="span12">
-              <a href="#modal-add-story" data-backdrop="static" data-keyboard="false" id="btn-add-story" role="button" class="btn btn-primary pull-left btn-lightred mr10" data-toggle="modal"><i class="icon-plus"></i> Add story</a>
+              <a href="#modal-add-story" data-backdrop="static" id="btn-add-story" role="button" class="btn btn-primary pull-left btn-lightred mr10" data-toggle="modal"><i class="icon-plus"></i> Add story</a>
               <button id="btn-download-excel" class="btn btn-primary pull-right mr10"><i class="icon-download-alt"></i> Excel</button>
             </div>
           </div>
@@ -53,6 +53,7 @@ Scrumreal - User story management
     </div>
   </div>
   <script src="{{ asset("js/story.js" ) }}"></script>
+  <script src="{{ asset("js/theme.js" ) }}"></script>
   <!-- dataTables -->
   <script src="{{ asset("js/plugins/datatable/jquery.dataTables.min.js") }}"></script>
   <script src="{{ asset("js/plugins/datatable/TableTools.min.js") }}"></script>

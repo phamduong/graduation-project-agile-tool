@@ -51,7 +51,7 @@ $(document).ready(function() {
     var container = $(this).attr("data-box-id");
     alert(container);
   });
-  
+
   //User select to go to menu -> check select project
   $(".main-nav li[id!='project']").click(function(event) {
     var link = $(this).attr("id");
@@ -69,8 +69,245 @@ $(document).ready(function() {
     });
     event.preventDefault();
   });
+
+  //Submit add task form
+  $("#form-add-task").submit(function(e) {
+    $("#form-add-task input:submit").attr("disabled", "disabled");
+    e.preventDefault();
+    if ($(this).valid() === true) {
+      var data = $(this).serialize();
+      data += "&sid=" + window.current_story;
+      $.ajax({
+        url: "task/add",
+        type: "POST",
+        data: data,
+        success: function(response) {
+          if (response.status === 200) {
+            showAlert(1, true, response.message);
+            setTimeout(function() {
+              $("#modal-add-task").modal('hide');
+            }, 1000);
+            var oTable = $("#task-datatable").dataTable();
+            oTable.fnReloadAjax();
+            clearFormInput("#form-add-task");
+          }
+        }
+      });
+    }
+  });
+
+
+  //Close modal -> destroy task-datatables
+  $("#modal-edit-story").on("hidden", function() {
+    var oTable = $("#task-datatable").dataTable();
+    if (oTable !== null) {
+      oTable.fnDestroy();
+    }
+  });
   
+  //Add story form
+  $("#form-add-story").submit(function(event) {
+    if ($(this).valid() === true) {
+      $.ajax({
+        url: "/story/add",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(response) {
+          if (response.status === 800) { //error
+            showAlert(0, true, response.message);
+          } else if (response.status === 200) {
+            appendStoryToHTML();
+            showAlert(1, true, response.message);
+            setTimeout(function() {
+              $("#modal-add-story").modal('hide');
+            }, 1000);
+            clearFormInput("#form-add-story");
+          }
+        }
+      });
+    }
+    event.preventDefault();
+  });
+
+  //Edit story form
+  $("#modal-edit-story").on("submit", "#form-edit-story", function(e) {
+    e.preventDefault();
+    if ($(this).valid() === true) {
+      $.ajax({
+        url: "/story/save",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(response) {
+          if (response.status === 200) {
+            showAlert(1, true, response.message);
+            setTimeout(function() {
+              $("#modal-edit-story").modal("hide");
+            }, 1000);
+            appendStoryToHTML();
+          } else if (response.status === 200) {
+            showAlert(0, true, response.message);
+          }
+        }
+      });
+    }
+  });
+
 });
+
+/**
+ * When submit edit sotry succesfully
+ * @returns {undefined}
+ */
+function appendStoryToHTML() {
+  var page = $(location).attr('pathname');
+  if (page === '/story') {
+    var oTable = $("#user-story-datatable").dataTable();
+    oTable.fnReloadAjax();
+  } else if (page === '/sprint') {
+    location.reload();
+  }
+}
+
+/**
+ * 
+ * @returns {undefined}
+ */
+function initTaskDatatable(sid) {
+  var sAjaxSource = "/task/get_datatables/" + sid + "/";
+  console.log(sAjaxSource)
+  var opt = {
+    "sAjaxSource": sAjaxSource,
+    "sDom": "<'row-fluid well-search'<'span5'Ti><'span2'f><'span5'p><'clear'><'container-processing'r>>t<'row-fluid'<'span6'i><'span6'p>>",
+    "sPaginationType": "full_numbers",
+    "oLanguage": {
+      "sSearch": "<span>Search:</span> ",
+      "sInfo": "Showing <span>_START_</span> to <span>_END_</span> of <span>_TOTAL_</span> entries",
+      "sLengthMenu": "_MENU_ <span>entries per page</span>"
+    },
+    "aoColumns": [
+      {"mData": "name"},
+      {"mData": "time_estimate"},
+      {"mData": "status"},
+      {"mData": "create_date"},
+      {"mData": "create_user"},
+      {"mData": "description"},
+      {"mData": "assign"},
+      {"mData": "taid"}
+    ],
+    'aoColumnDefs': [
+      {
+        'bSortable': false,
+        'aTargets': [7]
+      },
+      {
+        "mRender": function(data, type, row) {
+          switch (row["status"]) {
+            case 1:
+              return "To do";
+              break;
+            case 2:
+              return "In progress";
+              break;
+            case 3:
+              return "To test";
+              break;
+            case 4:
+              return "Done";
+              break;
+          }
+        },
+        'aTargets': [2]
+      },
+      {
+        "mRender": function(data, type, row) {
+          $html = '<div id="task_' + row['taid'] + '_ac"><a href="' + row['taid'] + '" class="btn view_story" rel="tooltip" title="View"><i class="icon-edit"></i></a>'
+                  + '</div>';
+          return $html;
+        },
+        'aTargets': [7]
+      }
+    ],
+    "oLanguage": {
+      "sLengthMenu": "_MENU_",
+      "sInfo": "Showing _START_ to _END_ of _TOTAL_ entries <span class='selected_rows'></span>",
+      "sSearch": "",
+      "oPaginate": {
+        "sNext": "Next",
+        "sPrevious": "Previous",
+      },
+      "sEmptyTable": "No data available in table",
+      "sInfoEmpty": "Showing 0 to 0 of 0 entries",
+      "sInfoFiltered": "(filtered from _MAX_ total entries)",
+      "sLoadingRecords": "Loading...",
+      "sProcessing": "<i class='icon-spinner icon-spin icon-large'></i> Processing..."
+    },
+    'oColVis': {
+      "buttonText": "Change columns <i class='icon-angle-down'></i>"
+    },
+    'oTableTools': {
+      //"sRowSelect": "single",
+      "aButtons": [],
+      //"sSelectedClass": 'row_selected',
+    }
+  };
+  oTable = $('#task-datatable').dataTable(opt);
+
+  $('.dataTables_filter input').attr("placeholder", "Search here...");
+  $(".dataTables_length select").wrap("<div class='input-mini'></div>").chosen({
+    disable_search_threshold: 9999999
+  });
+  // $("#check_all").click(function(e){
+  // 	$('input', oTable.fnGetNodes()).prop('checked',this.checked);
+  // });
+  $.datepicker.setDefaults({
+    dateFormat: "dd-mm-yy"
+  });
+  oTable.columnFilter({
+    "sPlaceHolder": "head:after",
+    'aoColumns': [
+      {
+        type: "text",
+      },
+      {
+        type: "text",
+      },
+      {
+        type: "select",
+        bCaseSensitive: false,
+        values: ['To do', 'In progress', 'To test', 'Done']
+      },
+      {
+        type: "date-range",
+        sRangeFormat: "{from} {to}",
+      },
+      {
+        type: "text",
+      },
+      {
+        type: "text",
+      },
+      {
+        type: "text",
+      },
+      null
+    ]
+  });
+  $("#user-story-datatable").css("width", '100%');
+  $('table#user-story-datatable > thead > tr:last-child').hide();
+
+  var html = '<button id="task_advanced_filter" class="advance-filter mr10 pull-right"><i class="icon-filter"></i></button>';
+  $('div.dataTables_wrapper > div.well-search > div:nth-child(3)').prepend(html);
+  $('table#task-datatable > thead > tr:last-child').hide();
+  $('#task_advanced_filter').click(function() {
+    $('table#task-datatable > thead > tr:last-child').toggle();
+    if ($('#task_advanced_filter').hasClass('advance-filter-active')) {
+      $('#task_advanced_filter').removeClass('advance-filter-active');
+      // reset_dt_view(oTable);
+    } else {
+      $('#task_advanced_filter').addClass('advance-filter-active');
+    }
+  });
+}
 
 /**
  * Only show loading to specific HTML element
@@ -96,14 +333,14 @@ function hideLoading(wrapper) {
   }
 }
 
-function showGlLoad(){
-  if($(".global-loading").css("display") == "none"){
+function showGlLoad() {
+  if ($(".global-loading").css("display") == "none") {
     $(".global-loading").css("display", "inline");
   }
 }
 
-function hideGlLoad(){
-  if($(".global-loading").css("display") == "inline"){
+function hideGlLoad() {
+  if ($(".global-loading").css("display") == "inline") {
     $(".global-loading").css("display", "none");
   }
 }

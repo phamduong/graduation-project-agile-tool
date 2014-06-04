@@ -38,7 +38,35 @@ $(document).ready(function() {
             setTimeout(function() {
               $("#modal-add-sprint").modal('hide');
             }, 1000);
-            clearFormInput("#form-add-sprint");
+            setTimeout(function() {
+              location.reload();
+            }, 500);
+//            clearFormInput("#form-add-sprint");
+          }
+        }
+      });
+    }
+  });
+
+  $("#form-edit-sprint").submit(function(e) {
+    e.preventDefault();
+    if ($(this).valid() === true) {
+      $.ajax({
+        url: "sprint/save",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(response) {
+          if (response.status === 800) { //error
+            showAlert(0, true, response.message);
+          } else if (response.status === 200) {
+            showAlert(1, true, response.message);
+            setTimeout(function() {
+              $("#modal-edit-sprint").modal('hide');
+            }, 1000);
+            setTimeout(function() {
+              location.reload();
+            }, 500);
+//            clearFormInput("#form-add-sprint");
           }
         }
       });
@@ -49,22 +77,24 @@ $(document).ready(function() {
   $("#sprint-team-list").on("click", ".sprint-name", function(event) {
     event.preventDefault();
     $('body').modalmanager('loading');
+    var spid = $(this).attr("href");
     $.ajax({
       url: 'sprint/edit',
       type: 'POST',
-      data: {spid: $(this).attr("href")},
+      data: {spid: spid},
       global: false,
       success: function(response) {
         if (response.status === 200) {
           var parent = "#modal-edit-sprint #form-edit-sprint ";
           var sprint_info = response.sprint_info;
+          $(parent + "#spid").val(sprint_info.spid);
           $(parent + "#name").val(sprint_info.name);
           $(parent + "#sprint_time").val(sprint_info.start_date + " - " + sprint_info.end_date);
           $(parent + "#description").val(sprint_info.description);
           $(parent + ".complete-sprint").attr("data-spid", response.spid);
           //comment
           var comment = response.comment;
-          getComment("#modal-edit-sprint", comment);
+          getComment("#modal-edit-sprint", spid, comment);
           $("#modal-edit-sprint").modal('show');
         }
       },
@@ -72,6 +102,44 @@ $(document).ready(function() {
         var err = jQuery.parseJSON(response.responseText);
         $("#modal-error-notice .error-content").html(err.error.message);
         $("#modal-error-notice").modal('show');
+      }
+    });
+  });
+
+  //Edit story in story list
+  $(document).on("click", ".edit-story", function(e) {
+    e.preventDefault();
+    $('body').modalmanager('loading');
+    var sid = $(this).attr("href");
+    $.ajax({
+      url: "story/edit",
+      type: "POST",
+      data: {sid: sid},
+      global: false,
+      success: function(response) {
+        if (response.status === 200) {
+          initTaskDatatable(sid);
+          var parent = "#modal-edit-story #form-edit-story";
+          var story_info = response.story_info;
+          $(parent + " #sid").val(story_info.sid);
+          $(parent + " #name").val(story_info.name);
+          $(parent + " #priority").val(story_info.priority);
+          $(parent + " #status").val(story_info.status);
+          $(parent + " #time_estimate").val(story_info.time_estimate);
+          $(parent + " #create_user").val(story_info.create_user);
+          $(parent + " #point").val(story_info.point);
+          $(parent + " #demo").val(story_info.demo);
+          $(parent + " #description").val(story_info.description);
+          $(parent + " .approve-story").attr("data-sid", story_info.sid);
+          $(parent + " .approve-story").attr("data-status", story_info.status);
+          if (story_info.status > 1) {
+            $(parent + " .approve-story").css("display", "none");
+          }
+          //comment info
+          var comment = response.comment;
+          getComment("#modal-edit-story", sid, comment);
+          $("#modal-edit-story").modal("show");
+        }
       }
     });
   });
@@ -100,7 +168,7 @@ function initStoryDragDrop() {
 //  });
 
   // let the story items be draggable
-  $(".sprint-story-list .story").draggable({
+  $(".sprint-story-list .story-addable").draggable({
     cancel: "a.ui-icon", // clicking an icon won't initiate dragging
     revert: "invalid", // when not dropped, the item will revert back to its initial position
     containment: "document",
@@ -148,7 +216,7 @@ function initStoryDragDrop() {
       }
     },
     stop: function() {
-      if(end_id !== "story-not-se-list"){
+      if (end_id !== "story-not-se-list") {
         updateStoryOrder(end_id);
       }
       //Update story data-order on draged team

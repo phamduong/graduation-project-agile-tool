@@ -132,16 +132,76 @@
       @include('layouts/main_nav')
     </div>
     @if ($cur_user['show_nav'] == 1)
-      <div class="container-fluid" id="content">
-    @else
+    <div class="container-fluid" id="content">
+      @else
       <div class="container-fluid nav-hidden" id="content">
-    @endif
-      <div id="left" class='force-full no-resize'>
+        @endif
+        <div id="left" class='force-full no-resize'>
           @include('layouts/sub_nav')
         </div>
         <div id="main">
           @yield('content')
         </div>
       </div>
+      @if($active_nav == 'taskboard')
+      <div id="task-control-bar">
+        <form class="form-horizontal form-column form-bordered" method="POST" action="#">
+          <div class="span3">
+            <div class="control-group">
+              <label class="control-label" for="textfield">Status</label>
+              <div class="controls">
+                <input type="text" disabled="" class="input-large" id="textfield" name="textfield">
+              </div>
+            </div>
+          </div>
+          <div class="span1">
+            <div class="control-group">
+              <div class="controls">
+                <button class="btn btn-primary" type="submit" data-spid="">Edit sprint</button>
+              </div>
+            </div>
+          </div>
+          <div class="span3">
+            <div class="control-group">
+              <label class="control-label" for="task_board_filter">Search</label>
+              <div class="controls">
+                <input type="text" class="input-large" placeholder="Search" id="task_board_filter" name="task_board_filter">
+              </div>
+            </div>
+          </div>
+          <div class="span2">
+            <div class="control-group">
+              <label class="control-label" for="sprint_filter">Sprint</label>
+              <div class="controls">
+                <select id="sprint_filter" name="sprint_filter" class="input-medium">
+                  @foreach($sprint_list as $sprint)
+                  <option value="{{{$sprint->spid}}}">{{{$sprint->name}}}</option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="span2-5">
+            <div class="control-group">
+              <!--<label class="control-label" for="other_filter"></label>-->
+              <div class="controls">
+                <select id="other_filter" name="other_filter" class="">
+                  <optgroup label="User">
+                    @foreach($user_list as $user)
+                    <option value="{{{$user->uid}}}">{{{$user->fullname}}}</option>
+                    @endforeach
+                  </optgroup>
+                  <optgroup label="Team">
+                    @foreach($team_list as $team)
+                    <option value="{{{$team->tid}}}">{{{$team->name}}}</option>
+                    @endforeach
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      @endif
   </body>
 </html>
