@@ -1,6 +1,6 @@
 $(document).ready(function() {
     initCalendar();
-    initContextMenu();
+//    initContextMenu();
 })
 
 function initCalendar() {
@@ -87,9 +87,9 @@ function initCalendar() {
                 // console.log(element);
             },
             dayRender: function(date, cell) {
-                if (date.getDay() == 0 || date.getDay() == 6) {
-                    cell.css("background-color", "#FFFF75");
-                }
+//                if (date.getDay() == 0 || date.getDay() == 6) {
+//                    cell.css("background-color", "#FFFF75");
+//                }
             }
         });
         $(".fc-button-effect").remove();

@@ -106,42 +106,19 @@ $(document).ready(function() {
     });
   });
 
-  //Edit story in story list
-  $(document).on("click", ".edit-story", function(e) {
+  $("#sprint-team-list").on("click", ".edit-story", function(e) {
+    window.story_locate = "sprint_page_left";
     e.preventDefault();
-    $('body').modalmanager('loading');
     var sid = $(this).attr("href");
-    $.ajax({
-      url: "story/edit",
-      type: "POST",
-      data: {sid: sid},
-      global: false,
-      success: function(response) {
-        if (response.status === 200) {
-          initTaskDatatable(sid);
-          var parent = "#modal-edit-story #form-edit-story";
-          var story_info = response.story_info;
-          $(parent + " #sid").val(story_info.sid);
-          $(parent + " #name").val(story_info.name);
-          $(parent + " #priority").val(story_info.priority);
-          $(parent + " #status").val(story_info.status);
-          $(parent + " #time_estimate").val(story_info.time_estimate);
-          $(parent + " #create_user").val(story_info.create_user);
-          $(parent + " #point").val(story_info.point);
-          $(parent + " #demo").val(story_info.demo);
-          $(parent + " #description").val(story_info.description);
-          $(parent + " .approve-story").attr("data-sid", story_info.sid);
-          $(parent + " .approve-story").attr("data-status", story_info.status);
-          if (story_info.status > 1) {
-            $(parent + " .approve-story").css("display", "none");
-          }
-          //comment info
-          var comment = response.comment;
-          getComment("#modal-edit-story", sid, comment);
-          $("#modal-edit-story").modal("show");
-        }
-      }
-    });
+    editStorySubmit(sid)
+  });
+
+  //Edit story in story list
+  $("#story-not-se-list").on("click", ".edit-story", function(e) {
+    window.story_locate = "sprint_page_right";
+    e.preventDefault();
+    var sid = $(this).attr("href");
+    editStorySubmit(sid)
   });
 });
 

@@ -170,16 +170,23 @@ Route::post('/sprint/update_order', [
     'uses' => 'SprintController@updateStoryOrder'
 ]);
 
+Route::get('/sprint/reload_story_list', [
+    'uses' => 'SprintController@reloadStoryList'
+]);
+
+
 Route::post('/task/add', [
     'uses' => 'TaskController@add'
 ]);
 
 Route::get('/task/get_datatables/{sid}', 'TaskController@getDatatables');
 
-Route::get('/taskboard', [
-    'uses' => 'TaskController@index'
+Route::get('/taskboard/{spid?}/{entity_type?}/{entity_id?}', 'TaskController@index');
+
+Route::get('/event', [
+    'uses' => 'EventController@index'
 ]);
 
-Route::get('/test', [
-    'uses' => 'LanguageController@index'
+Route::get('/report', [
+    'uses' => 'ReportController@index'
 ]);

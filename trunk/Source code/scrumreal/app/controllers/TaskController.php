@@ -2,10 +2,11 @@
 
 class TaskController extends BaseController {
 
-  public function index() {
+  public function index($spid = '', $entity_type = '', $entity_id = '') {
     if (Session::has('current_project')) {
       $data = array();
       $user = new User;
+      $task = new Task;
       //Comon data
       $data['lang'] = parent::getLanguage();
       $data['cur_user'] = parent::getCurrentUser();
@@ -18,6 +19,38 @@ class TaskController extends BaseController {
       $data['sprint_list'] = $sprint->getSprintInProject($current_project);
       $data['team_list'] = $team->getTeamOnProject($current_project);
       $data['user_list'] = $user->getUserInProject($current_project);
+      if ($spid == '') {
+        if (count($data['sprint_list']) !== 0) {
+          $spid = $data['sprint_list'][0]->spid;
+        } else {
+          //If current project does not have any sprint
+          return View::make('task', $data);
+        }
+      } else {
+        $data['selected_sprint'] = $spid;
+      }
+      //Get story in sprint
+      //IF GET BY TEAM -> get all stories for that team in current sprint
+      if ($entity_type === 'team') {
+        $data['story_in_sprint'] = $task->getStoryTaskByTeam($spid, $entity_id);
+        $data['selected_team'] = $entity_id . '_team';
+      } else {
+        $data['story_in_sprint'] = $task->getStoryTask($spid);
+      }
+      //IF GET BY USR -> get all tasks for that user in current sprint
+      if ($entity_type === 'user') {
+        $data['selected_user'] = $entity_id . '_user';
+        foreach ($data['story_in_sprint'] as $story) {
+          $story->task_in_sprint = $task->getTaskInStoryByUser($story->sid, $entity_id);
+        }
+      } else {
+        foreach ($data['story_in_sprint'] as $story) {
+          $story->task_in_sprint = $task->getTaskInStory($story->sid);
+        }
+      }
+//      print '<pre>';
+//      print_r($data);
+//      exit();
       return View::make('task', $data);
     } else {
       return Redirect::to('/project');

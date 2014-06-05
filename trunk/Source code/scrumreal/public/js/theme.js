@@ -56,7 +56,7 @@ $(document).ready(function() {
   $(".main-nav li[id!='project']").click(function(event) {
     var link = $(this).attr("id");
     $.ajax({
-      url: "project/check_current",
+      url: "/project/check_current",
       type: "GET",
       success: function(response) {
         if (response.status === 200) {
@@ -100,11 +100,9 @@ $(document).ready(function() {
   //Close modal -> destroy task-datatables
   $("#modal-edit-story").on("hidden", function() {
     var oTable = $("#task-datatable").dataTable();
-    if (oTable !== null) {
-      oTable.fnDestroy();
-    }
+    oTable.fnDestroy();
   });
-  
+
   //Add story form
   $("#form-add-story").submit(function(event) {
     if ($(this).valid() === true) {
@@ -116,11 +114,11 @@ $(document).ready(function() {
           if (response.status === 800) { //error
             showAlert(0, true, response.message);
           } else if (response.status === 200) {
-            appendStoryToHTML();
+            appendStoryToHTML("sprint_page_left");
             showAlert(1, true, response.message);
             setTimeout(function() {
               $("#modal-add-story").modal('hide');
-            }, 1000);
+            }, 1500);
             clearFormInput("#form-add-story");
           }
         }
@@ -140,10 +138,11 @@ $(document).ready(function() {
         success: function(response) {
           if (response.status === 200) {
             showAlert(1, true, response.message);
+            appendStoryToHTML(window.story_locate);
             setTimeout(function() {
               $("#modal-edit-story").modal("hide");
-            }, 1000);
-            appendStoryToHTML();
+            }, 1500);
+            clearFormInput("#form-edit-story");
           } else if (response.status === 200) {
             showAlert(0, true, response.message);
           }
@@ -158,13 +157,23 @@ $(document).ready(function() {
  * When submit edit sotry succesfully
  * @returns {undefined}
  */
-function appendStoryToHTML() {
+function appendStoryToHTML(locate) {
   var page = $(location).attr('pathname');
+//  console.log(locate);
+//  console.log(page);
   if (page === '/story') {
     var oTable = $("#user-story-datatable").dataTable();
     oTable.fnReloadAjax();
   } else if (page === '/sprint') {
-    location.reload();
+    if (locate === "sprint_page_right") {
+      $("#story-not-se-list .box-content").html("");
+      $("#story-not-se-list .box-content").load("/sprint/reload_story_list");
+    } else if (page === "sprint_page_left") {
+
+    }
+    else {
+      location.reload();
+    }
   }
 }
 
@@ -174,7 +183,6 @@ function appendStoryToHTML() {
  */
 function initTaskDatatable(sid) {
   var sAjaxSource = "/task/get_datatables/" + sid + "/";
-  console.log(sAjaxSource)
   var opt = {
     "sAjaxSource": sAjaxSource,
     "sDom": "<'row-fluid well-search'<'span5'Ti><'span2'f><'span5'p><'clear'><'container-processing'r>>t<'row-fluid'<'span6'i><'span6'p>>",
@@ -292,12 +300,12 @@ function initTaskDatatable(sid) {
       null
     ]
   });
-  $("#user-story-datatable").css("width", '100%');
-  $('table#user-story-datatable > thead > tr:last-child').hide();
-
+  $("#task-datatable").css("width", '100%');
+  $('table#task-datatable > thead > tr:last-child').hide();
+  
   var html = '<button id="task_advanced_filter" class="advance-filter mr10 pull-right"><i class="icon-filter"></i></button>';
   $('div.dataTables_wrapper > div.well-search > div:nth-child(3)').prepend(html);
-  $('table#task-datatable > thead > tr:last-child').hide();
+  
   $('#task_advanced_filter').click(function() {
     $('table#task-datatable > thead > tr:last-child').toggle();
     if ($('#task_advanced_filter').hasClass('advance-filter-active')) {
@@ -517,4 +525,40 @@ function showLoadMore(selector, count_from, count) {
   $(selector + ".load-more").attr('data-count-from', count_from);
   $(selector + ".load-more").attr('data-count', count);
   $(selector + ".load-more").show();
+}
+
+function editStorySubmit(sid) {
+  $('body').modalmanager('loading');
+  window.current_story = sid;
+  $.ajax({
+    url: "story/edit",
+    type: "POST",
+    data: {sid: sid},
+    global: false,
+    success: function(response) {
+      if (response.status === 200) {
+        initTaskDatatable(sid);
+        var parent = "#modal-edit-story #form-edit-story";
+        var story_info = response.story_info;
+        $(parent + " #sid").val(story_info.sid);
+        $(parent + " #name").val(story_info.name);
+        $(parent + " #priority").val(story_info.priority);
+        $(parent + " #status").val(story_info.status);
+        $(parent + " #time_estimate").val(story_info.time_estimate);
+        $(parent + " #create_user").val(story_info.create_user);
+        $(parent + " #point").val(story_info.point);
+        $(parent + " #demo").val(story_info.demo);
+        $(parent + " #description").val(story_info.description);
+        $(parent + " .approve-story").attr("data-sid", story_info.sid);
+        $(parent + " .approve-story").attr("data-status", story_info.status);
+        if (story_info.status > 1) {
+          $(parent + " .approve-story").css("display", "none");
+        }
+        //comment info
+        var comment = response.comment;
+        getComment("#modal-edit-story", sid, comment);
+        $("#modal-edit-story").modal("show");
+      }
+    }
+  });
 }

@@ -86,7 +86,10 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 /*Task board*/
-
+#task-board{
+  width: 100%;
+  margin-bottom: 40px;
+}
 #task-board .span10:first-child {
   margin-left: 17.094% !important;
 }
@@ -145,6 +148,13 @@ h1, h2, h3, h4, h5, h6 {
 #task-board .task-assign-name {
   font-size: 8px !important;
   text-align: center;
+}
+.taskboard-user-image{
+  width: 56px;
+  height: 56px;
+}
+.task-box-content .box-content .row-fluid:first-child{
+  min-height: 86px;
 }
 /*Datatables*/
 .dataTable {
@@ -458,6 +468,7 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 9000;
   min-height: 70px;
   padding-left: 5px;
+  padding-top: 5px;
   margin-bottom: 5px;
   /*max-width: 238px;*/
 }
