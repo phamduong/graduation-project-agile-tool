@@ -29,18 +29,35 @@ $(document).ready(function() {
   $("#other_filter").select2({
     width: '250px'
   });
+
+  //Choose sprint filter
+  $("#sprint_filter").change(function() {
+    var spid = $("#sprint_filter").select2("val");
+    window.location = "/taskboard/" + spid + "/";
+  });
+  
+  $("#other_filter").change(function(){
+    var temp = $("#other_filter").select2("val");
+    var spid = $("#sprint_filter").select2("val");
+    var entity_id = temp.split("_")[0];
+    var entity_type = temp.split("_")[1];
+    var url = "/taskboard/" + spid + "/" + entity_type + "/" + entity_id + "/";
+    window.location = url;
+  });
 });
 
 function caculateAllStory() {
-  $.each($("#task-board").find(".user-story td:first"), function(index, value) {
-    var max_height = 0;
+  var max_height;
+  $.each($("#task-board .user-story .story_info"), function() {
+    max_height = 0;
     $(this).parent().find(".story-tasks .task-box").each(function() {
       if ($(this).height() > max_height) {
+//        console.log(max_height);
+//        console.log($(this).height());
         max_height = $(this).height();
       }
-    })
-//  var height = $("#" + id).parent().find(".story-tasks:first .task-box").height();
-    if (max_height !== null) {
+    });
+    if (max_height !== null && max_height !== 0) {
       $(this).find(".story-content").css("height", (max_height - 80));
     }
   });

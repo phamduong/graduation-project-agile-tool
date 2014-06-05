@@ -380,7 +380,7 @@
             <div class="comment-temp" style="display: none">
               <div class="media" id="id-comment">
                   <a class="pull-left" href="#">
-                  <img src="<?php echo 'data/image/user/' . $cur_user['image']; ?>">
+                  <img src="<?php echo asset('data/image/user/' . $cur_user['image']); ?>">
                   </a>
                   <div class="media-body">
                     <h6 class="media-heading"><span class="user-comment">{{{$cur_user['name']}}}</span><small><span class="time-comment"></span></small></h6>

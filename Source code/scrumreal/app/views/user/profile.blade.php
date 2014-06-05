@@ -32,7 +32,7 @@ Scrumreal - User profile
                 <div class="row-fluid">
                   <div class="span2">
                     <div class="fileupload fileupload-new" data-provides="fileupload">
-                      <div class="fileupload-new thumbnail" style="max-width: 150px; max-height: 150px;"><img src="<?php echo 'data/image/user/' . $data['image']; ?>" /></div>
+                      <div class="fileupload-new thumbnail" style="max-width: 150px; max-height: 150px;"><img src="<?php echo asset('data/image/user/' . $data['image']); ?>" /></div>
                       <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 150px; max-height: 150px; line-height: 20px;"></div>
                       <div>
                         <span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" id="uimage" name="uimage" data-current="{{{$data['image']}}}"/></span>
@@ -84,12 +84,12 @@ Scrumreal - User profile
                   <label for="" class="control-label">Layout options</label>
                   <div class="controls">
                     <label class="checkbox" for="turn_on_of_nav">
-                    @if ($cur_user['show_nav'] == 1)
-                    <input type="checkbox" name="turn_on_of_nav" id="turn_on_of_nav" checked="checked">
-                    @else
-                    <input type="checkbox" name="turn_on_of_nav" id="turn_on_of_nav">
-                    @endif
-                    Always show navigation bar</label>
+                      @if ($cur_user['show_nav'] == 1)
+                      <input type="checkbox" name="turn_on_of_nav" id="turn_on_of_nav" checked="checked">
+                      @else
+                      <input type="checkbox" name="turn_on_of_nav" id="turn_on_of_nav">
+                      @endif
+                      Always show navigation bar</label>
                   </div>
                 </div>
                 <div class="form-actions">

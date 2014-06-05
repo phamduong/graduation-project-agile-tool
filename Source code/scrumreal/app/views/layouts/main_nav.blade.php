@@ -2,11 +2,6 @@
   <a href="#" id="brand">CONNECT</a>
   <a href="#" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Toggle navigation"><i class="icon-reorder"></i></a>
   <ul class='main-nav'>
-    <li id="dashboard">
-      <a href="index.html">
-        <span>{{{Lang::get('layout.dashboard')}}}</span>
-      </a>
-    </li>
     <li id="project">
       <a href="/project">
         <span>{{{Lang::get('layout.project')}}}</span>
@@ -32,7 +27,7 @@
         <span>{{{Lang::get('layout.taskboard')}}}</span>
       </a>
     </li>
-    <li id="calendar">
+    <li id="event">
       <a href="/event">
         <span>{{{Lang::get('layout.event')}}}</span>
       </a>
@@ -92,18 +87,18 @@
         </ul>
       </li>
       <li class='dropdown language-select'>
-        <a href="#" class='dropdown-toggle' data-toggle="dropdown"><img src="<?php echo 'img/demo/flags/' . $lang['current']['lang_icon'] ?>" alt=""><span>{{{strtoupper($lang['current']['lang_cd'])}}}</span></a>
+        <a href="#" class='dropdown-toggle' data-toggle="dropdown"><img src="<?php echo asset('img/demo/flags/' . $lang['current']['lang_icon']); ?>" alt=""><span>{{{strtoupper($lang['current']['lang_cd'])}}}</span></a>
         <ul class="dropdown-menu pull-right">
           @foreach($lang['lang_list'] as $lg)
           <li>
-            <a href="{{{route('language.select', $lg['lang_cd'])}}}" class="lang-select"><img src="<?php echo 'img/demo/flags/' . $lg['lang_icon']; ?>" alt=""><span>{{{$lg['lang_text']}}}</span></a>
+            <a href="{{{route('language.select', $lg['lang_cd'])}}}" class="lang-select"><img src="<?php echo asset('img/demo/flags/' . $lg['lang_icon']); ?>" alt=""><span>{{{$lg['lang_text']}}}</span></a>
           </li>
           @endforeach
         </ul>
       </li>
     </ul>
     <div class="dropdown">
-      <a href="#" class='dropdown-toggle' data-toggle="dropdown">{{{$cur_user['name']}}} <img src="<?php echo 'data/image/user/' . $cur_user['image']; ?>" class="uimage-small" alt=""></a>
+      <a href="#" class='dropdown-toggle' data-toggle="dropdown">{{{$cur_user['name']}}} <img src="<?php echo asset('data/image/user/' . $cur_user['image']); ?>" class="uimage-small" alt=""></a>
       <ul class="dropdown-menu pull-right">
         <li>
           <a href="/user-profile">{{{Lang::get('layout.edit_profile')}}}</a>

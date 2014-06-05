@@ -11,7 +11,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css" ) }}">
     <!--Bootstrap modal-->
-    <link rel="stylesheet" href="css/plugins/bootstrap-modal/bootstrap-modal.css">
+    <link rel="stylesheet" href="{{ asset("css/plugins/bootstrap-modal/bootstrap-modal.css")}}">
     <!-- Bootstrap responsive -->
     <link rel="stylesheet" href="{{ asset("css/bootstrap-responsive.min.css" ) }}">
     <!-- jQuery UI -->
@@ -33,7 +33,7 @@
     <!-- Update bootstrap -->
     <link rel="stylesheet" href="{{ asset("css/bootstrap_update.css") }}">
     <!-- Daterangepicker -->
-    <link rel="stylesheet" href="css/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="{{ asset("css/plugins/daterangepicker/daterangepicker.css")}}">
     <!-- Color CSS -->
     <link rel="stylesheet" href="{{ asset("css/themes.css" ) }}">
     <!-- Plupload -->
@@ -63,8 +63,8 @@
     <!-- Bootstrap -->
     <script src="{{ asset("js/bootstrap.min.js" ) }}"></script>
     <!-- Bootstrap modal -->
-    <script src="js/plugins/bootstrap-modal/bootstrap-modal.js"></script>
-    <script src="js/plugins/bootstrap-modal/bootstrap-modalmanager.js"></script>
+    <script src="{{ asset("js/plugins/bootstrap-modal/bootstrap-modal.js")}}"></script>
+    <script src="{{ asset("js/plugins/bootstrap-modal/bootstrap-modalmanager.js")}}"></script>
     <!-- vmap -->
     <script src="{{ asset("js/plugins/vmap/jquery.vmap.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/vmap/jquery.vmap.world.js" ) }}"></script>
@@ -72,7 +72,7 @@
     <!-- Bootbox -->
     <script src="{{ asset("js/plugins/bootbox/jquery.bootbox.js" ) }}"></script>
     <!-- Notify -->
-    <script src="js/plugins/gritter/jquery.gritter.min.js"></script>
+    <script src="{{ asset("js/plugins/gritter/jquery.gritter.min.js")}}"></script>
     <!-- Flot -->
     <script src="{{ asset("js/plugins/flot/jquery.flot.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/flot/jquery.flot.bar.order.min.js" ) }}"></script>
@@ -82,8 +82,6 @@
     <script src="{{ asset("js/plugins/imagesLoaded/jquery.imagesloaded.min.js" ) }}"></script>
     <!-- PageGuide -->
     <script src="{{ asset("js/plugins/pageguide/jquery.pageguide.js" ) }}"></script>
-    <!-- FullCalendar -->
-    <script src="{{ asset("js/plugins/fullcalendar/fullcalendar.min.js" ) }}"></script>
     <!-- Chosen -->
     <script src="{{ asset("js/plugins/chosen/chosen.jquery.min.js" ) }}"></script>
     <!-- select2 -->
@@ -96,8 +94,11 @@
     <script src="{{ asset("js/plugins/validation/jquery.validate.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/validation/additional-methods.min.js" ) }}"></script>
     <!-- Daterangepicker -->
+    <script src="{{ asset("js/plugins/fullcalendar/moment.min.js" ) }}"></script>
+    <!--<script src="{{ asset("js/plugins/daterangepicker/moment.min.js" ) }}"></script>-->
     <script src="{{ asset("js/plugins/daterangepicker/daterangepicker.js" ) }}"></script>
-    <script src="{{ asset("js/plugins/daterangepicker/moment.min.js" ) }}"></script>
+    <!-- FullCalendar -->
+    <script src="{{ asset("js/plugins/fullcalendar/fullcalendar.min.js" ) }}"></script>
     <!-- icheck -->
     <script src="{{ asset("js/plugins/icheck/jquery.icheck.min.js") }}"></script>
     <!-- Sparkline -->
@@ -131,18 +132,22 @@
     <div id="navigation">
       @include('layouts/main_nav')
     </div>
+
+
+
     @if ($cur_user['show_nav'] == 1)
     <div class="container-fluid" id="content">
+      <div id="left" class='force-full no-resize'>
+        @include('layouts/sub_nav')
+      </div>
       @else
       <div class="container-fluid nav-hidden" id="content">
         @endif
-        <div id="left" class='force-full no-resize'>
-          @include('layouts/sub_nav')
-        </div>
         <div id="main">
           @yield('content')
         </div>
       </div>
+
       @if($active_nav == 'taskboard')
       <div id="task-control-bar">
         <form class="form-horizontal form-column form-bordered" method="POST" action="#">
@@ -174,9 +179,19 @@
               <label class="control-label" for="sprint_filter">Sprint</label>
               <div class="controls">
                 <select id="sprint_filter" name="sprint_filter" class="input-medium">
-                  @foreach($sprint_list as $sprint)
-                  <option value="{{{$sprint->spid}}}">{{{$sprint->name}}}</option>
-                  @endforeach
+                  @if(isset($selected_sprint))
+                    @foreach($sprint_list as $sprint)
+                      @if($sprint->spid == $selected_sprint)
+                        <option value="{{{$sprint->spid}}}" selected="selected">{{{$sprint->name}}}</option>
+                      @else
+                        <option value="{{{$sprint->spid}}}">{{{$sprint->name}}}</option>
+                      @endif
+                    @endforeach
+                  @else
+                    @foreach($sprint_list as $sprint)
+                      <option value="{{{$sprint->spid}}}">{{{$sprint->name}}}</option>
+                    @endforeach
+                  @endif
                 </select>
               </div>
             </div>
@@ -186,15 +201,36 @@
               <!--<label class="control-label" for="other_filter"></label>-->
               <div class="controls">
                 <select id="other_filter" name="other_filter" class="">
+                  <option value=""></option>
                   <optgroup label="User">
-                    @foreach($user_list as $user)
-                    <option value="{{{$user->uid}}}">{{{$user->fullname}}}</option>
-                    @endforeach
+                    @if(isset($selected_user))
+                      @foreach($user_list as $user)
+                        @if($user->uid == $selected_user)
+                        <option value="{{{$user->uid}}}_user" selected="selected">{{{$user->fullname}}}</option>
+                        @else
+                          <option value="{{{$user->uid}}}_user">{{{$user->fullname}}}</option>
+                        @endif
+                      @endforeach
+                    @else
+                      @foreach($user_list as $user)
+                      <option value="{{{$user->uid}}}_user">{{{$user->fullname}}}</option>
+                      @endforeach
+                    @endif
                   </optgroup>
                   <optgroup label="Team">
-                    @foreach($team_list as $team)
-                    <option value="{{{$team->tid}}}">{{{$team->name}}}</option>
-                    @endforeach
+                    @if(isset($selected_team))
+                      @foreach($team_list as $team)
+                        @if($team->tid == $selected_team)
+                          <option value="{{{$team->tid}}}_team" selected="selected">{{{$team->name}}}</option>
+                        @else
+                          <option value="{{{$team->tid}}}_team">{{{$team->name}}}</option>
+                        @endif
+                      @endforeach
+                    @else
+                        @foreach($team_list as $team)
+                          <option value="{{{$team->tid}}}_team">{{{$team->name}}}</option>
+                        @endforeach
+                    @endif
                   </optgroup>
                 </select>
               </div>

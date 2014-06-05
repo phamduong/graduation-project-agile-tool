@@ -31,6 +31,24 @@ class SprintController extends BaseController {
     }
   }
 
+  public function reloadStoryList() {
+    $current_project = Session::get('current_project');
+    $sprint = new Sprint;
+    $story_not_asign = $sprint->getStoryNotAssign($current_project);
+    $html = "";
+    foreach ($story_not_asign as $story) {
+      if ($story->time_estimate == null) {
+        $html .= '<div id="story_' . $story->sid . '" data-sid="' . $story->sid . '" class="story story-unaddable" data-name="' . $story->name . '" data-order="">';
+      } else {
+        $html .= '<div id="story_' . $story->sid . '" data-sid="' . $story->sid . '" class="story story-addable" data-name="' . $story->name . '" data-order="">';
+      }
+      $html .= '<div class="story-name"><a href="' . $story->sid . '" class="edit-story">' . $story->name . '</a></div>';
+      $html .= '<div class="story-points badge badge-info">'.$story->point.' points</div>';
+      $html .= '</div></div>';
+    }
+    return $html;
+  }
+
   public function add() {
     $input = Input::all();
     $sprint = new Sprint;

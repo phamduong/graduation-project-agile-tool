@@ -35,12 +35,12 @@ Scrumreal - Team management
               <div class="box-content">
                 <div class="team-members">
                   <div data-name="{{{$team->master_name}}}" data-value="{{{$team->master_id}}}" class="leader ui-draggable">
-                    <img src="<?php echo 'data/image/user/' . $team->master_image; ?>" alt="">
+                    <img src="<?php echo asset('data/image/user/' . $team->master_image); ?>" alt="">
                     <p class="person-name">{{{$team->master_name}}}</p>
                   </div>
                   @foreach($team_members[$team->tid] as $mem)
                   <div data-uid="{{{$mem->uid}}}"  data-name="{{{$mem->fullname}}}" id="<?php echo "member_" . $mem->uid ?>" class="person ui-draggable">
-                    <img src="<?php echo 'data/image/user/' . $mem->image; ?>" alt="">
+                    <img src="<?php echo asset('data/image/user/' . $mem->image); ?>" alt="">
                     <p class="person-name">{{{$mem->fullname}}}</p>
                   </div>
                   @endforeach
@@ -84,7 +84,7 @@ Scrumreal - Team management
         <div class="box-content scrollable" data-height="520">
           @foreach($free_user as $user)
           <div id="<?php echo "member_" . $user->uid ?>" class="person" data-uid="{{{$user->uid}}}" data-name="{{{$user->fullname}}}">
-            <img alt="" src="<?php echo 'data/image/user/' . $user->image ?>">
+            <img alt="" src="<?php echo asset('data/image/user/' . $user->image); ?>">
             <p class="person-name">{{{$user->fullname}}}</p>
           </div>
           @endforeach
