@@ -66,4 +66,45 @@ SQL;
     return $result[0];
   }
 
+  public function checkExist($pid, $user_id) {
+    $exist = false;
+    $query = <<<SQL
+SELECT count(*) as count
+FROM project_user
+WHERE uid = ?
+	AND pid = ?
+SQL;
+    $result = DB::select($query, array($user_id, $pid, $user_role));    
+    return $result[0]->count;
+  }
+
+  public function insertProjectUser($pid, $user_id, $user_role) {
+    $query = <<<SQL
+INSERT INTO project_user
+  (
+    pid,
+    uid,
+    rid
+  )
+VALUE
+	(
+    ?,
+    ?,
+    ?
+  )
+SQL;
+    $result = DB::insert($query, array($pid, $user_id, $user_role));
+    return $result;
+  }
+
+  public function updateProjectUser($pid, $user_id, $user_role) {
+    $query = <<<SQL
+UPDATE project_user
+SET uid = ?
+WHERE pid = ? AND rid = ?
+SQL;
+    $result = DB::update($query, array($user_id, $pid, $user_role));
+    return $result;
+  }
+
 }

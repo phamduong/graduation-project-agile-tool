@@ -19,5 +19,10 @@ return array(
     'event' => 'Event',
     'report' => 'Report',
     'settings' => 'Settings',
-    'change_password' => 'Change password'
+    'change_password' => 'Change password',
+		'STATUS' => 'Status',
+		'NEW' => 'New',
+		'APPROVED' => 'Approved',
+		'ESTIMATED' => 'Estimated',
+		'ASIGNED' => 'Assigned'
 );

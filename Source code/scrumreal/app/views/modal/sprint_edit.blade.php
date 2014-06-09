@@ -44,7 +44,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <span class="loader"><img src="img/loading.gif" /></span>
+              <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
               <input type="submit" class="btn btn-primary" value="Save sprint">
               <button class="btn btn-red complete-sprint" aria-hidden="true" data-spid="">Complete this sprint</button>
               <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
@@ -78,8 +78,8 @@
                   </div>
                 </div>
                 <a class="btn cancel-reply-comment pull-right">Cancel</a>
-                <span class="loader"><img src="img/loading.gif" /></span>
-                <span class="loader"><img src="img/loading.gif" /></span>
+                <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
+                <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
                 <input type="submit" class="btn btn-primary pull-right btn-reply-comment-submit" value="Post comment">
               </form>
             </div>

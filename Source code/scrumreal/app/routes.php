@@ -52,6 +52,14 @@ Route::post('/user/change-pass', [
     'uses' => 'UserController@changePass'
 ]);
 
+Route::post('/user/edit', [
+    'uses' => 'UserController@edit'
+]);
+
+Route::post('/user/delete', [
+    'uses' => 'UserController@delete'
+]);
+
 Route::get('/project', [
     'uses' => 'ProjectController@index'
 ]);
@@ -68,6 +76,11 @@ Route::post('/project/add', [
     'uses' => 'ProjectController@add'
 ]);
 
+Route::post('/project/save', [
+    'uses' => 'ProjectController@save'
+]);
+
+
 Route::post('/project/set_current', [
     'uses' => 'ProjectController@setCurrentProject'
 ]);
@@ -82,6 +95,10 @@ Route::get('/story', [
 
 Route::post('/story/approve', [
     'uses' => 'StoryController@approve'
+]);
+
+Route::post('/story/delete', [
+    'uses' => 'StoryController@delete'
 ]);
 
 Route::post('/comment/reply', [
@@ -108,7 +125,6 @@ Route::post('/story/save', [
     'uses' => 'StoryController@save'
 ]);
 
-
 Route::get('/people', [
     'uses' => 'TeamController@index'
 ]);
@@ -133,9 +149,19 @@ Route::post('/people/move_to_team', [
     'uses' => 'TeamController@moveToTeam'
 ]);
 
-Route::get('/dashboard', function() {
-  return View::make('dashboard');
-});
+Route::get('/people/reload_list_staff', [
+    'uses' => 'TeamController@reloadListStaff'
+]);
+
+Route::get('/team/reload_team_data/{tid}', 'TeamController@reloadTeamData');
+
+Route::post('/team/save', [
+    'uses' => 'TeamController@save'
+]);
+
+Route::post('/team/delete', [
+    'uses' => 'TeamController@delete'
+]);
 
 Route::get('/sprint', [
     'uses' => 'SprintController@index'
@@ -179,12 +205,28 @@ Route::post('/task/add', [
     'uses' => 'TaskController@add'
 ]);
 
+Route::post('/task/edit', [
+    'uses' => 'TaskController@edit'
+]);
+
+Route::post('/task/save', [
+    'uses' => 'TaskController@save'
+]);
+
+Route::post('/task/update_status', [
+    'uses' => 'TaskController@update_status'
+]);
+
+Route::get('/task/reload_task_detail/{taid}', 'TaskController@reloadTaskDetail');
+
+Route::get('/task/reload_story_progress/{sid}', 'TaskController@reloadStoryProgress');
+
 Route::get('/task/get_datatables/{sid}', 'TaskController@getDatatables');
 
 Route::get('/taskboard/{spid?}/{entity_type?}/{entity_id?}', 'TaskController@index');
 
-Route::get('/event', [
-    'uses' => 'EventController@index'
+Route::post('/activity/get', [
+    'uses' => 'ActivityController@getActivityForEntity'
 ]);
 
 Route::get('/report', [

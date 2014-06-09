@@ -23,6 +23,7 @@
             <div class="box-content row-fluid">
               <div class="modal-body">
                 <div class='alert_block'></div>
+                <input type="hidden" value="" name="tid" id="tid" />
                 <div class="control-group">
                   <label for="name" class="control-label">Team name <small>Require</small></label>
                   <div class="controls">
@@ -51,8 +52,9 @@
               </div>
             </div>
             <div class="modal-footer">
-              <span class="loader"><img src="img/loading.gif" /></span>
-              <input type="submit" class="btn btn-primary" value="Add team">
+              <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
+              <input type="submit" class="btn btn-primary" value="Save team">
+              <button class="btn btn-red delete-team" data-tid="" aria-hidden="true">Delete</button>
               <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             </div>
           </form>
@@ -85,8 +87,8 @@
                   </div>
                 </div>
                 <a class="btn cancel-reply-comment pull-right">Cancel</a>
-                <span class="loader"><img src="img/loading.gif" /></span>
-                <span class="loader"><img src="img/loading.gif" /></span>
+                <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
+                <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
                 <input type="submit" class="btn btn-primary pull-right btn-reply-comment-submit" value="Post comment">
               </form>
             </div>

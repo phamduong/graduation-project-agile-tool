@@ -27,18 +27,13 @@
         <span>{{{Lang::get('layout.taskboard')}}}</span>
       </a>
     </li>
-    <li id="event">
-      <a href="/event">
-        <span>{{{Lang::get('layout.event')}}}</span>
-      </a>
-    </li>
     <li id="report">
       <a href="/report">
         <span>{{{Lang::get('layout.report')}}}</span>
       </a>
     </li>
   </ul>
-  <span class="global-loading"><img src="img/global_loading.gif" /></span>
+  <span class="global-loading"><img src="{{asset("img/global_loading.gif")}}" /></span>
   <div class="user">
     <ul class="icon-nav">
       <li class='dropdown'>
@@ -46,7 +41,7 @@
         <ul class="dropdown-menu pull-right message-ul">
           <li>
             <a href="#">
-              <img src="img/demo/user-1.jpg" alt="">
+              <img src="{{asset("img/demo/user-1.jpg")}}" alt="">
               <div class="details">
                 <div class="name">Jane Doe</div>
                 <div class="message">
@@ -57,7 +52,7 @@
           </li>
           <li>
             <a href="#">
-              <img src="img/demo/user-2.jpg" alt="">
+              <img src="{{asset("img/demo/user-2.jpg")}}" alt="">
               <div class="details">
                 <div class="name">John Doedoe</div>
                 <div class="message">
@@ -72,7 +67,7 @@
           </li>
           <li>
             <a href="#">
-              <img src="img/demo/user-3.jpg" alt="">
+              <img src="{{asset("img/demo/user-3.jpg")}}" alt="">
               <div class="details">
                 <div class="name">Bob Doe</div>
                 <div class="message">

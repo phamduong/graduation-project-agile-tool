@@ -23,7 +23,7 @@
         <div class="remember">
         </div>
         <input type="submit" value="<?php echo e(Lang::get('layout.sign_me_in')); ?>" class='btn btn-primary'>
-        <span class="loader"><img src="img/loading.gif" /></span>
+        <span class="loader"><img src="<?php echo asset("img/loading.gif"); ?>" /></span>
       </div>
     </form>
     <div class="forget">

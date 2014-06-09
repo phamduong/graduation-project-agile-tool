@@ -72,7 +72,7 @@ Scrumreal - User profile
                     </div>
                     <div class="form-actions">
                       <input type="submit" class='btn btn-primary' value="Save">
-                      <span class="loader"><img src="img/loading.gif" /></span>
+                      <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
                     </div>
                   </div>
                 </div>
@@ -94,7 +94,7 @@ Scrumreal - User profile
                 </div>
                 <div class="form-actions">
                   <input type="submit" class='btn btn-primary' value="Save settings">
-                  <span class="loader"><img src="img/loading.gif" /></span>
+                  <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
                 </div>
               </form>
             </div>
@@ -122,7 +122,7 @@ Scrumreal - User profile
                     </div>
                     <div class="form-actions">
                       <input type="submit" class='btn btn-primary' value="Change password">
-                      <span class="loader"><img src="img/loading.gif" /></span>
+                      <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
                     </div>
                   </div>
                 </div>

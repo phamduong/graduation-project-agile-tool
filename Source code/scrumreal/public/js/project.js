@@ -11,7 +11,7 @@ $(document).ready(function() {
   $("#form-add-project").submit(function(event) {
     if ($(this).valid() === true) {
       $.ajax({
-        url: "project/add",
+        url: "/project/add",
         type: "POST",
         data: $(this).serialize(),
         success: function(response) {
@@ -31,12 +31,36 @@ $(document).ready(function() {
     event.preventDefault();
   });
 
+  $("#form-edit-project").submit(function(e) {
+    e.preventDefault();
+    if ($(this).valid() === true) {
+      $.ajax({
+        url: "/project/save",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(response) {
+          if (response.status === 200) {
+            showAlert(1, true, response.message);
+            setTimeout(function() {
+              $("#modal-edit-project").modal('hide');
+            }, 1000);
+            var oTable = $("#project-datatable").dataTable();
+            oTable.fnReloadAjax();
+            setTimeout(function() {
+              clearFormInput("#form-edit-task");
+            }, 1000);
+          }
+        }
+      })
+    }
+  })
+
   //Edit project 
   $("#project-datatable").on("click", ".view_prj", function(event) {
     var pid = $(this).attr('href');
     $('body').modalmanager('loading');
     $.ajax({
-      url: "project/edit",
+      url: "/project/edit",
       type: "POST",
       data: {pid: pid},
       global: false,
@@ -48,17 +72,25 @@ $(document).ready(function() {
           $(parent + "#pid").val(project_info.pid);
           $(parent + "#name").val(project_info.name);
           $(parent + "#project_date_range").val(project_info.start_date + ' - ' + project_info.end_date);
-          $(parent + "#leader").val(project_info.leader_id);
+//          $(parent + "#leader").val(project_info.leader_id);
           //Because project owner is not on the list
-          var temp = '<option value="' + project_info.owner_name + '">' + project_info.owner_name + '</option>';
-          $(parent + "#owner").append(temp);
-          $(parent + "#owner").select2("data", {id: project_info.owner_id, text: project_info.owner_name});
+//          var temp = '<option value="' + project_info.owner_name + '">' + project_info.owner_name + '</option>';
+//          $(parent + "#owner").append(temp);
+          if (project_info.leader_id !== null) {
+            $(parent + "#leader").select2("data", {id: project_info.leader_id, text: project_info.leader_name});
+          }
+          if (project_info.owner_id !== null) {
+            $(parent + "#owner").select2("data", {id: project_info.owner_id, text: project_info.owner_name});
+          }
           $(parent + "#description").val(project_info.description);
           $(parent + "#note").val(project_info.note);
-          $("#modal-edit-project").modal("show");
+          
           //Set project comment
           var comment = response.comment;
           getComment("#modal-edit-project", pid, comment);
+          getActivity("#modal-edit-project", 1, pid, 0, 10);
+          
+          $("#modal-edit-project").modal("show");
         }
       }, error: function(response) {
         var err = jQuery.parseJSON(response.responseText);
@@ -75,7 +107,7 @@ $(document).ready(function() {
     var wrapper = "#project_" + pid + "_ac";
     showLoading(wrapper);
     $.ajax({
-      url: "project/set_current",
+      url: "/project/set_current",
       type: "POST",
       data: {pid: pid},
       global: false,

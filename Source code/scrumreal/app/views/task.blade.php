@@ -3,7 +3,6 @@
 Scrumreal - Sprint management
 @stop
 @section('content')
-@include('modal/task_add')
 @include('modal/task_edit')
 <div class="container-fluid">
   <div class="row-fluid">
@@ -52,19 +51,23 @@ Scrumreal - Sprint management
                     <div class="story-status badge badge-info">Sprint completed</div>
                     @endif
                     <div class="progress progress-info story-progress">
-                      <div class="bar" style="width: 81%">??%</div>
+                      <div class="bar" style="width: {{{$story->progress . '%'}}}">{{{$story->progress . '%'}}}</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </td>
-          @if(count($story->task_in_sprint) != 0)
+          @if(count($story->task_in_story) != 0)
           <td class="story-tasks to-do-tasks">
-            <div class="span10 task-box">
-              @foreach($story->task_in_sprint as $task)
+            <div class="span10 task-box" data-task-status="1">
+              @foreach($story->task_in_story as $task)
               @if($task->status === 1)
-              <div class="box box-color box-bordered blue box-condensed task-box-content">
+              @if($task->user_image != "")
+              <div class="box box-color box-bordered blue box-condensed task-item" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              @else
+              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              @endif
                 <div class="box-title">
                 </div>
                 <div class="box-content">
@@ -89,7 +92,7 @@ Scrumreal - Sprint management
                       {{{$task->time_estimate}}} d
                     </span>
                     <div class="span9 progress progress-info">
-                      <div class="bar" style="width: 81%">??%</div>
+                      <div class="bar" style="width: {{{$task->progress . '%'}}}">{{{$task->progress . '%'}}}</div>
                     </div>
                   </div>
                 </div>
@@ -99,10 +102,14 @@ Scrumreal - Sprint management
             </div>
           </td>
           <td class="story-tasks in-progress-tasks">
-            <div class="span10 task-box">
-              @foreach($story->task_in_sprint as $task)
+            <div class="span10 task-box" data-task-status="2">
+              @foreach($story->task_in_story as $task)
               @if($task->status === 2)
-              <div class="box box-color box-bordered blue box-condensed task-box-content">
+              @if($task->user_image != "")
+              <div class="box box-color box-bordered blue box-condensed task-item" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              @else
+              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              @endif
                 <div class="box-title">
                 </div>
                 <div class="box-content">
@@ -127,7 +134,7 @@ Scrumreal - Sprint management
                       {{{$task->time_estimate}}} d
                     </span>
                     <div class="span9 progress progress-info">
-                      <div class="bar" style="width: 81%">??%</div>
+                      <div class="bar" style="width: {{{$task->progress . '%'}}}">{{{$task->progress . '%'}}}</div>
                     </div>
                   </div>
                 </div>
@@ -137,10 +144,14 @@ Scrumreal - Sprint management
             </div>
           </td>
           <td class="story-tasks to-test-tasks">
-            <div class="span10 task-box">
-              @foreach($story->task_in_sprint as $task)
+            <div class="span10 task-box" data-task-status="3">
+              @foreach($story->task_in_story as $task)
               @if($task->status === 3)
-              <div class="box box-color box-bordered blue box-condensed task-box-content">
+              @if($task->user_image != "")
+              <div class="box box-color box-bordered blue box-condensed task-item" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              @else
+              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              @endif
                 <div class="box-title">
                 </div>
                 <div class="box-content">
@@ -165,7 +176,7 @@ Scrumreal - Sprint management
                       {{{$task->time_estimate}}} d
                     </span>
                     <div class="span9 progress progress-info">
-                      <div class="bar" style="width: 81%">??%</div>
+                      <div class="bar" style="width: {{{$task->progress . '%'}}}">{{{$task->progress . '%'}}}</div>
                     </div>
                   </div>
                 </div>
@@ -175,10 +186,14 @@ Scrumreal - Sprint management
             </div>
           </td>
           <td class="story-tasks done-tasks">
-            <div class="span10 task-box">
-              @foreach($story->task_in_sprint as $task)
+            <div class="span10 task-box" data-task-status="4">
+              @foreach($story->task_in_story as $task)
               @if($task->status === 4)
-              <div class="box box-color box-bordered blue box-condensed task-box-content">
+              @if($task->user_image != "")
+              <div class="box box-color box-bordered blue box-condensed task-item" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              @else
+              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              @endif
                 <div class="box-title">
                 </div>
                 <div class="box-content">
@@ -203,7 +218,7 @@ Scrumreal - Sprint management
                       {{{$task->time_estimate}}} d
                     </span>
                     <div class="span9 progress progress-info">
-                      <div class="bar" style="width: 81%">??%</div>
+                      <div class="bar" style="width: {{{$task->progress . '%'}}}">{{{$task->progress . '%'}}}</div>
                     </div>
                   </div>
                 </div>

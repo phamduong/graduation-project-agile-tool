@@ -79,8 +79,8 @@ $(document).ready(function() {
     $('body').modalmanager('loading');
     var spid = $(this).attr("href");
     $.ajax({
-      url: 'sprint/edit',
-      type: 'POST',
+      url: "sprint/edit",
+      type: "POST",
       data: {spid: spid},
       global: false,
       success: function(response) {
@@ -110,7 +110,7 @@ $(document).ready(function() {
     window.story_locate = "sprint_page_left";
     e.preventDefault();
     var sid = $(this).attr("href");
-    editStorySubmit(sid)
+    editStorySubmit(sid);
   });
 
   //Edit story in story list
@@ -118,7 +118,7 @@ $(document).ready(function() {
     window.story_locate = "sprint_page_right";
     e.preventDefault();
     var sid = $(this).attr("href");
-    editStorySubmit(sid)
+    editStorySubmit(sid);
   });
 });
 

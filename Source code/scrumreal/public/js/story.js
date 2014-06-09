@@ -9,28 +9,47 @@ $(document).ready(function() {
     editStorySubmit(sid);
   });
 
-  $("#form-edit-story").on("click", ".approve-story", function(e) {
+  $("#tab-story-info-edit").on("click", ".approve-story", function(e) {
     //If status === New -> allow to appoved it
     e.preventDefault();
-    if ($(this).attr("status") === 1) {
-      var sid = $(this).attr("data-sid");
-      $.ajax({
-        url: "/story/approve",
-        type: "POST",
-        data: {sid: sid},
-        success: function(response) {
-          if (response.status === 200) {
-            showAlert(1, true, response.message);
-            setTimeout(function() {
-              $("#modal-edit-story").modal("hide");
-            }, 1000);
-            appendStoryToHTML();
-          } else if (response.status === 200) {
-            showAlert(0, true, response.message);
-          }
+    var sid = $(this).attr("data-sid");
+    $.ajax({
+      url: "/story/approve",
+      type: "POST",
+      data: {sid: sid},
+      success: function(response) {
+        if (response.status === 200) {
+          showAlert(1, true, response.message);
+          setTimeout(function() {
+            $("#modal-edit-story").modal("hide");
+          }, 1000);
+          appendStoryToHTML();
+        } else if (response.status === 200) {
+          showAlert(0, true, response.message);
         }
-      });
-    }
+      }
+    });
+  });
+  
+  $("#tab-story-info-edit").on("click", ".delete-story", function(e) {
+    e.preventDefault();
+    var sid = $(this).attr("data-sid");
+    $.ajax({
+      url: "/story/delete",
+      type: "POST",
+      data: {sid: sid},
+      success: function(response) {
+        if (response.status === 200) {
+          showAlert(1, true, response.message);
+          setTimeout(function() {
+            $("#modal-edit-story").modal("hide");
+          }, 1000);
+          appendStoryToHTML();
+        } else if (response.status === 200) {
+          showAlert(0, true, response.message);
+        }
+      }
+    });
   });
 
 });

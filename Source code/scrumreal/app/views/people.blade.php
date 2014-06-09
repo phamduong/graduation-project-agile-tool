@@ -6,6 +6,7 @@ Scrumreal - Team management
 @include('modal/team_add')
 @include('modal/team_edit')
 @include('modal/user_add', $role)
+@include('modal/user_edit')
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span8">
@@ -93,5 +94,8 @@ Scrumreal - Team management
     </div>
   </div>
   <script src="{{ asset("js/people.js" ) }}"></script>
+  <!-- Daterangepicker -->
+  <script src="{{ asset("js/plugins/daterangepicker/daterangepicker.js") }}"></script>
+  <script src="{{ asset("js/plugins/daterangepicker/moment.min.js") }}"></script>
 </div>
 @stop

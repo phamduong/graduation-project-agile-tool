@@ -10,7 +10,7 @@ $(document).ready(function() {
     event.preventDefault();
     if ($(this).valid() === true) {
       $.ajax({
-        url: 'team/add',
+        url: '/team/add',
         type: 'POST',
         data: $(this).serialize(),
         success: function(response) {
@@ -18,6 +18,8 @@ $(document).ready(function() {
             showAlert(0, true, response.message);
           } else if (response.status === 200) {
             showAlert(1, true, response.message);
+            //Append new team to HTML
+
             setTimeout(function() {
               $("#modal-add-team").modal('hide');
             }, 1000);
@@ -28,11 +30,114 @@ $(document).ready(function() {
     }
   });
 
+  //Submit form edit team
+  $("#form-edit-team").submit(function(e) {
+    e.preventDefault();
+    if ($(this).valid() === true) {
+      var tid = $("#form-edit-team #tid").val();
+      $.ajax({
+        url: "/team/save",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(response) {
+          if (response.status === 200) {
+            showAlert(1, true, response.message);
+            $("#team_" + tid).html("");
+            $("#team_" + tid).load("/team/reload_team_data/" + tid);
+            var page = $(location).attr('pathname');
+            if (page === "/people") {
+              //in people page -> reload staff list
+              $("#staff-list .box-content").html();
+              $("#staff-list .box-content").load("/people/reload_list_staff");
+              setTimeout(function() {
+                $("#modal-edit-team").modal("hide");
+              }, 1000);
+            }
+          } else if (response.status === 200) {
+            showAlert(0, true, response.message);
+          }
+        }
+      });
+    }
+  });
+
+  //Delete team
+  $(".delete-team").click(function(e) {
+    e.preventDefault();
+    var tid = $(this).attr("data-tid");
+    $.ajax({
+      url: "/team/delete",
+      type: "POST",
+      data: {tid: tid},
+      success: function(response) {
+        if (response.status === 200) {
+          showAlert(1, true, response.message);
+          setTimeout(function() {
+            $("#modal-edit-team").modal("hide");
+          }, 1000);
+          //appendStoryToHTML();
+        } else if (response.status === 200) {
+          showAlert(0, true, response.message);
+        }
+      }
+    });
+  });
+
+  //View user detail
+  $("#staff-list").on("click", ".person-name", function(event) {
+    var uid = $(this).parent().attr("data-uid");
+    $.ajax({
+      url: "/user/edit",
+      type: "POST",
+      data: {uid: uid},
+      global: false,
+      success: function(response) {
+        if (response.status === 200) {
+          var parent = "#modal-edit-user #form-edit-user ";
+          var user_info = response.user_info;
+          $(parent + "#fullname").val(user_info.fullname);
+          $(parent + "#birthday").val(user_info.birthday);
+          $(parent + ".delete-user").attr("data-uid", user_info.uid);
+          $("#modal-edit-user").modal('show');
+        }
+      }, error: function(response) {
+        var err = jQuery.parseJSON(response.responseText);
+        $("#modal-error-notice .error-content").html(err.error.message);
+        $("#modal-error-notice").modal('show');
+      }
+    });
+  });
+
+  //Delete user
+  $(document).on("click", '.delete-user', function(e) {
+    e.preventDefault();
+    var uid = $(this).attr("data-uid");
+    $.ajax({
+      url: "/user/delete",
+      type: "POST",
+      data: {uid: uid},
+      success: function(response) {
+        if (response.status === 200) {
+          var page = $(location).attr('pathname');
+          if (page === "/people") {
+            //in people page -> reload staff list
+            $("#staff-list .box-content").html();
+            $("#staff-list .box-content").load("/people/reload_list_staff");
+            setTimeout(function() {
+              $("#modal-edit-user").modal("hide");
+            }, 1000);
+          }
+        }
+      }
+    });
+  })
+
+  //View team info
   $(".team-list").on("click", ".team-name", function(event) {
     $('body').modalmanager('loading');
     var tid = $(this).attr("href");
     $.ajax({
-      url: "team/edit",
+      url: "/team/edit",
       type: "POST",
       data: {tid: tid},
       global: false,
@@ -40,11 +145,13 @@ $(document).ready(function() {
         if (response.status === 200) {
           var parent = "#modal-edit-team #form-edit-team ";
           var team_info = response.team_info;
+          $(parent + "#tid").val(team_info.tid);
           $(parent + "#name").val(team_info.name);
-          var temp = '<option value="' + team_info.master_id + '">' + team_info.master_name + '</option>';
-          $(parent + "#master").append(temp);
+//          var temp = '<option value="' + team_info.master_id + '">' + team_info.master_name + '</option>';
+//          $(parent + "#master").append(temp);
           $(parent + "#master").select2("data", {id: team_info.master_id, text: team_info.master_name});
           $(parent + "#description").val(team_info.description);
+          $(parent + ".delete-team").attr("data-tid", team_info.tid);
           //comment
           var comment = response.comment;
           getComment("#modal-edit-team", tid, comment);
@@ -187,12 +294,12 @@ function initPeopleDragDrop() {
     drop: function(event, ui) {
       $(this).find(".scrollable").append(ui.draggable);
       if ($("#" + start_id).find("#" + select_id).length == 0) {
-        start_tid = 0;
         select_uid = $("#" + select_id).attr("data-uid");
         console.log("drop to people");
         console.log(select_uid);
         //Remove people from project
-        removeFromProject(select_uid);
+        removeFromProject(select_uid, start_tid);
+        start_tid = 0;
       }
       //Sort by name
       sortPeopleList();
@@ -208,13 +315,13 @@ function initPeopleDragDrop() {
   });
 }
 
-function removeFromProject(select_uid) {
+function removeFromProject(select_uid, start_tid) {
   showGlLoad();
   $.ajax({
-    url: "people/remove_from_project",
+    url: "/people/remove_from_project",
     type: "POST",
     global: false,
-    data: {select_uid: select_uid},
+    data: {select_uid: select_uid, tid: start_tid},
     success: function(response) {
       if (response.status === 200) {
         showAlert(1, true, response.message);
@@ -234,7 +341,7 @@ function removeFromProject(select_uid) {
 function addToProject(select_uid, end_tid) {
   showGlLoad();
   $.ajax({
-    url: "people/add_to_project",
+    url: "/people/add_to_project",
     type: "POST",
     global: false,
     data: {select_uid: select_uid, end_tid: end_tid},
@@ -257,7 +364,7 @@ function addToProject(select_uid, end_tid) {
 function moveToTeam(start_tid, end_tid, select_uid) {
   showGlLoad();
   $.ajax({
-    url: "people/move_to_team",
+    url: "/people/move_to_team",
     type: "POST",
     data: {start_tid: start_tid, end_tid: end_tid, select_uid: select_uid},
     success: function(response) {

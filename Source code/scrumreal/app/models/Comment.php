@@ -34,5 +34,15 @@ SQL;
     $result = DB::select($query, array($entity_id, $entity_type));
     return $result[0]->count;
   }
+  
+  public function getCommentDetail($cid){
+    $query = <<<SQL
+SELECT `comment`.content, `comment`.time
+FROM `comment`
+WHERE `comment`.cid = ?
+SQL;
+    $result = DB::select($query, array($cid));
+    return $result[0];
+  }
 
 }
