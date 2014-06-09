@@ -24,7 +24,7 @@
         <div class="remember">
         </div>
         <input type="submit" value="{{{Lang::get('layout.sign_me_in')}}}" class='btn btn-primary'>
-        <span class="loader"><img src="img/loading.gif" /></span>
+        <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
       </div>
     </form>
     <div class="forget">

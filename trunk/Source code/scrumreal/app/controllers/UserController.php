@@ -34,6 +34,32 @@ class UserController extends \BaseController {
       return View::make('user.login');
     }
   }
+  
+  public function edit(){
+    $input = Input::all();
+    $user = User::find($input['uid']);
+    $data = array(
+        'status' => 200,
+        'user_info' => array(
+            'uid' => $user->uid,
+            'fullname' => $user->fullname,
+            'birthday' => $user->birthday
+        )
+    );
+    return $data;
+  }
+  
+  public function delete(){
+    $input = Input::all();
+    $user = User::find($input['uid']);
+    $user->delete_flg = 1;
+    if($user->save()){
+      $data = array('status' => 200, 'message' => 'Delete user successfully!');
+    }else{
+      $data = array('status' => 800, 'message' => 'Delete user unsuccessfully!');
+    }
+    return $data;
+  }
 
   public function logout() {
     Auth::logout();

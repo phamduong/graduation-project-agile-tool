@@ -21,7 +21,7 @@ $(document).ready(function() {
   $("#form-add-user").submit(function(event) {
     if ($(this).valid() === true) {
       $.ajax({
-        url: 'user/add',
+        url: '/user/add',
         type: 'POST',
         data: $(this).serialize(),
         success: function(response) {
@@ -29,15 +29,25 @@ $(document).ready(function() {
             showAlert(0, true, response.message);
           } else if (response.status === 200) {
             showAlert(1, true, response.message);
-            if ($("#selected-role").val() != "") {
-              var select = $("#modal-add-project " + "#" + $("#selected-role").val());
-              var temp = '<option value="' + response.user.uid + '">' + response.user.full_name + '</option>';
-              select.append(temp);
-              select.select2("data", {id: response.user.uid, text: response.user.full_name});
-              $("#selected-role").val("");
+            var page = $(location).attr('pathname');
+            if (page === "/people") {
+              //in people page -> reload staff list
+              $("#staff-list .box-content").html();
+              $("#staff-list .box-content").load("/people/reload_list_staff");
               setTimeout(function() {
-                $("#modal-add-project").modal('hide');
+                $("#modal-add-user").modal('hide');
               }, 1500);
+            } else {
+              if ($("#selected-role").val() != "") {
+                var select = $("#modal-add-project " + "#" + $("#selected-role").val());
+                var temp = '<option value="' + response.user.uid + '">' + response.user.full_name + '</option>';
+                select.append(temp);
+                select.select2("data", {id: response.user.uid, text: response.user.full_name});
+                $("#selected-role").val("");
+                setTimeout(function() {
+                  $("#modal-add-project").modal('hide');
+                }, 1500);
+              }
             }
           }
         }
@@ -70,37 +80,11 @@ $(document).ready(function() {
     event.preventDefault();
   });
 
-  //Submit add task form
-  $("#form-add-task").submit(function(e) {
-    $("#form-add-task input:submit").attr("disabled", "disabled");
-    e.preventDefault();
-    if ($(this).valid() === true) {
-      var data = $(this).serialize();
-      data += "&sid=" + window.current_story;
-      $.ajax({
-        url: "task/add",
-        type: "POST",
-        data: data,
-        success: function(response) {
-          if (response.status === 200) {
-            showAlert(1, true, response.message);
-            setTimeout(function() {
-              $("#modal-add-task").modal('hide');
-            }, 1000);
-            var oTable = $("#task-datatable").dataTable();
-            oTable.fnReloadAjax();
-            clearFormInput("#form-add-task");
-          }
-        }
-      });
-    }
-  });
-
-
   //Close modal -> destroy task-datatables
   $("#modal-edit-story").on("hidden", function() {
     var oTable = $("#task-datatable").dataTable();
     oTable.fnDestroy();
+    $("#modal-edit-story #task-datatable tbody").html("");
   });
 
   //Add story form
@@ -153,6 +137,159 @@ $(document).ready(function() {
 
 });
 
+
+//Submit add task form
+$("#form-add-task").submit(function(e) {
+  e.preventDefault();
+  $("#form-add-task").unbind('submit');
+  if ($(this).valid() === true) {
+    $("#form-add-task input:submit").attr("disabled", "disabled");
+    var data = $(this).serialize();
+    data += "&sid=" + window.current_story;
+    $.ajax({
+      url: "/task/add",
+      type: "POST",
+      data: data,
+      success: function(response) {
+        if (response.status === 200) {
+          showAlert(1, true, response.message);
+          setTimeout(function() {
+            $("#modal-add-task").modal('hide');
+          }, 1000);
+          var oTable = $("#task-datatable").dataTable();
+          oTable.fnReloadAjax();
+          clearFormInput("#form-add-task");
+        }
+      }
+    });
+  }
+  return false;
+});
+
+
+function loadTask(taid) {
+  $('body').modalmanager('loading');
+  $.ajax({
+    url: "/task/edit",
+    type: "POST",
+    data: {taid: taid},
+    global: false,
+    success: function(response) {
+      if (response.status === 200) {
+        var parent = "#modal-edit-task #form-edit-task ";
+        var task_info = response.task_info;
+//        console.log(task_info);
+        $(parent + "#taid").val(task_info.taid);
+        $(parent + "#name").val(task_info.name);
+        $(parent + "#time_estimate").val(task_info.time_estimate);
+        $(parent + "#create_date").val(task_info.create_date);
+        $(parent + "#create_user").val(task_info.user_name);
+        $(parent + "#time_remain").val(task_info.time_remain);
+        if (task_info.status == 1) {
+          $(parent + "#time_remain").attr("disabled", "disabled");
+        } else {
+          $(parent + "#time_remain").removeAttr("disabled");
+        }
+        switch (task_info.status) {
+          case 1:
+            $(parent + "#status").val("To do");
+            break;
+          case 2:
+            $(parent + "#status").val("In progress");
+            break;
+          case 3:
+            $(parent + "#status").val("To test");
+            break;
+          case 4:
+            $(parent + "#status").val("Done");
+            break;
+        }
+        $(parent + "#description").val(task_info.description);
+        if (task_info.assign === 0) {
+          $(parent + "#uid").attr("disabled", "disabled");
+        } else {
+          $(parent + "#uid").removeAttr("disabled");
+          //$(parent + "#uid").attr("data-rule-required", "true");
+          var html = '<option value=""></option>';
+          $.each(response.user_in_team, function(key, value) {
+            html += '<option value="' + value.uid + '">' + value.fullname + '</option>';
+          });
+          $(parent + "#uid").html(html);
+          $(parent + "#uid").val(task_info.uid);
+        }
+        //comment
+        var comment = response.comment;
+        getComment("#modal-edit-task", taid, comment);
+        $("#modal-edit-task").modal('show');
+      }
+    },
+    error: function(response) {
+      var err = jQuery.parseJSON(response.responseText);
+      $("#modal-error-notice .error-content").html(err.error.message);
+      $("#modal-error-notice").modal('show');
+    }
+  });
+}
+
+/**
+ * View a task in modal edit story
+ */
+$("#modal-edit-story").on("click", ".view_task", function(e) {
+  e.preventDefault();
+  var taid = $(this).attr("href");
+  loadTask(taid);
+})
+
+//Submit form edit task
+$("#form-edit-task").submit(function(e) {
+  e.preventDefault();
+  $("#form-edit-task input:submit").attr("disabled", "disabled");
+  if ($(this).valid() === true) {
+    var data = $(this).serialize();
+    var has_user = false;
+    var taid = $("#form-edit-task #taid").val();
+    if ($("#form-edit-task #uid").val() !== "") {
+      has_user = true;
+    }
+    $.ajax({
+      url: "task/save",
+      type: "POST",
+      data: data,
+      success: function(response) {
+        if (response.status === 200) {
+          showAlert(1, true, response.message);
+          setTimeout(function() {
+            $("#modal-edit-task").modal('hide');
+          }, 1000);
+          appendTaskToHTML(taid, has_user);
+          setTimeout(function() {
+            clearFormInput("#form-edit-task");
+          }, 1000);
+        }
+      }, complete: function() {
+        $("#form-edit-task input:submit").attr("disabled", "disabled");
+      }
+    });
+  }
+});
+
+function appendTaskToHTML(taid, has_user, sid) {
+  var page = $(location).attr('pathname');
+  if (page === "/story" || page === "/sprint") {
+    var oTable = $("#task-datatable").dataTable();
+    oTable.fnReloadAjax();
+  } else {
+    if (has_user === true) {
+      $("#task_" + taid).removeClass("task-item-unsortabled");
+      $("#task_" + taid).addClass("task-item");
+    }
+    $("#task_" + taid).html("");
+    $("#story_" + sid + " .story-description .story-progress").html("");
+    $("#story_" + sid + " .story-description .story-progress").load("/task/reload_story_progress/" + sid);
+    $("#task_" + taid).load("/task/reload_task_detail/" + taid);
+  }
+}
+
 /**
  * When submit edit sotry succesfully
  * @returns {undefined}
@@ -161,7 +298,7 @@ function appendStoryToHTML(locate) {
   var page = $(location).attr('pathname');
 //  console.log(locate);
 //  console.log(page);
-  if (page === '/story') {
+  if (page === "/story") {
     var oTable = $("#user-story-datatable").dataTable();
     oTable.fnReloadAjax();
   } else if (page === '/sprint') {
@@ -228,7 +365,7 @@ function initTaskDatatable(sid) {
       },
       {
         "mRender": function(data, type, row) {
-          $html = '<div id="task_' + row['taid'] + '_ac"><a href="' + row['taid'] + '" class="btn view_story" rel="tooltip" title="View"><i class="icon-edit"></i></a>'
+          $html = '<div id="task_' + row['taid'] + '_ac"><a href="' + row['taid'] + '" class="btn view_task" rel="tooltip" title="View"><i class="icon-edit"></i></a>'
                   + '</div>';
           return $html;
         },
@@ -302,10 +439,10 @@ function initTaskDatatable(sid) {
   });
   $("#task-datatable").css("width", '100%');
   $('table#task-datatable > thead > tr:last-child').hide();
-  
+
   var html = '<button id="task_advanced_filter" class="advance-filter mr10 pull-right"><i class="icon-filter"></i></button>';
   $('div.dataTables_wrapper > div.well-search > div:nth-child(3)').prepend(html);
-  
+
   $('#task_advanced_filter').click(function() {
     $('table#task-datatable > thead > tr:last-child').toggle();
     if ($('#task_advanced_filter').hasClass('advance-filter-active')) {
@@ -329,6 +466,31 @@ function showLoading(wrapper) {
     $(".loader").show();
   }
 }
+
+function getActivity(selector, entity_type, entity_id, offset, limit) {
+  $.ajax({
+    url: "/activity/get",
+    type: "POST",
+    data: {entity_type: entity_type, entity_id: entity_id, offset: offset, limit: limit},
+    success: function(response) {
+//      console.log(response);
+      var act_list = response;
+      var act_temp = selector + " .tab-activity .activity-temp";
+      $(selector + " .tab-activity .timeline").html("");
+      $.each(act_list, function(key, act) {
+        $(act_temp + " .img-user-info").attr("src", "data/image/user/" + act.user_image);
+        $(act_temp + " .activity-text").html(act.text);
+        $(act_temp + " .activity-time").html(act.time);
+        $(selector + " .tab-activity .timeline").append($(act_temp).html());
+      });
+    }
+  })
+
+}
+
+$(".tab-activity").on("click", ".user", function(e) {
+  e.preventDefault();
+})
 
 /**
  * Hide loading gif 
@@ -531,7 +693,7 @@ function editStorySubmit(sid) {
   $('body').modalmanager('loading');
   window.current_story = sid;
   $.ajax({
-    url: "story/edit",
+    url: "/story/edit",
     type: "POST",
     data: {sid: sid},
     global: false,
@@ -551,12 +713,16 @@ function editStorySubmit(sid) {
         $(parent + " #description").val(story_info.description);
         $(parent + " .approve-story").attr("data-sid", story_info.sid);
         $(parent + " .approve-story").attr("data-status", story_info.status);
+        $(parent + " .delete-story").attr("data-sid", story_info.sid);
         if (story_info.status > 1) {
           $(parent + " .approve-story").css("display", "none");
+        } else {
+          $(parent + " .approve-story").css("display", "inline");
         }
         //comment info
         var comment = response.comment;
         getComment("#modal-edit-story", sid, comment);
+        getActivity("#modal-edit-story", 2, sid, 0, 10);
         $("#modal-edit-story").modal("show");
       }
     }

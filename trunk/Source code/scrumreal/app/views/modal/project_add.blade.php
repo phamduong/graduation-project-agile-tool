@@ -35,6 +35,7 @@
                 <div class="controls">
                   <div class="add-min-height">
                     <select name="leader" id="leader" class="select2-me span8" data-placeholder="Please select">
+                      <option value=""></option>
                       @foreach($candicate_leader as $user)
                         <option value="{{{$user->uid}}}">{{{$user->fullname}}}</option>
                       @endforeach
@@ -49,6 +50,7 @@
                 <div class="controls">
                   <div class="add-min-height">
                     <select name="owner" id="owner" class="select2-me span8" data-placeholder="Please select">
+                      <option value=""></option>
                       @foreach($free_user as $user)
                         <option value="{{{$user->uid}}}">{{{$user->fullname}}}</option>
                       @endforeach
@@ -102,7 +104,7 @@
       </div>
       <div class="modal-footer">
         <input type="submit" class="btn btn-primary" value="Add project">
-        <span class="loader"><img src="img/loading.gif" /></span>
+        <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
       </div>
     </form>

@@ -153,19 +153,19 @@
         <form class="form-horizontal form-column form-bordered" method="POST" action="#">
           <div class="span3">
             <div class="control-group">
-              <label class="control-label" for="textfield">Status</label>
+              <label class="control-label" for="sprint-status">Sprint status</label>
               <div class="controls">
-                <input type="text" disabled="" class="input-large" id="textfield" name="textfield">
+                @if($sprint_status === 1)
+                  <input type="text" disabled="" class="input-large" value="In plan" id="sprint-status" name="sprint-status">
+                @elseif($sprint_status === 2)
+                  <input type="text" disabled="" class="input-large" value="In progress" id="sprint-status" name="sprint-status">
+                @elseif($sprint_status === 3)
+                  <input type="text" disabled="" class="input-large" value="Completed" id="sprint-status" name="sprint-status">
+                @endif
               </div>
             </div>
           </div>
-          <div class="span1">
-            <div class="control-group">
-              <div class="controls">
-                <button class="btn btn-primary" type="submit" data-spid="">Edit sprint</button>
-              </div>
-            </div>
-          </div>
+          
           <div class="span3">
             <div class="control-group">
               <label class="control-label" for="task_board_filter">Search</label>

@@ -34,6 +34,8 @@ class StoryController extends BaseController {
     $story->pid = Session::get('current_project');
     $story->create_user = Auth::user()->uid;
     if ($story->save() == 1) {
+      //Add new activity to project
+      ActivityController::createActivityAdd(Session::get('current_project'), ENTITY_PROJECT, $story->sid, ENTITY_STORY);
       $data['status'] = 200;
       $data['message'] = 'Add new user story successfully';
     } else {
@@ -58,6 +60,10 @@ class StoryController extends BaseController {
     return $data;
   }
 
+  /**
+   * Approve story
+   * @return string
+   */
   public function approve() {
     $input = Input::all();
     $data = array('status' => 800, 'message' => 'Appoved unsucessfully');
@@ -65,6 +71,28 @@ class StoryController extends BaseController {
       $sid = $input['sid'];
       $story = new Story;
       if ($story->approveStory($sid)) {
+        //Create activity update for current project
+        ActivityController::createActivityUpdate(Session::get('current_project'), ENTITY_PROJECT, 'Status', 'New', 'Approved');
+        $data = array('status' => 200, 'message' => 'Appoved sucessfully');
+      }
+    }
+    return $data;
+  }
+
+  /**
+   * Delete a story
+   * @return int
+   */
+  public function delete() {
+    $input = Input::all();
+    $data = array('status' => 800, 'message' => 'Appoved unsucessfully');
+    if (isset($input['sid'])) {
+      $sid = $input['sid'];
+      $story = Story::find($sid);
+      $story->delete_flg = 1;
+      if ($story->save()) {
+        //Create an activity for current project
+        ActivityController::createActivityDelete(Session::get('current_project'), ENTITY_PROJECT, $story->sid, ENTITY_STORY);
         $data = array('status' => 200, 'message' => 'Appoved sucessfully');
       }
     }
@@ -75,12 +103,26 @@ class StoryController extends BaseController {
     $input = Input::all();
     $data = array('status' => 800, 'message' => 'Save unsucessfully');
     $story = Story::find($input['sid']);
-    $story->name = $input['name'];
-    $story->priority = $input['priority'];
-    $story->time_estimate = $input['time_estimate'];
-    $story->point = $input['point'];
-    $story->demo = $input['demo'];
-    $story->description = $input['description'];
+    $arr_match = array(
+        'name' => 'Name',
+        'priority' => 'Priority',
+        'time_estimate' => 'Estimate time',
+        'point' => 'Story point',
+        'demo' => 'Demo',
+        'description' => 'Description'
+    );
+    foreach ($arr_match as $key => $value) {
+      if($story->$key != $input[$key]){
+        ActivityController::createActivityUpdate($input['sid'], ENTITY_STORY, $value, $story->$key, $input[$key]);
+        $story->$key = $input[$key];
+      }
+    }
+//    $story->name = $input['name'];
+//    $story->priority = $input['priority'];
+//    $story->time_estimate = $input['time_estimate'];
+//    $story->point = $input['point'];
+//    $story->demo = $input['demo'];
+//    $story->description = $input['description'];
     if ($story->save()) {
       $data = array('status' => 200, 'message' => 'Save sucessfully');
     }

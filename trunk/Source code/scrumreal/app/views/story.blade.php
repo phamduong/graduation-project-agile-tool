@@ -6,6 +6,7 @@ Scrumreal - User story management
 @include('modal/story_add')
 @include('modal/story_edit')
 @include('modal/task_add')
+@include('modal/task_edit')
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span12">
@@ -53,7 +54,6 @@ Scrumreal - User story management
     </div>
   </div>
   <script src="{{ asset("js/story.js" ) }}"></script>
-  <script src="{{ asset("js/theme.js" ) }}"></script>
   <!-- dataTables -->
   <script src="{{ asset("js/plugins/datatable/jquery.dataTables.min.js") }}"></script>
   <script src="{{ asset("js/plugins/datatable/TableTools.min.js") }}"></script>

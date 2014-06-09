@@ -16,6 +16,7 @@ define('ENTITY_SPRINT', 4);
 define('ENTITY_COMMENT', 5);
 define('ENTITY_TASK', 6);
 define('ENTITY_EVENT', 7);
+define('ENTITY_USER', 8);
 
 define('STORY_STATUS_NEW', 1);
 define('STORY_STATUS_APPROVED', 2);
@@ -40,3 +41,8 @@ define('TASK_STATUS_TODO', 1);
 define('TASK_STATUS_IN_PROGRESS', 2);
 define('TASK_STATUS_TO_TEST', 3);
 define('TASK_STATUS_DONE', 4);
+
+define('ACTIVITY_COMMENT', 1);
+define('ACTIVITY_ADD', 2);
+define('ACTIVITY_DELETE', 3);
+define('ACTIVITY_UPDATE', 4);

@@ -3,7 +3,7 @@
     <div class="box-content nopadding scrollable" data-height="570" data-visible="true">
       <ul class="userlist">
         <li id="id1">
-          <a href="#"><img src="img/demo/user-1.jpg" class="img-user-info" alt=""></a>
+          <a href="#"><img src="{{asset("img/demo/user-1.jpg")}}" class="img-user-info" alt=""></a>
           <div class="user">
             <span class="name">
               Jane Doe
@@ -73,7 +73,7 @@
           </div>
         </li>
         <li>
-          <a href="#"><img src="img/demo/user-1.jpg" class="img-user-info" alt=""></a>
+          <a href="#"><img src="{{asset("img/demo/user-1.jpg")}}" class="img-user-info" alt=""></a>
           <div class="user">
             <span class="name">
               Jane Doe

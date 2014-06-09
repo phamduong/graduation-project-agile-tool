@@ -45,6 +45,7 @@
                 <div class="controls">
                   <div class="add-min-height">
                     <select name="leader" id="leader" class="select2-me span8" data-placeholder="Please select">
+                      <option></option>
                       @foreach($candicate_leader as $user)
                       <option value="{{{$user->uid}}}">{{{$user->fullname}}}</option>
                       @endforeach
@@ -59,8 +60,9 @@
                 <div class="controls">
                   <div class="add-min-height">
                     <select name="owner" id="owner" class="select2-me span8" data-placeholder="Please select">
-                      @foreach($free_user as $user)
-                      <option value="{{{$user->uid}}}">{{{$user->fullname}}}</option>
+                      <option></option>
+                      @foreach($free_user as $user_1)
+                      <option value="{{{$user_1->uid}}}">{{{$user_1->fullname}}}</option>
                       @endforeach
                     </select>
                   </div>
@@ -116,230 +118,26 @@
             </div>
           </form>
         </div>
-        <div class="tab-pane" id="tab-proj-activity">
+        <div class="tab-pane tab-activity" id="tab-proj-activity">
           <div class="modal-body">
+            <div class="activity-temp" style="display: none;">
+              <li>
+                <div class="timeline-content row-fluid">
+                  <div class="left">
+                    <div class="icon">
+                      <img alt="" class="img-user-info" src="">
+                    </div>
+                  </div>
+                  <div class="activity span11">
+                    <p class="activity-text"></p>
+                    <div class="datetime activity-time"></div>
+                  </div>
+                </div>
+                <div class="line"></div>
+              </li>
+            </div>
             <ul class="timeline">
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                      Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                      Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li class="timeline-separated">
-                Sunday
-              </li>
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-content row-fluid">
-                  <div class="left">
-                    <div class="icon">
-                        <!-- <i class="icon-picture"></i> -->
-                      <img alt="" class="img-user-info" src="img/demo/user-1.jpg">
-                    </div>
-                    <div class="username">Jane Leo Doe</div>
-                  </div>
-                  <div class="activity span11">
-                    <p>
-                      <a href="#"class="user">Jane Leo Doe</a> Lorem ipsum Fugiat magna velit consectetur qui in veniam cillum exercitation Ut occaecat Duis mollit. Lorem ipsum Dolore dolor Excepteur sunt amet officia officia sunt aliquip id occaecat officia.
-                    </p>
-                    <div class="datetime">14 hours ago</div>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
+
             </ul>
           </div>
         </div>
@@ -349,7 +147,7 @@
             <input type="hidden" id="entity_type" value="{{{ENTITY_PROJECT}}}" />
             <div class="comment-list">
             </div>
-            
+
             <div class="new-comment-form-wrapper">
               <h6>Add a new comment</h6>
               <form action="#" method="POST" class="form-vertical form-validate new-comment-form" data-container="#modal-edit-project .tab-comment" autocomplete=off>
@@ -361,7 +159,7 @@
                 <button type="submit" class="btn btn-primary pull-right btn-new-comment">Post comment</button>
               </form>
             </div>
-            
+
             <div class="reply-comment-form-temp">
               <h6>Reply to this comment</h6>
               <form action="#" method="POST" class='form-vertical form-validate' data-reply-to="" data-container="#modal-edit-project .tab-comment" autocomplete=off>
@@ -371,24 +169,24 @@
                   </div>
                 </div>
                 <a class="btn cancel-reply-comment pull-right">Cancel</a>
-                <span class="loader"><img src="img/loading.gif" /></span>
-                <span class="loader"><img src="img/loading.gif" /></span>
+                <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
+                <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
                 <input type="submit" class="btn btn-primary pull-right btn-reply-comment-submit" value="Post comment">
               </form>
             </div>
-            
+
             <div class="comment-temp" style="display: none">
               <div class="media" id="id-comment">
-                  <a class="pull-left" href="#">
+                <a class="pull-left" href="#">
                   <img src="<?php echo asset('data/image/user/' . $cur_user['image']); ?>">
-                  </a>
-                  <div class="media-body">
-                    <h6 class="media-heading"><span class="user-comment">{{{$cur_user['name']}}}</span><small><span class="time-comment"></span></small></h6>
-                      <p class="content-comment"></p>
-                      <div class="media-actions">
-                          <a href="#" class="btn btn-small btn-reply-comment" data-container=""><i class="icon-reply"></i> Reply</a>
-                      </div>
+                </a>
+                <div class="media-body">
+                  <h6 class="media-heading"><span class="user-comment">{{{$cur_user['name']}}}</span><small><span class="time-comment"></span></small></h6>
+                  <p class="content-comment"></p>
+                  <div class="media-actions">
+                    <a href="#" class="btn btn-small btn-reply-comment" data-container=""><i class="icon-reply"></i> Reply</a>
                   </div>
+                </div>
               </div>
             </div>
           </div>

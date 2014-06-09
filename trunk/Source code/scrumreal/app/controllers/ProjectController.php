@@ -21,7 +21,41 @@ class ProjectController extends BaseController {
     if (Session::has('current_project')) {
       $data['current_project'] = Session::get('current_project');
     }
+//    print '<pre>';
+//    print_r($data);
+//    exit();
     return View::make('project', $data);
+  }
+
+  public function save() {
+    $input = Input::all();
+    $project = Project::find($input['pid']);
+    $project->name = $input['name'];
+    $date_arr = explode(' - ', $input['project_date_range']);
+    $project->start_date = date('Y-m-d', strtotime($date_arr[0]));
+    $project->end_date_es = date('Y-m-d', strtotime($date_arr[1]));
+    $project_model = new Project;
+    if ($input['leader'] != '') {
+      if ($project_model->checkExist($input['pid'], $input['leader']) == 1) {
+        $project_model->updateProjectUser($input['pid'], $input['leader'], ROLE_LEADER);
+      }else{
+        $project_model->insertProjectUser($input['pid'], $input['leader'], ROLE_LEADER);
+      }
+    }
+    if ($input['owner'] != '') {
+      if ($project_model->checkExist($input['pid'], $input['owner']) == 1) {
+        $project_model->updateProjectUser($input['pid'], $input['owner'], ROLE_OWNER);
+      }else{
+        $project_model->insertProjectUser($input['pid'], $input['owner'], ROLE_OWNER);
+      }
+    }
+    $project->description = $input['description'];
+    $project->note = $input['note'];
+    $data = array('status' => 800, 'message' => 'Save unsucessfully');
+    if ($project->save()) {
+      $data = array('status' => 200, 'message' => 'Save sucessfully');
+    }
+    return $data;
   }
 
   /**
@@ -32,22 +66,6 @@ class ProjectController extends BaseController {
     $project = new Project;
     $p_list = $project->getAll();
     return json_encode($p_list);
-//    exit;
-//    $output = '{"aaData": [';
-//    foreach ($p_list as $row) {
-//      $output .= "[";
-//      $output .= '"' . $row->name . '",';
-//      $output .= '"' . $row->owner . '",';
-//      $output .= '"' . $row->leader . '",';
-//      $output .= '"' . $row->start_date . '",';
-//      $output .= '"' . $row->end_date . '",';
-//      $output .= '"' . $row->status . '",';
-//      $output .= '"' . $row->pid . '"';
-//      $output .= "],";
-//    }
-//    $output = substr_replace($output, "", -1);
-//    $output .= "]}";
-//    return $output;
   }
 
   /**

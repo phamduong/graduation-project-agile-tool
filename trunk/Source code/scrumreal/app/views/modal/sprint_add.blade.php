@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <span class="loader"><img src="img/loading.gif" /></span>
+        <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
         <input type="submit" class="btn btn-primary" value="Add sprint">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
       </div>

@@ -6,6 +6,12 @@ h1, h2, h3, h4, h5, h6 {
   height: 27px;
   width: 27px;
 }
+.tab-activity li{
+  line-height: 21px !important;
+}
+input[disabled=disabled]{
+  background-color: #f1f1f1 !important;
+}
 #project-datatable .btn {
   margin-right: 5px;
 }
@@ -57,7 +63,6 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #D8D8D8;
 }
 /*User chat list status*/
-
 .userlistchat .status {
   color: #B21000;
   float: right;
@@ -128,6 +133,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 #task-board .story-tasks .task-box {
   min-height: 200px;
+  margin-bottom: 30px;
 }
 #task-board .progress {
   margin-bottom: 0px !important;
@@ -153,7 +159,10 @@ h1, h2, h3, h4, h5, h6 {
   width: 56px;
   height: 56px;
 }
-.task-box-content .box-content .row-fluid:first-child{
+.task-item .box-content .row-fluid:first-child{
+  min-height: 86px;
+}
+.task-item-unsortabled .box-content .row-fluid:first-child{
   min-height: 86px;
 }
 /*Datatables*/
@@ -343,6 +352,9 @@ h1, h2, h3, h4, h5, h6 {
   width: 80px;
   margin-top: 3px;
   display: inline-block;
+}
+.person-name{
+  cursor: pointer;
 }
 .span2-5 {
   width: 18.162375% !important;

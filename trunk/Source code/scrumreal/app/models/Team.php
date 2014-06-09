@@ -16,7 +16,7 @@ class Team extends Eloquent {
 SELECT team.tid, team.name, user.uid AS master_id, user.fullname AS master_name, user.image AS master_image
 FROM team INNER JOIN project_user ON team.tid = project_user.tid
 	INNER JOIN user on user.uid = project_user.uid
-WHERE project_user.pid = ? AND project_user.rid = ?
+WHERE project_user.pid = ? AND project_user.rid = ? AND team.delete_flg = 0 AND user.delete_flg = 0
 SQL;
     $result = DB::select($query, array($pid, ROLE_SCRUM_MASTER));
     return $result;
@@ -32,7 +32,7 @@ SQL;
     $query = <<<SQL
 SELECT `user`.uid, `user`.image, `user`.fullname
 FROM `user` INNER JOIN project_user ON user.uid = project_user.uid
-WHERE project_user.tid = ? AND project_user.pid = ? AND project_user.rid = ?
+WHERE project_user.tid = ? AND project_user.pid = ? AND project_user.rid = ? AND user.delete_flg = 0
 GROUP BY uid
 SQL;
     $result = DB::select($query, array($tid, $pid, ROLE_MEMBER));
@@ -47,10 +47,11 @@ SQL;
    */
   public function getTeam($pid, $tid) {
     $query = <<<SQL
-SELECT team.tid, team.name, team.description ,user.uid AS master_id, user.fullname AS master_name
+SELECT team.tid, team.name, team.description ,user.uid AS master_id, user.fullname AS master_name,
+            user.image AS master_image
 FROM team INNER JOIN project_user ON team.tid = project_user.tid
 	INNER JOIN user on user.uid = project_user.uid
-WHERE project_user.pid = ? AND project_user.rid = ? AND team.tid = ?
+WHERE project_user.pid = ? AND project_user.rid = ? AND team.tid = ? AND team.delete_flg = 0
 SQL;
     $result = DB::select($query, array($pid, ROLE_SCRUM_MASTER, $tid));
     return $result[0];
@@ -105,6 +106,36 @@ WHERE project_user.pid = ?
 SQL;
     $result = DB::update($query, array($end_tid, $pid, $uid));
     return $result;
+  }
+  
+  public function updateMaster($pid, $tid, $uid){
+    $query_1 = <<<SQL
+DELETE FROM
+	project_user
+WHERE
+	pid = ?
+AND tid = ?
+AND rid = ?
+SQL;
+    DB::delete($query_1, array($pid, $tid, ROLE_SCRUM_MASTER));
+    $query_2 = <<<SQL
+INSERT INTO
+	project_user
+	(
+		pid,
+		uid,
+		tid,
+		rid
+	)
+VALUES
+	(
+		?,
+		?,
+		?,
+		?
+	)
+SQL;
+    DB::insert($query_2, array($pid, $uid, $tid, ROLE_SCRUM_MASTER));
   }
 
 }
