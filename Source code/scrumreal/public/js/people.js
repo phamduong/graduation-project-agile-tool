@@ -155,6 +155,9 @@ $(document).ready(function() {
           //comment
           var comment = response.comment;
           getComment("#modal-edit-team", tid, comment);
+
+          getActivity("#modal-edit-team", 3, tid, 0, 10);
+
           $("#modal-edit-team").modal('show');
         }
       }, error: function(response) {

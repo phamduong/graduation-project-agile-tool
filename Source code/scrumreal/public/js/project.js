@@ -88,6 +88,7 @@ $(document).ready(function() {
           //Set project comment
           var comment = response.comment;
           getComment("#modal-edit-project", pid, comment);
+          
           getActivity("#modal-edit-project", 1, pid, 0, 10);
           
           $("#modal-edit-project").modal("show");

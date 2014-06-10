@@ -96,6 +96,8 @@ class TaskController extends BaseController {
     $task->description = $input['description'];
     $task->sid = $input['sid'];
     if ($task->save()) {
+      //activity
+      ActivityController::createActivityAdd($input['sid'], ENTITY_STORY, $task->taid, ENTITY_TASK);
       $data = array('status' => 200, 'message' => '');
     } else {
       $data = array('status' => 800, 'message' => 'Add task unsuccessfully!');
@@ -140,18 +142,36 @@ class TaskController extends BaseController {
     $input = Input::all();
     $story = new Story;
     $task = Task::find($input['taid']);
-    $task->name = $input['name'];
-    $task->time_estimate = $input['time_estimate'];
-    $task->description = $input['description'];
-    if (isset($input['time_remain'])) {
+    if($task->name != $input['name']){
+      //activity
+      ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'Name', $task->name, $input['name']);
+      $task->name = $input['name'];
+    }
+    if($task->time_estimate != $input['time_estimate']){
+      //activity
+      ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'Estimate time', $task->time_estimate, $input['time_estimate']);
+      $task->time_estimate = $input['time_estimate'];
+    }
+    if($task->description != $input['description']){
+      //activity
+      ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'Description', $task->description, $input['description']);
+      $task->description = $input['description'];
+    }
+    if (isset($input['time_remain']) && $input['time_remain'] != $task->time_remain) {
       if ($input['time_remain'] > $input['time_estimate']) {
         $task->time_remain = $input['time_estimate'];
       } else {
         $task->time_remain = $input['time_remain'];
       }
+      ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'Time remain', $task->time_remain, $input['time_remain']);
     }
     if (count($story->getStoryThatAssigned($task->sid)) != 0) {
-      $task->uid = $input['uid'];
+      if($task->uid != $input['uid']){
+        $new_user = User::find($input['uid'])->fullname;
+        $old_user = User::find($task->uid)->fullname;
+        ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'User assign', $old_user, $new_user);
+        $task->uid = $input['uid'];
+      }
     }
     if ($task->save()) {
       $data = array('status' => 200, 'message' => '');
@@ -164,7 +184,16 @@ class TaskController extends BaseController {
   public function update_status() {
     $input = Input::all();
     $task = Task::find($input['taid']);
-    $task->status = $input['status'];
+    $task_status = array(
+        1 => 'To do',
+        2 => 'In Progress',
+        3 => 'To test',
+        4 => 'Done'
+    );
+    if($task->status != $input['status']){
+      ActivityController::createActivityUpdate($task->taid, ENTITY_TASK, 'Status', $task_status[$task->status], $task_status[$input['status']]);
+      $task->status = $input['status'];
+    }
     if ($input['status'] >= 3) {
       $task->time_remain = 0;
     } else if ($input['status'] === 1) {

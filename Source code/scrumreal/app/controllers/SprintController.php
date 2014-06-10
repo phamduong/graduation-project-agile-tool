@@ -61,6 +61,8 @@ class SprintController extends BaseController {
     $sprint->status = SPRINT_STATUS_IN_PLAN;
     if ($sprint->save() == 1) {
       $data = array('status' => 200, 'message' => 'Add sprint successfully!');
+      //activity
+      ActivityController::createActivityAdd(Session::get('current_project'), ENTITY_PROJECT, $sprint->spid, ENTITY_SPRINT);
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
     }
@@ -85,6 +87,9 @@ class SprintController extends BaseController {
     $sprint = new Sprint;
     $result = $sprint->addStoryToSprint($input['select_sid'], $input['end_spid'], $input['end_tid'], $input['order']);
     if ($result != 0) {
+      //activity
+      ActivityController::createActivityAdd($input['end_spid'], ENTITY_SPRINT, $input['select_sid'], ENTITY_STORY);
+      ActivityController::createActivityAdd($input['end_tid'], ENTITY_TEAM, $input['select_sid'], ENTITY_STORY);
       $data = array('status' => 200, 'message' => 'Successfull');
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
@@ -96,6 +101,9 @@ class SprintController extends BaseController {
     $sprint = new Sprint;
     $result = $sprint->removeStoryFromSprint($input['select_sid'], $input['start_spid'], $input['start_tid']);
     if ($result != 0) {
+      //activity
+      ActivityController::createActivityDelete($input['start_spid'], ENTITY_SPRINT, $input['select_sid'], ENTITY_STORY);
+      ActivityController::createActivityDelete($input['start_tid'], ENTITY_TEAM, $input['select_sid'], ENTITY_STORY);
       $data = array('status' => 200, 'message' => 'Successfull');
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
@@ -107,6 +115,13 @@ class SprintController extends BaseController {
     $sprint = new Sprint;
     $result = $sprint->moveStoryToSrpint($input['end_tid'], $input['end_spid'], $input['order'], $input['select_sid'], $input['start_tid'], $input['start_spid']);
     if ($result != 0) {
+      //activity
+      ActivityController::createActivityAdd($input['end_spid'], ENTITY_SPRINT, $input['select_sid'], ENTITY_STORY);
+      ActivityController::createActivityAdd($input['end_tid'], ENTITY_TEAM, $input['select_sid'], ENTITY_STORY);
+      
+      ActivityController::createActivityDelete($input['start_spid'], ENTITY_SPRINT, $input['select_sid'], ENTITY_STORY);
+      ActivityController::createActivityDelete($input['start_tid'], ENTITY_TEAM, $input['select_sid'], ENTITY_STORY);
+      
       $data = array('status' => 200, 'message' => 'Successfull');
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
@@ -124,12 +139,32 @@ class SprintController extends BaseController {
   public function save() {
     $input = Input::all();
     $sprint = Sprint::find($input['spid']);
-    $sprint->pid = Session::get('current_project');
-    $sprint->name = $input['name'];
-    $sprint->description = $input['description'];
+    
+    $arr_match = array(
+        'name' => 'Name',
+        'start_date' => 'Start date',
+        'end_date' => 'End date',
+        'status' => 'Status',
+        'description' => 'Description'
+    );
+    
     $date = explode(" - ", $input['sprint_time']);
-    $sprint->start_date = date('Y-m-d', strtotime($date[0]));
-    $sprint->end_date = date('Y-m-d', strtotime($date[1]));
+    $input['start_date'] = date('Y-m-d', strtotime($date[0]));
+    $input['end_date'] = date('Y-m-d', strtotime($date[1]));
+    
+    foreach ($arr_match as $key => $value) {
+      if($sprint->$key != $input[$key]){
+        ActivityController::createActivityUpdate($input['spid'], ENTITY_SPRINT, $value, $sprint->$key, $input[$key]);
+        $sprint->$key = $input[$key];
+      }
+    }
+    
+//    $sprint->name = $input['name'];
+//    $sprint->description = $input['description'];
+//    $date = explode(" - ", $input['sprint_time']);
+//    $sprint->start_date = date('Y-m-d', strtotime($date[0]));
+//    $sprint->end_date = date('Y-m-d', strtotime($date[1]));
+    
     if ($sprint->save() == 1) {
       $data = array('status' => 200, 'message' => 'Save sprint successfully!');
     } else {

@@ -95,6 +95,10 @@ $(document).ready(function() {
           //comment
           var comment = response.comment;
           getComment("#modal-edit-sprint", spid, comment);
+          
+          //Get activity
+          getActivity("#modal-edit-sprint", 4, spid, 0, 10);
+          
           $("#modal-edit-sprint").modal('show');
         }
       },
