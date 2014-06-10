@@ -7,24 +7,23 @@ class ProjectController extends BaseController {
    * @return type
    */
   public function index() {
-    $data = array();
-    $user = new User;
-    //Common data
-    $data['lang'] = parent::getLanguage();
-    $data['cur_user'] = parent::getCurrentUser();
-    $data['active_nav'] = 'project';
+    if (!Auth::check()) {
+      return Redirect::to('/');
+    } else {
+      $data = array();
+      $user = new User;
+      //Common data
+      $data['lang'] = parent::getLanguage();
+      $data['cur_user'] = parent::getCurrentUser();
+      $data['active_nav'] = 'project';
 
-    //Project page data
-    $data['role'] = parent::getRole();
-    $data['free_user'] = $user->getNotInProject();
-    $data['candicate_leader'] = $user->getCandicate();
-    if (Session::has('current_project')) {
+      //Project page data
+      $data['role'] = parent::getRole();
+      $data['free_user'] = $user->getNotInProject();
+      $data['candicate_leader'] = $user->getCandicate();
       $data['current_project'] = Session::get('current_project');
+      return View::make('project', $data);
     }
-//    print '<pre>';
-//    print_r($data);
-//    exit();
-    return View::make('project', $data);
   }
 
   public function save() {
@@ -38,14 +37,14 @@ class ProjectController extends BaseController {
     if ($input['leader'] != '') {
       if ($project_model->checkExist($input['pid'], $input['leader']) == 1) {
         $project_model->updateProjectUser($input['pid'], $input['leader'], ROLE_LEADER);
-      }else{
+      } else {
         $project_model->insertProjectUser($input['pid'], $input['leader'], ROLE_LEADER);
       }
     }
     if ($input['owner'] != '') {
       if ($project_model->checkExist($input['pid'], $input['owner']) == 1) {
         $project_model->updateProjectUser($input['pid'], $input['owner'], ROLE_OWNER);
-      }else{
+      } else {
         $project_model->insertProjectUser($input['pid'], $input['owner'], ROLE_OWNER);
       }
     }

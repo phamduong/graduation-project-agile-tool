@@ -149,23 +149,24 @@
       </div>
 
       @if($active_nav == 'taskboard')
-      <div id="task-control-bar">
-        <form class="form-horizontal form-column form-bordered" method="POST" action="#">
-          <div class="span3">
-            <div class="control-group">
-              <label class="control-label" for="sprint-status">Sprint status</label>
-              <div class="controls">
-                @if($sprint_status === 1)
-                  <input type="text" disabled="" class="input-large" value="In plan" id="sprint-status" name="sprint-status">
-                @elseif($sprint_status === 2)
-                  <input type="text" disabled="" class="input-large" value="In progress" id="sprint-status" name="sprint-status">
-                @elseif($sprint_status === 3)
-                  <input type="text" disabled="" class="input-large" value="Completed" id="sprint-status" name="sprint-status">
-                @endif
-              </div>
-            </div>
-          </div>
-          
+      <div id="task-control-bar" class="container-fluid">
+        <div class="row-fluid">
+          <!--<form class="form-horizontal form-column form-bordered" method="POST" action="#">-->
+          <!--          <div class="span3">
+                      <div class="control-group">
+                        <label class="control-label" for="sprint-status">Sprint status</label>
+                        <div class="controls">
+                          @if($sprint_status === 1)
+                            <input type="text" disabled="" class="input-large" value="In plan" id="sprint-status" name="sprint-status">
+                          @elseif($sprint_status === 2)
+                            <input type="text" disabled="" class="input-large" value="In progress" id="sprint-status" name="sprint-status">
+                          @elseif($sprint_status === 3)
+                            <input type="text" disabled="" class="input-large" value="Completed" id="sprint-status" name="sprint-status">
+                          @endif
+                        </div>
+                      </div>
+                    </div>-->
+
           <div class="span3">
             <div class="control-group">
               <label class="control-label" for="task_board_filter">Search</label>
@@ -180,63 +181,63 @@
               <div class="controls">
                 <select id="sprint_filter" name="sprint_filter" class="input-medium">
                   @if(isset($selected_sprint))
-                    @foreach($sprint_list as $sprint)
-                      @if($sprint->spid == $selected_sprint)
-                        <option value="{{{$sprint->spid}}}" selected="selected">{{{$sprint->name}}}</option>
-                      @else
-                        <option value="{{{$sprint->spid}}}">{{{$sprint->name}}}</option>
-                      @endif
-                    @endforeach
+                  @foreach($sprint_list as $sprint)
+                  @if($sprint->spid == $selected_sprint)
+                  <option value="{{{$sprint->spid}}}" selected="selected">{{{$sprint->name}}}</option>
                   @else
-                    @foreach($sprint_list as $sprint)
-                      <option value="{{{$sprint->spid}}}">{{{$sprint->name}}}</option>
-                    @endforeach
+                  <option value="{{{$sprint->spid}}}">{{{$sprint->name}}}</option>
+                  @endif
+                  @endforeach
+                  @else
+                  @foreach($sprint_list as $sprint)
+                  <option value="{{{$sprint->spid}}}">{{{$sprint->name}}}</option>
+                  @endforeach
                   @endif
                 </select>
               </div>
             </div>
           </div>
-          <div class="span2-5">
+          <div class="span5">
             <div class="control-group">
-              <!--<label class="control-label" for="other_filter"></label>-->
+              <label class="control-label" for="other_filter">Other filters</label>
               <div class="controls">
                 <select id="other_filter" name="other_filter" class="">
                   <option value=""></option>
                   <optgroup label="User">
                     @if(isset($selected_user))
-                      @foreach($user_list as $user)
-                        @if($user->uid == $selected_user)
-                        <option value="{{{$user->uid}}}_user" selected="selected">{{{$user->fullname}}}</option>
-                        @else
-                          <option value="{{{$user->uid}}}_user">{{{$user->fullname}}}</option>
-                        @endif
-                      @endforeach
+                    @foreach($user_list as $user)
+                    @if($user->uid == $selected_user)
+                    <option value="{{{$user->uid}}}_user" selected="selected">{{{$user->fullname}}}</option>
                     @else
-                      @foreach($user_list as $user)
-                      <option value="{{{$user->uid}}}_user">{{{$user->fullname}}}</option>
-                      @endforeach
+                    <option value="{{{$user->uid}}}_user">{{{$user->fullname}}}</option>
+                    @endif
+                    @endforeach
+                    @else
+                    @foreach($user_list as $user)
+                    <option value="{{{$user->uid}}}_user">{{{$user->fullname}}}</option>
+                    @endforeach
                     @endif
                   </optgroup>
                   <optgroup label="Team">
                     @if(isset($selected_team))
-                      @foreach($team_list as $team)
-                        @if($team->tid == $selected_team)
-                          <option value="{{{$team->tid}}}_team" selected="selected">{{{$team->name}}}</option>
-                        @else
-                          <option value="{{{$team->tid}}}_team">{{{$team->name}}}</option>
-                        @endif
-                      @endforeach
+                    @foreach($team_list as $team)
+                    @if($team->tid == $selected_team)
+                    <option value="{{{$team->tid}}}_team" selected="selected">{{{$team->name}}}</option>
                     @else
-                        @foreach($team_list as $team)
-                          <option value="{{{$team->tid}}}_team">{{{$team->name}}}</option>
-                        @endforeach
+                    <option value="{{{$team->tid}}}_team">{{{$team->name}}}</option>
+                    @endif
+                    @endforeach
+                    @else
+                    @foreach($team_list as $team)
+                    <option value="{{{$team->tid}}}_team">{{{$team->name}}}</option>
+                    @endforeach
                     @endif
                   </optgroup>
                 </select>
               </div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
       @endif
   </body>

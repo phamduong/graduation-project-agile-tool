@@ -63,6 +63,8 @@ class UserController extends \BaseController {
 
   public function logout() {
     Auth::logout();
+    //Remove all item from session
+    Session::flush();
     return Redirect::to('/');
   }
 

@@ -220,6 +220,8 @@ function loadTask(taid) {
         //comment
         var comment = response.comment;
         getComment("#modal-edit-task", taid, comment);
+        getActivity("#modal-edit-task", 6, taid, 0, 10);
+        
         $("#modal-edit-task").modal('show');
       }
     },
@@ -723,6 +725,7 @@ function editStorySubmit(sid) {
         var comment = response.comment;
         getComment("#modal-edit-story", sid, comment);
         getActivity("#modal-edit-story", 2, sid, 0, 10);
+        
         $("#modal-edit-story").modal("show");
       }
     }

@@ -45,6 +45,8 @@ class CommentController extends BaseController {
     if ($comment->save() == 1) {
       $data['status'] = 200;
       $data['message'] = 'Reply comment sucessfully!';
+      //activity
+      ActivityController::createActivityComment($input['entity_id'], $input['entity_type'], $comment->cid);
       $data['cid'] = $comment->cid;
       $data['time'] = Comment::find($data['cid'])->time;
     }
@@ -66,6 +68,8 @@ class CommentController extends BaseController {
     if ($comment->save() == 1) {
       $data['status'] = 200;
       $data['message'] = 'Add new comment sucessfully!';
+      //activity
+      ActivityController::createActivityComment($input['entity_id'], $input['entity_type'], $comment->cid);
       $data['cid'] = $comment->cid;
       $data['time'] = Comment::find($data['cid'])->time;
     }
