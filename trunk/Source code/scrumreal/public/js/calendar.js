@@ -11,6 +11,7 @@ function initCalendar() {
     var y = date.getFullYear();
     if ($('.calendar').length > 0) {
         var calendar = $('.calendar').fullCalendar({
+            firstDay: 1,
             header: {
                 left: '',
                 center: 'prev,title,next',

@@ -46,3 +46,6 @@ define('ACTIVITY_COMMENT', 1);
 define('ACTIVITY_ADD', 2);
 define('ACTIVITY_DELETE', 3);
 define('ACTIVITY_UPDATE', 4);
+
+define('PERMISSION_TYPE_LINK', 0);
+define('PERMISSION_TYPE_REGEX', 1);

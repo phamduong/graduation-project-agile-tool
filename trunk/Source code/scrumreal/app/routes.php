@@ -80,6 +80,9 @@ Route::post('/project/save', [
     'uses' => 'ProjectController@save'
 ]);
 
+Route::post('/project/delete', [
+    'uses' => 'ProjectController@delete'
+]);
 
 Route::post('/project/set_current', [
     'uses' => 'ProjectController@setCurrentProject'
@@ -231,4 +234,12 @@ Route::post('/activity/get', [
 
 Route::get('/report', [
     'uses' => 'ReportController@index'
+]);
+
+Route::any('/permission', [
+    'uses' => 'PermissionController@index'
+]);
+
+Route::any('/permission/save', [
+    'uses' => 'PermissionController@save'
 ]);

@@ -31,7 +31,7 @@ input[disabled=disabled]{
   margin-left: 0px !important;
 }
 #task-control-bar .form-horizontal.form-column [class*="span"] .control-group .control-label {
-    width: inherit !important;
+  width: inherit !important;
 }
 .other_filter_wrapper{
   width: 20%;
@@ -43,6 +43,14 @@ input[disabled=disabled]{
 .loader {
   display: none;
 }
+.permission-submit{
+  float: right;
+  height: 30px;
+  margin-right: 40px;
+}
+.permission-submit button{
+  margin-right: 5px;
+}
 .global-loading{
   display: none;
 }
@@ -51,16 +59,16 @@ input[disabled=disabled]{
   width: 30px;
 }
 /*Load more*/
-.load-more {
+.load-more-activity {
   background-color: #eee;
   color: #929292;
   font-weight: bold;
   text-align: center;
   padding: 6px 0;
   cursor: pointer;
-  display: none;
+  /*display: none;*/
 }
-.load-more:hover {
+.load-more-activity:hover {
   background-color: #D8D8D8;
 }
 /*User chat list status*/

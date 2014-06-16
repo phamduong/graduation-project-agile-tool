@@ -34,8 +34,8 @@ class UserController extends \BaseController {
       return View::make('user.login');
     }
   }
-  
-  public function edit(){
+
+  public function edit() {
     $input = Input::all();
     $user = User::find($input['uid']);
     $data = array(
@@ -48,14 +48,14 @@ class UserController extends \BaseController {
     );
     return $data;
   }
-  
-  public function delete(){
+
+  public function delete() {
     $input = Input::all();
     $user = User::find($input['uid']);
     $user->delete_flg = 1;
-    if($user->save()){
+    if ($user->save()) {
       $data = array('status' => 200, 'message' => 'Delete user successfully!');
-    }else{
+    } else {
       $data = array('status' => 800, 'message' => 'Delete user unsuccessfully!');
     }
     return $data;
@@ -84,6 +84,9 @@ class UserController extends \BaseController {
           'user_settings_cls' => 'active'
       );
     }
+    $data['active_nav'] = 'story';
+    $data['current_proj_name'] = Session::get('current_project_nm');
+
     $data['lang'] = parent::getLanguage();
     $data['cur_user'] = parent::getCurrentUser();
     $user_data = User::find(Auth::user()->uid);
@@ -392,7 +395,7 @@ class UserController extends \BaseController {
     $data = array('status' => 800, 'message' => 'Error!');
     $input = Input::all();
     $count = User::where("login_nm", "=", $input['login_nm'])->count();
-    if($count > 0){
+    if ($count > 0) {
       $data['message'] = 'User login name exist!';
       return $data;
     }

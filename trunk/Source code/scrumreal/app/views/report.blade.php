@@ -63,7 +63,7 @@ Scrumreal - Report
     <div class="span6">
       <div class="scrollable"  data-height="520">
         <div class="span6">
-          <div class="box box-color lightred box-bordered">
+          <div class="box box-color box-bordered">
             <div class="box-title">
               <h3>
                 <i class="icon-bar-chart"></i>

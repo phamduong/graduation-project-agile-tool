@@ -86,6 +86,7 @@
             </div>
             <div class="modal-footer">
               <input type="submit" class="btn btn-primary" value="Save project infomation">
+              <button class="btn btn-red delete-project" data-pid="" aria-hidden="true">Delete</button>
               <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             </div>
           </form>
@@ -139,6 +140,7 @@
             <ul class="timeline">
 
             </ul>
+            <div class="load-more-activity" data-selector="" data-entity-type="" data-entity-id="" data-offset="" data-limit="" >Load More <span class="loader"><img src="img/loading.gif" /></span></div>
           </div>
         </div>
         <div class="tab-pane tab-comment" id="tab-proj-comment">

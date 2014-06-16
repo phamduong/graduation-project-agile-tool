@@ -47,59 +47,101 @@ $(document).ready(function() {
             var oTable = $("#project-datatable").dataTable();
             oTable.fnReloadAjax();
             setTimeout(function() {
-              clearFormInput("#form-edit-task");
+              clearFormInput("#form-edit-project");
             }, 1000);
           }
         }
       })
     }
-  })
+  });
+
+  //Delete project
+  $("#modal-edit-project").on("click", ".delete-project", function(e) {
+    e.preventDefault();
+    var pid = $(this).attr("data-pid");
+    if (pid !== "" && typeof pid !== "undefined") {
+      $.ajax({
+        url: "/project/delete",
+        type: "POST",
+        data: {pid: pid},
+        success: function(response) {
+          if (response.status === 200) {
+            showAlert(1, true, response.message);
+            setTimeout(function() {
+              $("#modal-edit-project").modal('hide');
+            }, 1000);
+            var oTable = $("#project-datatable").dataTable();
+            oTable.fnReloadAjax();
+            setTimeout(function() {
+              clearFormInput("#form-edit-project");
+            }, 1000);
+          }
+        }
+      });
+    }
+  });
+  
+  //Show modal add project
+  $("#btn-add-project").click(function(){
+    if (window.has_select_project === false) {
+      $("#modal-error-notice .error-content").html("Please select working project!");
+      $("#modal-error-notice").modal('show');
+    } else {
+      $("#modal-add-project").modal("show");
+    }
+  });
 
   //Edit project 
   $("#project-datatable").on("click", ".view_prj", function(event) {
-    var pid = $(this).attr('href');
-    $('body').modalmanager('loading');
-    $.ajax({
-      url: "/project/edit",
-      type: "POST",
-      data: {pid: pid},
-      global: false,
-      success: function(response) {
-        if (response.status === 200) {
-          //Set project info content
-          var parent = "#modal-edit-project #form-edit-project ";
-          var project_info = response.project_info;
-          $(parent + "#pid").val(project_info.pid);
-          $(parent + "#name").val(project_info.name);
-          $(parent + "#project_date_range").val(project_info.start_date + ' - ' + project_info.end_date);
+    event.preventDefault();
+//    if (window.has_select_project === false) {
+//      $("#modal-error-notice .error-content").html("Please select working project!");
+//      $("#modal-error-notice").modal("show");
+//    } else {
+      var pid = $(this).attr('href');
+      $('body').modalmanager('loading');
+      $.ajax({
+        url: "/project/edit",
+        type: "POST",
+        data: {pid: pid},
+        global: false,
+        success: function(response) {
+          if (response.status === 200) {
+            //Set project info content
+            var parent = "#modal-edit-project #form-edit-project ";
+            var project_info = response.project_info;
+            $(parent + "#pid").val(project_info.pid);
+            $(parent + "#name").val(project_info.name);
+            $(parent + "#project_date_range").val(project_info.start_date + ' - ' + project_info.end_date);
 //          $(parent + "#leader").val(project_info.leader_id);
-          //Because project owner is not on the list
+            //Because project owner is not on the list
 //          var temp = '<option value="' + project_info.owner_name + '">' + project_info.owner_name + '</option>';
 //          $(parent + "#owner").append(temp);
-          if (project_info.leader_id !== null) {
-            $(parent + "#leader").select2("data", {id: project_info.leader_id, text: project_info.leader_name});
+            if (project_info.leader_id !== null) {
+              $(parent + "#leader").select2("data", {id: project_info.leader_id, text: project_info.leader_name});
+            }
+            if (project_info.owner_id !== null) {
+              $(parent + "#owner").select2("data", {id: project_info.owner_id, text: project_info.owner_name});
+            }
+            $(parent + "#description").val(project_info.description);
+            $(parent + "#note").val(project_info.note);
+            $(parent + ".delete-project").attr("data-pid", project_info.pid);
+
+            //Set project comment
+            var comment = response.comment;
+            getComment("#modal-edit-project", pid, comment);
+
+            getActivity("#modal-edit-project", 1, pid, 0, 10);
+
+            $("#modal-edit-project").modal("show");
           }
-          if (project_info.owner_id !== null) {
-            $(parent + "#owner").select2("data", {id: project_info.owner_id, text: project_info.owner_name});
-          }
-          $(parent + "#description").val(project_info.description);
-          $(parent + "#note").val(project_info.note);
-          
-          //Set project comment
-          var comment = response.comment;
-          getComment("#modal-edit-project", pid, comment);
-          
-          getActivity("#modal-edit-project", 1, pid, 0, 10);
-          
-          $("#modal-edit-project").modal("show");
+        }, error: function(response) {
+          var err = jQuery.parseJSON(response.responseText);
+          $("#modal-error-notice .error-content").html(err.error.message);
+          $("#modal-error-notice").modal('show');
         }
-      }, error: function(response) {
-        var err = jQuery.parseJSON(response.responseText);
-        $("#modal-error-notice .error-content").html(err.error.message);
-        $("#modal-error-notice").modal('show');
-      }
-    });
-    event.preventDefault();
+      });
+//    }
   });
 
   //Set current project
@@ -117,6 +159,7 @@ $(document).ready(function() {
           showAlert(1, true, response.message);
           $(".row_selected").removeClass("row_selected");
           $(wrapper).parent().parent().addClass("row_selected");
+          window.has_select_project = true;
         }
       }, error: function(response) {
         var err = jQuery.parseJSON(response.responseText);

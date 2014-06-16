@@ -24,7 +24,7 @@ Scrumreal - Team management
           <div class='alert_block'></div>
           @foreach($team_list as $team)
           <div class="span12 team" id="<?php echo 'team_' . $team->tid; ?>" data-tid="{{{$team->tid}}}">
-            <div class="box box-color teal box-small box-bordered">
+            <div class="box box-color box-small box-bordered">
               <div class="box-title">
                 <h3>
                   <i class="glyphicon-group"></i>
