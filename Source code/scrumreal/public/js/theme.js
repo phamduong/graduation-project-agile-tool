@@ -221,7 +221,7 @@ function loadTask(taid) {
         var comment = response.comment;
         getComment("#modal-edit-task", taid, comment);
         getActivity("#modal-edit-task", 6, taid, 0, 10);
-        
+
         $("#modal-edit-task").modal('show');
       }
     },
@@ -470,6 +470,7 @@ function showLoading(wrapper) {
 }
 
 function getActivity(selector, entity_type, entity_id, offset, limit) {
+  $(selector + " .tab-activity .load-more-activity").css("display", "block");
   $.ajax({
     url: "/activity/get",
     type: "POST",
@@ -479,20 +480,71 @@ function getActivity(selector, entity_type, entity_id, offset, limit) {
       var act_list = response;
       var act_temp = selector + " .tab-activity .activity-temp";
       $(selector + " .tab-activity .timeline").html("");
+      var count = 0;
       $.each(act_list, function(key, act) {
         $(act_temp + " .img-user-info").attr("src", "data/image/user/" + act.user_image);
         $(act_temp + " .activity-text").html(act.text);
         $(act_temp + " .activity-time").html(act.time);
         $(selector + " .tab-activity .timeline").append($(act_temp).html());
+        count++;
       });
-    }
-  })
+      if (count < 10) {
+        $(selector + " .tab-activity .load-more-activity").css("display", "none");
+      } else {
+        $(selector + " .tab-activity .load-more-activity").attr("data-selector", selector);
+        $(selector + " .tab-activity .load-more-activity").attr("data-entity-type", entity_type);
+        $(selector + " .tab-activity .load-more-activity").attr("data-entity-id", entity_id);
+        $(selector + " .tab-activity .load-more-activity").attr("data-offset", offset + 10);
+        $(selector + " .tab-activity .load-more-activity").attr("data-limit", limit + 10);
+      }
 
+    }
+  });
 }
+
+function getMoreActivity(selector, entity_type, entity_id, offset, limit) {
+  $.ajax({
+    url: "/activity/get",
+    type: "POST",
+    data: {entity_type: entity_type, entity_id: entity_id, offset: offset, limit: limit},
+    success: function(response) {
+      var act_list = response;
+      var act_temp = selector + " .tab-activity .activity-temp";
+//      $(selector + " .tab-activity .timeline").html("");
+      var count = 0;
+      $.each(act_list, function(key, act) {
+        $(act_temp + " .img-user-info").attr("src", "data/image/user/" + act.user_image);
+        $(act_temp + " .activity-text").html(act.text);
+        $(act_temp + " .activity-time").html(act.time);
+        $(selector + " .tab-activity .timeline").append($(act_temp).html());
+        count++;
+      });
+      if (count < 10) {
+        $(selector + " .tab-activity .load-more-activity").css("display", "none");
+      } else {
+        $(selector + " .tab-activity .load-more-activity").attr("data-selector", selector);
+        $(selector + " .tab-activity .load-more-activity").attr("data-entity-type", entity_type);
+        $(selector + " .tab-activity .load-more-activity").attr("data-entity-id", entity_id);
+        $(selector + " .tab-activity .load-more-activity").attr("data-offset", offset + 10);
+        $(selector + " .tab-activity .load-more-activity").attr("data-limit", limit + 10);
+      }
+    }
+  });
+}
+
+$(document).on("click", ".load-more-activity", function(e) {
+  e.preventDefault();
+  var selector = $(this).attr("data-selector");
+  var entity_type = $(this).attr("data-entity-type");
+  var entity_id = $(this).attr("data-entity-id");
+  var offset = $(this).attr("data-offset");
+  var limit = $(this).attr("data-limit");
+  getMoreActivity(selector, entity_type, entity_id, offset, limit);
+});
 
 $(".tab-activity").on("click", ".user", function(e) {
   e.preventDefault();
-})
+});
 
 /**
  * Hide loading gif 
@@ -591,6 +643,11 @@ function showAlert(type, valid, msg) {
       }, 5000);
     });
   }
+}
+
+function showAlertModal(message) {
+  $("#modal-error-notice .error-content").html(message);
+  $("#modal-error-notice").modal('show');
 }
 
 /**
@@ -725,7 +782,7 @@ function editStorySubmit(sid) {
         var comment = response.comment;
         getComment("#modal-edit-story", sid, comment);
         getActivity("#modal-edit-story", 2, sid, 0, 10);
-        
+
         $("#modal-edit-story").modal("show");
       }
     }

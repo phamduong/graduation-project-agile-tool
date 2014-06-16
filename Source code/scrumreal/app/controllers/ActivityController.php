@@ -96,7 +96,7 @@ class ActivityController extends BaseController {
           break;
         case 4:
           $data = explode('+', $act->content);
-          $text = '<a class="user" href="#">' . $act->user_name . '</a> updates ' . $data[0] . ' <b>FROM</b>: ' . $data[1] . ' <b>TO</b> ' . $data[2];
+          $text = '<a class="user" href="#">' . $act->user_name . '</a> updates <i>' . $data[0] . '</i> <b>FROM</b>: ' . $data[1] . ' <b>TO</b> ' . $data[2];
           $act->text = $text;
           break;
       }

@@ -19,7 +19,7 @@ Scrumreal - Project management
           <div class='alert_block'></div>
           <div id="action_bar" class="row-fluid">
             <div class="span12">
-              <a href="#modal-add-project" data-backdrop="static" data-keyboard="false" id="btn-add-project" role="button" class="btn btn-primary pull-left btn-lightred mr10" data-toggle="modal"><i class="icon-plus"></i> Add Project</a>
+              <a data-backdrop="static" data-keyboard="false" id="btn-add-project" role="button" class="btn btn-primary pull-left btn-lightred mr10"><i class="icon-plus"></i> Add Project</a>
               <button id="btn-download-excel" class="btn btn-primary pull-right mr10"><i class="icon-download-alt"></i> Excel</button>
             </div>
           </div>
@@ -62,6 +62,9 @@ Scrumreal - Project management
   <script>
     @if(isset($current_project))
       var current_project = "{{{$current_project}}}";
+      window.has_select_project = true;
+    @else
+      window.has_select_project = false;
     @endif
   </script>
   <script src="{{ asset("js/project.js" ) }}"></script>

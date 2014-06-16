@@ -1,4 +1,4 @@
-<div id="modal-edit-user" class="modal modal-custom hide fade box box-color lime modal-with-tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal-edit-user" class="modal modal-custom hide fade box box-color modal-with-tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <input type="hidden" id="selected-role" value="" />
     <form action="#" class='form-horizontal form-validate' id="form-edit-user" autocomplete="off">

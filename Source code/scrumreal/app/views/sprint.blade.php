@@ -11,7 +11,7 @@ Scrumreal - Sprint management
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span9">
-      <div class="box box-color box-bordered teal sprint-list">
+      <div class="box box-color box-bordered sprint-list">
         <div class="box-title">
           <h3>
             <i class="glyphicon-folder_open"></i>
@@ -24,7 +24,7 @@ Scrumreal - Sprint management
         <div class="box-content scrollable" data-height="520" id="sprint-team-list">
           @foreach($sprint_list as $sprint)
           <div class="sprint" id="<?php echo 'sprint_' . $sprint->spid; ?>">
-            <div class="box box-color teal box-small box-bordered">
+            <div class="box box-color box-small box-bordered">
               <div class="box-title">
                 <h3>
                   <a href="{{{$sprint->spid}}}" class="sprint-name"><i class="glyphicon-folder_flag"></i>
@@ -72,14 +72,14 @@ Scrumreal - Sprint management
         </div>
       </div>
       <div class="span3">
-        <div class="box box-color box-bordered teal sprint-story-list" id="story-not-se-list">
+        <div class="box box-color box-bordered sprint-story-list" id="story-not-se-list">
           <div class="box-title">
             <h3>
               <i class="glyphicon-notes"></i>
               Stories
             </h3>
             <div class="actions">
-              <a href="#modal-add-story" data-backdrop="static" data-keyboard="false" id="btn-add-story" role="button" class="btn btn-primary mr10" data-toggle="modal"><i class="icon-plus"></i> Add story</a>
+              <a href="#modal-add-story" data-backdrop="static" id="btn-add-story" role="button" class="btn btn-primary mr10" data-toggle="modal"><i class="icon-plus"></i> Add story</a>
             </div>
           </div>
           <div class="box-content scrollable" data-height="520">

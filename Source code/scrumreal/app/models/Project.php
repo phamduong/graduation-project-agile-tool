@@ -31,7 +31,8 @@ LEFT JOIN
 									JOIN user ON project_user.uid = user.uid
 		WHERE project_user.rid = 4
 	)project_owner
-ON project_owner.pid = project.pid            
+ON project_owner.pid = project.pid
+WHERE project.delete_flg = 0
 SQL;
     $result = array();
     $result["aaData"] = DB::select($query);
@@ -60,21 +61,21 @@ LEFT JOIN
 		WHERE project_user.rid = 4
 	) project_owner
 ON project_owner.pid = project.pid
-WHERE project.pid = ?
+WHERE project.pid = ? AND project.delete_flg = 0
 SQL;
     $result = DB::select($query, array($pid));
     return $result[0];
   }
 
-  public function checkExist($pid, $user_id) {
+  public function checkRoleAssign($pid, $user_role) {
     $exist = false;
     $query = <<<SQL
 SELECT count(*) as count
 FROM project_user
-WHERE uid = ?
-	AND pid = ?
+WHERE pid = ?
+	AND rid = ?
 SQL;
-    $result = DB::select($query, array($user_id, $pid, $user_role));    
+    $result = DB::select($query, array($pid, $user_role));
     return $result[0]->count;
   }
 
@@ -104,6 +105,30 @@ SET uid = ?
 WHERE pid = ? AND rid = ?
 SQL;
     $result = DB::update($query, array($user_id, $pid, $user_role));
+    return $result;
+  }
+
+  /**
+   * Remove user from project
+   * @param type $pid
+   * @param type $uid
+   * @return type
+   */
+  public function removeFromProject($pid, $uid) {
+    $query = <<<SQL
+DELETE FROM project_user
+WHERE pid = ? AND uid = ?
+SQL;
+    $result = DB::delete($query, array($pid, $uid));
+    return $result;
+  }
+  
+  public function removeUserWithRole($pid, $rid){
+    $query = <<<SQL
+DELETE FROM project_user
+WHERE pid = ? AND rid = ?
+SQL;
+    $result = DB::delete($query, array($pid, $rid));
     return $result;
   }
 

@@ -22,7 +22,7 @@ Scrumreal - Sprint management
         <tr class="user-story" id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}">
           <td class="story_info">
             <div class="span12 story-info">
-              <div class="box box-color box-bordered red">
+              <div class="box box-color box-bordered">
                 <div class="box-title story-point">
                   <i class="icon-user"></i> {{{$story->point}}} points
                 </div>

@@ -144,7 +144,6 @@ class SprintController extends BaseController {
         'name' => 'Name',
         'start_date' => 'Start date',
         'end_date' => 'End date',
-        'status' => 'Status',
         'description' => 'Description'
     );
     

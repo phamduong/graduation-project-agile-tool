@@ -1,4 +1,4 @@
-<div id="modal-edit-story" class="modal modal-custom hide fade box box-color lime modal-with-tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal-edit-story" class="modal modal-custom hide fade box box-color modal-with-tab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="box-title">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

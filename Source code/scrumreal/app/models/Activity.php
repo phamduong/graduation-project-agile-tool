@@ -12,6 +12,7 @@ SELECT activity.*, `user`.fullname AS user_name, `user`.image AS user_image
 FROM activity INNER JOIN `user` ON activity.uid = `user`.uid
 WHERE entity_id = ?
 	AND entity_type = ?
+ORDER BY activity.time DESC
 LIMIT ?, ?
 SQL;
     $result = DB::select($query, array($entity_id, $entity_type, $offset, $limit));
