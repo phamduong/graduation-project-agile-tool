@@ -11,11 +11,11 @@ $(document).ready(function() {
           .ajaxStop(function() {
             $loading.hide();
           })
-          .ajaxError(function(event, jqxhr, settings, exception) {
-            var err = jQuery.parseJSON(jqxhr.responseText);
-            showAlert(0, true, err.error.message);
-            $loading.hide();
-          });
+//          .ajaxError(function(event, jqxhr, settings, exception) {
+//            var err = jQuery.parseJSON(jqxhr.responseText);
+//            showAlert(0, true, err.error.message);
+//            $loading.hide();
+//          });
 
   //Add new user
   $("#form-add-user").submit(function(event) {
@@ -39,11 +39,11 @@ $(document).ready(function() {
               }, 1500);
             } else {
               if ($("#selected-role").val() != "") {
-                var select = $("#modal-add-project " + "#" + $("#selected-role").val());
-                var temp = '<option value="' + response.user.uid + '">' + response.user.full_name + '</option>';
-                select.append(temp);
-                select.select2("data", {id: response.user.uid, text: response.user.full_name});
-                $("#selected-role").val("");
+//                var select = $("#modal-add-project " + "#" + $("#selected-role").val());
+//                var temp = '<option value="' + response.user.uid + '">' + response.user.full_name + '</option>';
+//                select.append(temp);
+//                select.select2("data", {id: response.user.uid, text: response.user.full_name});
+//                $("#selected-role").val("");
                 setTimeout(function() {
                   $("#modal-add-project").modal('hide');
                 }, 1500);

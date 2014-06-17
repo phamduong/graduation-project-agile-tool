@@ -204,6 +204,11 @@ class TaskController extends BaseController {
     } else {
       $data = array('status' => 800, 'message' => 'Save task unsuccessfully!');
     }
+    
+    //update status of story that contains task
+    $story = new Story;
+    $story->updateStatusFollowTasks($task->sid);
+//    return $test;
     return $data;
   }
 

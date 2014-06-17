@@ -84,7 +84,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
    * Get user who are not in any project or project which are not started
    * @return type
    */
-  public function getNotInProject() {
+  public function getNotInProject($name) {
     $query = <<<SQL
 SELECT user.uid, user.fullname, user.image
 FROM user
@@ -95,7 +95,8 @@ WHERE user.uid NOT IN
 							INNER JOIN project ON project_user.pid = project.pid
 		WHERE project.status = 1
 	)
-  AND user.delete_flg = 0;
+  AND user.delete_flg = 0
+  AND user.fullname LIKE '%$name%'
 SQL;
     $result = DB::select($query);
     return $result;
@@ -106,11 +107,11 @@ SQL;
    * Any free user and project leader in active or initial project
    * @return type
    */
-  public function getCandicate() {
+  public function getCandicate($name) {
     $query = <<<SQL
 SELECT user.uid, user.fullname
 FROM user
-WHERE user.uid NOT IN
+WHERE (user.uid NOT IN
  (
 		SELECT user.uid
 		FROM user INNER JOIN project_user ON user.uid = project_user.uid 
@@ -123,8 +124,9 @@ WHERE user.uid NOT IN
 		FROM user INNER JOIN project_user ON user.uid = project_user.uid 
 							INNER JOIN project ON project_user.pid = project.pid
 		WHERE project.status = 1 AND project_user.rid = 1
-	)
+	))
   AND user.delete_flg = 0
+  AND user.fullname LIKE '%$name%'
 SQL;
     $result = DB::select($query);
     return $result;

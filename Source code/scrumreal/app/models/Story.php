@@ -52,4 +52,57 @@ SQL;
     return $result;
   }
 
+  public function getStoryNotComplete($pid) {
+    $query = <<<SQL
+  SELECT story.*
+  FROM story
+  WHERE story.pid = ?
+    AND story.status <> ?
+    AND delete_flg = 0
+SQL;
+    $result = DB::select($query, array($pid, STORY_STATUS_SPRINT_COMPLETED));
+    return $result;
+  }
+
+  public function updateStatusFollowTasks($sid) {
+    $query = <<<SQL
+SELECT task.*
+FROM task INNER JOIN story_team ON task.sid = story_team.sid
+INNER JOIN story ON story_team.sid = story.sid
+WHERE story.sid = ?
+	AND task.delete_flg = 0
+SQL;
+    $result = DB::select($query, array($sid));
+//    return $result;
+    $min_status = $result[0]->status;
+    foreach ($result as $story) {
+      if ($story->status < $min_status) {
+        $min_status = $story->status;
+      }
+    }
+//    return $min_status;
+    $story_status = 0;
+    switch ($min_status) {
+      case 1:
+        $story_status = STORY_STATUS_TO_DO;
+        break;
+      case 2:
+        $story_status = STORY_STATUS_IN_PROGRESS;
+        break;
+      case 3:
+        $story_status = STORY_STATUS_TO_TEST;
+        break;
+      case 4:
+        $story_status = STORY_STATUS_DONE;
+        break;
+    }
+    $query = <<<SQL
+  UPDATE story 
+  SET status = ?
+  WHERE sid = ?
+SQL;
+    $result = DB::update($query, array($story_status, $sid));
+    return $story_status;
+  }
+
 }
