@@ -15,7 +15,7 @@ WHERE story.sid NOT IN
 	SELECT story.sid
 	FROM story INNER JOIN story_team ON story.sid = story_team.sid
 	WHERE story.pid = ?
-) AND story.pid = ?
+) AND story.pid = ? AND delete_flg = 0
 ORDER BY story.name
 SQL;
     $result = DB::select($query, array($pid, $pid));
@@ -26,7 +26,7 @@ SQL;
     $query = <<<SQL
 SELECT *
 FROM sprint
-WHERE sprint.pid = ?
+WHERE sprint.pid = ? AND delete_flg = 0
 SQL;
     $result = DB::select($query, array($pid));
     return $result;
@@ -36,7 +36,7 @@ SQL;
     $query = <<<SQL
 SELECT story.sid, story.`name`, story.point, story_team.order
 FROM story INNER JOIN story_team ON story.sid = story_team.sid
-WHERE story_team.tid = ? AND story_team.spid = ?
+WHERE story_team.tid = ? AND story_team.spid = ? AND delete_flg = 0
 ORDER BY story_team.order
 SQL;
     $result = DB::select($query, array($tid, $spid));
@@ -101,6 +101,16 @@ SQL;
     foreach ($data as $key => $value) {
       DB::update($query, array($value, $tid, $spid, $key));
     }
+  }
+  
+  public function getSprintNotComplete($pid){
+    $query = <<<SQL
+SELECT *
+FROM sprint
+WHERE sprint.pid = ? AND sprint.status <> ? AND delete_flg = 0
+SQL;
+    $result = DB::select($query, array($pid, SPRINT_STATUS_COMPLETED));
+    return $result;
   }
 
 }

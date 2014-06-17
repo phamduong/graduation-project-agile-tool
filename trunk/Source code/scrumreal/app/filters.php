@@ -12,14 +12,14 @@
  */
 
 App::before(function($request) {
-  if (Session::has('current_project')) {
-    $path = $_SERVER['REQUEST_URI'];
-    $uid = Auth::user()->uid;
-    if (PermissionController::checkPermission($uid, $path) == false) {
-      $data = array('status' => 801, 'message' => "You don't have permission to perform this action");
-      return $data;
-    }
-  }
+//  if (Session::has('current_project')) {
+//    $path = $_SERVER['REQUEST_URI'];
+//    $uid = Auth::user()->uid;
+//    if (PermissionController::checkPermission($uid, $path) == false) {
+//      $data = array('status' => 801, 'message' => "You don't have permission to perform this action");
+//      return $data;
+//    }
+//  }
 });
 
 App::after(function($request, $response) {

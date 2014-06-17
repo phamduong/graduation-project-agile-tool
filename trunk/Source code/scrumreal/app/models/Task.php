@@ -92,5 +92,18 @@ SQL;
     $result = DB::select($query, array($sid));
     return $result;
   }
+  
+  public function getTaskNotComplete($pid){
+    $query = <<<SQL
+SELECT task.*
+FROM task INNER JOIN story_team ON task.sid = story_team.sid
+INNER JOIN sprint ON story_team.spid = sprint.spid
+WHERE sprint.pid = ?
+	AND task.status <> ?
+	AND task.delete_flg = 0
+SQL;
+    $result = DB::select($query, array($pid, TASK_STATUS_DONE));
+    return $result;
+  }
 
 }

@@ -19,11 +19,41 @@ class ProjectController extends BaseController {
 
       //Project page data
       $data['role'] = parent::getRole();
-      $data['free_user'] = $user->getNotInProject();
-      $data['candicate_leader'] = $user->getCandicate();
+      //$data['free_user'] = $user->getNotInProject();
+      //$data['candicate_leader'] = $user->getCandicate();
       $data['current_project'] = Session::get('current_project');
       return View::make('project', $data);
     }
+  }
+
+  public function getLeader() {
+    $data = array();
+    $input = Input::all();
+    $user = new User;
+    $result = $user->getCandicate($input['q']);
+    if (count($result) > 0) {
+      foreach ($result as $val) {
+        $data[] = array("id" => $val->uid, "text" => $val->fullname);
+      }
+    } else {
+      $data = array("id" => 0, "text" => "No result found...");
+    }
+    return json_encode($data);
+  }
+
+  public function getOwner() {
+    $data = array();
+    $input = Input::all();
+    $user = new User;
+    $result = $user->getNotInProject($input['q']);
+    if (count($result) > 0) {
+      foreach ($result as $val) {
+        $data[] = array("id" => $val->uid, "text" => $val->fullname);
+      }
+    } else {
+      $data = array("id" => 0, "text" => "No result found...");
+    }
+    return json_encode($data);
   }
 
   public function save() {
@@ -39,24 +69,24 @@ class ProjectController extends BaseController {
     //change date to same format
     $project->start_date = date('Y-m-d', strtotime($project->start_date));
     $project->end_date_es = date('Y-m-d', strtotime($project->end_date_es));
-    
+
     $date_arr = explode(' - ', $input['project_date_range']);
     $input['start_date'] = date('Y-m-d', strtotime($date_arr[0]));
     $input['end_date_es'] = date('Y-m-d', strtotime($date_arr[1]));
-    
+
     //Activity
     foreach ($arr_match as $key => $value) {
-      if($project->$key != $input[$key]){
+      if ($project->$key != $input[$key]) {
         ActivityController::createActivityUpdate($input['pid'], ENTITY_PROJECT, $value, $project->$key, $input[$key]);
         $project->$key = $input[$key];
       }
     }
-    
+
 //    $project->name = $input['name'];
 //    $project->description = $input['description'];
 //    $project->note = $input['note'];
-    
-    
+
+
     $project_model = new Project;
     if ($input['leader'] != '') {
       if ($project_model->checkRoleAssign($input['pid'], ROLE_LEADER) == 0) {
@@ -76,10 +106,34 @@ class ProjectController extends BaseController {
         $project_model->insertProjectUser($input['pid'], $input['owner'], ROLE_OWNER);
       }
     }
-    
+
     $data = array('status' => 800, 'message' => 'Save unsucessfully');
     if ($project->save()) {
       $data = array('status' => 200, 'message' => 'Save sucessfully');
+    }
+    return $data;
+  }
+
+  public function complete() {
+    $input = Input::all();
+    $pid = $input['pid'];
+    //Check if project contain any unfinished sprint, task, story
+    $sprint = new Sprint;
+    $story = new Story;
+    $task = new Task;
+    if (count($sprint->getSprintNotComplete($pid)) > 0) {
+      $data = array('status' => 803, 'message' => 'Project contain uncompleted sprint');
+    } else if (count($story->getStoryNotComplete($pid)) > 0) {
+      $data = array('status' => 804, 'message' => 'Project contain uncompleted story');
+    } else if (count($task->getTaskNotComplete($pid)) > 0) {
+      $data = array('status' => 805, 'message' => 'Project contain uncompleted task');
+    } else {
+      $project = Project::find($pid);
+      ActivityController::createActivityUpdate($pid, ENTITY_PROJECT, 'Status', $project->$status, PROJECT_COMPLETE_STATUS);
+      $project->status = PROJECT_COMPLETE_STATUS;
+      if ($project->save()) {
+        $data = array('status' => 800, 'message' => 'Project successfully complete.');
+      }
     }
     return $data;
   }

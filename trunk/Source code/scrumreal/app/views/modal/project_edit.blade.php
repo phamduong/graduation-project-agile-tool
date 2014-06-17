@@ -44,12 +44,7 @@
                 <label for="leader" class="control-label">Select product leader</label>
                 <div class="controls">
                   <div class="add-min-height">
-                    <select name="leader" id="leader" class="select2-me span8" data-placeholder="Please select">
-                      <option></option>
-                      @foreach($candicate_leader as $user)
-                      <option value="{{{$user->uid}}}">{{{$user->fullname}}}</option>
-                      @endforeach
-                    </select>
+                    <input type="hidden" name="leader" id="leader2" class="span8" />
                   </div>
                   <span class="help-block"><a href="#modal-add-user" data-selected="1" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="btn-add-user" data-toggle="modal"><i class="icon-plus"></i> Or add product leader here</a></span>
                 </div>
@@ -59,12 +54,7 @@
                 <label for="owner" class="control-label">Select product owner</label>
                 <div class="controls">
                   <div class="add-min-height">
-                    <select name="owner" id="owner" class="select2-me span8" data-placeholder="Please select">
-                      <option></option>
-                      @foreach($free_user as $user_1)
-                      <option value="{{{$user_1->uid}}}">{{{$user_1->fullname}}}</option>
-                      @endforeach
-                    </select>
+                    <input type="hidden" name="owner" id="owner2" class="span8" />
                   </div>
                   <span class="help-block"><a href="#modal-add-user" data-selected="4" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="btn-add-user" data-toggle="modal"><i class="icon-plus"></i> Or add product owner here</a></span>
                 </div>
@@ -86,6 +76,7 @@
             </div>
             <div class="modal-footer">
               <input type="submit" class="btn btn-primary" value="Save project infomation">
+              <button class="btn btn-red complete-project" data-pid="" aria-hidden="true">Complete this project</button>
               <button class="btn btn-red delete-project" data-pid="" aria-hidden="true">Delete</button>
               <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             </div>

@@ -243,3 +243,15 @@ Route::any('/permission', [
 Route::any('/permission/save', [
     'uses' => 'PermissionController@save'
 ]);
+
+Route::any('/project/get_leader', [
+    'uses' => 'ProjectController@getLeader'
+]);
+
+Route::any('/project/get_owner', [
+    'uses' => 'ProjectController@getOwner'
+]);
+
+Route::any('/project/complete', [
+    'uses' => 'ProjectController@complete'
+]);
