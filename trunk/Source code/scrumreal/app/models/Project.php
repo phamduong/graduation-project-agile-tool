@@ -131,5 +131,14 @@ SQL;
     $result = DB::delete($query, array($pid, $rid));
     return $result;
   }
+  
+  public function deleteProjectUser($pid){
+    $query = <<<SQL
+  DELETE FROM project_user
+  WHERE pid = ?
+SQL;
+    $result = DB::delete($query, array($pid));
+    return $result;
+  }
 
 }

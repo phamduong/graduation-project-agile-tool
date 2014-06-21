@@ -255,3 +255,31 @@ Route::any('/project/get_owner', [
 Route::any('/project/complete', [
     'uses' => 'ProjectController@complete'
 ]);
+
+Route::any('/sprint/start_sprint', [
+    'uses' => 'SprintController@startSprint'
+]);
+
+Route::any('/sprint/complete_sprint', [
+    'uses' => 'SprintController@completeSprint'
+]);
+
+Route::any('/sprint/resume_sprint', [
+    'uses' => 'SprintController@resumeSprint'
+]);
+
+Route::any('/sprint/delete', [
+    'uses' => 'SprintController@delete'
+]);
+
+Route::any('sprint/get_team_day', [
+    'uses' => 'SprintController@getTeamDay'
+]);
+
+Route::any('sprint/update_team_day', [
+    'uses' => 'SprintController@updateTeamDay'
+]);
+
+Route::any('sprint/get_team_day_all', [
+    'uses' => 'SprintController@getTeamDayAll'
+]);

@@ -30,10 +30,10 @@ $(document).ready(function() {
 //      console.log("task id: " + item.attr("data-taid"));
       var taid = item.attr("data-taid");
       var end_col = parent.attr("data-task-status");
-      if(end_col >= 3){
+      if (end_col >= 3) {
         $("#task_" + taid + " .progress-info .bar").width("100%");
         $("#task_" + taid + " .progress-info .bar").html("100%");
-      }else if(end_col === 1){
+      } else if (end_col === 1) {
         $("#task_" + taid + " .progress-info .bar").width("0%");
         $("#task_" + taid + " .progress-info .bar").html("0%");
       }
@@ -43,11 +43,13 @@ $(document).ready(function() {
           type: "POST",
           data: {taid: taid, old_status: window.start_col, status: end_col},
           success: function(response) {
+            var story_data = response.story;
+            $("#story_" + story_data.sid + " .story-status").html(story_data.status);
             $("#story_" + window.start_sid_task + " .story-description .story-progress").html("");
             $("#story_" + window.start_sid_task + " .story-description .story-progress").load("/task/reload_story_progress/" + window.start_sid_task);
           },
           error: function(response) {
-
+            showAlertModal(response.message);
           }
         });
 

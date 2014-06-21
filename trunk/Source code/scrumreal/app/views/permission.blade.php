@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumreal - Event management
+Scrumreal - Permission
 @stop
 @section('content')
 <div class="container-fluid">

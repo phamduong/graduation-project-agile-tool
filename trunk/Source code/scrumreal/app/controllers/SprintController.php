@@ -16,6 +16,15 @@ class SprintController extends BaseController {
       //page data
       $data['story_not_asign'] = $sprint->getStoryNotAssign($current_project);
       $data['sprint_list'] = $sprint->getSprintInProject($current_project);
+//      var_dump($data['sprint_list']);
+//      exit();
+      $data['has_sprint_running'] = false;
+      foreach ($data['sprint_list'] as $sp) {
+        if ($sp->status == SPRINT_STATUS_IN_PROGRESS) {
+          $data['has_sprint_running'] = true;
+          break;
+        }
+      }
       $data['team_list'] = $team->getTeamOnProject($current_project);
       foreach ($data['sprint_list'] as $item1) {
         foreach ($data['team_list'] as $item2) {
@@ -43,7 +52,7 @@ class SprintController extends BaseController {
         $html .= '<div id="story_' . $story->sid . '" data-sid="' . $story->sid . '" class="story story-addable" data-name="' . $story->name . '" data-order="">';
       }
       $html .= '<div class="story-name"><a href="' . $story->sid . '" class="edit-story">' . $story->name . '</a></div>';
-      $html .= '<div class="story-points badge badge-info">'.$story->point.' points</div>';
+      $html .= '<div class="story-points badge badge-info">' . $story->point . ' points</div>';
       $html .= '</div></div>';
     }
     return $html;
@@ -55,12 +64,19 @@ class SprintController extends BaseController {
     $sprint->pid = Session::get('current_project');
     $sprint->name = $input['name'];
     $sprint->description = $input['description'];
-    $date = explode(" - ", $input['sprint_time']);
-    $sprint->start_date = date('Y-m-d', strtotime($date[0]));
-    $sprint->end_date = date('Y-m-d', strtotime($date[1]));
+//    $date = explode(" - ", $input['sprint_time']);
+//    $sprint->start_date = date('Y-m-d', strtotime($date[0]));
+//    $sprint->end_date = date('Y-m-d', strtotime($date[1]));
+//    $sprint->num_day = $input['num_day'];
     $sprint->status = SPRINT_STATUS_IN_PLAN;
     if ($sprint->save() == 1) {
       $data = array('status' => 200, 'message' => 'Add sprint successfully!');
+      //add to sprint_team table 
+      $team_model = new Team;
+      $team_list = $team_model->getTeamOnProject(Session::get('current_project'));
+      foreach ($team_list as $t) {
+        $team_model->addToSprint_Team($sprint->spid, $t->tid);
+      }
       //activity
       ActivityController::createActivityAdd(Session::get('current_project'), ENTITY_PROJECT, $sprint->spid, ENTITY_SPRINT);
     } else {
@@ -94,6 +110,7 @@ class SprintController extends BaseController {
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
     }
+    return $data;
   }
 
   public function removeStory() {
@@ -108,6 +125,7 @@ class SprintController extends BaseController {
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
     }
+    return $data;
   }
 
   public function moveStory() {
@@ -118,14 +136,15 @@ class SprintController extends BaseController {
       //activity
       ActivityController::createActivityAdd($input['end_spid'], ENTITY_SPRINT, $input['select_sid'], ENTITY_STORY);
       ActivityController::createActivityAdd($input['end_tid'], ENTITY_TEAM, $input['select_sid'], ENTITY_STORY);
-      
+
       ActivityController::createActivityDelete($input['start_spid'], ENTITY_SPRINT, $input['select_sid'], ENTITY_STORY);
       ActivityController::createActivityDelete($input['start_tid'], ENTITY_TEAM, $input['select_sid'], ENTITY_STORY);
-      
+
       $data = array('status' => 200, 'message' => 'Successfull');
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
     }
+    return $data;
   }
 
   public function updateStoryOrder() {
@@ -139,36 +158,138 @@ class SprintController extends BaseController {
   public function save() {
     $input = Input::all();
     $sprint = Sprint::find($input['spid']);
-    
+
     $arr_match = array(
         'name' => 'Name',
-        'start_date' => 'Start date',
-        'end_date' => 'End date',
         'description' => 'Description'
     );
-    
-    $date = explode(" - ", $input['sprint_time']);
-    $input['start_date'] = date('Y-m-d', strtotime($date[0]));
-    $input['end_date'] = date('Y-m-d', strtotime($date[1]));
-    
+
+//    $date = explode(" - ", $input['sprint_time']);
+//    $input['start_date'] = date('Y-m-d', strtotime($date[0]));
+//    $input['end_date'] = date('Y-m-d', strtotime($date[1]));
+
     foreach ($arr_match as $key => $value) {
-      if($sprint->$key != $input[$key]){
+      if ($sprint->$key != $input[$key]) {
         ActivityController::createActivityUpdate($input['spid'], ENTITY_SPRINT, $value, $sprint->$key, $input[$key]);
         $sprint->$key = $input[$key];
       }
     }
-    
+
 //    $sprint->name = $input['name'];
 //    $sprint->description = $input['description'];
 //    $date = explode(" - ", $input['sprint_time']);
 //    $sprint->start_date = date('Y-m-d', strtotime($date[0]));
 //    $sprint->end_date = date('Y-m-d', strtotime($date[1]));
-    
+
     if ($sprint->save() == 1) {
       $data = array('status' => 200, 'message' => 'Save sprint successfully!');
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
     }
+    return $data;
+  }
+
+  public function startSprint() {
+    $input = Input::all();
+    $spid = $input['spid'];
+    $sprint = Sprint::find($spid);
+    $sprint_model = new Sprint;
+    $data = array('status' => 800, 'message' => 'Error!');
+    //Check are there any sprint in progress
+    if (count($sprint_model->getSprintByStatus(SPRINT_STATUS_IN_PROGRESS)) == 0) {
+      $sprint->status = SPRINT_STATUS_IN_PROGRESS;
+      $sprint->start_date = date('Y-m-d');
+      if ($sprint->save()) {
+        $data = array('status' => 200, 'message' => 'Start sprint successfully');
+      }
+    } else {
+      $data = array('status' => 801, 'message' => 'There is sprint in progress');
+    }
+    return $data;
+  }
+
+  public function completeSprint() {
+    $input = Input::all();
+    $spid = $input['spid'];
+    $sprint = Sprint::find($spid);
+    $sprint->status = SPRINT_STATUS_COMPLETED;
+    $sprint->end_date = date('Y-m-d');
+    $data = array('status' => 800, 'message' => 'Error!');
+    if ($sprint->save()) {
+      $data = array('status' => 200, 'message' => 'Start sprint successfully');
+    }
+    return $data;
+  }
+
+  public function resumeSprint() {
+    $input = Input::all();
+    $spid = $input['spid'];
+    $sprint = Sprint::find($spid);
+    $sprint_model = new Sprint;
+    $data = array('status' => 800, 'message' => 'Error!');
+    //Check are there any sprint in progress
+    if (count($sprint_model->getSprintByStatus(SPRINT_STATUS_IN_PROGRESS)) == 0) {
+      $sprint->status = SPRINT_STATUS_IN_PROGRESS;
+      if ($sprint->save()) {
+        $data = array('status' => 200, 'message' => 'Resume sprint successfully');
+      }
+    } else {
+      $data = array('status' => 802, 'message' => 'There is sprint in progress');
+    }
+    return $data;
+  }
+
+  public function delete() {
+    $input = Input::all();
+    $spid = $input['spid'];
+    $sprint = Sprint::find($spid);
+    $sprint->delete_flg = 1;
+    if ($sprint->save()) {
+      $data = array('status' => 200, 'message' => 'Delete sprint successfully');
+      //remove from sprint_team table
+      $team_model = new Team;
+      $team_list = $team_model->getTeamOnProject(Session::get('current_project'));
+      foreach ($team_list as $t) {
+        $team_model->deleteFromSprint_Team($spid, $t->tid);
+      }
+      //remove from story_team table
+      foreach ($team_list as $t) {
+        $team_model->deleteFromStory_Team($spid, $t->tid);
+      }
+
+      ActivityController::createActivityDelete(Session::get('current_project'), ENTITY_PROJECT, $spid, ENTITY_SPRINT);
+    } else {
+      $data = array('status' => 800, 'message' => 'Error deleting sprint');
+    }
+    return $data;
+  }
+
+  public function getTeamDay() {
+    $input = Input::all();
+    $tid = $input['tid'];
+    $spid = $input['spid'];
+    $sprint_model = new Sprint;
+    $data['data'] = $sprint_model->getTeamDay($spid, $tid);
+    $data['status'] = 200;
+    return $data;
+  }
+
+  public function updateTeamDay() {
+    $input = Input::all();
+    $sprint_model = new Sprint;
+    if ($sprint_model->updateTeamDay($input['spid'], $input['tid'], $input['num_day']) > 0) {
+      $data = array('status' => 200, 'message' => 'Update successfully!');
+    } else {
+      $data = array('status' => 800, 'message' => 'Fail!');
+    }
+    return $data;
+  }
+
+  public function getTeamDayAll() {
+    $pid = Session::get('current_project');
+    $sprint_model = new Sprint;
+    $data = array('status' => 200);
+    $data['data'] = $sprint_model->getTeamDayAll($pid);
     return $data;
   }
 

@@ -135,18 +135,12 @@
 
 
 
-    @if ($cur_user['show_nav'] == 1)
-    <div class="container-fluid" id="content">
-      <div id="left" class='force-full no-resize'>
-        @include('layouts/sub_nav')
+    <!--<div class="container-fluid" id="content">-->
+    <div class="container-fluid nav-hidden" id="content">
+      <div id="main">
+        @yield('content')
       </div>
-      @else
-      <div class="container-fluid nav-hidden" id="content">
-        @endif
-        <div id="main">
-          @yield('content')
-        </div>
-      </div>
+    </div>
 
       @if($active_nav == 'taskboard')
       <div id="task-control-bar" class="container-fluid">

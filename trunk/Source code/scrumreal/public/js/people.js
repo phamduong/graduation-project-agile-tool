@@ -9,24 +9,28 @@ $(document).ready(function() {
   $("#form-add-team").submit(function(event) {
     event.preventDefault();
     if ($(this).valid() === true) {
-      $.ajax({
-        url: '/team/add',
-        type: 'POST',
-        data: $(this).serialize(),
-        success: function(response) {
-          if (response.status === 800) { //error
-            showAlert(0, true, response.message);
-          } else if (response.status === 200) {
-            showAlert(1, true, response.message);
-            //Append new team to HTML
-
-            setTimeout(function() {
-              $("#modal-add-team").modal('hide');
-            }, 1000);
-            clearFormInput("#form-add-team");
+      if ($("#master").val() === "") {
+        showAlertModal("Team leader can not be empty!");
+      } else {
+        $.ajax({
+          url: '/team/add',
+          type: 'POST',
+          data: $(this).serialize(),
+          success: function(response) {
+            if (response.status === 800) { //error
+              showAlert(0, true, response.message);
+            } else if (response.status === 200) {
+              showAlert(1, true, response.message);
+              //Append new team to HTML
+              setTimeout(function() {
+                $("#modal-add-team").modal('hide');
+              }, 1000);
+              clearFormInput("#form-add-team");
+              location.reload(); //temp
+            }
           }
-        }
-      });
+        });
+      }
     }
   });
 
@@ -35,50 +39,61 @@ $(document).ready(function() {
     e.preventDefault();
     if ($(this).valid() === true) {
       var tid = $("#form-edit-team #tid").val();
-      $.ajax({
-        url: "/team/save",
-        type: "POST",
-        data: $(this).serialize(),
-        success: function(response) {
-          if (response.status === 200) {
-            showAlert(1, true, response.message);
-            $("#team_" + tid).html("");
-            $("#team_" + tid).load("/team/reload_team_data/" + tid);
-            var page = $(location).attr('pathname');
-            if (page === "/people") {
-              //in people page -> reload staff list
-              $("#staff-list .box-content").html();
-              $("#staff-list .box-content").load("/people/reload_list_staff");
-              setTimeout(function() {
-                $("#modal-edit-team").modal("hide");
-              }, 1000);
+      if ($("#master2").val() === "") {
+        showAlertModal("Team leader can not be empty!");
+      } else {
+        $.ajax({
+          url: "/team/save",
+          type: "POST",
+          data: $(this).serialize(),
+          success: function(response) {
+            if (response.status === 200) {
+              showAlert(1, true, response.message);
+              $("#team_" + tid).html("");
+              $("#team_" + tid).load("/team/reload_team_data/" + tid);
+              var page = $(location).attr('pathname');
+              if (page === "/people") {
+                //in people page -> reload staff list
+//              $("#staff-list .box-content").html();
+//              $("#staff-list .box-content").load("/people/reload_list_staff");
+                setTimeout(function() {
+                  $("#modal-edit-team").modal("hide");
+                }, 1000);
+                location.reload(); //teamp
+              }
+            } else if (response.status === 200) {
+              showAlert(0, true, response.message);
             }
-          } else if (response.status === 200) {
-            showAlert(0, true, response.message);
           }
-        }
-      });
+        });
+      }
     }
   });
 
   //Delete team
-  $(".delete-team").click(function(e) {
+  $(document).on("click", ".delete-team", function(e) {
+    //$(".delete-team").click(function(e) {
     e.preventDefault();
     var tid = $(this).attr("data-tid");
-    $.ajax({
-      url: "/team/delete",
-      type: "POST",
-      data: {tid: tid},
-      success: function(response) {
-        if (response.status === 200) {
-          showAlert(1, true, response.message);
-          setTimeout(function() {
-            $("#modal-edit-team").modal("hide");
-          }, 1000);
-          //appendStoryToHTML();
-        } else if (response.status === 200) {
-          showAlert(0, true, response.message);
-        }
+    bootbox.confirm("Are you sure you want to delete that team?", function(result) {
+      if (result === true) {
+        $.ajax({
+          url: "/team/delete",
+          type: "POST",
+          data: {tid: tid},
+          success: function(response) {
+            if (response.status === 200) {
+              showAlert(1, true, response.message);
+              setTimeout(function() {
+                $("#modal-edit-team").modal("hide");
+              }, 1000);
+              //appendStoryToHTML();
+              location.reload(); //temp
+            } else if (response.status === 200) {
+              showAlert(0, true, response.message);
+            }
+          }
+        });
       }
     });
   });
@@ -149,7 +164,7 @@ $(document).ready(function() {
           $(parent + "#name").val(team_info.name);
 //          var temp = '<option value="' + team_info.master_id + '">' + team_info.master_name + '</option>';
 //          $(parent + "#master").append(temp);
-          $(parent + "#master").select2("data", {id: team_info.master_id, text: team_info.master_name});
+          $(parent + "#master2").select2("data", {id: team_info.master_id, text: team_info.master_name});
           $(parent + "#description").val(team_info.description);
           $(parent + ".delete-team").attr("data-tid", team_info.tid);
           //comment
@@ -168,6 +183,45 @@ $(document).ready(function() {
     });
     event.preventDefault();
   });
+
+  //Init select2 leader
+  $("#master").select2({
+    minimumInputLength: 2,
+    ajax: {
+      url: "project/get_owner",
+      dataType: 'json',
+      global: false,
+      quietMillis: 800,
+      data: function(term, page) {
+        return {
+          q: term
+        };
+      },
+      results: function(data, page) {
+        return {results: data};
+      }
+    }
+  });
+
+//Init select2 leader
+  $("#master2").select2({
+    minimumInputLength: 2,
+    ajax: {
+      url: "project/get_owner",
+      dataType: 'json',
+      global: false,
+      quietMillis: 800,
+      data: function(term, page) {
+        return {
+          q: term
+        };
+      },
+      results: function(data, page) {
+        return {results: data};
+      }
+    }
+  });
+
 });
 
 /**

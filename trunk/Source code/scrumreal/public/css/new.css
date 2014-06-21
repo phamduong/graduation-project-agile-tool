@@ -24,6 +24,9 @@ input[disabled=disabled]{
   border-top: 2px solid #00ABA9;
   background-color: #FFFFFF;
 }
+#main{
+  margin-left: 0px !important;
+}
 #task-control-bar form{
   margin: 0px;
 }
@@ -35,6 +38,12 @@ input[disabled=disabled]{
 }
 .other_filter_wrapper{
   width: 20%;
+}
+.s-team-name{
+  cursor: pointer;
+}
+.s-team-status{
+  float: right;
 }
 #other_filter{
   width: 200px;

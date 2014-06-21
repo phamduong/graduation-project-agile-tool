@@ -11,11 +11,17 @@ $(document).ready(function() {
           .ajaxStop(function() {
             $loading.hide();
           })
-//          .ajaxError(function(event, jqxhr, settings, exception) {
-//            var err = jQuery.parseJSON(jqxhr.responseText);
-//            showAlert(0, true, err.error.message);
-//            $loading.hide();
-//          });
+          .ajaxError(function(event, jqxhr, settings, exception) {
+            var err = jQuery.parseJSON(jqxhr.responseText);
+            showAlert(0, true, err.error.message);
+            $loading.hide();
+          })
+          .ajaxComplete(function(event, jqxhr, settings, exception){
+            var response = jQuery.parseJSON(jqxhr.responseText);
+              if(response.status === 801){
+                showAlertModal(response.message);
+              }
+          });
 
   //Add new user
   $("#form-add-user").submit(function(event) {

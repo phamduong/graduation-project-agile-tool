@@ -188,6 +188,8 @@ class ProjectController extends BaseController {
     $input = Input::all();
     $project = Project::find($input['pid']);
     $project->delete_flg = 1;
+    $project_model = new Project;
+    $project_model->deleteProjectUser($input['pid']);
     if ($project->save()) {
       $data = array(
           'status' => 200,

@@ -18,12 +18,7 @@
             <label for="master" class="control-label">Scrum Master</label>
             <div class="controls">
               <div class="add-min-height">
-                <select name="master" id="master" class="select2-me span8" data-placeholder="Please select" data-rule-required="true">
-                  <option value=""></option>
-                  @foreach($free_user as $user)
-                    <option value="{{{$user->uid}}}">{{{$user->fullname}}}</option>
-                  @endforeach
-                </select>
+                <input type="hidden" name="master" id="master" class="span8" data-rule-required="true"/>
               </div>
             </div>
           </div>
