@@ -14,6 +14,7 @@ $(document).ready(function() {
       url: "project/get_leader",
       dataType: 'json',
       global: false,
+      quietMillis: 800,
       data: function(term, page) {
         return {
           q: term
@@ -32,6 +33,7 @@ $(document).ready(function() {
       url: "project/get_owner",
       dataType: 'json',
       global: false,
+      quietMillis: 800,
       data: function(term, page) {
         return {
           q: term
@@ -50,6 +52,7 @@ $(document).ready(function() {
       url: "project/get_leader",
       dataType: 'json',
       global: false,
+      quietMillis: 800,
       data: function(term, page) {
         return {
           q: term
@@ -68,6 +71,7 @@ $(document).ready(function() {
       url: "project/get_owner",
       dataType: 'json',
       global: false,
+      quietMillis: 800,
       data: function(term, page) {
         return {
           q: term

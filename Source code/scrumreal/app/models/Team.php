@@ -61,7 +61,7 @@ SQL;
     $query = <<<SQL
 SELECT *
 FROM team
-WHERE team.pid = ?
+WHERE team.pid = ? AND delete_flg = 0
 SQL;
     $result = DB::select($query, array($pid));
     return $result;
@@ -107,8 +107,8 @@ SQL;
     $result = DB::update($query, array($end_tid, $pid, $uid));
     return $result;
   }
-  
-  public function updateMaster($pid, $tid, $uid){
+
+  public function updateMaster($pid, $tid, $uid) {
     $query_1 = <<<SQL
 DELETE FROM
 	project_user
@@ -136,6 +136,44 @@ VALUES
 	)
 SQL;
     DB::insert($query_2, array($pid, $uid, $tid, ROLE_SCRUM_MASTER));
+  }
+
+  public function addToSprint_Team($spid, $tid) {
+    $query = <<<SQL
+  INSERT INTO sprint_team 
+    (spid, tid, num_day)
+  VALUES
+    (?, ?, ?)
+SQL;
+    $result = DB::insert($query, array($spid, $tid, 0));
+    return $result;
+  }
+
+  public function deleteFromSprint_Team($spid, $tid) {
+    $query = <<<SQL
+  DELETE FROM sprint_team
+  WHERE spid = ? and tid = ?
+SQL;
+    $result = DB::delete($query, array($spid, $tid));
+    return $result;
+  }
+  
+  public function deleteFromStory_Team($sid, $tid){
+    $query = <<<SQL
+  DELETE FROM story_team
+  WHERE sid = ? AND tid = ?
+SQL;
+    $result = DB::delete($query, array($sid, $tid));
+    return $result;
+  }
+  
+  public function removeTeamLeaderFromProject($pid, $tid){
+    $query = <<<SQL
+  DELETE FROM project_user
+  WHERE pid = ? AND tid = ? AND rid = ?
+SQL;
+    $result = DB::delete($query, array($pid, $tid, ROLE_SCRUM_MASTER));
+    return $result;
   }
 
 }

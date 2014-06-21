@@ -34,7 +34,7 @@ SQL;
 
   public function getStoryInSprint($spid, $tid) {
     $query = <<<SQL
-SELECT story.sid, story.`name`, story.point, story_team.order
+SELECT story.sid, story.`name`, story.point, story_team.order, story.time_estimate
 FROM story INNER JOIN story_team ON story.sid = story_team.sid
 WHERE story_team.tid = ? AND story_team.spid = ? AND delete_flg = 0
 ORDER BY story_team.order
@@ -102,14 +102,54 @@ SQL;
       DB::update($query, array($value, $tid, $spid, $key));
     }
   }
-  
-  public function getSprintNotComplete($pid){
+
+  public function getSprintNotComplete($pid) {
     $query = <<<SQL
 SELECT *
 FROM sprint
 WHERE sprint.pid = ? AND sprint.status <> ? AND delete_flg = 0
 SQL;
     $result = DB::select($query, array($pid, SPRINT_STATUS_COMPLETED));
+    return $result;
+  }
+
+  public function getSprintByStatus($status) {
+    $query = <<<SQL
+  SELECT *
+  FROM sprint
+  WHERE sprint.status = ? AND delete_flg = 0
+SQL;
+    $result = DB::select($query, array($status));
+    return $result;
+  }
+
+  public function getTeamDay($spid, $tid) {
+    $query = <<<SQL
+  SELECT *
+  FROM sprint_team
+  WHERE spid = ? AND tid = ?
+SQL;
+    $result = DB::select($query, array($spid, $tid));
+    return $result[0]->num_day;
+  }
+
+  public function updateTeamDay($spid, $tid, $num_day) {
+    $query = <<<SQL
+  UPDATE sprint_team
+  SET num_day = ?
+  WHERE spid = ? AND tid = ?
+SQL;
+    $result = DB::select($query, array($num_day, $spid, $tid));
+    return $result;
+  }
+
+  public function getTeamDayAll($pid) {
+    $query = <<<SQL
+SELECT sprint_team.*
+FROM sprint_team INNER JOIN sprint ON sprint_team.spid = sprint.spid
+WHERE sprint.pid = ?  
+SQL;
+    $result = DB::select($query, array($pid));
     return $result;
   }
 

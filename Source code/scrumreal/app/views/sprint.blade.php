@@ -8,6 +8,7 @@ Scrumreal - Sprint management
 @include('modal/story_add')
 @include('modal/story_edit')
 @include('modal/task_add')
+@include('modal/team_edit_day')
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span9">
@@ -31,15 +32,32 @@ Scrumreal - Sprint management
                     {{{$sprint->name}}}</a>
                 </h3>
                 <div class="actions">
+                  @if($sprint->status == SPRINT_STATUS_IN_PLAN)
+                  @if($has_sprint_running == false)
+                  <button class="btn btn-darkblue btn-start-sprint" data-spid="{{{$sprint->spid}}}" aria-hidden="true">Start sprint</button>
+                  @else  
+                  <button style="display: none;" class="btn btn-darkblue btn-start-sprint" data-spid="{{{$sprint->spid}}}" aria-hidden="true">Start sprint</button>
+                  @endif
+                  <button style="display: none;" class="btn btn-darkblue btn-complete-sprint" data-spid="{{{$sprint->spid}}}" aria-hidden="true">Complete sprint</button>
+                  <button style="display: none;" class="btn btn-darkblue btn-resume-sprint" data-spid="{{{$sprint->spid}}}" aria-hidden="true">Resume sprint</button>
+                  <div class="sprint-status badge badge-warning">Planning</div>
+                  @elseif ($sprint->status == SPRINT_STATUS_IN_PROGRESS)
+                  <button style="display: none;" class="btn btn-darkblue btn-start-sprint" data-spid="{{{$sprint->spid}}}" aria-hidden="true">Start sprint</button>
+                  <button class="btn btn-darkblue btn-complete-sprint" data-spid="{{{$sprint->spid}}}" aria-hidden="true">Complete sprint</button>
+                  <button style="display: none;" class="btn btn-darkblue btn-resume-sprint" data-spid="{{{$sprint->spid}}}" aria-hidden="true">Resume sprint</button>
+                  <div class="sprint-status badge badge-warning">In progress</div>
+                  @elseif ($sprint->status == SPRINT_STATUS_COMPLETED)
+                  <button style="display: none;" class="btn btn-darkblue btn-start-sprint" data-spid="{{{$sprint->spid}}}" aria-hidden="true">Start sprint</button>
+                  <button style="display: none;" class="btn btn-darkblue btn-complete-sprint" data-spid="{{{$sprint->spid}}}" aria-hidden="true">Complete sprint</button>
+                  @if($has_sprint_running == false)
+                  <button class="btn btn-darkblue btn-resume-sprint" data-spid="{{{$sprint->spid}}}" aria-hidden="true">Resume sprint</button>
+                  @else
+                  <button style="display: none;" class="btn btn-darkblue btn-resume-sprint" data-spid="{{{$sprint->spid}}}" aria-hidden="true">Resume sprint</button>
+                  @endif
                   <div class="sprint-status badge badge-warning">
-                    @if($sprint->status == SPRINT_STATUS_IN_PLAN)
-                    Planning
-                    @elseif ($sprint->status == SPRINT_STATUS_IN_PROGRESS)
-                    In progress
-                    @elseif ($sprint->status == SPRINT_STATUS_COMPLETED)
                     Completed
-                    @endif
                   </div>
+                  @endif
                 </div>
               </div>
               <div class="box-content">
@@ -49,13 +67,14 @@ Scrumreal - Sprint management
                   <div class="sprint-teams" data-spid="{{{$sprint->spid}}}">
                     @endif
                     @foreach($team_list as $team)
-                    <div class="s-team" id="<?php echo 's_team_' . $team->tid; ?>" data-tid="{{{$team->tid}}}">
+                    <div class="s-team" id="<?php echo 's_team_' . $team->tid; ?>" data-tid="{{{$team->tid}}}" data-num-day="">
                       <div class="s-team-name">
                         {{{$team->name}}}
+                        <span class="s-team-status"></span>
                       </div>
                       <!--<div class="s-team-story">-->
                       @foreach($story_list[$sprint->spid][$team->tid] as $story)
-                      <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-addable" data-name="{{{$story->name}}}" data-order="{{{$story->order}}}">
+                      <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-addable" data-name="{{{$story->name}}}" data-order="{{{$story->order}}}" data-time-estimate="{{{$story->time_estimate}}}">
                         <div class="story-name"><a href="{{{$story->sid}}}" class="edit-story">{{{$story->name}}}</a></div>
                         <div class="story-points badge badge-info">{{{$story->point}}} points</div>
                       </div>
@@ -85,9 +104,9 @@ Scrumreal - Sprint management
           <div class="box-content scrollable" data-height="520">
             @foreach($story_not_asign as $story)
             @if($story->time_estimate == null)
-            <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-unaddable" data-name="{{{$story->name}}}" data-order="">
+            <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-unaddable" data-name="{{{$story->name}}}" data-time-estimate="{{{$story->time_estimate}}}" data-order="">
               @else
-              <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-addable" data-name="{{{$story->name}}}" data-order="">
+              <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-addable" data-name="{{{$story->name}}}" data-time-estimate="{{{$story->time_estimate}}}" data-order="">
                 @endif
                 <div class="story-name"><a href="{{{$story->sid}}}" class="edit-story">{{{$story->name}}}</a></div>
                 <div class="story-points badge badge-info">{{{$story->point}}} points</div>

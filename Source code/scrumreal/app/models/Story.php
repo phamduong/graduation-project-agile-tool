@@ -102,7 +102,23 @@ SQL;
   WHERE sid = ?
 SQL;
     $result = DB::update($query, array($story_status, $sid));
-    return $story_status;
+    $story_status_name = '';
+    switch($story_status){
+      case STORY_STATUS_TO_DO:
+        $story_status_name = 'To do';
+        break;
+      case STORY_STATUS_IN_PROGRESS:
+        $story_status_name = 'In progress';
+        break;
+      case STORY_STATUS_TO_TEST:
+        $story_status_name = 'To test';
+        break;
+      case STORY_STATUS_DONE:
+        $story_status_name = 'Done';
+        break;
+    }
+    $data = array('sid' => $sid, 'status' => $story_status_name);
+    return $data;
   }
 
 }

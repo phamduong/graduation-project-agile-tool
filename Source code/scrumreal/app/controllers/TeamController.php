@@ -13,7 +13,7 @@ class TeamController extends BaseController {
       $data['cur_user'] = parent::getCurrentUser();
       $data['active_nav'] = 'people';
       $data['role'] = parent::getRole();
-      $data['free_user'] = $user->getNotInProject();
+      $data['free_user'] = $user->getNotInProject2();
       $data['team_list'] = $team->getTeamList($current_project);
       foreach ($data['team_list'] as $item) {
         $data['team_members'][$item->tid] = $team->getTeamMembers($item->tid, $current_project);
@@ -36,10 +36,18 @@ class TeamController extends BaseController {
     $pid = Session::get('current_project');
     $team->pid = $pid;
     $team->description = $input['description'];
+    $team_model = new Team;
     if ($team->save() == 1) {
       //Insert user to project_user table
-      if ($project->addToProject($pid, $input['master'], $team->tid, ROLE_SCRUM_MASTER)) {
+      if ($team_model->addToProject($pid, $input['master'], $team->tid, ROLE_SCRUM_MASTER)) {
         $data = array('status' => 200, 'message' => 'Add team successfully!');
+        //add to table sprint_team
+        $sprint = new Sprint;
+        $sprint_in_proj = $sprint->getSprintInProject(Session::get('current_project'));
+        $new_tid = $team->tid;
+        foreach ($sprint_in_proj as $sp) {
+          $team_model->addToSprint_Team($sp->spid, $new_tid);
+        }
         //Create activity
         ActivityController::createActivityAdd(Session::get('current_project'), ENTITY_PROJECT, $team->tid, ENTITY_TEAM);
       }
@@ -55,6 +63,21 @@ class TeamController extends BaseController {
     $team = Team::find($tid);
     $team->delete_flg = 1;
     if ($team->save()) {
+      //delete from table sprint_team
+      $sprint = new Sprint;
+      $team_model = new Team;
+      $sprint_in_proj = $sprint->getSprintInProject(Session::get('current_project'));
+      foreach ($sprint_in_proj as $sp) {
+        $team_model->deleteFromSprint_Team($sp->spid, $tid);
+      }
+      //delete team leader from list user in projet
+      $team_model->removeTeamLeaderFromProject(Session::get('current_project'), $tid);
+      
+      //delete from story_team folder
+      foreach ($sprint_in_proj as $sp) {
+        $team_model->deleteFromStory_Team($sp->spid, $tid);
+      }
+      
       //Create activity
       ActivityController::createActivityDelete(Session::get('current_project'), ENTITY_PROJECT, $team->tid, ENTITY_TEAM);
       $data = array('status' => 200, 'message' => 'Successfull');
@@ -118,9 +141,9 @@ class TeamController extends BaseController {
     $html .= '<div class="box box-color teal box-small box-bordered"><div class="box-title"><h3><i class="glyphicon-group"></i>';
     $html .= '<a href="' . $team->tid . '" class="team-name">' . $team->name . '</a>';
     $html .= '</h3><div class="actions"></div></div><div class="box-content"><div class="team-members">';
-    $html .= '<div data-name="'.$team->master_name.'" data-value="'.$team->master_id.'" class="leader ui-draggable">';
+    $html .= '<div data-name="' . $team->master_name . '" data-value="' . $team->master_id . '" class="leader ui-draggable">';
     $html .= '<img src="data/image/user/' . $team->master_image . '" alt="">';
-    $html .= '<p class="person-name">'.$team->master_name.'</p></div>';
+    $html .= '<p class="person-name">' . $team->master_name . '</p></div>';
     foreach ($team_member as $mem) {
       $html .= '<div data-uid="' . $mem->uid . '"  data-name="' . $mem->fullname . '" id="member_' . $mem->uid . '" class="person ui-draggable">';
       $html .= '<img src="data/image/user/' . $mem->image . '" alt="">';

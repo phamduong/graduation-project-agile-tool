@@ -22,7 +22,6 @@
           <form action="#" method="POST" class='form-horizontal form-validate' id="form-edit-team">
             <div class="box-content row-fluid">
               <div class="modal-body">
-                <div class='alert_block'></div>
                 <input type="hidden" value="" name="tid" id="tid" />
                 <div class="control-group">
                   <label for="name" class="control-label">Team name <small>Require</small></label>
@@ -34,12 +33,7 @@
                   <label for="master" class="control-label">Scrum Master</label>
                   <div class="controls">
                     <div class="add-min-height">
-                      <select name="master" id="master" class="select2-me span8" data-placeholder="Please select" data-rule-required="true">
-                        <option value=""></option>
-                        @foreach($free_user as $user)
-                        <option value="{{{$user->uid}}}">{{{$user->fullname}}}</option>
-                        @endforeach
-                      </select>
+                      <input type="hidden" name="master" id="master2" class="span8" />
                     </div>
                   </div>
                 </div>

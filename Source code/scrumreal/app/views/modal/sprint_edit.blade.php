@@ -30,12 +30,6 @@
                   </div>
                 </div>
                 <div class="control-group">
-                  <label for="sprint_time" class="control-label">Time <small>Require</small></label>
-                  <div class="controls">
-                    <input type="text" name="sprint_time" id="sprint_time" class="span8 daterangepick" data-rule-required="true">
-                  </div>
-                </div>
-                <div class="control-group">
                   <label for="description" class="control-label">Description</label>
                   <div class="controls">
                     <textarea name="description" id="description" class="input-block-level span11" placeholder="Input sprint's description here"></textarea>
@@ -46,7 +40,7 @@
             <div class="modal-footer">
               <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
               <input type="submit" class="btn btn-primary" value="Save sprint">
-              <button class="btn btn-red complete-sprint" aria-hidden="true" data-spid="">Complete this sprint</button>
+              <button class="btn btn-red delete-sprint" aria-hidden="true" data-spid="">Delete</button>
               <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             </div>
           </form>

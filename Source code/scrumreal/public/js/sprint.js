@@ -20,6 +20,9 @@ var count;
 var insideMain = false;
 
 $(document).ready(function() {
+  //Show number of days for each team in sprint
+  getTeamDayAll();
+
   //Init dragable and dropable
   initStoryDragDrop();
   //Add new sprint
@@ -38,6 +41,7 @@ $(document).ready(function() {
             setTimeout(function() {
               $("#modal-add-sprint").modal('hide');
             }, 1000);
+            clearFormInput("#form-add-sprint");
             setTimeout(function() {
               location.reload();
             }, 500);
@@ -89,16 +93,15 @@ $(document).ready(function() {
           var sprint_info = response.sprint_info;
           $(parent + "#spid").val(sprint_info.spid);
           $(parent + "#name").val(sprint_info.name);
-          $(parent + "#sprint_time").val(sprint_info.start_date + " - " + sprint_info.end_date);
+//          $(parent + "#num_day").val(sprint_info.num_day);
           $(parent + "#description").val(sprint_info.description);
-          $(parent + ".complete-sprint").attr("data-spid", response.spid);
+          $(parent + ".delete-sprint").attr("data-spid", sprint_info.spid);
           //comment
           var comment = response.comment;
           getComment("#modal-edit-sprint", spid, comment);
-          
           //Get activity
           getActivity("#modal-edit-sprint", 4, spid, 0, 10);
-          
+
           $("#modal-edit-sprint").modal('show');
         }
       },
@@ -109,6 +112,7 @@ $(document).ready(function() {
       }
     });
   });
+
 
   $("#sprint-team-list").on("click", ".edit-story", function(e) {
     window.story_locate = "sprint_page_left";
@@ -227,10 +231,12 @@ function initStoryDragDrop() {
           console.log("add: " + select_sid + " to team :" + end_tid + " ,sprint: " + end_spid);
           //Send ajax request
           addToSprint(select_sid, end_spid, end_tid, order);
+
         } else {
           console.log("add: " + select_sid + " to team :" + end_tid + " ,sprint: " + end_spid + " from team: " + start_tid + " from sprint: " + start_spid);
           //Send ajax request
           moveToSprint(select_sid, start_spid, start_tid, end_spid, end_tid, order);
+
         }
       }
       //Update story data order on droped team
@@ -257,6 +263,7 @@ function initStoryDragDrop() {
         select_sid = $("#" + select_id).attr("data-sid");
         console.log("Drop story: " + select_sid + " to story list from team: " + start_tid + " ,from sprint: " + start_spid);
         removeFromSprint(select_sid, start_spid, start_tid);
+
         start_tid = 0;
         start_spid = 0;
       }
@@ -290,6 +297,9 @@ function addToSprint(select_sid, end_spid, end_tid, order) {
     success: function(response) {
       if (response.status === 200) {
         showAlert(1, true, response.message);
+        //update status
+        var num_day_1 = parseInt($("#sprint_" + end_spid + " #s_team_" + end_tid).attr("data-num-day"));
+        updateEachTeamDay(end_spid, end_tid, num_day_1);
       } else if (response.status === 800) { //error
         showAlert(0, true, response.message);
       }
@@ -314,6 +324,12 @@ function moveToSprint(select_sid, start_spid, start_tid, end_spid, end_tid, orde
     success: function(response) {
       if (response.status === 200) {
         showAlert(1, true, response.message);
+        //Update status
+        var num_day_1 = parseInt($("#sprint_" + start_spid + " #s_team_" + start_tid).attr("data-num-day"));
+        updateEachTeamDay(start_spid, start_tid, num_day_1);
+        var num_day_2 = parseInt($("#sprint_" + end_spid + " #s_team_" + end_tid).attr("data-num-day"));
+        updateEachTeamDay(end_spid, end_tid, num_day_2);
+
       } else if (response.status === 800) { //error
         showAlert(0, true, response.message);
       }
@@ -337,6 +353,11 @@ function removeFromSprint(select_sid, start_spid, start_tid) {
     success: function(response) {
       if (response.status === 200) {
         showAlert(1, true, response.message);
+        //update team day
+        var num_day = parseInt($("#sprint_" + start_spid + " #s_team_" + start_tid).attr("data-num-day"));
+
+        updateEachTeamDay(start_spid, start_tid, num_day);
+        //
       } else if (response.status === 800) { //error
         showAlert(0, true, response.message);
       }
@@ -365,8 +386,8 @@ function updateStoryOrder(selector) {
 
     }
   });
-  console.log("selector: " + selector);
-  console.log(data);
+//  console.log("selector: " + selector);
+//  console.log(data);
   if (count > 0) {
     //Send ajax update order
     $.ajax({
@@ -383,4 +404,187 @@ function updateStoryOrder(selector) {
 //      data[$(this).attr("data-order")] = $(this).attr("data-sid");
 //  })
 
+}
+
+
+$(document).on("click", ".btn-start-sprint", function(e) {
+  e.preventDefault();
+  var spid = $(this).attr("data-spid");
+  bootbox.confirm("Are you sure?", function(result) {
+    if (result === true) {
+      $.ajax({
+        url: "/sprint/start_sprint",
+        type: "POST",
+        data: {spid: spid},
+        success: function(response) {
+          if (response.status === 200) {
+            location.reload(); //temp
+            //Hide all Sprint button
+//            $(".sprint .btn-start-sprint").css("display", "none");
+//            $(".sprint .btn-complete-sprint").css("display", "none");
+//            $(".sprint .btn-resume-sprint").css("display", "none");
+//
+//            $("#sprint_" + spid + " .btn-start-sprint").css("display", "none");
+//            $("#sprint_" + spid + " .btn-complete-sprint").css("display", "inline");
+//            $("#sprint_" + spid + " .btn-resume-sprint").css("display", "none");
+          } else {
+            showAlertModal(response.message);
+          }
+        }
+      });
+    }
+  });
+});
+
+$(document).on("click", ".btn-complete-sprint", function(e) {
+  e.preventDefault();
+  var spid = $(this).attr("data-spid");
+  bootbox.confirm("Are you sure?", function(result) {
+    if (result === true) {
+      $.ajax({
+        url: "/sprint/complete_sprint",
+        type: "POST",
+        data: {spid: spid},
+        success: function(response) {
+          if (response.status === 200) {
+            location.reload(); //temp
+//            $(".sprint .btn-start-sprint").css("display", "inline");
+//            $(".sprint .btn-resume-sprint").css("display", "inline");
+//            
+//            $("#sprint_" + spid + " .btn-start-sprint").css("display", "none");
+//            $("#sprint_" + spid + " .btn-complete-sprint").css("display", "none");
+//            $("#sprint_" + spid + " .btn-resume-sprint").css("display", "inline");
+          } else {
+            showAlertModal(response.message);
+          }
+        }
+      });
+    }
+  });
+});
+
+$(document).on("click", ".btn-resume-sprint", function(e) {
+  e.preventDefault();
+  var spid = $(this).attr("data-spid");
+  bootbox.confirm("Are you sure?", function(result) {
+    if (result === true) {
+      $.ajax({
+        url: "/sprint/resume_sprint",
+        type: "POST",
+        data: {spid: spid},
+        success: function(response) {
+          if (response.status === 200) {
+            location.reload(); //temp
+//            $(".sprint .btn-start-sprint").css("display", "none");
+//            $(".sprint .btn-complete-sprint").css("display", "none");
+//            $(".sprint .btn-resume-sprint").css("display", "none");
+//            
+//            $("#sprint_" + spid + " .btn-start-sprint").css("display", "inline");
+//            $("#sprint_" + spid + " .btn-complete-sprint").css("display", "none");
+//            $("#sprint_" + spid + " .btn-resume-sprint").css("display", "none");
+          } else {
+            showAlertModal(response.message);
+          }
+        }
+      });
+    }
+  });
+});
+
+//Delete sprint
+$(document).on("click", ".delete-sprint", function(e) {
+  e.preventDefault();
+  var spid = $(this).attr("data-spid");
+  bootbox.confirm("Are you sure you want to delete that sprint?", function(result) {
+    if (result === true) {
+      $.ajax({
+        url: "sprint/delete",
+        type: "POST",
+        data: {spid: spid},
+        success: function(response) {
+          showAlert(1, true, response.message);
+          setTimeout(function() {
+            $("#modal-edit-sprint").modal('hide');
+          }, 1000);
+          location.reload();
+        }
+      });
+    }
+  });
+});
+
+$(document).on("click", ".s-team-name", function(e) {
+  e.preventDefault();
+  var tid = $(this).parent().attr("data-tid");
+  var spid = $(this).parent().parent().attr("data-spid");
+  $.ajax({
+    url: "sprint/get_team_day",
+    type: "POST",
+    data: {tid: tid, spid: spid},
+    success: function(response) {
+      if (response.status === 200) {
+        $("#modal-edit-team-day #num_day").val(response.data);
+        $("#modal-edit-team-day #spid").val(spid);
+        $("#modal-edit-team-day #tid").val(tid);
+        $("#modal-edit-team-day").modal("show");
+      }
+    }
+  })
+});
+
+$("#form-edit-team-day").submit(function(e) {
+  e.preventDefault();
+  var spid = $("#form-edit-team-day #spid").val();
+  var tid = $("#form-edit-team-day #tid").val();
+  var num_day = $("#form-edit-team-day #num_day").val();
+  if ($(this).valid() === true) {
+    $.ajax({
+      url: "sprint/update_team_day",
+      type: "POST",
+      data: $(this).serialize(),
+      success: function(response) {
+        if (response.status === 200) {
+          showAlert(1, true, response.message);
+          updateEachTeamDay(spid, tid, num_day);
+          setTimeout(function() {
+            $("#modal-edit-team-day").modal('hide');
+          }, 1000);
+        }
+      }
+    });
+  }
+});
+
+function getTeamDayAll() {
+  $.ajax({
+    url: "sprint/get_team_day_all",
+    type: "POST",
+    success: function(response) {
+//      console.log(response);
+      $.each(response.data, function(key, value) {
+//        console.log(value.tid);
+        updateEachTeamDay(value.spid, value.tid, value.num_day);
+      });
+    }
+  });
+}
+
+function updateEachTeamDay(spid, tid, num_day) {
+  console.log("-------num_day: " + num_day);
+
+  var selector = "#sprint_" + spid + " #s_team_" + tid;
+  $(selector).attr("data-num-day", num_day);
+  var total_day = 0;
+  $(selector + " .story").each(function() {
+    total_day += parseInt($(this).attr("data-time-estimate"));
+  });
+  //assign to html
+  $(selector + " .s-team-status").html(num_day + " / " + total_day);
+  //highlight
+  if (num_day < total_day) {
+    $(selector + " .s-team-status").css("color", "#FF0000");
+  } else {
+    $(selector + " .s-team-status").css("color", "#0066FF");
+  }
+//  console.log(total_day);
 }

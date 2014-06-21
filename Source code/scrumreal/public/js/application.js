@@ -231,11 +231,11 @@ function createSubNav() {
 
 function hideNav() {
   $("#left").toggle().toggleClass("forced-hide");
-  if ($("#left").is(":visible")) {
-    $("#main").css("margin-left", $("#left").width());
-  } else {
-    $("#main").css("margin-left", 0);
-  }
+//  if ($("#left").is(":visible")) {
+//    $("#main").css("margin-left", $("#left").width());
+//  } else {
+//    $("#main").css("margin-left", 0);
+//  }
 
   if ($('.dataTable').length > 0) {
     var table = $.fn.dataTable.fnTables(true);
