@@ -14,12 +14,12 @@
               <input type="text" placeholder="Input sprint name here" name="name" id="name" class="span8" data-rule-required="true">
             </div>
           </div>
-<!--          <div class="control-group">
-            <label for="num_day" class="control-label">Time <small>Require</small></label>
+          <div class="control-group">
+            <label for="sprint_time" class="control-label">Time <small>Require</small></label>
             <div class="controls">
-              <input type="text" name="num_day" id="num_day" class="span8" data-rule-required="true" placeholder="Number of days available for this sprint">
+              <input type="text" name="sprint_time" id="sprint_time" class="span8 daterangepick" data-rule-required="true">
             </div>
-          </div>-->
+          </div>
           <div class="control-group">
             <label for="description" class="control-label">Description</label>
             <div class="controls">

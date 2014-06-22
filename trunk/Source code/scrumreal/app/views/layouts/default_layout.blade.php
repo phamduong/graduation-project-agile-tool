@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="{{ asset("css/bootstrap_update.css") }}">
     <!-- Daterangepicker -->
     <link rel="stylesheet" href="{{ asset("css/plugins/daterangepicker/daterangepicker.css")}}">
+    <link rel="stylesheet" href="{{ asset("css/plugins/daterangepicker/daterangepicker-bs2.css")}}">
     <!-- Color CSS -->
     <link rel="stylesheet" href="{{ asset("css/themes.css" ) }}">
     <!-- Plupload -->
@@ -73,11 +74,6 @@
     <script src="{{ asset("js/plugins/bootbox/jquery.bootbox.js" ) }}"></script>
     <!-- Notify -->
     <script src="{{ asset("js/plugins/gritter/jquery.gritter.min.js")}}"></script>
-    <!-- Flot -->
-    <script src="{{ asset("js/plugins/flot/jquery.flot.min.js" ) }}"></script>
-    <script src="{{ asset("js/plugins/flot/jquery.flot.bar.order.min.js" ) }}"></script>
-    <script src="{{ asset("js/plugins/flot/jquery.flot.pie.min.js" ) }}"></script>
-    <script src="{{ asset("js/plugins/flot/jquery.flot.resize.min.js" ) }}"></script>
     <!-- imagesLoaded -->
     <script src="{{ asset("js/plugins/imagesLoaded/jquery.imagesloaded.min.js" ) }}"></script>
     <!-- PageGuide -->

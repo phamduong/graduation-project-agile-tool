@@ -82,40 +82,42 @@ $(document).ready(function() {
   });
 
   //Submit form edit task
-  $("#form-edit-task").submit(function(e) {
-    e.preventDefault();
-    $("#form-edit-task input:submit").attr("disabled", "disabled");
-    if ($(this).valid() === true) {
-      var data = $(this).serialize();
-      var has_user = false;
-      var taid = $("#form-edit-task #taid").val();
-      if ($("#form-edit-task #uid").val() !== "") {
-        has_user = true;
-      }
-      var sid = $("#task_" + taid).attr("data-current-sid");
-      $.ajax({
-        url: "/task/save",
-        type: "POST",
-        data: data,
-        success: function(response) {
-          if (response.status === 200) {
-            showAlert(1, true, response.message);
-            setTimeout(function() {
-              $("#modal-edit-task").modal('hide');
-            }, 1000);
-            appendTaskToHTML(taid, has_user, sid);
-            setTimeout(function() {
-              clearFormInput("#form-edit-task");
-            }, 1000);
-          }
-        }, complete: function() {
-          $("#form-edit-task input:submit").removeAttr("disabled");
-        }
-      });
-    }
-  });
-
-
+//  $("#form-edit-task").submit(function(e) {
+//    e.preventDefault();
+//    $("#form-edit-task input:submit").attr("disabled", "disabled");
+//    if ($(this).valid() === true) {
+//      var data = $(this).serialize();
+//      var has_user = false;
+//      var taid = $("#form-edit-task #taid").val();
+//      if ($("#form-edit-task #uid").val() !== "") {
+//        has_user = true;
+//      }
+//      $.ajax({
+//        url: "/task/save",
+//        type: "POST",
+//        data: data,
+//        success: function(response) {
+//          if (response.status === 200) {
+//            showAlert(1, true, response.message);
+//            setTimeout(function() {
+//              $("#modal-edit-task").modal('hide');
+//            }, 1000);
+//            var sid = $("#task_" + taid).attr("data-current-sid");
+//            appendTaskToHTML(taid, has_user, sid);
+//            setTimeout(function() {
+//              clearFormInput("#form-edit-task");
+//            }, 1000);
+//          }
+//        }, complete: function() {
+//          $("#form-edit-task input:submit").removeAttr("disabled");
+//        }
+//      });
+//    }
+//  });
+//  
+//  var page = $(location).attr('pathname');
+//  console.log(page.indexOf("taskboard"));
+  
 });
 
 $("#task-board").on("click", ".task_edit_task", function(e) {

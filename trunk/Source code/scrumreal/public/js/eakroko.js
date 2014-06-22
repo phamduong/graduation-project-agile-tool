@@ -170,7 +170,9 @@ $(document).ready(function() {
 
 	// daterangepicker
 	if($('.daterangepick').length > 0){
-		$('.daterangepick').daterangepicker();
+		$('.daterangepick').daterangepicker({
+      format: 'YYYY-MM-DD',
+    });
 	}
 
 	// timepicker

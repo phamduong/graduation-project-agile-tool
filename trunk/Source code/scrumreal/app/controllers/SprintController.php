@@ -64,9 +64,9 @@ class SprintController extends BaseController {
     $sprint->pid = Session::get('current_project');
     $sprint->name = $input['name'];
     $sprint->description = $input['description'];
-//    $date = explode(" - ", $input['sprint_time']);
-//    $sprint->start_date = date('Y-m-d', strtotime($date[0]));
-//    $sprint->end_date = date('Y-m-d', strtotime($date[1]));
+    $date = explode(" - ", $input['sprint_time']);
+    $sprint->start_date_es = date('Y-m-d', strtotime($date[0]));
+    $sprint->end_date_es = date('Y-m-d', strtotime($date[1]));
 //    $sprint->num_day = $input['num_day'];
     $sprint->status = SPRINT_STATUS_IN_PLAN;
     if ($sprint->save() == 1) {
@@ -161,12 +161,14 @@ class SprintController extends BaseController {
 
     $arr_match = array(
         'name' => 'Name',
-        'description' => 'Description'
+        'description' => 'Description',
+        'start_date_es' => 'Start date estimate',
+        'end_date_es' => 'End date estimate'
     );
 
-//    $date = explode(" - ", $input['sprint_time']);
-//    $input['start_date'] = date('Y-m-d', strtotime($date[0]));
-//    $input['end_date'] = date('Y-m-d', strtotime($date[1]));
+    $date = explode(" - ", $input['sprint_time']);
+    $input['start_date_es'] = date('Y-m-d', strtotime($date[0]));
+    $input['end_date_es'] = date('Y-m-d', strtotime($date[1]));
 
     foreach ($arr_match as $key => $value) {
       if ($sprint->$key != $input[$key]) {

@@ -3,32 +3,32 @@ $(document).ready(function(){
 	init2();
 });
 function init1() {
-    if ($("#flot-audience").length > 0) {
+    if ($("#flot-all-team").length > 0) {
         var data = [
             [1262304000000, 100],
-            [1264982400000, 2200],
-            [1267401600000, 3600],
-            [1270080000000, 5200],
-            [1272672000000, 4500],
-            [1275350400000, 3900],
-            [1277942400000, 3600],
-            [1280620800000, 4600],
-            [1283299200000, 5300],
-            [1285891200000, 47100],
-            [1288569600000, 17800],
-            [1291241700000, 9195]
+            [1264982400000, 90],
+            [1267401600000, 78],
+            [1270080000000, 67],
+            [1272672000000, 50],
+            [1275350400000, 41],
+            [1277942400000, 30],
+            [1280620800000, 21],
+            [1283299200000, 10],
+            [1285891200000, 5],
+            [1288569600000, 0]            
         ];
-        $.plot($("#flot-audience"), [{
-            label: "Visits",
+        $.plot($("#flot-all-team"), [{
+            label: "Days",
             data: data,
             color: "#f36b6b"
         }], {
             xaxis: {
-                min: (new Date(2009, 12, 1)).getTime(),
-                max: (new Date(2010, 11, 2)).getTime(),
+//                min: (new Date(2009, 12, 1)).getTime(),
+//                max: (new Date(2010, 11, 2)).getTime(),
                 mode: "time",
-                tickSize: [1, "month"],
-                monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                tickSize: [2, "day"],
+                timeformat: "%b%d"
+                //monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             },
             series: {
                 lines: {
@@ -47,7 +47,8 @@ function init1() {
                 show: false
             }
         });
-        $("#flot-audience").bind("plothover", function(event, pos, item) {
+        
+        $("#flot-all-team").bind("plothover", function(event, pos, item) {
             if (item) {
                 if (previousPoint != item.dataIndex) {
                     previousPoint = item.dataIndex;

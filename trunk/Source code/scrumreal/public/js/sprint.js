@@ -93,7 +93,11 @@ $(document).ready(function() {
           var sprint_info = response.sprint_info;
           $(parent + "#spid").val(sprint_info.spid);
           $(parent + "#name").val(sprint_info.name);
-//          $(parent + "#num_day").val(sprint_info.num_day);
+          $(parent + "#sprint_time").val(sprint_info.start_date_es + " - " + sprint_info.end_date_es);
+//          $(parent + "#sprint_time").daterangepicker();
+          $(parent + "#sprint_time").data('daterangepicker').setStartDate(sprint_info.start_date_es);
+          $(parent + "#sprint_time").data('daterangepicker').setEndDate(sprint_info.end_date_es);
+          
           $(parent + "#description").val(sprint_info.description);
           $(parent + ".delete-sprint").attr("data-spid", sprint_info.spid);
           //comment

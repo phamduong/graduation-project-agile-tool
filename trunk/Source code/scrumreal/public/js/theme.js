@@ -12,15 +12,24 @@ $(document).ready(function() {
             $loading.hide();
           })
           .ajaxError(function(event, jqxhr, settings, exception) {
-            var err = jQuery.parseJSON(jqxhr.responseText);
-            showAlert(0, true, err.error.message);
-            $loading.hide();
+            try {
+              var err = jQuery.parseJSON(jqxhr.responseText);
+              showAlert(0, true, err.error.message);
+              $loading.hide();
+            } catch (e) {
+              console.log(e);
+            }
+
           })
-          .ajaxComplete(function(event, jqxhr, settings, exception){
-            var response = jQuery.parseJSON(jqxhr.responseText);
-              if(response.status === 801){
+          .ajaxComplete(function(event, jqxhr, settings, exception) {
+            try {
+              var response = jQuery.parseJSON(jqxhr.responseText);
+              if (response.status === 801) {
                 showAlertModal(response.message);
               }
+            } catch (e) {
+              console.log(e);
+            }
           });
 
   //Add new user
@@ -145,7 +154,8 @@ $(document).ready(function() {
 
 
 //Submit add task form
-$("#form-add-task").submit(function(e) {
+//$("#form-add-task").submit(function(e) {
+$(document).on("submit", "#form-add-task", function(e) {
   e.preventDefault();
   $("#form-add-task").unbind('submit');
   if ($(this).valid() === true) {
@@ -227,7 +237,7 @@ function loadTask(taid) {
         var comment = response.comment;
         getComment("#modal-edit-task", taid, comment);
         getActivity("#modal-edit-task", 6, taid, 0, 10);
-
+        $("#form-add-task input:submit").attr("disabled", false);
         $("#modal-edit-task").modal('show');
       }
     },
@@ -242,16 +252,20 @@ function loadTask(taid) {
 /**
  * View a task in modal edit story
  */
-$("#modal-edit-story").on("click", ".view_task", function(e) {
+$(document).on("click", ".view_task", function(e) {
   e.preventDefault();
   var taid = $(this).attr("href");
   loadTask(taid);
-})
+});
 
 //Submit form edit task
-$("#form-edit-task").submit(function(e) {
+//$("#form-edit-task").submit(function(e) {
+$(document).on("submit", "#form-edit-task", function(e) {
   e.preventDefault();
-  $("#form-edit-task input:submit").attr("disabled", "disabled");
+  //$("#form-edit-task input:submit").attr("disabled", "disabled");
+  //$("#form-edit-task").unbind('submit');
+  $(this).unbind('submit');
+  $(this).find("input:submit").attr("disabled", true);
   if ($(this).valid() === true) {
     var data = $(this).serialize();
     var has_user = false;
@@ -260,7 +274,7 @@ $("#form-edit-task").submit(function(e) {
       has_user = true;
     }
     $.ajax({
-      url: "task/save",
+      url: "/task/save",
       type: "POST",
       data: data,
       success: function(response) {
@@ -269,16 +283,24 @@ $("#form-edit-task").submit(function(e) {
           setTimeout(function() {
             $("#modal-edit-task").modal('hide');
           }, 1000);
-          appendTaskToHTML(taid, has_user);
+          var page = $(location).attr('pathname');
+          //Make change to HTML
+          if (page.indexOf("taskboard") !== -1) {
+            var sid = $("#task_" + taid).attr("data-current-sid");
+            appendTaskToHTML(taid, has_user, sid);
+          } else {
+            appendTaskToHTML(taid, has_user);
+          }
           setTimeout(function() {
             clearFormInput("#form-edit-task");
           }, 1000);
         }
       }, complete: function() {
-        $("#form-edit-task input:submit").attr("disabled", "disabled");
+        $("#form-edit-task input:submit").attr("disabled", false);
       }
     });
   }
+  return false;
 });
 
 function appendTaskToHTML(taid, has_user, sid) {

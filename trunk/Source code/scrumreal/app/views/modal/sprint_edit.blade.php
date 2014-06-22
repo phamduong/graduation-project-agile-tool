@@ -30,6 +30,12 @@
                   </div>
                 </div>
                 <div class="control-group">
+                  <label for="sprint_time" class="control-label">Time <small>Require</small></label>
+                  <div class="controls">
+                    <input type="text" name="sprint_time" id="sprint_time" class="span8 daterangepick" data-rule-required="true">
+                  </div>
+                </div>
+                <div class="control-group">
                   <label for="description" class="control-label">Description</label>
                   <div class="controls">
                     <textarea name="description" id="description" class="input-block-level span11" placeholder="Input sprint's description here"></textarea>

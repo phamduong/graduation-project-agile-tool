@@ -567,3 +567,6 @@ input[disabled=disabled]{
 .context-menu-list {
   z-index: 5000 !important;
 }
+#flot-all-team{
+  height: 430px !important;
+}
