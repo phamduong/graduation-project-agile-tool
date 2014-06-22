@@ -9,6 +9,7 @@ Scrumreal - Sprint management
 @include('modal/story_edit')
 @include('modal/task_add')
 @include('modal/team_edit_day')
+@include('modal/task_edit')
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span9">
@@ -29,7 +30,7 @@ Scrumreal - Sprint management
               <div class="box-title">
                 <h3>
                   <a href="{{{$sprint->spid}}}" class="sprint-name"><i class="glyphicon-folder_flag"></i>
-                    {{{$sprint->name}}}</a>
+                    {{{$sprint->name . ' ('. $sprint->start_date_es . ' - ' . $sprint->end_date_es  .') '}}}</a>
                 </h3>
                 <div class="actions">
                   @if($sprint->status == SPRINT_STATUS_IN_PLAN)

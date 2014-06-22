@@ -18,7 +18,7 @@ Scrumreal - Report
         <div class="box-content">
           <div class="statistic-big">
             <div class="bottom">
-              <div class="flot medium" id="flot-audience"></div>
+              <div class="flot" id="flot-all-team"></div>
             </div>
             <div class="bottom">
               <ul class="stats-overview">
@@ -60,6 +60,7 @@ Scrumreal - Report
         </div>
       </div>
     </div>
+    
     <div class="span6">
       <div class="scrollable"  data-height="520">
         <div class="span6">
@@ -87,5 +88,11 @@ Scrumreal - Report
     </div>
   </div>
   <script src="{{asset("js/report.js")}}"></script>
+  <!-- Flot -->
+  <script src="{{ asset("js/plugins/flot/jquery.flot.min.js" ) }}"></script>
+  <script src="{{ asset("js/plugins/flot/jquery.flot.bar.order.min.js" ) }}"></script>
+  <script src="{{ asset("js/plugins/flot/jquery.flot.pie.min.js" ) }}"></script>
+  <script src="{{ asset("js/plugins/flot/jquery.flot.resize.min.js" ) }}"></script>
+  <script src="{{ asset("js/plugins/flot/jquery.flot.time.js" ) }}"></script>  
 </div>
 @stop

@@ -98,7 +98,20 @@ class TaskController extends BaseController {
     if ($task->save()) {
       //activity
       ActivityController::createActivityAdd($input['sid'], ENTITY_STORY, $task->taid, ENTITY_TASK);
-      $data = array('status' => 200, 'message' => '');
+      //If number of day in task exceed number of date for sprint, update sprint estimate day
+      $task_model = new Task;
+      $same_story = $task_model->getTaskInStory($input['sid']);
+      $num_day = 0;
+      foreach ($same_story as $t) {
+        $num_day += $t->time_estimate;
+      }
+      $story_contain = Story::find($input['sid']);
+      if ($num_day != $story_contain->time_estimate) {
+        $story_contain->time_estimate = $num_day;
+      }
+      if ($story_contain->save()) {
+        $data = array('status' => 200, 'message' => '');
+      }
     } else {
       $data = array('status' => 800, 'message' => 'Add task unsuccessfully!');
     }
@@ -142,17 +155,17 @@ class TaskController extends BaseController {
     $input = Input::all();
     $story = new Story;
     $task = Task::find($input['taid']);
-    if($task->name != $input['name']){
+    if ($task->name != $input['name']) {
       //activity
       ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'Name', $task->name, $input['name']);
       $task->name = $input['name'];
     }
-    if($task->time_estimate != $input['time_estimate']){
+    if ($task->time_estimate != $input['time_estimate']) {
       //activity
       ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'Estimate time', $task->time_estimate, $input['time_estimate']);
       $task->time_estimate = $input['time_estimate'];
     }
-    if($task->description != $input['description']){
+    if ($task->description != $input['description']) {
       //activity
       ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'Description', $task->description, $input['description']);
       $task->description = $input['description'];
@@ -166,15 +179,32 @@ class TaskController extends BaseController {
       ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'Time remain', $task->time_remain, $input['time_remain']);
     }
     if (count($story->getStoryThatAssigned($task->sid)) != 0) {
-      if($task->uid != $input['uid']){
+      if ($task->uid != $input['uid']) {
         $new_user = User::find($input['uid'])->fullname;
-        $old_user = User::find($task->uid)->fullname;
-        ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'User assign', $old_user, $new_user);
+        $old_user = User::find($task->uid);
+        if($old_user != null){
+          $old_name = $old_user->fullname;
+          ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'User assign', $old_name, $new_user);
+        }
         $task->uid = $input['uid'];
       }
     }
     if ($task->save()) {
-      $data = array('status' => 200, 'message' => '');
+      //If number of day in task exceed number of date for sprint, update sprint estimate day
+      $task_model = new Task;
+      $same_story = $task_model->getTaskInStory($task->sid);
+      $num_day = 0;
+      foreach ($same_story as $t) {
+        $num_day += $t->time_estimate;
+      }
+      $story_contain = Story::find($task->sid);
+      if ($num_day != $story_contain->time_estimate) {
+        $story_contain->time_estimate = $num_day;
+      }
+      if ($story_contain->save()) {
+        $data = array('status' => 200, 'message' => '');
+      }
+//      $data = array('status' => 200, 'message' => '');
     } else {
       $data = array('status' => 800, 'message' => 'Save task unsuccessfully!');
     }
@@ -190,7 +220,7 @@ class TaskController extends BaseController {
         3 => 'To test',
         4 => 'Done'
     );
-    if($task->status != $input['status']){
+    if ($task->status != $input['status']) {
       ActivityController::createActivityUpdate($task->taid, ENTITY_TASK, 'Status', $task_status[$task->status], $task_status[$input['status']]);
       $task->status = $input['status'];
     }
@@ -223,7 +253,7 @@ class TaskController extends BaseController {
     $html .= '<span class="task-name"><i class="icon-file"></i>';
     $html .= '<a href="' . $task->taid . '" class="task_edit_task">' . $task->name . '</a></span></div><div class="span4">';
     if ($task->user_image != "") {
-      $html .= '<img alt="" class="taskboard-user-image" src="data/image/user/' . $task->user_image . '">';
+      $html .= '<img alt="" class="taskboard-user-image" src="/data/image/user/' . $task->user_image . '">';
     }
     if ($task->user_name != "") {
       $html .= '<p class="task-assign-name">' . $task->user_name . '</p>';

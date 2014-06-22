@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumreal - Sprint management
+Scrumreal - KanBan Tool
 @stop
 @section('content')
 @include('modal/task_edit')
