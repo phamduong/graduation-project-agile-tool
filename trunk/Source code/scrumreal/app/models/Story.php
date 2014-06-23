@@ -103,7 +103,7 @@ SQL;
 SQL;
     $result = DB::update($query, array($story_status, $sid));
     $story_status_name = '';
-    switch($story_status){
+    switch ($story_status) {
       case STORY_STATUS_TO_DO:
         $story_status_name = 'To do';
         break;
@@ -119,6 +119,38 @@ SQL;
     }
     $data = array('sid' => $sid, 'status' => $story_status_name);
     return $data;
+  }
+
+  public function getTotalStoryPoint($pid) {
+    $query = <<<SQL
+SELECT SUM(story.point) AS point
+FROM story
+WHERE story.pid = ? AND story.delete_flg = 0
+SQL;
+    $result = DB::select($query, array($pid));
+    return $result[0]->point;
+  }
+
+  public function getStoryPointDoneInTime($pid, $time) {
+    $query = <<<SQL
+SELECT SUM(story.point) AS point
+FROM story
+WHERE story.pid = ?
+	AND story.finish_date < ? AND story.delete_flg = 0
+SQL;
+    $result = DB::select($query, array($pid, $time));
+    return $result[0]->point;
+  }
+
+  public function getTotalStoryPointAtTime($pid, $time) {
+    $query = <<<SQL
+SELECT SUM(story.point) AS point
+FROM story
+WHERE story.pid = ?
+	AND story.create_date < ? AND story.delete_flg = 0
+SQL;
+    $result = DB::select($query, array($pid, $time));
+    return $result[0]->point;
   }
 
 }

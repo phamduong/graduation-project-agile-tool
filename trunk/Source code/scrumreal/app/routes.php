@@ -298,3 +298,7 @@ Route::get('/burndown/{spid?}/{tid?}', 'ReportController@index');
 Route::any('/burnup', [
     'uses' => 'ReportController@sprintBurnUp'
 ]);
+
+Route::any('/burnup/initialize', [
+    'uses' => 'ReportController@sprintBurnUpGetData'
+]);
