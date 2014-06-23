@@ -153,4 +153,13 @@ SQL;
     return $result;
   }
 
+  public function removeUnCompletedStory($spid) {
+    $query = <<<SQL
+DELETE FROM story_team
+WHERE spid = ?
+SQL;
+    $result = DB::delete($query, array($spid));
+    return $result;
+  }
+
 }

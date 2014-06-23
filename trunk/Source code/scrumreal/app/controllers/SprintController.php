@@ -218,6 +218,9 @@ class SprintController extends BaseController {
     $sprint->end_date = date('Y-m-d');
     $data = array('status' => 800, 'message' => 'Error!');
     if ($sprint->save()) {
+      //remove uncomplete story form this sprint
+      $sprint_model = new Sprint;
+      $sprint_model->removeUnCompletedStory($spid);
       $data = array('status' => 200, 'message' => 'Start sprint successfully');
     }
     return $data;

@@ -84,7 +84,7 @@ class UserController extends \BaseController {
           'user_settings_cls' => 'active'
       );
     }
-    $data['active_nav'] = 'story';
+    $data['active_nav'] = '';
     $data['current_proj_name'] = Session::get('current_project_nm');
 
     $data['lang'] = parent::getLanguage();

@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'scrumreal',
+			'database'  => 'scrumreal2',
 			'username'  => 'root',
 			'password'  => 'root',
 			'charset'   => 'utf8',
