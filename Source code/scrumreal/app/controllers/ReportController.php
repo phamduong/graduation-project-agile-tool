@@ -103,13 +103,39 @@ class ReportController extends BaseController {
       $data['cur_user'] = parent::getCurrentUser();
       $data['active_nav'] = 'burnup';
       $data['current_proj_name'] = Session::get('current_project_nm');
-//      $current_project = Session::get('current_project');
-//      $sprint = new Sprint;
-//      $team = new Team;
       return View::make('burn_up', $data);
     } else {
       return Redirect::to('/project');
     }
+  }
+
+  public function sprintBurnUpGetData() {
+    $pid = Session::get('current_project');
+    $project = Project::find($pid);
+    $data = array();
+    $project_start_str = strtotime($project->start_date);
+    $project_end_str = strtotime($project->end_date_es);
+    //xaxis
+    $data['xaxis']['project_start_date'] = $project_start_str;
+    $data['xaxis']['project_end_date'] = $project_end_str;
+    //yaxis
+    $story_model = new Story;
+    $total_point = $story_model->getTotalStoryPoint($pid);
+    $data['yaxis'][] = array('time' => $project_start_str, 'points' => 0);
+    $current_date = strtotime(date('Y-m-d H:i:s'));
+    for ($i = $project_start_str + (2 * 86400); $i <= $project_end_str; $i += (2 * 86400)) {
+      if ($i <= $current_date) {
+        $temp = date('Y-m-d H:i:s', $i);
+        $data['yaxis'][] = array('time' => $i, 'points' => $story_model->getStoryPointDoneInTime($pid, $temp));
+      }
+      
+    }
+    //get total line
+    for($i = $project_start_str; $i <= $project_end_str; $i += (2 * 86400)){
+      $temp = date('Y-m-d H:i:s', $i);
+      $data['yaxis_total'][] = array('time' => $i, 'points' => $story_model->getTotalStoryPointAtTime($pid, $temp));
+    }
+    return $data;
   }
 
 }

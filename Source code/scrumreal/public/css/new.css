@@ -590,3 +590,6 @@ input[disabled=disabled]{
 #report-page-content .span11{
   margin-left: 0px;
 }
+#report-burn-up{
+  height: 480px;
+}
