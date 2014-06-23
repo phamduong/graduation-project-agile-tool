@@ -92,8 +92,8 @@ SQL;
     $result = DB::select($query, array($sid));
     return $result;
   }
-  
-  public function getTaskNotComplete($pid){
+
+  public function getTaskNotComplete($pid) {
     $query = <<<SQL
 SELECT task.*
 FROM task INNER JOIN story_team ON task.sid = story_team.sid
@@ -103,6 +103,87 @@ WHERE sprint.pid = ?
 	AND task.delete_flg = 0
 SQL;
     $result = DB::select($query, array($pid, TASK_STATUS_DONE));
+    return $result;
+  }
+
+  public function updateTaskFinishDate($tid) {
+    $query = <<<SQL
+  UPDATE task
+  SET finish_date = NOW()
+SQL;
+    $result = DB::update($query);
+    return $result;
+  }
+
+  /**
+   * For all team
+   * @param type $spid
+   * @return type
+   */
+  public function getTotalDaysInSprintAll($spid) {
+    $query = <<<SQL
+SELECT SUM(task.time_estimate) AS total_day
+FROM task INNER JOIN story_team ON task.sid = story_team.sid
+WHERE story_team.spid = ?
+  AND task.delete_flg = 0
+SQL;
+    $result = DB::select($query, array($spid));
+    return $result[0]->total_day;
+  }
+
+  public function getTotalDaysInSprintTeam($spid, $tid) {
+    $query = <<<SQL
+SELECT SUM(task.time_estimate) AS total_day
+FROM task INNER JOIN story_team ON task.sid = story_team.sid
+WHERE story_team.spid = ? 
+  AND story_team.tid = ?
+  AND task.delete_flg = 0
+SQL;
+    $result = DB::select($query, array($spid, $tid));
+    return $result[0]->total_day;
+  }
+
+  /**
+   * For all team
+   * @param type $spid
+   * @param type $time
+   */
+  public function getTotalDaysInSprintDoneAll($spid, $time) {
+    $query = <<<SQL
+SELECT SUM(task.time_estimate) AS total_day
+FROM task INNER JOIN story_team ON task.sid = story_team.sid
+WHERE task.`status` = 4 
+	AND story_team.spid = ?
+	AND task.finish_date <= ?
+  AND task.delete_flg = 0
+SQL;
+    $result = DB::select($query, array($spid, $time));
+    return $result[0]->total_day;
+  }
+
+  public function getTotalDaysInSprintDoneTeam($spid, $tid, $time) {
+    $query = <<<SQL
+SELECT SUM(task.time_estimate) AS total_day
+FROM task INNER JOIN story_team ON task.sid = story_team.sid
+WHERE task.`status` = 4 
+	AND story_team.spid = ?
+	AND story_team.tid = ? 
+	AND task.finish_date <= ?
+  AND task.delete_flg = 0
+SQL;
+    $result = DB::select($query, array($spid, $tid, $time));
+    return $result[0]->total_day;
+  }
+
+    //not use
+  public function getTaskInSprint($spid) {
+    $query = <<<SQL
+SELECT task.*
+FROM task INNER JOIN story_team ON task.sid = story_team.sid
+WHERE story_team.spid = ?
+	AND task.delete_flg = 0
+SQL;
+    $result = DB::select($query, array($spid));
     return $result;
   }
 

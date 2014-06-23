@@ -15,10 +15,10 @@ WHERE story.sid NOT IN
 	SELECT story.sid
 	FROM story INNER JOIN story_team ON story.sid = story_team.sid
 	WHERE story.pid = ?
-) AND story.pid = ? AND delete_flg = 0
+) AND story.pid = ? AND delete_flg = 0 AND story.status > ?
 ORDER BY story.name
 SQL;
-    $result = DB::select($query, array($pid, $pid));
+    $result = DB::select($query, array($pid, $pid, STORY_STATUS_NEW));
     return $result;
   }
 

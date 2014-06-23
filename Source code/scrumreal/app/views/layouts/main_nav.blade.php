@@ -27,9 +27,14 @@
         <span>{{{Lang::get('layout.taskboard')}}}</span>
       </a>
     </li>
-    <li id="report">
-      <a href="/report">
-        <span>{{{Lang::get('layout.report')}}}</span>
+    <li id="burndown">
+      <a href="/burndown">
+        <span>Burn down</span>
+      </a>
+    </li>
+    <li id="burnup">
+      <a href="/burnup">
+        <span>Burn up</span>
       </a>
     </li>
   </ul>

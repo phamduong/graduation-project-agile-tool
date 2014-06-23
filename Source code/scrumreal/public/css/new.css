@@ -12,10 +12,14 @@ h1, h2, h3, h4, h5, h6 {
 input[disabled=disabled]{
   background-color: #f1f1f1 !important;
 }
+.control-label{
+
+}
 #project-datatable .btn {
   margin-right: 5px;
 }
-#task-control-bar{
+#task-control-bar,
+#sprint-control-bar{
   position: fixed;
   bottom: 0;
   right: 0;
@@ -27,14 +31,21 @@ input[disabled=disabled]{
 #main{
   margin-left: 0px !important;
 }
-#task-control-bar form{
+#task-control-bar form, #sprint-control-bar form{
   margin: 0px;
 }
-#task-control-bar .form-horizontal .controls {
+#task-control-bar .form-horizontal .controls ,
+#sprint-control-bar .form-horizontal .controls{
   margin-left: 0px !important;
 }
-#task-control-bar .form-horizontal.form-column [class*="span"] .control-group .control-label {
+#task-control-bar .form-horizontal.form-column [class*="span"] .control-group .control-label,
+#sprint-control-bar .form-horizontal.form-column [class*="span"] .control-group .control-label{
   width: inherit !important;
+}
+#task-control-bar .control-group,
+#sprint-control-bar .control-group{
+  margin-bottom: 0px !important;
+  margin-top: 10px;
 }
 .other_filter_wrapper{
   width: 20%;
@@ -569,4 +580,13 @@ input[disabled=disabled]{
 }
 #flot-all-team{
   height: 430px !important;
+}
+.team-report-temp{
+  /*display: none !important;*/
+}
+.team-report-temp-item{
+  display: none !important;
+}
+#report-page-content .span11{
+  margin-left: 0px;
 }
