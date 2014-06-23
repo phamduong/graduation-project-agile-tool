@@ -182,7 +182,7 @@ class TaskController extends BaseController {
       if ($task->uid != $input['uid']) {
         $new_user = User::find($input['uid'])->fullname;
         $old_user = User::find($task->uid);
-        if($old_user != null){
+        if ($old_user != null) {
           $old_name = $old_user->fullname;
           ActivityController::createActivityUpdate($input['taid'], ENTITY_TASK, 'User assign', $old_name, $new_user);
         }
@@ -229,8 +229,16 @@ class TaskController extends BaseController {
     } else if ($input['status'] === 1) {
       $task->time_remain = $task->time_estimate;
     }
+
     if ($task->save()) {
-      $data = array('status' => 200, 'message' => '');
+      //IF task id completed update finish date
+      if ($input['status'] == 4) {
+        $task_model = new Task;
+        //$task->finish_date = date('Y-m-d H:i:s');
+        if ($task_model->updateTaskFinishDate($task->tid)) {
+          $data = array('status' => 200, 'message' => '');
+        }
+      }
     } else {
       $data = array('status' => 800, 'message' => 'Save task unsuccessfully!');
     }

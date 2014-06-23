@@ -1,138 +1,111 @@
-$(document).ready(function(){
-	init1();
-	init2();
-});
-function init1() {
-    if ($("#flot-all-team").length > 0) {
-        var data = [
-            [1262304000000, 100],
-            [1264982400000, 90],
-            [1267401600000, 78],
-            [1270080000000, 67],
-            [1272672000000, 50],
-            [1275350400000, 41],
-            [1277942400000, 30],
-            [1280620800000, 21],
-            [1283299200000, 10],
-            [1285891200000, 5],
-            [1288569600000, 0]            
-        ];
-        $.plot($("#flot-all-team"), [{
-            label: "Days",
-            data: data,
-            color: "#f36b6b"
-        }], {
-            xaxis: {
-//                min: (new Date(2009, 12, 1)).getTime(),
-//                max: (new Date(2010, 11, 2)).getTime(),
-                mode: "time",
-                tickSize: [2, "day"],
-                timeformat: "%b%d"
-                //monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            },
-            series: {
-                lines: {
-                    show: true,
-                    fill: false,
-                },
-                points: {
-                    show: true,
-                },
-            },
-            grid: {
-                hoverable: true,
-                clickable: true
-            },
-            legend: {
-                show: false
-            }
-        });
-        
-        $("#flot-all-team").bind("plothover", function(event, pos, item) {
-            if (item) {
-                if (previousPoint != item.dataIndex) {
-                    previousPoint = item.dataIndex;
-                    $("#tooltip").remove();
-                    var y = item.datapoint[1].toFixed();
-                    showTooltip(item.pageX, item.pageY, item.series.label + " = " + y);
-                }
-            } else {
-                $("#tooltip").remove();
-                previousPoint = null;
-            }
-        });
-    }
+function goToBurnDown() {
+  var spid = $("#sprint-control-bar #sprint_filter").val();
+  var tid = $("#sprint-control-bar #other_filter").val();
+  var url = "/burndown/" + spid + "/" + tid + "/";
+  window.location = url;
 }
 
-function init2() {
-    if ($("#flot-hdd").length > 0) {
-        var data = [
-            [1364598000000, 10],
-            [1364601600000, 12],
-            [1364605200000, 14],
-            [1364608800000, 14],
-            [1364612400000, 10],
-            [1364616000000, 16],
-            [1364619600000, 18],
-            [1364623200000, 15],
-            [1364626800000, 16],
-            [1364630400000, 18],
-            [1364634000000, 20],
-            [1364637600000, 22],
-            [1364641200000, 24],
-            [1364644800000, 25],
-            [1364648400000, 27],
-            [1364652000000, 31],
-            [1364655600000, 33],
-            [1364659200000, 36],
-            [1364662800000, 37],
-            [1364666400000, 38],
-            [1364670000000, 39],
-            [1364673600000, 42],
-            [1364677200000, 45],
-            [1364680800000, 47],
-            [1364684400000, 50]
-        ];
-        $.plot($("#flot-hdd"), [{
-            label: "HDD usage",
-            data: data,
-            color: "#f36b6b"
-        }], {
-            xaxis: {
-                min: (new Date("2013/03/30")).getTime(),
-                max: (new Date("2013/03/31")).getTime(),
-                mode: "time",
-                tickSize: [3, "hour"],
-            },
-            series: {
-                lines: {
-                    show: true,
-                    fill: true
-                },
-                points: {
-                    show: true,
-                }
-            },
-            grid: {
-                hoverable: true,
-                clickable: true
-            },
-            legend: {
-                show: false
-            }
-        });
-        $("#flot-hdd").bind("plothover", function(event, pos, item) {
-            if (item) {
-                if (previousPoint != item.dataIndex) {
-                    previousPoint = item.dataIndex;
-                    $("#tooltip").remove();
-                    var y = item.datapoint[1].toFixed();
-                    showTooltip(item.pageX, item.pageY, item.series.label + " = " + y + "%");
-                }
-            } else {
-                $("#tooltip").remove();
-                previousPoint = null;
-            }
-        });
+function initTeam(spid, tid) {
+  $.ajax({
+    url: "/burndown/sprint_each_team_burndown",
+    type: "POST",
+//    async: false,
+    data: {spid: spid, tid: tid},
+    success: function(response) {
+      initializeChart("#team_report_" + tid, response);
     }
+  });
+}
+
+function createIdealData(response) {
+  //ideal line
+  var data2 = [];
+  data2[0] = [];
+  data2[1] = [];
+  data2[0][0] = response.xaxis.sprint_start_date * 1000;
+  data2[0][1] = response.yaxis[0].days;
+  data2[1][0] = response.xaxis.sprint_end_date * 1000;
+  data2[1][1] = 0;
+  return data2;
+}
+
+function initializeChart(selector, response) {
+  var data1 = [];
+  var i = 0;
+  $.each(response.yaxis, function(key, value) {
+    data1[i] = [];
+    data1[i][0] = value.time * 1000;
+    data1[i][1] = value.days;
+    i++;
+  });
+  var data2 = createIdealData(response);
+  //Initialize flot chart
+  $.plot($(selector), [
+    {
+      label: "Days",
+      data: data1,
+      color: "#f36b6b"
+    }
+    ,
+    {
+      label: "Ideal line",
+      data: data2,
+      color: "#75FF47"
+    }
+  ], {
+    xaxis: {
+      min: response.xaxis.sprint_start_date * 1000,
+      max: response.xaxis.sprint_end_date * 1000,
+      mode: "time",
+      tickSize: [2, "day"],
+      timeformat: "%b%d",
+    },
+    yaxis: {
+      min: 0
+    },
+    series: {
+      lines: {
+        show: true,
+        fill: false,
+      },
+      points: {
+        show: true,
+      },
+    },
+    grid: {
+      hoverable: true,
+      clickable: true
+    },
+    legend: {
+      show: true
+    }
+  });
+
+  $(selector).bind("plothover", function(event, pos, item) {
+    if (item) {
+      if (typeof previousPoint !== "undefined") {
+        if (previousPoint !== item.dataIndex) {
+          previousPoint = item.dataIndex;
+          $("#tooltip").remove();
+          var y = item.datapoint[1].toFixed();
+          showTooltip(item.pageX, item.pageY, item.series.label + " = " + y);
+        }
+      }
+    } else {
+      $("#tooltip").remove();
+      previousPoint = null;
+    }
+  });
+}
+
+function initAllTeam(spid) {
+  $.ajax({
+    url: "/burndown/sprint_all_team_burndown",
+    type: "POST",
+//    async: false,
+    data: {spid: spid},
+    success: function(response) {
+      initializeChart("#flot-all-team", response);
+    }
+  });
 }

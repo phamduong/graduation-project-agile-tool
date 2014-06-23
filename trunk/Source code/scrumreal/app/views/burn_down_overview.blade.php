@@ -5,11 +5,8 @@ Scrumreal - Report
 @section('content')
 <div class="container-fluid">
   <div class="row-fluid" id="report-page-content">
-
-    <!--    <div class="span12 report-detail-temp">
-        </div>-->
-
-    <div class="span6 all-team-report-temp">
+    
+    <div class="span6">
       <div class="box box-color box-bordered">
         <div class="box-title">
           <h3>
@@ -27,36 +24,36 @@ Scrumreal - Report
       </div>
     </div>
 
-    <div class="span6 team-report-temp">
+    <div class="span6">
       <div class="scrollable" data-height="520">
-        
-        <div class="team-report-temp-item">
-          <div class="span11">
-            <div class="box box-color box-bordered">
-              <div class="box-title">
-                <h3>
-                  <i class="icon-bar-chart"></i>
-                  <span class="team-report-name">Team 1</span>
-                </h3>
-              </div>
-              <div class="box-content">
-                <div class="statistic-big">
-                  <div class="flot medium team-report" id=""></div>
-                </div>
+        @foreach($team_list as $team)
+        <div class="span11">
+          <div class="box box-color box-bordered">
+            <div class="box-title">
+              <h3>
+                <i class="icon-bar-chart"></i>
+                <span class="team-report-name">{{{$team->name}}}</span>
+              </h3>
+            </div>
+            <div class="box-content">
+              <div class="statistic-big">
+                <div class="flot medium team-report" id="{{{'team_report_'. $team->tid}}}"></div>
               </div>
             </div>
           </div>
         </div>
+        @endforeach
       </div>
     </div>
 
     <script>
       window.report_team_list = <?php echo json_encode($team_list); ?>;
-      window.report_selected_sprint = <?php echo $sprint_list[0]->spid; ?>;
+      window.report_selected_sprint = <?php echo $report_selected_sprint; ?>;
     </script>
 
   </div>
   <script src="{{asset("js/report.js")}}"></script>
+  <script src="{{asset("js/burndown_overview.js")}}"></script>
   <!-- Flot -->
   <script src="{{ asset("js/plugins/flot/jquery.flot.min.js" ) }}"></script>
   <!--<script src="{{ asset("js/plugins/flot/jquery.flot.bar.order.min.js" ) }}"></script>-->

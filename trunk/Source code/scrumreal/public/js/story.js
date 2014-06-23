@@ -216,7 +216,7 @@ function initUserStoryDatatable() {
     $('table#user-story-datatable > thead > tr:last-child').hide();
 
     var html = '<button id="advanceFilter" class="advance-filter mr10 pull-right"><i class="icon-filter"></i></button>';
-    $('div.dataTables_wrapper > div.well-search > div:nth-child(3)').prepend(html);
+    $('#user-story-datatable_wrapper > div.well-search > div:nth-child(3)').prepend(html);
 
     $('#advanceFilter').click(function() {
       $('table#user-story-datatable > thead > tr:last-child').toggle();

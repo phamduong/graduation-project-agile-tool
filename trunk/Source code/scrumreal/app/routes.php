@@ -232,9 +232,6 @@ Route::post('/activity/get', [
     'uses' => 'ActivityController@getActivityForEntity'
 ]);
 
-Route::get('/report', [
-    'uses' => 'ReportController@index'
-]);
 
 Route::any('/permission', [
     'uses' => 'PermissionController@index'
@@ -272,14 +269,32 @@ Route::any('/sprint/delete', [
     'uses' => 'SprintController@delete'
 ]);
 
-Route::any('sprint/get_team_day', [
+Route::any('/sprint/get_team_day', [
     'uses' => 'SprintController@getTeamDay'
 ]);
 
-Route::any('sprint/update_team_day', [
+Route::any('/sprint/update_team_day', [
     'uses' => 'SprintController@updateTeamDay'
 ]);
 
-Route::any('sprint/get_team_day_all', [
+Route::any('/sprint/get_team_day_all', [
     'uses' => 'SprintController@getTeamDayAll'
+]);
+
+//Route::get('/burndown', [
+//    'uses' => 'ReportController@index'
+//]);
+
+Route::any('/burndown/sprint_all_team_burndown', [
+    'uses' => 'ReportController@sprintAllTeamBurnDown'
+]);
+
+Route::any('/burndown/sprint_each_team_burndown', [
+    'uses' => 'ReportController@sprintOneTeamBurnDown'
+]);
+
+Route::get('/burndown/{spid?}/{tid?}', 'ReportController@index');
+
+Route::any('/burnup', [
+    'uses' => 'ReportController@sprintBurnUp'
 ]);

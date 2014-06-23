@@ -471,7 +471,7 @@ function initTaskDatatable(sid) {
   $('table#task-datatable > thead > tr:last-child').hide();
 
   var html = '<button id="task_advanced_filter" class="advance-filter mr10 pull-right"><i class="icon-filter"></i></button>';
-  $('div.dataTables_wrapper > div.well-search > div:nth-child(3)').prepend(html);
+  $('#task-datatable_wrapper > div.well-search > div:nth-child(3)').prepend(html);
 
   $('#task_advanced_filter').click(function() {
     $('table#task-datatable > thead > tr:last-child').toggle();
