@@ -9,7 +9,7 @@ class StoryController extends BaseController {
       $data['lang'] = parent::getLanguage();
       $data['cur_user'] = parent::getCurrentUser();
       $data['active_nav'] = 'story';
-      $data['current_proj_name'] = Session::get('current_project_nm');
+      $data['current_proj_name'] = Project::find(Session::get('current_project'))->name;
       return View::make('story', $data);
     } else {
       return Redirect::to('/project');
@@ -85,7 +85,7 @@ class StoryController extends BaseController {
    */
   public function delete() {
     $input = Input::all();
-    $data = array('status' => 800, 'message' => 'Appoved unsucessfully');
+    $data = array('status' => 800, 'message' => 'Delete story unsucessfully');
     if (isset($input['sid'])) {
       $sid = $input['sid'];
       $story = Story::find($sid);

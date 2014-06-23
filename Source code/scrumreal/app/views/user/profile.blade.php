@@ -81,16 +81,6 @@ Scrumreal - User profile
             <div class="tab-pane {{{$user_settings_cls}}}" id="user-settings">
               <form action="#" class="form-horizontal form-validate">
                 <div class="control-group">
-                  <label for="" class="control-label">Layout options</label>
-                  <div class="controls">
-                    <label class="checkbox" for="turn_on_of_nav">
-                      @if ($cur_user['show_nav'] == 1)
-                      <input type="checkbox" name="turn_on_of_nav" id="turn_on_of_nav" checked="checked">
-                      @else
-                      <input type="checkbox" name="turn_on_of_nav" id="turn_on_of_nav">
-                      @endif
-                      Always show navigation bar</label>
-                  </div>
                 </div>
                 <div class="form-actions">
                   <input type="submit" class='btn btn-primary' value="Save settings">

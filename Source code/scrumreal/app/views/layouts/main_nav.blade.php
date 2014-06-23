@@ -41,7 +41,7 @@
   <span class="global-loading"><img src="{{asset("img/global_loading.gif")}}" /></span>
   <div class="user">
     <ul class="icon-nav">
-      <li class='dropdown'>
+<!--      <li class='dropdown'>
         <a href="#" class='dropdown-toggle' data-toggle="dropdown"><i class="icon-envelope"></i><span class="label label-lightred">4</span></a>
         <ul class="dropdown-menu pull-right message-ul">
           <li>
@@ -85,8 +85,8 @@
             <a href="components-messages.html" class='more-messages'>Go to Message center <i class="icon-arrow-right"></i></a>
           </li>
         </ul>
-      </li>
-      <li class='dropdown language-select'>
+      </li>-->
+<!--      <li class='dropdown language-select'>
         <a href="#" class='dropdown-toggle' data-toggle="dropdown"><img src="<?php echo asset('img/demo/flags/' . $lang['current']['lang_icon']); ?>" alt=""><span>{{{strtoupper($lang['current']['lang_cd'])}}}</span></a>
         <ul class="dropdown-menu pull-right">
           @foreach($lang['lang_list'] as $lg)
@@ -95,7 +95,7 @@
           </li>
           @endforeach
         </ul>
-      </li>
+      </li>-->
     </ul>
     <div class="dropdown">
       <a href="#" class='dropdown-toggle' data-toggle="dropdown">{{{$cur_user['name']}}} <img src="<?php echo asset('data/image/user/' . $cur_user['image']); ?>" class="uimage-small" alt=""></a>
