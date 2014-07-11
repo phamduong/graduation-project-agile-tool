@@ -1,0 +1,4 @@
+1) task dã assign cho 1 user -> user này chuyen team khac (thanh phan team van giu nguyen trong Sprint)
+2) story chua hoan thanh, van con task nhung sprint da hoan thanh
+3) khi them 1 story thi se them 1 activity là no duoc tao cho chinh story do thay vi chi cho project chua no
+4) chi có product owner moi duoc them sotry
