@@ -8,11 +8,13 @@ class Permission extends Eloquent {
 
   public function getUserPermission($uid, $pid) {
     $query = <<<SQL
-SELECT permission.path, permission.type
+SELECT access_link.path, access_link.type
 FROM `user` INNER JOIN project_user ON `user`.uid = project_user.uid
 	INNER JOIN role_permission ON project_user.rid = role_permission.rid
 	INNER JOIN permission ON role_permission.peid = permission.peid
+	LEFT OUTER JOIN access_link ON permission.peid = access_link.peid
 WHERE `user`.uid = ? AND project_user.pid = ?
+HAVING access_link.path IS NOT NULL
 SQL;
     $result = DB::select($query, array($uid, $pid));
     return $result;

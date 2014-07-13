@@ -1,6 +1,6 @@
 <div id="modal-add-project" class="modal modal-custom hide fade box box-color modal-with-tab no-border" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
   <div class="modal-dialog modal-lg">
-    <form class="form-horizontal form-validate" id="form-add-project" autocomplete="off">
+    <form class="form-horizontal form-validate" id="form-add-project" autocomplete="off" accept-charset="utf-8">
       <div class="box-title">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel"><i class="icon-plus-sign-alt"></i>Add new project</h3>
@@ -39,7 +39,7 @@
                   <span class="help-block"><a href="#" data-selected="leader" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="btn-add-user" data-toggle="modal"><i class="icon-plus"></i> Or add product leader here</a></span>
                 </div>
               </div>
-              
+
               <div class="control-group">
                 <label for="owner" class="control-label">Select product owner</label>
                 <div class="controls">
@@ -49,22 +49,29 @@
                   <span class="help-block"><a href="#" data-selected="owner" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="btn-add-user" data-toggle="modal"><i class="icon-plus"></i> Or add product owner here</a></span>
                 </div>
               </div>
-              
+
               <div class="control-group">
                 <label for="description" class="control-label">Description</label>
                 <div class="controls">
                   <textarea name="description" id="description" class="input-block-level span11" placeholder="Input project's description here"></textarea>
                 </div>
               </div>
-              
+
               <div class="control-group">
                 <label for="note" class="control-label">Note</label>
                 <div class="controls">
                   <textarea name="note" id="note" class="input-block-level span11" placeholder="Input project's note here"></textarea>
                 </div>
               </div>
+              <div class="control-group">
+                <label for="note" class="control-label">Attach</label>
+                <div class="controls attach">
+                  <input type="file" name="attach[]" id="project-attach-add" multiple/>
+                </div>
+              </div>
+
             </div>
-            
+
           </div>
           <div class="tab-pane" id="tab-proj-settings-add">
             <div class="modal-body">

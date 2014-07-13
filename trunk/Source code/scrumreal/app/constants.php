@@ -17,6 +17,7 @@ define('ENTITY_COMMENT', 5);
 define('ENTITY_TASK', 6);
 define('ENTITY_EVENT', 7);
 define('ENTITY_USER', 8);
+define('ENTITY_ATTACH', 9);
 
 define('STORY_STATUS_NEW', 1);
 define('STORY_STATUS_APPROVED', 2);

@@ -593,3 +593,10 @@ input[disabled=disabled]{
 #report-burn-up{
   height: 480px;
 }
+.attach-files{
+  min-height: 30px;
+}
+.attach-files .glyphicon-remove_2{
+  color: #e51400;
+  cursor: pointer;
+}

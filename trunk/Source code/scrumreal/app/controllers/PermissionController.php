@@ -65,7 +65,10 @@ class PermissionController extends BaseController {
         '/logout' => 0,
         '/project\/datatables\?_=\d+/' => 1,
         '/project/set_current' => 0,
-        '/project/check_current' => 0
+        '/project/check_current' => 0,
+        '/permission/check' => 0,
+        '/attach\/\d+\/\d+/' => 1,
+        '/attach/remove_attach' => 0
     );
     foreach ($arr_ignore_path as $key => $val) {
       if ($path == $key) {
@@ -102,7 +105,7 @@ class PermissionController extends BaseController {
           $check = true;
           return $check;
         }
-      } elseif ($p['type'] == 1) {
+      } elseif ($p['type'] == 1) { //check with regex
 //        $t = preg_match($p['path'], $path);
 //        var_dump($t);
 //        exit();
@@ -113,6 +116,20 @@ class PermissionController extends BaseController {
       }
     }
     return $check;
+  }
+
+  public function checkLinkPermission() {
+    $input = Input::all();
+    $path = $input['path'];
+    $uid = Auth::user()->uid;
+    if ($this->checkPermission($uid, $path) == false) {
+      $data = array('status' => 801,
+          'message' => "You don't have permission to perform this action",
+          'url' => $path);      
+    }else{
+      $data = array('status' => 200);
+    }
+    return $data;
   }
 
 }

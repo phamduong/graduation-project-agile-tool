@@ -18,9 +18,7 @@ Scrumreal - Permission
           <table id="role-permission" class="table table-hover table-nomargin">
             <thead>
               <tr>
-                <th>Permission name</th>
-                <th>Permission path</th>
-                <th>Permission type</th>
+                <th>Permission name</th>                
                 <th>Project Leader</th>
                 <th>Scrum Master</th>
                 <th>Team member</th>
@@ -31,12 +29,6 @@ Scrumreal - Permission
               @foreach($list_permission as $permission)
               <tr>
                 <td>{{{$permission->name}}}</td>
-                <td>{{{$permission->path}}}</td>
-                @if($permission->type === 0)
-                <td>String</td>
-                @else
-                <td>Regular expression</td>
-                @endif
                 @for($i = 1; $i <= 4; $i++)
                 @if(in_array($i, $permission->role_satus))
                 <td><input type="checkbox" value="{{{$permission->peid . '_' . $i}}}" checked class="check_permission" /></td>

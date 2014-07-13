@@ -38,7 +38,7 @@
     <!-- Color CSS -->
     <link rel="stylesheet" href="{{ asset("css/themes.css" ) }}">
     <!-- Plupload -->
-    <link rel="stylesheet" href="{{ asset("css/plugins/plupload/jquery.plupload.queue.css" ) }}">
+    <!--<link rel="stylesheet" href="{{ asset("css/plugins/plupload/jquery.plupload.queue.css" ) }}">-->
     <!-- New CSS (supplement) -->
     <link rel="stylesheet" href="{{ asset("css/new.css" ) }}">
     <link rel="stylesheet" href="{{ asset("css/font.css") }}">
@@ -102,7 +102,7 @@
     <!-- Custom file upload -->
     <script src="{{ asset("js/plugins/fileupload/bootstrap-fileupload.min.js" ) }}"></script>
     <!-- PLUpload -->
-    <!--<script src="{{ asset("js/plugins/plupload/plupload.full.js" ) }}"></script>
+<!--    <script src="{{ asset("js/plugins/plupload/plupload.full.js" ) }}"></script>
     <script src="{{ asset("js/plugins/plupload/jquery.plupload.queue.js" ) }}"></script>-->
     <!-- Theme framework -->
     <script src="{{ asset("js/eakroko.js" ) }}"></script>
@@ -115,8 +115,10 @@
     <!-- Dashboard javascript -->
     <script src="{{ asset("js/dash_board.js" ) }}"></script>
     <!--Scrumreal common-->
+    <script src="{{ asset("js/common.js" ) }}"></script>
     <script src="{{ asset("js/comment.js" ) }}"></script>
     <script src="{{ asset("js/theme.js" ) }}"></script>
+    
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon.ico" />
     <!-- Apple devices Homescreen icon -->

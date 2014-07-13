@@ -15,6 +15,10 @@
 //  return Redirect::to('/login');
 //});
 
+Route::get("/", function() {
+  return View::make("test");
+});
+
 Route::any('/', [
     'uses' => 'UserController@login'
 ]);
@@ -296,4 +300,14 @@ Route::any('/burnup', [
 
 Route::any('/burnup/initialize', [
     'uses' => 'ReportController@sprintBurnUpGetData'
+]);
+
+Route::any('/permission/check', [
+    'uses' => 'PermissionController@checkLinkPermission'
+]);
+
+Route::any('attach/{entity_type}/{entity_id}', 'AttachController@attachFile');
+
+Route::any('attach/remove_attach', [
+    'uses' => 'AttachController@removeAttach'
 ]);
