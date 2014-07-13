@@ -73,6 +73,17 @@
                   <textarea name="note" id="note" class="input-block-level span11" placeholder="Input project's note here"></textarea>
                 </div>
               </div>
+              
+              <div class="control-group">
+                <label for="note" class="control-label">Attach</label>
+                <div class="controls attach-files" id="">
+                  
+                </div>
+                <div class="controls">
+                  <input type="file" name="attach[]" id="project-attach-update" multiple/>
+                </div>
+              </div>
+              
             </div>
             <div class="modal-footer">
               <input type="submit" class="btn btn-primary" value="Save project infomation">

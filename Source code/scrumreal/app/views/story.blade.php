@@ -20,7 +20,7 @@ Scrumreal - User story management
           <div id="action_bar" class="row-fluid">
             <div class="span12">
               <a href="#modal-add-story" data-backdrop="static" id="btn-add-story" role="button" class="btn btn-primary pull-left btn-lightred mr10" data-toggle="modal"><i class="icon-plus"></i> Add story</a>
-              <button id="btn-download-excel" class="btn btn-primary pull-right mr10"><i class="icon-download-alt"></i> Excel</button>
+              <!--<button id="btn-download-excel" class="btn btn-primary pull-right mr10"><i class="icon-download-alt"></i> Excel</button>-->
             </div>
           </div>
           <table class="table table-hover table-nomargin table-bordered usertable" id="user-story-datatable">

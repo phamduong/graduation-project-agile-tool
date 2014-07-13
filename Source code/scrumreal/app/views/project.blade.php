@@ -20,7 +20,7 @@ Scrumreal - Project management
           <div id="action_bar" class="row-fluid">
             <div class="span12">
               <a data-backdrop="static" data-keyboard="false" id="btn-add-project" role="button" class="btn btn-primary pull-left btn-lightred mr10"><i class="icon-plus"></i> Add Project</a>
-              <button id="btn-download-excel" class="btn btn-primary pull-right mr10"><i class="icon-download-alt"></i> Excel</button>
+              <!--<button id="btn-download-excel" class="btn btn-primary pull-right mr10"><i class="icon-download-alt"></i> Excel</button>-->
             </div>
           </div>
           <table class="table table-hover table-nomargin table-bordered usertable" id="project-datatable">

@@ -1,5 +1,6 @@
 var oTable;
 $(document).ready(function() {
+  //init plupload
   initProjectDatatable();
   //Add user in project add modal
   $("#modal-add-project a.btn-add-user").click(function() {
@@ -85,50 +86,116 @@ $(document).ready(function() {
 
   //Add new project
   $("#form-add-project").submit(function(event) {
+    event.preventDefault();
     if ($(this).valid() === true) {
-      $.ajax({
-        url: "/project/add",
-        type: "POST",
-        data: $(this).serialize(),
-        success: function(response) {
-          if (response.status === 800) { //error
-            showAlert(0, true, response.message);
-          } else if (response.status === 200) {
-            showAlert(1, true, response.message);
-            oTable.fnReloadAjax();
-            setTimeout(function() {
-              $("#modal-add-project").modal('hide');
-            }, 1000);
-            clearFormInput("#form-add-story");
+      var fileSelect = document.getElementById('project-attach-add');
+      var files = fileSelect.files;
+      var len = files.length;
+      var formData = new FormData();
+      var ext_arr = ['jpg', 'png', 'doc', 'docx', 'xls', 'xlsx', 'pdf'];
+      var name_err = [];
+      if (len > 0) {
+        for (var i = 0; i < len; i++) {
+          var file = files[i];
+          if (checkFileExtension(file.name, ext_arr) == true) {
+            formData.append('attach[]', file, file.name);
+          } else {
+            name_err.push(file.name);
           }
         }
-      });
+      }
+      if (name_err.length > 0) {
+        alert("Some file extension are not valid, pls check a again: " + name_err.toString());
+      } else {
+        $.ajax({
+          url: "/project/add",
+          type: "POST",
+          data: $(this).serialize(),
+          success: function(response) {
+            if (response.status === 800) { //error
+              showAlert(0, true, response.message);
+            } else if (response.status === 200) {
+              showAlert(1, true, response.message);
+              if(formData != null){
+                addAttach(formData, 1, response.pid);
+              }              
+              oTable.fnReloadAjax();
+              setTimeout(function() {
+                $("#modal-add-project").modal('hide');
+              }, 1000);
+              clearFormInput("#form-add-story");
+            }
+          }
+        });
+      }
     }
-    event.preventDefault();
   });
 
   $("#form-edit-project").submit(function(e) {
     e.preventDefault();
+    //get remove attach file
+    var remove_attach_name = [];
+    $("#form-edit-project .attach-files .file_attach").each(function(){
+      if($(this).css("display") == "none"){
+        remove_attach_name.push($(this).find("a").html());
+      }
+    });
+    
+//    var pid = $("#form-edit-project #pid").val();
+//    removeAttach(remove_attach_name, 1, pid);
+                
     if ($(this).valid() === true) {
-      $.ajax({
-        url: "/project/save",
-        type: "POST",
-        data: $(this).serialize(),
-        success: function(response) {
-          if (response.status === 200) {
-            showAlert(1, true, response.message);
-            setTimeout(function() {
-              $("#modal-edit-project").modal('hide');
-            }, 1000);
-            var oTable = $("#project-datatable").dataTable();
-            oTable.fnReloadAjax();
-            setTimeout(function() {
-              clearFormInput("#form-edit-project");
-            }, 1000);
+      var fileSelect = document.getElementById('project-attach-update');
+      var files = fileSelect.files;
+      var len = files.length;
+      var formData = new FormData();
+      var ext_arr = ['jpg', 'png', 'doc', 'docx', 'xls', 'xlsx', 'pdf'];
+      var name_err = [];
+      if (len > 0) {
+        for (var i = 0; i < len; i++) {
+          var file = files[i];
+          if (checkFileExtension(file.name, ext_arr) == true) {
+            formData.append('attach[]', file, file.name);
+          } else {
+            name_err.push(file.name);
           }
         }
-      })
+      }
+      var pid = $("#form-edit-project #pid").val();
+      if (name_err.length > 0) {
+        alert("Some file extension are not valid, pls check a again: " + name_err.toString());
+      } else {
+        $.ajax({
+          url: "/project/save",
+          type: "POST",
+          data: $(this).serialize(),
+          success: function(response) {
+            if (response.status === 200) {
+              showAlert(1, true, response.message);
+              //attach new file
+              if(formData != null){
+                addAttach(formData, 1, pid);
+              }
+              //remove old file
+              if(remove_attach_name.length > 0){                
+                removeAttach(remove_attach_name, 1, pid);
+              }
+              
+              setTimeout(function() {
+                $("#modal-edit-project").modal('hide');
+              }, 1000);
+              
+              var oTable = $("#project-datatable").dataTable();
+              oTable.fnReloadAjax();
+              setTimeout(function() {
+                clearFormInput("#form-edit-project");
+              }, 1000);
+            }
+          }
+        });
+      }
     }
+    
   });
 
   //Delete project
@@ -194,6 +261,8 @@ $(document).ready(function() {
       $("#modal-error-notice .error-content").html("Please select working project!");
       $("#modal-error-notice").modal('show');
     } else {
+      //clear old attach file
+//      $("#modal-add-project .attach").html('<input type="file" name="attach[]" id="project-attach" multiple/>');
       $("#modal-add-project").modal("show");
     }
   });
@@ -201,6 +270,7 @@ $(document).ready(function() {
   //Edit project 
   $("#project-datatable").on("click", ".view_prj", function(event) {
     event.preventDefault();
+    clearFormInput("#form-edit-project");
 //    if (window.has_select_project === false) {
 //      $("#modal-error-notice .error-content").html("Please select working project!");
 //      $("#modal-error-notice").modal("show");
@@ -234,6 +304,11 @@ $(document).ready(function() {
           $(parent + "#note").val(project_info.note);
           $(parent + ".delete-project").attr("data-pid", project_info.pid);
           $(parent + ".complete-project").attr("data-pid", project_info.pid);
+          $(".attach-files").html("");
+          $.each(response.attachment, function(key, val) {
+            var link = '<div class="file_attach"><a href=' + val.link + '>' + val.name + '</a> <i class="glyphicon-remove_2 remove_attach"></i></div>';
+            $(parent + ".attach-files").append(link);
+          });
           //Set project comment
           var comment = response.comment;
           getComment("#modal-edit-project", pid, comment);

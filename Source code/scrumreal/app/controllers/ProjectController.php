@@ -173,7 +173,8 @@ class ProjectController extends BaseController {
       }
       $data = array(
           'status' => 200,
-          'message' => 'Create project successfully!'
+          'message' => 'Create project successfully!',
+          'pid' => $project->pid
       );
       return $data;
     }
@@ -218,6 +219,7 @@ class ProjectController extends BaseController {
       $data['project_info'] = $project->getProject($pid);
       //Get comment
       $data['comment'] = $comment->getComment($pid, ENTITY_PROJECT);
+      $data['attachment'] = AttachController::getAttach(ENTITY_PROJECT, $pid);
       $data['status'] = 200;
       $data['message'] = '';
     }
