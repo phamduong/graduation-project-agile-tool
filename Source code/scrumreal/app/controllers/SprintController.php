@@ -31,6 +31,17 @@ class SprintController extends BaseController {
           $data['story_list'][$item1->spid][$item2->tid] = $sprint->getStoryInSprint($item1->spid, $item2->tid);
         }
       }
+      $data['story_status_name'] = array(
+          STORY_STATUS_NEW => "New",
+          STORY_STATUS_APPROVED => "Approve",
+          STORY_STATUS_ESTIMATED => "Estimate",
+          STORY_STATUS_ASIGNED => "Assigned",
+          STORY_STATUS_TO_DO => "To do",
+          STORY_STATUS_IN_PROGRESS => "In progress",
+          STORY_STATUS_TO_TEST => "To test",
+          STORY_STATUS_DONE => "Done",
+          STORY_STATUS_SPRINT_COMPLETED => "Sprint completed"
+      );
 //      print '<pre>';
 //      print_r($data);
 //      exit();
@@ -79,6 +90,7 @@ class SprintController extends BaseController {
       }
       //activity
       ActivityController::createActivityAdd(Session::get('current_project'), ENTITY_PROJECT, $sprint->spid, ENTITY_SPRINT);
+      ActivityController::createActivityCreate($sprint->spid, ENTITY_SPRINT);
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
     }

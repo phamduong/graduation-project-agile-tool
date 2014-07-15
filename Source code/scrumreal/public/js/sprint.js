@@ -111,8 +111,9 @@ $(document).ready(function() {
       },
       error: function(response) {
         var err = jQuery.parseJSON(response.responseText);
-        $("#modal-error-notice .error-content").html(err.error.message);
-        $("#modal-error-notice").modal('show');
+        showAlertModal(err.error.message);
+//        $("#modal-error-notice .error-content").html(err.error.message);
+//        $("#modal-error-notice").modal('show');
       }
     });
   });

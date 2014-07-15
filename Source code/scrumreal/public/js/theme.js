@@ -1,5 +1,5 @@
 var current_sid;
-var taskTable;
+var taskTable; //global object to easily reference
 
 $(document).ready(function() {
   //Init comment form submit event handler
@@ -17,7 +17,8 @@ $(document).ready(function() {
           .ajaxError(function(event, jqxhr, settings, exception) {
             try {
               var err = jQuery.parseJSON(jqxhr.responseText);
-              showAlert(0, true, err.error.message);
+              //showAlert(0, true, err.error.message);
+              showAlertModal(err.error.message);
               $loading.hide();
             } catch (e) {
               console.log(e);
@@ -95,8 +96,7 @@ $(document).ready(function() {
           }
 
         } else {
-          $("#modal-error-notice .error-content").html(response.message);
-          $("#modal-error-notice").modal('show');
+          showAlertModal(response.message);
         }
       }
     });
@@ -114,23 +114,48 @@ $(document).ready(function() {
   //Add story form
   $("#form-add-story").submit(function(event) {
     if ($(this).valid() === true) {
-      $.ajax({
-        url: "/story/add",
-        type: "POST",
-        data: $(this).serialize(),
-        success: function(response) {
-          if (response.status === 800) { //error
-            showAlert(0, true, response.message);
-          } else if (response.status === 200) {
-            appendStoryToHTML("sprint_page_left");
-            showAlert(1, true, response.message);
-            setTimeout(function() {
-              $("#modal-add-story").modal('hide');
-            }, 1500);
-            clearFormInput("#form-add-story");
+      var fileSelect = document.getElementById('story-attach-add');
+      var files = fileSelect.files;
+      var len = files.length;
+      var formData = new FormData();
+      var ext_arr = ['jpg', 'png', 'doc', 'docx', 'xls', 'xlsx', 'pdf', 'rar', 'zip'];
+      var name_err = [];
+      var count_form_data_ele = 0;
+      if (len > 0) {
+        for (var i = 0; i < len; i++) {
+          var file = files[i];
+          if (checkFileExtension(file.name, ext_arr) == true) {
+            formData.append('attach[]', file, file.name);
+            count_form_data_ele++;
+          } else {
+            name_err.push(file.name);
           }
         }
-      });
+      }
+      if (name_err.length > 0) {
+        alert("Some file extension are not valid, pls check a again: " + name_err.toString());
+      } else {
+        $.ajax({
+          url: "/story/add",
+          type: "POST",
+          data: $(this).serialize(),
+          success: function(response) {
+            if (response.status === 800) { //error
+              showAlert(0, true, response.message);
+            } else if (response.status === 200) {
+              if (count_form_data_ele > 0) {
+                addAttach(formData, 2, response.sid);
+              }
+              appendStoryToHTML("sprint_page_left");
+              showAlert(1, true, response.message);
+              setTimeout(function() {
+                $("#modal-add-story").modal('hide');
+              }, 1500);
+              clearFormInput("#form-add-story");
+            }
+          }
+        });
+      }
     }
     event.preventDefault();
   });
@@ -138,26 +163,75 @@ $(document).ready(function() {
   //Edit story form
   $("#modal-edit-story").on("submit", "#form-edit-story", function(e) {
     e.preventDefault();
+    var remove_attach_name = [];
+    $("#form-edit-story .attach_files .file_attach").each(function() {
+      if ($(this).css("display") == "none") {
+        remove_attach_name.push($(this).find("a").html());
+      }
+    });
     if ($(this).valid() === true) {
-      $.ajax({
-        url: "/story/save",
-        type: "POST",
-        data: $(this).serialize(),
-        success: function(response) {
-          if (response.status === 200) {
-            showAlert(1, true, response.message);
-            appendStoryToHTML(window.story_locate);
-            setTimeout(function() {
-              $("#modal-edit-story").modal("hide");
-            }, 1500);
-            clearFormInput("#form-edit-story");
-          } else if (response.status === 200) {
-            showAlert(0, true, response.message);
+      var fileSelect = document.getElementById('story-attach-update');
+      var files = fileSelect.files;
+      var len = files.length;
+      var formData = new FormData();
+      var ext_arr = ['jpg', 'png', 'doc', 'docx', 'xls', 'xlsx', 'pdf', 'rar', 'zip'];
+      var name_err = [];
+      var count_form_data_ele = 0;
+      if (len > 0) {
+        for (var i = 0; i < len; i++) {
+          var file = files[i];
+          if (checkFileExtension(file.name, ext_arr) == true) {
+            formData.append('attach[]', file, file.name);
+            count_form_data_ele++;
+          } else {
+            name_err.push(file.name);
           }
         }
-      });
+      }
+      var sid = $("#form-edit-story #sid").val();
+      if (name_err.length > 0) {
+        alert("Some file extension are not valid, pls check a again: " + name_err.toString());
+      } else {
+        $.ajax({
+          url: "/story/save",
+          type: "POST",
+          data: $(this).serialize(),
+          success: function(response) {
+            if (response.status == 200) {
+              showAlert(1, true, response.message);
+              
+              //attach new file
+              if (count_form_data_ele > 0) {
+                addAttach(formData, 2, sid);
+              }
+              
+              //remove old file
+              if (remove_attach_name.length > 0) {
+                removeAttach(remove_attach_name, 2, sid);
+              }
+              
+              appendStoryToHTML(window.story_locate);
+              
+              setTimeout(function() {
+                $("#modal-edit-story").modal("hide");
+              }, 1500);
+              clearFormInput("#form-edit-story");
+            } else if (response.status != 200) {
+              showAlert(0, true, response.message);
+            }
+          }
+        });
+      }
     }
   });
+
+  $(".attach_files").on("click", "a", function(e) {
+    e.preventDefault();
+    var href = $(this).attr("href");
+//    var filename = $(this).html();
+    window.location.assign("/download_attach/" + href);
+  });
+
 });
 
 
@@ -259,15 +333,44 @@ $(".tab-activity").on("click", ".user", function(e) {
   e.preventDefault();
 });
 
-$(".attach-files").on("click", "a", function(e) {
-  e.preventDefault();
-  var href = $(this).attr("href");
-//  var filename = $(this).html();
-//  var url = "/attach/download_file/" + filename + "/" + href;
-  window.location.assign(href);
-});
-
 $(document).on("click", ".remove_attach", function(e) {
   e.preventDefault();
   $(this).parent().css("display", "none");
+});
+
+
+$(document).on("click", ".delete-task", function(e) {
+  e.preventDefault();
+  var taid = $(this).attr("data-taid");
+  bootbox.confirm("Are you sure you want to delete this task?", function(result) {
+    if (result === true) {
+      $.ajax({
+        url: "/task/delete",
+        type: "POST",
+        data: {taid: taid},
+        success: function(response) {
+          if (response.status == 200) {
+            var page = $(location).attr('pathname');
+
+            setTimeout(function() {
+              $("#modal-edit-task").modal('hide');
+            }, 1000);
+
+            //check if page taskboard
+            if (page.indexOf("taskboard") !== -1) {
+              $("#task_" + taid).remove();
+              caculateAllStory();
+            } else {
+              //if in story page -> reload task datatable
+              taskTable.fnReloadAjax("/task/get_datatables/" + window.current_story + "/");
+              //refer to window object
+            }
+            showAlertModal(response.message, "success");
+          } else {
+            showAlertModal(response.message);
+          }
+        }
+      });
+    }
+  });
 });

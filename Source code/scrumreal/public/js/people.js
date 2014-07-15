@@ -75,7 +75,7 @@ $(document).ready(function() {
     //$(".delete-team").click(function(e) {
     e.preventDefault();
     var tid = $(this).attr("data-tid");
-    bootbox.confirm("Are you sure you want to delete that team?", function(result) {
+    bootbox.confirm("BE CAREFUL: Are you sure you want to delete that team?", function(result) {
       if (result === true) {
         $.ajax({
           url: "/team/delete",
@@ -117,8 +117,9 @@ $(document).ready(function() {
         }
       }, error: function(response) {
         var err = jQuery.parseJSON(response.responseText);
-        $("#modal-error-notice .error-content").html(err.error.message);
-        $("#modal-error-notice").modal('show');
+        showAlertModal(err.error.message);
+//        $("#modal-error-notice .error-content").html(err.error.message);
+//        $("#modal-error-notice").modal('show');
       }
     });
   });
@@ -127,25 +128,29 @@ $(document).ready(function() {
   $(document).on("click", '.delete-user', function(e) {
     e.preventDefault();
     var uid = $(this).attr("data-uid");
-    $.ajax({
-      url: "/user/delete",
-      type: "POST",
-      data: {uid: uid},
-      success: function(response) {
-        if (response.status === 200) {
-          var page = $(location).attr('pathname');
-          if (page === "/people") {
-            //in people page -> reload staff list
-            $("#staff-list .box-content").html();
-            $("#staff-list .box-content").load("/people/reload_list_staff");
-            setTimeout(function() {
-              $("#modal-edit-user").modal("hide");
-            }, 1000);
+    bootbox.confirm("Are you sure you want to delete this user?", function(result) {
+      if (result === true) {
+        $.ajax({
+          url: "/user/delete",
+          type: "POST",
+          data: {uid: uid},
+          success: function(response) {
+            if (response.status === 200) {
+              var page = $(location).attr('pathname');
+              if (page === "/people") {
+                //in people page -> reload staff list
+                $("#staff-list .box-content").html();
+                $("#staff-list .box-content").load("/people/reload_list_staff");
+                setTimeout(function() {
+                  $("#modal-edit-user").modal("hide");
+                }, 1000);
+              }
+            }
           }
-        }
+        });
       }
     });
-  })
+  });
 
   //View team info
   $(".team-list").on("click", ".team-name", function(event) {

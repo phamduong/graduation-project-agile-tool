@@ -36,8 +36,10 @@ class StoryController extends BaseController {
     if ($story->save() == 1) {
       //Add new activity to project
       ActivityController::createActivityAdd(Session::get('current_project'), ENTITY_PROJECT, $story->sid, ENTITY_STORY);
+      ActivityController::createActivityCreate($story->sid, ENTITY_STORY);
       $data['status'] = 200;
       $data['message'] = 'Add new user story successfully';
+      $data['sid'] = $story->sid;
     } else {
       $data['status'] = 800;
       $data['message'] = 'Error';
@@ -54,6 +56,7 @@ class StoryController extends BaseController {
       $data['story_info'] = $story->getStory($sid);
       //Get comment
       $data['comment'] = $comment->getComment($sid, ENTITY_STORY);
+      $data['attachment'] = AttachController::getAttach(ENTITY_STORY, $sid);
       $data['status'] = 200;
       $data['message'] = '';
     }

@@ -593,10 +593,16 @@ input[disabled=disabled]{
 #report-burn-up{
   height: 480px;
 }
-.attach-files{
+.attach_files{
   min-height: 30px;
 }
-.attach-files .glyphicon-remove_2{
+.attach_files .remove_attach{
   color: #e51400;
   cursor: pointer;
 }
+#modal-error-notice #myModalLabel{
+  color: #fff;
+}
+/*#project-datatable tbody .row_selected:hover{
+  background-color: #d9edf7 !important;
+}*/

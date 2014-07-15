@@ -30,28 +30,38 @@ $(document).ready(function() {
       }
     });
   });
-  
+
   $("#tab-story-info-edit").on("click", ".delete-story", function(e) {
     e.preventDefault();
     var sid = $(this).attr("data-sid");
-    $.ajax({
-      url: "/story/delete",
-      type: "POST",
-      data: {sid: sid},
-      success: function(response) {
-        if (response.status === 200) {
-          showAlert(1, true, response.message);
-          setTimeout(function() {
-            $("#modal-edit-story").modal("hide");
-          }, 1000);
-          appendStoryToHTML();
-        } else if (response.status === 200) {
-          showAlert(0, true, response.message);
-        }
+    bootbox.confirm("Are you sure you want to delete this story?", function(result) {
+      if (result === true) {
+        $.ajax({
+          url: "/story/delete",
+          type: "POST",
+          data: {sid: sid},
+          success: function(response) {
+            if (response.status === 200) {
+              showAlert(1, true, response.message);
+              setTimeout(function() {
+                $("#modal-edit-story").modal("hide");
+              }, 1000);
+              appendStoryToHTML();
+            } else if (response.status === 200) {
+              showAlert(0, true, response.message);
+            }
+          }
+        });
       }
     });
   });
-
+  
+  $("#btn-add-story").click(function(e){
+    e.preventDefault();
+    $("#modal-add-story .attach").html('<input type="file" name="attach[]" id="story-attach-add" multiple/>');
+    $("#modal-add-story").modal("show");
+  });
+  
 });
 
 

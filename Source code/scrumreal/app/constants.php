@@ -1,8 +1,10 @@
 <?php
 
+define('PROJECT_NEW_STATUS', -1);
 define('PROJECT_CANCELED_STATUS', 0);
 define('PROJECT_ACTIVE_STATUS', 1);
 define('PROJECT_COMPLETE_STATUS', 2);
+define('PROJECT_PAUSE_STATUS', 3);
 
 define('ROLE_LEADER', 1);
 define('ROLE_SCRUM_MASTER', 2);
@@ -47,6 +49,7 @@ define('ACTIVITY_COMMENT', 1);
 define('ACTIVITY_ADD', 2);
 define('ACTIVITY_DELETE', 3);
 define('ACTIVITY_UPDATE', 4);
+define('ACTIVITY_CREATE', 5);
 
 define('PERMISSION_TYPE_LINK', 0);
 define('PERMISSION_TYPE_REGEX', 1);

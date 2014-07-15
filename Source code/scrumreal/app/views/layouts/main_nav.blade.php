@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <a href="#" id="brand">CONNECT</a>
+  <a href="#" id="brand">Scrumreal</a>
   <a href="#" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Toggle navigation"><i class="icon-reorder"></i></a>
   <ul class='main-nav'>
     <li id="project">
@@ -41,61 +41,6 @@
   <span class="global-loading"><img src="{{asset("img/global_loading.gif")}}" /></span>
   <div class="user">
     <ul class="icon-nav">
-<!--      <li class='dropdown'>
-        <a href="#" class='dropdown-toggle' data-toggle="dropdown"><i class="icon-envelope"></i><span class="label label-lightred">4</span></a>
-        <ul class="dropdown-menu pull-right message-ul">
-          <li>
-            <a href="#">
-              <img src="{{asset("img/demo/user-1.jpg")}}" alt="">
-              <div class="details">
-                <div class="name">Jane Doe</div>
-                <div class="message">
-                  Lorem ipsum Commodo quis nisi ...
-                </div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <img src="{{asset("img/demo/user-2.jpg")}}" alt="">
-              <div class="details">
-                <div class="name">John Doedoe</div>
-                <div class="message">
-                  Ut ad laboris est anim ut ...
-                </div>
-              </div>
-              <div class="count">
-                <i class="icon-comment"></i>
-                <span>3</span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <img src="{{asset("img/demo/user-3.jpg")}}" alt="">
-              <div class="details">
-                <div class="name">Bob Doe</div>
-                <div class="message">
-                  Excepteur Duis magna dolor!
-                </div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="components-messages.html" class='more-messages'>Go to Message center <i class="icon-arrow-right"></i></a>
-          </li>
-        </ul>
-      </li>-->
-<!--      <li class='dropdown language-select'>
-        <a href="#" class='dropdown-toggle' data-toggle="dropdown"><img src="<?php echo asset('img/demo/flags/' . $lang['current']['lang_icon']); ?>" alt=""><span>{{{strtoupper($lang['current']['lang_cd'])}}}</span></a>
-        <ul class="dropdown-menu pull-right">
-          @foreach($lang['lang_list'] as $lg)
-          <li>
-            <a href="{{{route('language.select', $lg['lang_cd'])}}}" class="lang-select"><img src="<?php echo asset('img/demo/flags/' . $lg['lang_icon']); ?>" alt=""><span>{{{$lg['lang_text']}}}</span></a>
-          </li>
-          @endforeach
-        </ul>
-      </li>-->
     </ul>
     <div class="dropdown">
       <a href="#" class='dropdown-toggle' data-toggle="dropdown">{{{$cur_user['name']}}} <img src="<?php echo asset('data/image/user/' . $cur_user['image']); ?>" class="uimage-small" alt=""></a>

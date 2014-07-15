@@ -77,7 +77,9 @@ Scrumreal - Sprint management
                       @foreach($story_list[$sprint->spid][$team->tid] as $story)
                       <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-addable" data-name="{{{$story->name}}}" data-order="{{{$story->order}}}" data-time-estimate="{{{$story->time_estimate}}}">
                         <div class="story-name"><a href="{{{$story->sid}}}" class="edit-story">{{{$story->name}}}</a></div>
-                        <div class="story-points badge badge-info">{{{$story->point}}} points</div>
+                        <div class="story-points badge badge-info">{{{$story->point}}} point(s)</div>
+                        <div class="story-status badge badge-info">{{{$story_status_name[$story->status]}}}</div>
+                        <div class="story-time_estimate badge badge-info">{{{$story->time_estimate}}} day(s)</div>
                       </div>
                       @endforeach
                       <!--</div>-->
@@ -110,7 +112,9 @@ Scrumreal - Sprint management
               <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-addable" data-name="{{{$story->name}}}" data-time-estimate="{{{$story->time_estimate}}}" data-order="">
                 @endif
                 <div class="story-name"><a href="{{{$story->sid}}}" class="edit-story">{{{$story->name}}}</a></div>
-                <div class="story-points badge badge-info">{{{$story->point}}} points</div>
+                <div class="story-points badge badge-info">{{{$story->point}}} point(s)</div>
+                <div class="story-status badge badge-info">{{{$story_status_name[$story->status]}}}</div>
+                <div class="story-time_estimate badge badge-info">{{{$story->time_estimate}}} day(s)</div>
               </div>
               @endforeach
             </div>
