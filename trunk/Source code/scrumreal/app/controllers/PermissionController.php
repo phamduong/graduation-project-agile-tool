@@ -68,7 +68,8 @@ class PermissionController extends BaseController {
         '/project/check_current' => 0,
         '/permission/check' => 0,
         '/attach\/\d+\/\d+/' => 1,
-        '/attach/remove_attach' => 0
+        '/attach/remove_attach' => 0,
+        '/download_attach\/\d+/' => 1
     );
     foreach ($arr_ignore_path as $key => $val) {
       if ($path == $key) {
@@ -129,6 +130,7 @@ class PermissionController extends BaseController {
     }else{
       $data = array('status' => 200);
     }
+//    $data = array('status' => 200); // test
     return $data;
   }
 

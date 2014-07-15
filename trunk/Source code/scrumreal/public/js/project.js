@@ -1,4 +1,5 @@
 var oTable;
+var current_project;
 $(document).ready(function() {
   //init plupload
   initProjectDatatable();
@@ -92,13 +93,15 @@ $(document).ready(function() {
       var files = fileSelect.files;
       var len = files.length;
       var formData = new FormData();
-      var ext_arr = ['jpg', 'png', 'doc', 'docx', 'xls', 'xlsx', 'pdf'];
+      var ext_arr = ['jpg', 'png', 'doc', 'docx', 'xls', 'xlsx', 'pdf', 'rar', 'zip'];
       var name_err = [];
+      var count_form_data_ele = 0;
       if (len > 0) {
         for (var i = 0; i < len; i++) {
           var file = files[i];
           if (checkFileExtension(file.name, ext_arr) == true) {
             formData.append('attach[]', file, file.name);
+            count_form_data_ele++;
           } else {
             name_err.push(file.name);
           }
@@ -116,14 +119,14 @@ $(document).ready(function() {
               showAlert(0, true, response.message);
             } else if (response.status === 200) {
               showAlert(1, true, response.message);
-              if(formData != null){
+              if (count_form_data_ele > 0) {
                 addAttach(formData, 1, response.pid);
-              }              
+              }
               oTable.fnReloadAjax();
               setTimeout(function() {
                 $("#modal-add-project").modal('hide');
-              }, 1000);
-              clearFormInput("#form-add-story");
+                clearFormInput("#form-add-project");
+              }, 1000);              
             }
           }
         });
@@ -135,27 +138,25 @@ $(document).ready(function() {
     e.preventDefault();
     //get remove attach file
     var remove_attach_name = [];
-    $("#form-edit-project .attach-files .file_attach").each(function(){
-      if($(this).css("display") == "none"){
+    $("#form-edit-project .attach_files .file_attach").each(function() {
+      if ($(this).css("display") == "none") {
         remove_attach_name.push($(this).find("a").html());
       }
     });
-    
-//    var pid = $("#form-edit-project #pid").val();
-//    removeAttach(remove_attach_name, 1, pid);
-                
     if ($(this).valid() === true) {
       var fileSelect = document.getElementById('project-attach-update');
       var files = fileSelect.files;
       var len = files.length;
       var formData = new FormData();
-      var ext_arr = ['jpg', 'png', 'doc', 'docx', 'xls', 'xlsx', 'pdf'];
+      var ext_arr = ['jpg', 'png', 'doc', 'docx', 'xls', 'xlsx', 'pdf', 'rar', 'zip'];
       var name_err = [];
+      var count_form_data_ele = 0;
       if (len > 0) {
         for (var i = 0; i < len; i++) {
           var file = files[i];
           if (checkFileExtension(file.name, ext_arr) == true) {
             formData.append('attach[]', file, file.name);
+            count_form_data_ele++;
           } else {
             name_err.push(file.name);
           }
@@ -173,18 +174,18 @@ $(document).ready(function() {
             if (response.status === 200) {
               showAlert(1, true, response.message);
               //attach new file
-              if(formData != null){
+              if (count_form_data_ele > 0) {
                 addAttach(formData, 1, pid);
               }
               //remove old file
-              if(remove_attach_name.length > 0){                
+              if (remove_attach_name.length > 0) {
                 removeAttach(remove_attach_name, 1, pid);
               }
-              
+
               setTimeout(function() {
                 $("#modal-edit-project").modal('hide');
               }, 1000);
-              
+
               var oTable = $("#project-datatable").dataTable();
               oTable.fnReloadAjax();
               setTimeout(function() {
@@ -195,7 +196,7 @@ $(document).ready(function() {
         });
       }
     }
-    
+
   });
 
   //Delete project
@@ -203,22 +204,26 @@ $(document).ready(function() {
     e.preventDefault();
     var pid = $(this).attr("data-pid");
     if (pid !== "" && typeof pid !== "undefined") {
-      $.ajax({
-        url: "/project/delete",
-        type: "POST",
-        data: {pid: pid},
-        success: function(response) {
-          if (response.status === 200) {
-            showAlert(1, true, response.message);
-            setTimeout(function() {
-              $("#modal-edit-project").modal('hide');
-            }, 1000);
-            var oTable = $("#project-datatable").dataTable();
-            oTable.fnReloadAjax();
-            setTimeout(function() {
-              clearFormInput("#form-edit-project");
-            }, 1000);
-          }
+      bootbox.confirm("Are you sure you want to delete this project?", function(result) {
+        if (result === true) {
+          $.ajax({
+            url: "/project/delete",
+            type: "POST",
+            data: {pid: pid},
+            success: function(response) {
+              if (response.status === 200) {
+                showAlert(1, true, response.message);
+                setTimeout(function() {
+                  $("#modal-edit-project").modal('hide');
+                }, 1000);
+                var oTable = $("#project-datatable").dataTable();
+                oTable.fnReloadAjax();
+                setTimeout(function() {
+                  clearFormInput("#form-edit-project");
+                }, 1000);
+              }
+            }
+          });
         }
       });
     }
@@ -227,42 +232,42 @@ $(document).ready(function() {
   //Delete project
   $("#modal-edit-project").on("click", ".complete-project", function(e) {
     e.preventDefault();
-    var r = confirm("Do you want to mark project as complete");
-    if (r === true) {
-      var pid = $(this).attr("data-pid");
-      if (pid !== "" && typeof pid !== "undefined") {
-        $.ajax({
-          url: "/project/complete",
-          type: "POST",
-          data: {pid: pid},
-          success: function(response) {
-            if (response.status === 200) {
-              showAlert(1, true, response.message);
-              setTimeout(function() {
-                $("#modal-edit-project").modal('hide');
-              }, 1000);
-              var oTable = $("#project-datatable").dataTable();
-              oTable.fnReloadAjax();
-              setTimeout(function() {
-                clearFormInput("#form-edit-project");
-              }, 1000);
-            } else {
-              showAlertModal(response.message);
+    var pid = $(this).attr("data-pid");
+    bootbox.confirm("Are you sure you want to mark this project as complete?", function(result) {
+      if (result === true) {
+        if (pid !== "" && typeof pid !== "undefined") {
+          $.ajax({
+            url: "/project/complete",
+            type: "POST",
+            data: {pid: pid},
+            success: function(response) {
+              if (response.status === 200) {
+                showAlert(1, true, response.message);
+                setTimeout(function() {
+                  $("#modal-edit-project").modal('hide');
+                }, 1000);
+                var oTable = $("#project-datatable").dataTable();
+                oTable.fnReloadAjax();
+                setTimeout(function() {
+                  clearFormInput("#form-edit-project");
+                }, 1000);
+              } else {
+                showAlertModal(response.message);
+              }
             }
-          }
-        });
+          });
+        }
       }
-    }
+    });
   });
 
   //Show modal add project
   $("#btn-add-project").click(function() {
     if (window.has_select_project === false) {
-      $("#modal-error-notice .error-content").html("Please select working project!");
-      $("#modal-error-notice").modal('show');
+      showAlertModal("Please select working project!", "notice");
     } else {
       //clear old attach file
-//      $("#modal-add-project .attach").html('<input type="file" name="attach[]" id="project-attach" multiple/>');
+      $("#modal-add-project .attach").html('<input type="file" name="attach[]" id="project-attach-add" multiple/>');
       $("#modal-add-project").modal("show");
     }
   });
@@ -289,7 +294,8 @@ $(document).ready(function() {
           var project_info = response.project_info;
           $(parent + "#pid").val(project_info.pid);
           $(parent + "#name").val(project_info.name);
-          $(parent + "#project_date_range").val(project_info.start_date + ' - ' + project_info.end_date);
+          $(parent + "#project_date_range").val(project_info.start_date + ' - ' + project_info.end_date_es);
+          $(parent + "#status").val(project_info.status);
 //          $(parent + "#leader").val(project_info.leader_id);
           //Because project owner is not on the list
 //          var temp = '<option value="' + project_info.owner_name + '">' + project_info.owner_name + '</option>';
@@ -304,10 +310,10 @@ $(document).ready(function() {
           $(parent + "#note").val(project_info.note);
           $(parent + ".delete-project").attr("data-pid", project_info.pid);
           $(parent + ".complete-project").attr("data-pid", project_info.pid);
-          $(".attach-files").html("");
+          $(".attach_files").html("");
           $.each(response.attachment, function(key, val) {
-            var link = '<div class="file_attach"><a href=' + val.link + '>' + val.name + '</a> <i class="glyphicon-remove_2 remove_attach"></i></div>';
-            $(parent + ".attach-files").append(link);
+            var link = '<div class="file_attach"><a href="' + val.taid + '" class="file_attach_link">' + val.name + '</a> <i class="glyphicon-remove_2 remove_attach"></i></div>';
+            $(parent + ".attach_files").append(link);
           });
           //Set project comment
           var comment = response.comment;
@@ -319,11 +325,9 @@ $(document).ready(function() {
         }
       }, error: function(response) {
         var err = jQuery.parseJSON(response.responseText);
-        $("#modal-error-notice .error-content").html(err.error.message);
-        $("#modal-error-notice").modal('show');
+        showAlertModal(err.error.message);
       }
     });
-//    }
   });
 
   //Set current project
@@ -341,12 +345,12 @@ $(document).ready(function() {
           showAlert(1, true, response.message);
           $(".row_selected").removeClass("row_selected");
           $(wrapper).parent().parent().addClass("row_selected");
+          current_project = pid;
           window.has_select_project = true;
         }
       }, error: function(response) {
         var err = jQuery.parseJSON(response.responseText);
-        $("#modal-error-notice .error-content").html(err.error.message);
-        $("#modal-error-notice").modal('show');
+        showAlertModal(err.error.message);
       },
       complete: function() {
         hideLoading(wrapper);
@@ -389,6 +393,9 @@ function initProjectDatatable() {
         {
           "mRender": function(data, type, row) {
             switch (row["status"]) {
+              case -1:
+                return "<span class='label label-warning'>New</span>";
+                break;
               case 0:
                 return "<span class='label label-inverse'>Cancled</span>";
                 break;
@@ -396,7 +403,10 @@ function initProjectDatatable() {
                 return "<span class='label label-satgreen'>Active</span>";
                 break;
               case 2:
-                return "<span class='label label-info'>Completed</span>";
+                return "<span class='label label-info'>Complete</span>";
+                break;
+              case 3:
+                return "<span class='label'>Pause</span>";
                 break;
             }
           },
@@ -436,6 +446,8 @@ function initProjectDatatable() {
       },
       "fnDrawCallback": function(oSettings) {
         //alert(current_project);
+        //remove all tr has class row_selected
+        $("#project-datatable tr").removeClass("row_selected");
         if (typeof current_project != "undefined") {
           var wrapper = "#project_" + current_project + "_ac";
           if (typeof $(wrapper)[0] != "undefined") {

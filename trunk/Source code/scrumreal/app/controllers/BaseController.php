@@ -18,20 +18,20 @@ class BaseController extends Controller {
    * @return type
    */
   public function getLanguage() {
-    $lang = Language::all();
-    $lang = $lang->toArray();
-    $current_cd = Session::get('lang', 'en');
-    $current_lang = array();
-    foreach ($lang as $key => $value) {
-      if ($value['lang_cd'] == $current_cd) {
-        $current_lang = $value;
-        unset($lang[$key]);
-        break;
-      }
-    }
+//    $lang = Language::all();
+//    $lang = $lang->toArray();
+//    $current_cd = Session::get('lang', 'en');
+//    $current_lang = array();
+//    foreach ($lang as $key => $value) {
+//      if ($value['lang_cd'] == $current_cd) {
+//        $current_lang = $value;
+//        unset($lang[$key]);
+//        break;
+//      }
+//    }
     $data = array(
-        'current' => $current_lang,
-        'lang_list' => $lang
+        'current' => 'en',
+        'lang_list' => ['en', 'vi']
     );
     return $data;
   }

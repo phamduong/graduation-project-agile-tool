@@ -6,16 +6,22 @@ class Sprint extends Eloquent {
   public $timestamps = false;
   public $primaryKey = 'spid';
 
+  /**
+   * Only appoved story 
+   * @param type $pid
+   * @return type
+   */
   public function getStoryNotAssign($pid) {
     $query = <<<SQL
 SELECT story.*
 FROM story
 WHERE story.sid NOT IN
-(
-	SELECT story.sid
-	FROM story INNER JOIN story_team ON story.sid = story_team.sid
-	WHERE story.pid = ?
-) AND story.pid = ? AND delete_flg = 0 AND story.status > ?
+  (
+    SELECT story.sid
+    FROM story INNER JOIN story_team ON story.sid = story_team.sid
+    WHERE story.pid = ?
+  )
+  AND story.pid = ? AND delete_flg = 0 AND story.status > ?
 ORDER BY story.name
 SQL;
     $result = DB::select($query, array($pid, $pid, STORY_STATUS_NEW));
@@ -34,7 +40,7 @@ SQL;
 
   public function getStoryInSprint($spid, $tid) {
     $query = <<<SQL
-SELECT story.sid, story.`name`, story.point, story_team.order, story.time_estimate
+SELECT story.sid, story.`name`, story.status, story.time_estimate, story.point, story_team.order, story.time_estimate
 FROM story INNER JOIN story_team ON story.sid = story_team.sid
 WHERE story_team.tid = ? AND story_team.spid = ? AND delete_flg = 0
 ORDER BY story_team.order

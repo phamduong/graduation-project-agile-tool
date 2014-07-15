@@ -162,8 +162,9 @@ function caculateAllStory() {
     if (max_height !== null && max_height !== 0) {
       $(this).find(".story-content").css("height", (max_height - 80));
       //Update height of all taskbox
-      $(this).parent().find(".story-tasks .task-box").each(function() {
-        if ($(this).height() < max_height) {
+      var parent_id = $(this).parent().attr("id");
+      $("#" + parent_id + " .story-tasks .task-box").each(function() {
+        if ($(this).height() > max_height) {
           $(this).height(max_height);
         }
       });

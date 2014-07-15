@@ -7,9 +7,9 @@
         <li class="active">
           <a href="#tab-proj-info-edit" data-toggle="tab">Project infomations</a>
         </li>
-        <li>
+<!--        <li>
           <a href="#tab-proj-settings-edit" data-toggle="tab">Project settings</a>
-        </li>
+        </li>-->
         <li>
           <a href="#tab-proj-comment" data-toggle="tab">Comment</a>
         </li>
@@ -37,6 +37,19 @@
                 <label for="project_date_range" class="control-label">Start date - End date</label>
                 <div class="controls">
                   <input type="text" name="project_date_range" id="project_date_range" class="span8 daterangepick" data-rule-required="true" data-msg-required="Please pick project's start date and project's end date">
+                </div>
+              </div>
+              
+              <div class="control-group">
+                <label for="status" class="control-label">Status</label>
+                <div class="controls">
+                  <select id="status" name="status" class="span8">
+                    <option value="-1">New</option>
+                    <option value="0">Canceled</option>
+                    <option value="1">Active</option>
+                    <option value="2">Complete</option>
+                    <option value="3">Pause</option>
+                  </select>
                 </div>
               </div>
 
@@ -76,7 +89,7 @@
               
               <div class="control-group">
                 <label for="note" class="control-label">Attach</label>
-                <div class="controls attach-files" id="">
+                <div class="controls attach_files" id="">
                   
                 </div>
                 <div class="controls">
@@ -87,17 +100,17 @@
             </div>
             <div class="modal-footer">
               <input type="submit" class="btn btn-primary" value="Save project infomation">
-              <button class="btn btn-red complete-project" data-pid="" aria-hidden="true">Complete this project</button>
+              <!--<button class="btn btn-red complete-project" data-pid="" aria-hidden="true">Complete this project</button>-->
               <button class="btn btn-red delete-project" data-pid="" aria-hidden="true">Delete</button>
               <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             </div>
           </form>
         </div>
-        <div class="tab-pane" id="tab-proj-settings-edit">
+<!--        <div class="tab-pane" id="tab-proj-settings-edit">
           <form action="#" method="POST" class='form-horizontal'>
             <div class="modal-body">
               <div class="control-group">
-                <!-- <div class="controls"> -->
+                 <div class="controls"> 
                 <div class="check-demo-col">
                   <div class="check-line">
                     <input type="checkbox" id="c5" class='icheck-me' data-skin="square" data-color="blue"> <label class='inline' for="c5">Default</label>
@@ -112,7 +125,7 @@
                     <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" checked disabled> <label class='inline'>Disabled &amp; checked</label>
                   </div>
                 </div>
-                <!-- </div> -->
+                 </div> 
               </div>
             </div>
             <div class="modal-footer">
@@ -120,7 +133,7 @@
               <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             </div>
           </form>
-        </div>
+        </div>-->
         <div class="tab-pane tab-activity" id="tab-proj-activity">
           <div class="modal-body">
             <div class="activity-temp" style="display: none;">

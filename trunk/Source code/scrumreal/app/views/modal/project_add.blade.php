@@ -8,9 +8,9 @@
           <li class="active">
             <a href="#tab-proj-info-add" data-toggle="tab">Project infomations</a>
           </li>
-          <li>
+<!--          <li>
             <a href="#tab-proj-settings-add" data-toggle="tab">Project settings</a>
-          </li>
+          </li>-->
         </ul>
       </div>
       <div class="box-content">
@@ -73,11 +73,11 @@
             </div>
 
           </div>
-          <div class="tab-pane" id="tab-proj-settings-add">
+<!--          <div class="tab-pane" id="tab-proj-settings-add">
             <div class="modal-body">
-              <!-- <form action="#" method="POST" class='form-horizontal'> -->
+               <form action="#" method="POST" class='form-horizontal'> 
               <div class="control-group">
-                <!-- <div class="controls"> -->
+                 <div class="controls"> 
                 <div class="check-demo-col">
                   <div class="check-line">
                     <input type="checkbox" id="c5" class='icheck-me' data-skin="square" data-color="blue"> <label class='inline' for="c5">Default</label>
@@ -92,11 +92,11 @@
                     <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" checked disabled> <label class='inline'>Disabled &amp; checked</label>
                   </div>
                 </div>
-                <!-- </div> -->
+                 </div> 
               </div>
-              <!-- </form> -->
+               </form> 
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
       <div class="modal-footer">

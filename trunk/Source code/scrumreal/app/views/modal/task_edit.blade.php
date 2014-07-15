@@ -87,6 +87,7 @@
             <div class="modal-footer">
               <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
               <input type="submit" class="btn btn-primary" value="Save task">
+              <button class="btn btn-red delete-task" data-taid="" aria-hidden="true">Delete</button>
               <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
             </div>
           </form>

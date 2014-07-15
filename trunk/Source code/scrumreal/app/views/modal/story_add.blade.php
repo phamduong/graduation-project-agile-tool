@@ -38,6 +38,13 @@
               <textarea name="description" id="description" class="input-block-level span11" data-rule-required="true" placeholder="Describe story"></textarea>
             </div>
           </div>
+          <div class="control-group">
+            <label for="note" class="control-label">Attach</label>
+            <div class="controls attach">
+              <input type="file" name="attach[]" id="story-attach-add" multiple/>
+            </div>
+          </div>
+          
         </div>
       </div>
       <div class="modal-footer">

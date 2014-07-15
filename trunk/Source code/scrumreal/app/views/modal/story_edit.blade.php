@@ -64,7 +64,7 @@
                 <div class="control-group">
                   <label for="time_estimate" class="control-label">Estimate time <small>Day(s)</small></label>
                   <div class="controls">
-                    <input type="text" placeholder="Input time estimate here" name="time_estimate" data-rule-number="true" id="time_estimate" class="span8" data-rule-required="true" >
+                    <input type="text" placeholder="Input time estimate here" name="time_estimate" data-rule-number="true" id="time_estimate" class="span8">
                   </div>
                 </div>
                 <div class="control-group">
@@ -76,7 +76,7 @@
                 <div class="control-group">
                   <label for="point" class="control-label">Points <small>Points</small></label>
                   <div class="controls">
-                    <input type="text" placeholder="Story points" name="point" id="point" class="span8" data-rule-number="true" data-rule-required="true" >
+                    <input type="text" placeholder="Story points" name="point" id="point" class="span8" data-rule-number="true" >
                   </div>
                 </div>
                 <div class="control-group">
@@ -91,6 +91,16 @@
                     <textarea name="description" id="description" class="input-block-level span11" placeholder="Describe story" data-rule-required="true" ></textarea>
                   </div>
                 </div>
+                <div class="control-group">
+                <label for="note" class="control-label">Attach</label>
+                <div class="controls attach_files" id="">
+                  
+                </div>
+                <div class="controls">
+                  <input type="file" name="attach[]" id="story-attach-update" multiple/>
+                </div>
+              </div>       
+                  
               </div>
             </div>
             <div class="modal-footer">

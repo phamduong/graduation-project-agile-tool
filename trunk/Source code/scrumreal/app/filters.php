@@ -13,23 +13,22 @@
 
 App::before(function($request) {
   $path = $_SERVER['REQUEST_URI'];
-//  return $path;
-//  if (Session::has('current_project')) {
-//    $uid = Auth::user()->uid;
-//    if (PermissionController::checkPermission($uid, $path) == false) {
-//      $data = array('status' => 801,
-//          'message' => "You don't have permission to perform this action",
-//          'url' => $path);
-//      return $data;
-//    }
-//  } else {
-//    if ($path != '/' && $path != '/login') {
-//      //if login -> not check user login status
-//      if (!Auth::check()) {
-//        return Redirect::to('/');
-//      }
-//    }
-//  }
+  if (Session::has('current_project')) {
+    $uid = Auth::user()->uid;
+    if (PermissionController::checkPermission($uid, $path) == false) {
+      $data = array('status' => 801,
+          'message' => "You don't have permission to perform this action",
+          'url' => $path);
+      return $data;
+    }
+  } else {
+    if ($path != '/' && $path != '/login') {
+      //if login -> not check user login status
+      if (!Auth::check()) {
+        return Redirect::to('/');
+      }
+    }
+  }
 });
 
 App::after(function($request, $response) {

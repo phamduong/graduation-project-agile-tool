@@ -308,6 +308,12 @@ Route::any('/permission/check', [
 
 Route::any('attach/{entity_type}/{entity_id}', 'AttachController@attachFile');
 
-Route::any('attach/remove_attach', [
+Route::any('/attach/remove_attach', [
     'uses' => 'AttachController@removeAttach'
+]);
+
+Route::get('/download_attach/{atid}', 'AttachController@downloadAttach');
+//Route::get('/team/reload_team_data/{tid}', 'TeamController@reloadTeamData');
+Route::any('/task/delete', [
+    'uses' => 'TaskController@deleteTask'
 ]);

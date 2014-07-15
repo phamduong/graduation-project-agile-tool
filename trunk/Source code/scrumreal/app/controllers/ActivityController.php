@@ -19,18 +19,19 @@ class ActivityController extends BaseController {
         4 => 'sprint',
         5 => 'comment',
         6 => 'task',
-        8 => 'user'
+        8 => 'user',
+        9 => 'attach'
     );
 //    var_dump($act_list);
 //    exit();
     foreach ($act_list as $act) {
       switch ($act->type) {
-        case 1: //comment
+        case ACTIVITY_COMMENT: //comment
           $cid = $act->content;
           $text = '<a class="user" href="#">' . $act->user_name . '</a> comments: <i>' . $comment->getCommentDetail($cid)->content . '</i>';
           $act->text = $text;
           break;
-        case 2: //add
+        case ACTIVITY_ADD: //add
           $data = explode('+', $act->content);
           $id = $data[0];
           $type = $data[1];
@@ -60,9 +61,14 @@ class ActivityController extends BaseController {
               $text = '<a class="user" href="#">' . $act->user_name . '</a> adds a user to this ' . $type_list[$entity_type] . ': <i>' . $user->fullname . '</i>';
               $act->text = $text;
               break;
+            case ENTITY_ATTACH:
+              $attach = Attach::find($id);
+              $text = '<a class="user" href="#">' . $act->user_name . '</a> adds a attachment to this ' . $type_list[$entity_type] . ': <i>' . $attach->file_name . '</i>';
+              $act->text = $text;
+              break;
           }
           break;
-        case 3: //remove
+        case ACTIVITY_DELETE: //remove
           $data = explode('+', $act->content);
           $id = $data[0];
           $type = $data[1];
@@ -92,16 +98,31 @@ class ActivityController extends BaseController {
               $text = '<a class="user" href="#">' . $act->user_name . '</a> remove 1 user from this ' . $type_list[$entity_type] . ': <i>' . $user->fullname . '</i>';
               $act->text = $text;
               break;
+            case ENTITY_ATTACH:
+              $attach = Attach::find($id);
+              $text = '<a class="user" href="#">' . $act->user_name . '</a> remove 1 attachment from this ' . $type_list[$entity_type] . ': <i>' . $attach->file_name . '</i>';
+              $act->text = $text;
+              break;
           }
           break;
-        case 4:
+        case ACTIVITY_UPDATE:
           $data = explode('+', $act->content);
           $text = '<a class="user" href="#">' . $act->user_name . '</a> updates <i>' . $data[0] . '</i> <b>FROM</b>: ' . $data[1] . ' <b>TO</b> ' . $data[2];
+          $act->text = $text;
+          break;
+        case ACTIVITY_CREATE:
+          $text = '<a class="user" href="#">' . $act->user_name . '</a> create this.';
           $act->text = $text;
           break;
       }
     }
     return $act_list;
+  }
+  
+  public static function createActivityCreate($entity_id, $entity_type){
+    $activity = new Activity;
+    $uid = Auth::user()->uid;
+    $activity->createActivity(ACTIVITY_CREATE, $entity_id, $entity_type, '', $uid);
   }
 
   /**

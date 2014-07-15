@@ -98,6 +98,7 @@ class TaskController extends BaseController {
     if ($task->save()) {
       //activity
       ActivityController::createActivityAdd($input['sid'], ENTITY_STORY, $task->taid, ENTITY_TASK);
+      ActivityController::createActivityCreate($task->taid, ENTITY_TASK);
       //If number of day in task exceed number of date for sprint, update sprint estimate day
       $task_model = new Task;
       $same_story = $task_model->getTaskInStory($input['sid']);
@@ -294,6 +295,22 @@ class TaskController extends BaseController {
     $progress = $this->getStoryProgress($sid);
     $html = '<div class="bar" style="width: ' . $progress . '%">' . $progress . '%</div>';
     return $html;
+  }
+
+  public function deleteTask() {
+    $input = Input::all();
+    $taid = $input['taid'];
+    $task = Task::find($taid);
+    $sid = $task->sid;
+    $task->delete_flg = 1;
+    if ($task->save()) {
+      //create activity
+      ActivityController::createActivityDelete($sid, ENTITY_STORY, $taid, ENTITY_TASK);
+      $data = array('status' => 200, 'message' => 'Delete task successfully');
+    } else {
+      $data = array('status' => 800, 'message' => 'Error when delete task');
+    }
+    return $data;
   }
 
 }

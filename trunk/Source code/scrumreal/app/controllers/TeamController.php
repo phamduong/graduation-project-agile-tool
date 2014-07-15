@@ -50,6 +50,7 @@ class TeamController extends BaseController {
         }
         //Create activity
         ActivityController::createActivityAdd(Session::get('current_project'), ENTITY_PROJECT, $team->tid, ENTITY_TEAM);
+        ActivityController::createActivityCreate($new_tid, ENTITY_TEAM);
       }
     } else {
       $data = array('status' => 800, 'message' => 'Error!');

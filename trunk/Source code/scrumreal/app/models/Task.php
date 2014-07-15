@@ -186,5 +186,5 @@ SQL;
     $result = DB::select($query, array($spid));
     return $result;
   }
-
+  
 }

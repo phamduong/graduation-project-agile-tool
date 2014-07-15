@@ -61,6 +61,7 @@ class ProjectController extends BaseController {
     $project = Project::find($input['pid']);
     $arr_match = array(
         'name' => 'Name',
+        'status' => 'Status',
         'start_date' => 'Start date',
         'end_date_es' => 'Estimate end date',
         'description' => 'Desciption',
@@ -85,8 +86,6 @@ class ProjectController extends BaseController {
 //    $project->name = $input['name'];
 //    $project->description = $input['description'];
 //    $project->note = $input['note'];
-
-
     $project_model = new Project;
     if ($input['leader'] != '') {
       if ($project_model->checkRoleAssign($input['pid'], ROLE_LEADER) == 0) {
@@ -122,11 +121,11 @@ class ProjectController extends BaseController {
     $story = new Story;
     $task = new Task;
     if (count($sprint->getSprintNotComplete($pid)) > 0) {
-      $data = array('status' => 803, 'message' => 'Project contain uncompleted sprint');
+      $data = array('status' => 803, 'message' => 'Project contains uncompleted sprints');
     } else if (count($story->getStoryNotComplete($pid)) > 0) {
-      $data = array('status' => 804, 'message' => 'Project contain uncompleted story');
+      $data = array('status' => 804, 'message' => 'Project contains uncompleted storys');
     } else if (count($task->getTaskNotComplete($pid)) > 0) {
-      $data = array('status' => 805, 'message' => 'Project contain uncompleted task');
+      $data = array('status' => 805, 'message' => 'Project contains uncompleted tasks');
     } else {
       $project = Project::find($pid);
       ActivityController::createActivityUpdate($pid, ENTITY_PROJECT, 'Status', $project->$status, PROJECT_COMPLETE_STATUS);
@@ -160,7 +159,7 @@ class ProjectController extends BaseController {
     $project->start_date = date('Y-m-d', strtotime($date_arr[0]));
     $project->end_date_es = date('Y-m-d', strtotime($date_arr[1]));
     $project->note = $input['note'];
-    $project->status = 1; //active
+    $project->status = PROJECT_NEW_STATUS; //active
     $project->description = $input['description'];
     if ($project->save() == 1) {
       $pid = $project->pid;
@@ -171,6 +170,7 @@ class ProjectController extends BaseController {
       if ($input['owner'] != '') {
         $project_model->insertProjectUser($pid, $input['owner'], ROLE_OWNER);
       }
+      ActivityController::createActivityCreate($pid, ENTITY_PROJECT);
       $data = array(
           'status' => 200,
           'message' => 'Create project successfully!',
