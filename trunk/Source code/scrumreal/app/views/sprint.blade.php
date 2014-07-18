@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumreal - Sprint management
+Scrumtool - Sprint management
 @stop
 @section('content')
 @include('modal/sprint_add')

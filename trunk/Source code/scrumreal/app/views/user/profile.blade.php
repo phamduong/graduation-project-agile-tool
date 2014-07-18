@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumreal - User profile
+Scrumtool - User profile
 @stop
 @section('content')
 <div class="container-fluid">

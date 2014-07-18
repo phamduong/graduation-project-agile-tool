@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cb88b8992eff2de4926b476d6540d951",
+    "hash": "5582c8cf57e359858b61d736f68e74c5",
     "packages": [
         {
             "name": "cboden/ratchet",
@@ -1155,6 +1155,51 @@
             "time": "2014-03-30 17:19:02"
         },
         {
+            "name": "react/zmq",
+            "version": "dev-psr4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/zmq.git",
+                "reference": "af9871b24f9b7ec1e31de23f876e479c01998ab4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/zmq/zipball/af9871b24f9b7ec1e31de23f876e479c01998ab4",
+                "reference": "af9871b24f9b7ec1e31de23f876e479c01998ab4",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "~2.0",
+                "ext-zmq": "*",
+                "php": ">=5.4.0",
+                "react/event-loop": "0.4.*"
+            },
+            "require-dev": {
+                "ext-pcntl": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "React\\ZMQ\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "ZeroMQ bindings for React.",
+            "keywords": [
+                "zeromq",
+                "zmq"
+            ],
+            "time": "2014-05-25 17:58:02"
+        },
+        {
             "name": "stack/builder",
             "version": "v1.0.2",
             "source": {
@@ -2067,7 +2112,8 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "cboden/ratchet": 20
+        "cboden/ratchet": 20,
+        "react/zmq": 20
     },
     "platform": [
 

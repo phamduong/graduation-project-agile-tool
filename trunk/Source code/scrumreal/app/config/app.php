@@ -119,7 +119,7 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-    'Formativ\Realtime\RealtimeServiceProvider'
+    'Scrumtool\Realtime\RealtimeServiceProvider'
 	),
 
 	/*

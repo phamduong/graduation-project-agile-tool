@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumreal - Project management
+Scrumtool - Project management
 @stop
 @section('content')
 @include('modal/project_add')

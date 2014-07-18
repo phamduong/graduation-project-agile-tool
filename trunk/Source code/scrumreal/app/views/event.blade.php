@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumreal - Event management
+Scrumtool - Event management
 @stop
 @section('content')
 @include('modal/event_add')

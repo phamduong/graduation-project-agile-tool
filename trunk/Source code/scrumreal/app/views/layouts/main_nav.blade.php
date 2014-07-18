@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <a href="#" id="brand">Scrumreal</a>
+  <a href="#" id="brand">Scrumtool</a>
   <a href="#" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Toggle navigation"><i class="icon-reorder"></i></a>
   <ul class='main-nav'>
     <li id="project">

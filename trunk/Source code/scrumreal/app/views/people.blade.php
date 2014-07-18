@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumreal - Team management
+Scrumtool - Team management
 @stop
 @section('content')
 @include('modal/team_add')
