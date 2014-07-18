@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <!-- Apple devices fullscreen -->
     <!--<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />-->
-    <title>@yield('title', 'Scrumreal')</title>
+    <title>@yield('title', 'Scrum Tool')</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css" ) }}">
     <!--Bootstrap modal-->
@@ -104,6 +104,8 @@
     <!-- PLUpload -->
 <!--    <script src="{{ asset("js/plugins/plupload/plupload.full.js" ) }}"></script>
     <script src="{{ asset("js/plugins/plupload/jquery.plupload.queue.js" ) }}"></script>-->
+    <!--Autobahn js-->
+    <script src="{{ asset("js/autobahn.min.js" ) }}"></script>
     <!-- Theme framework -->
     <script src="{{ asset("js/eakroko.js" ) }}"></script>
     <!-- Theme scripts -->

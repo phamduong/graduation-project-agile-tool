@@ -5,7 +5,8 @@
   "license": "MIT",
   "require": {
     "laravel/framework": "4.1.*",
-    "cboden/ratchet": "dev-master"
+    "cboden/ratchet": "dev-master",
+    "react/zmq": "dev-psr4"
   },
   "autoload": {
     "classmap": [
@@ -17,7 +18,7 @@
       "app/tests/TestCase.php"
     ],
     "psr-0": {
-      "Formativ\\Realtime": "workbench/formativ/realtime/src/"
+      "Scrumtool\\Realtime": "workbench/scrumtool/realtime/src/"
     }
   },
   "scripts": {

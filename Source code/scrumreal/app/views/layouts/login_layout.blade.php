@@ -8,7 +8,7 @@
     <!-- Apple devices fullscreen -->
     <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <title>SCRUM REAL - Login</title>
+    <title>SCRUM TOOL - Login</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">

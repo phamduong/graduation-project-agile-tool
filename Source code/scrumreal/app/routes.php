@@ -15,7 +15,7 @@
 //  return Redirect::to('/login');
 //});
 
-Route::get("/", function() {
+Route::get("/test", function() {
   return View::make("test");
 });
 

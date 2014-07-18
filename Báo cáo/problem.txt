@@ -1,29 +1,35 @@
 ﻿1) task da assign cho 1 user -> user nay chuyen team khac (thanh phan team van giu nguyen trong Sprint)
 2) story chua hoan thanh, van con task nhung sprint da hoan thanh
-(3) khi them 1 story thi se them 1 activity la no duoc tao cho chinh story do thay vi chi cho project chua no
-(4) chi co product owner moi duoc them story
-(5) product owner va project leader thi khong the assign vao Team
-(6) Fix loi select current project khi phan trang
-(7)[khong can] chinh mau cua current project khac mau hover tr trong datatables
-(8) cho phep thay doi role nguoi dung trong project
-(9) project complete roi co cho chuyen sang trang thai khac duoc khong?
+	(3) khi them 1 story thi se them 1 activity la no duoc tao cho chinh story do thay vi chi cho project chua no
+	(4) chi co product owner moi duoc them story
+	(5) product owner va project leader thi khong the assign vao Team
+	(6) Fix loi select current project khi phan trang
+	(7)[khong can] chinh mau cua current project khac mau hover tr trong datatables
+	(8) cho phep thay doi role nguoi dung trong project
+	(9) project complete roi co cho chuyen sang trang thai khac duoc khong?
 10) bo tri lai cach hien thi Sotry: them thong tin ve trang thai, so ngay...
-(11) nhan Delete cai gi cung phai confirm ca da?...
+	(11) nhan Delete cai gi cung phai confirm ca da?...
 12) check lai phan quyen, voi project ma nguoi dung khong tham gia...
 13) complete Sprint -> xac nhan : hien thi danh sach cac story chua hoan thanh a assign lai vao danh sach story
-(14) complete project -> xac nhan
-(15) delete story phai co thong bao xac nhan
-(16)[khong can] neu team da duoc assign story dang chay, hoac sap chay thi khong cho xoa nua
-(17) thieu Delete task
-(18) project dang chay delete ? -> cho roll back
-(19)[khong can] lam them tinh nang export file
-(20) fix loi man hinh taskboard
-(21)[khong can] bo button appove story di																				
-(22) chon CURRENT PROEJCT -> USE CASE
-(23)[???] giai phap cho van de phan quyen: neu da lam project leader cua bat ki du an nao thi role mac dinh se la leader, tru khi thay doi role do bang cach chon project lam viec tren do
-(24)[bo] tinh nang option
-(25) hoan thanh tinh nang attach
-(26)[???] them danh sach project
-(27)[khong can] cap nhat thong tin user, assign role
-(28) project tao ra ve trang thai New, them button start??
-(29) CHECK lai chuc nang tao tai khoan cho nguoi dung
+	(14) complete project -> xac nhan
+	(15) delete story phai co thong bao xac nhan
+	(16)[khong can] neu team da duoc assign story dang chay, hoac sap chay thi khong cho xoa nua
+	(17) thieu Delete task
+	(18) project dang chay delete ? -> cho roll back
+	(19)[khong can] lam them tinh nang export file
+	(20) fix loi man hinh taskboard
+	(21)[khong can] bo button appove story di																				
+	(22) chon CURRENT PROEJCT -> USE CASE
+	(23)[???] giai phap cho van de phan quyen: neu da lam project leader cua bat ki du an nao thi role mac dinh se la leader, tru khi thay doi role do bang cach chon project lam viec tren do
+	(24)[bo] tinh nang option
+	(25) hoan thanh tinh nang attach
+	(26)[???] them danh sach project
+	(27)[khong can] cap nhat thong tin user, assign role
+	(28) project tao ra ve trang thai New, them button start??
+29) CHECK lai chuc nang tao tai khoan cho nguoi dung
+
+
+30) cập nhật thời gian thực
+		project, story: reload datatables + info
+		task, people, sprint -> drag, drop (hoặc di chuyển HTML cũng được)
+		report -> nếu có cập nhật mới (xác nhận người dùng có muốn tải lại trang không?)

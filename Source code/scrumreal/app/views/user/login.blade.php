@@ -5,7 +5,7 @@
 @stop
 @section('content')
 <div class="wrapper">
-  <h1><a href="#"><img src="img/logo-big.png" alt="" class='retina-ready' width="59" height="49">SCRUM REAL</a></h1>
+  <h1><a href="#"><img src="img/logo-big.png" alt="" class='retina-ready' width="59" height="49">SCRUM TOOL</a></h1>
   <div class="login-body">
     <h2>{{{Lang::get('layout.sign_in_title')}}}</h2>
     <form class='form-validate' id="frm_login">

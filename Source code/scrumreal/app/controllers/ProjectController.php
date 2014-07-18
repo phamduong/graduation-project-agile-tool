@@ -182,6 +182,18 @@ class ProjectController extends BaseController {
         'status' => 800,
         'message' => 'Error!'
     );
+
+    $broadcast_data = array(
+        'category' => 'scrum.realtime.project',
+        'type' => 'add',
+        'time' => date('H:i:s'),
+        'content' => array(
+            'pid' => $pid,
+            'name' => $project->name
+        )
+    );
+    PushController::publishData($broadcast_data);
+    
     return $data;
   }
 

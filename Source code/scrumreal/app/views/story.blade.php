@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumreal - User story management
+Scrumtool - User story management
 @stop
 @section('content')
 @include('modal/story_add')
