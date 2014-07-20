@@ -1,3 +1,7 @@
+if (!window.WebSocket){
+  alert("BROWSER DOES NOT SUPPORTED WEBSOCKET, PLEASE UPDATE YOUR BROWSER TO USE FULL FEATURES OF SCRUM TOOL!");
+}
+
 var current_sid;
 var taskTable; //global object to easily reference
 
@@ -51,8 +55,8 @@ $(document).ready(function() {
             var page = $(location).attr('pathname');
             if (page === "/people") {
               //in people page -> reload staff list
-              $("#staff-list .box-content").html();
-              $("#staff-list .box-content").load("/people/reload_list_staff");
+//              $("#staff-list .box-content").html();
+//              $("#staff-list .box-content").load("/people/reload_list_staff");
               setTimeout(function() {
                 $("#modal-add-user").modal('hide');
               }, 1500);
@@ -146,7 +150,7 @@ $(document).ready(function() {
               if (count_form_data_ele > 0) {
                 addAttach(formData, 2, response.sid);
               }
-              appendStoryToHTML("sprint_page_left");
+//              appendStoryToHTML("sprint_page_left");
               showAlert(1, true, response.message);
               setTimeout(function() {
                 $("#modal-add-story").modal('hide');
@@ -209,9 +213,7 @@ $(document).ready(function() {
               if (remove_attach_name.length > 0) {
                 removeAttach(remove_attach_name, 2, sid);
               }
-              
-              appendStoryToHTML(window.story_locate);
-              
+//              appendStoryToHTML(window.story_locate);
               setTimeout(function() {
                 $("#modal-edit-story").modal("hide");
               }, 1500);

@@ -1,8 +1,25 @@
 var oTable;
 var current_project;
+
 $(document).ready(function() {
   //init plupload
   initProjectDatatable();
+  //subscribe to realtime update
+  var callback = function(topic, data) {
+//    console.log(topic);
+//    console.log(data);
+    if (data.type === 'add') {
+      var oTable = $("#project-datatable").dataTable();
+      oTable.fnReloadAjax();
+    } else if (data.type === 'update') {
+      var oTable = $("#project-datatable").dataTable();
+      oTable.fnReloadAjax();
+    } else if (data.type === 'delete') {
+      var oTable = $("#project-datatable").dataTable();
+      oTable.fnReloadAjax();
+    }
+  };
+  subscribeToTopic(["scrum.realtime_" + current_project + ".project"], 'localhost', '8080', callback);
   //Add user in project add modal
   $("#modal-add-project a.btn-add-user").click(function() {
     $("#selected-role").val($(this).attr('data-selected'));
@@ -122,11 +139,11 @@ $(document).ready(function() {
               if (count_form_data_ele > 0) {
                 addAttach(formData, 1, response.pid);
               }
-              oTable.fnReloadAjax();
+//              oTable.fnReloadAjax();
               setTimeout(function() {
                 $("#modal-add-project").modal('hide');
                 clearFormInput("#form-add-project");
-              }, 1000);              
+              }, 1000);
             }
           }
         });
@@ -186,8 +203,8 @@ $(document).ready(function() {
                 $("#modal-edit-project").modal('hide');
               }, 1000);
 
-              var oTable = $("#project-datatable").dataTable();
-              oTable.fnReloadAjax();
+//              var oTable = $("#project-datatable").dataTable();
+//              oTable.fnReloadAjax();
               setTimeout(function() {
                 clearFormInput("#form-edit-project");
               }, 1000);

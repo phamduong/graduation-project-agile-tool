@@ -26,6 +26,7 @@ Scrumtool - User story management
           <table class="table table-hover table-nomargin table-bordered usertable" id="user-story-datatable">
             <thead>
               <tr class='thefilter'>
+                <th>Story id</th>
                 <th>Story name</th>
                 <th>Priority</th>
                 <th>Time estimate</th>
@@ -36,6 +37,7 @@ Scrumtool - User story management
                 <th>Options</th>
               </tr>
               <tr>
+                <th>Story id</th>
                 <th>Story name</th>
                 <th>Priority</th>
                 <th>Time estimate</th>
@@ -53,6 +55,11 @@ Scrumtool - User story management
       </div>
     </div>
   </div>
+  <script>
+    @if(isset($current_project))
+      var current_project = {{{$current_project}}};
+    @endif
+  </script>
   <script src="{{ asset("js/story.js" ) }}"></script>
   <!-- dataTables -->
   <script src="{{ asset("js/plugins/datatable/jquery.dataTables.min.js") }}"></script>

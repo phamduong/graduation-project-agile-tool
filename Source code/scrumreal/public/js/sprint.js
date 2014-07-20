@@ -14,12 +14,78 @@ var end_id;
 var current_team;
 var current_sprint;
 var order;
-
 var count;
-
 var insideMain = false;
 
+var story_status = {};
+story_status[1] = "New";
+story_status[2] = "Approved";
+story_status[3] = "Estimated";
+story_status[4] = "Assigned";
+story_status[5] = "To do";
+story_status[6] = "In progress";
+story_status[7] = "To test";
+story_status[8] = "Done";
+story_status[9] = "Sprint completed";
+
+function appendNewStoryHTML(story_data) {
+  var story_temp = $(".story-temp").html();
+  $(".story-temp .story").attr("id", "story_" + story_data.sid);
+  $(".story-temp .story").attr("data-sid", story_data.sid);
+  $(".story-temp .story").attr("data-name", story_data.name);
+  $(".story-temp .story").attr("data-time-estimate", story_data.time_estimate);
+  $(".story-temp .story-name a").attr("href", story_data.sid);
+  $(".story-temp .story-name a").html(story_data.name);
+  $(".story-temp .story-points").html(story_data.point + " point(s");
+  $(".story-temp .story-status").html(story_status[story_data.status]);
+  $(".story-temp .story-time_estimate").html(story_data.time_estimate + " day(s)");
+
+  $("#story-not-se-list .scrollable").append($(".story-temp").html());
+  $("story-temp").html(story_temp);
+}
+
+function updateStoryHTML(story_data) {
+  var id = "#story_" + story_data.sid;
+  $(id + " .story-name a").html(story_data.name);
+  $(id + " .story-points").html(story_data.point + " point(s");
+  $(id + " .story-status").html(story_status[story_data.status]);
+  $(id + " .story-time_estimate").html(story_data.time_estimate + " day(s)");
+  if (story_data.sid >= 2) {
+    $(id).removeClass("story-unaddable");
+    $(id).addClass("story-addable");
+  }
+}
+
 $(document).ready(function() {
+  var callback = function(topic, data) {
+    if (topic === "scrum.realtime_" + current_project + ".team") {
+
+    } else if (topic === "scrum.realtime_" + current_project + ".story") {
+      switch (data.type) {
+        case "approve":
+          {
+            appendNewStoryHTML(data.content);
+            destroyStoryDragDrop();
+            initStoryDragDrop();
+            break;
+          }
+        case "update":
+          {
+            updateStoryHTML(data.content);
+            destroyStoryDragDrop();
+            initStoryDragDrop();
+            break;
+          }
+      }
+    } else if (topic === "scrum.realtime_" + current_project + ".sprint") {
+
+    }
+  }
+  var link = ["scrum.realtime_" + current_project + ".team",
+    "scrum.realtime_" + current_project + ".story",
+    "scrum.realtime_" + current_project + ".sprint"];
+  subscribeToTopic(link, "localhost", "8080", callback);
+
   //Show number of days for each team in sprint
   getTeamDayAll();
 
@@ -97,7 +163,7 @@ $(document).ready(function() {
 //          $(parent + "#sprint_time").daterangepicker();
           $(parent + "#sprint_time").data('daterangepicker').setStartDate(sprint_info.start_date_es);
           $(parent + "#sprint_time").data('daterangepicker').setEndDate(sprint_info.end_date_es);
-          
+
           $(parent + "#description").val(sprint_info.description);
           $(parent + ".delete-sprint").attr("data-spid", sprint_info.spid);
           //comment
@@ -575,7 +641,7 @@ function getTeamDayAll() {
 }
 
 function updateEachTeamDay(spid, tid, num_day) {
-  console.log("-------num_day: " + num_day);
+//  console.log("-------num_day: " + num_day);
 
   var selector = "#sprint_" + spid + " #s_team_" + tid;
   $(selector).attr("data-num-day", num_day);
@@ -592,4 +658,25 @@ function updateEachTeamDay(spid, tid, num_day) {
     $(selector + " .s-team-status").css("color", "#0066FF");
   }
 //  console.log(total_day);
+}
+
+
+function destroyStoryDragDrop() {
+  $(".sprint-story-list .story-addable").each(function() {
+    if ($(this).data("uiDraggable")) {
+      $(this).draggable("destroy");
+    }
+  });
+
+  $(".sprint-teams .story").each(function() {
+    if ($(this).data("uiDraggable")) {
+      $(this).draggable("destroy");
+    }
+  });
+
+  $sprint_team.each(function() {
+    if ($(this).data("uiDroppable")) {
+      $(this).droppable("destroy");
+    }
+  });
 }

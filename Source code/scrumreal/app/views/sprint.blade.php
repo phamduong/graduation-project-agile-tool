@@ -119,8 +119,21 @@ Scrumtool - Sprint management
               @endforeach
             </div>
           </div>
+          <div class="story-temp">
+            <div id="" data-sid="" class="story story-addable" data-name="" data-time-estimate="" data-order="">
+              <div class="story-name"><a href="" class="edit-story"></a></div>
+              <div class="story-points badge badge-info"></div>
+              <div class="story-status badge badge-info"></div>
+              <div class="story-time_estimate badge badge-info"></div>
+            </div>
+          </div>
         </div>
         <script src="{{ asset("js/sprint.js" ) }}"></script>
+        <script>
+          @if(isset($current_project))
+            var current_project = {{{$current_project}}};
+          @endif
+        </script>
       </div>    
     </div>
   </div>

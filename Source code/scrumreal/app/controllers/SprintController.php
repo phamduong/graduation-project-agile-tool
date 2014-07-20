@@ -16,6 +16,7 @@ class SprintController extends BaseController {
       //page data
       $data['story_not_asign'] = $sprint->getStoryNotAssign($current_project);
       $data['sprint_list'] = $sprint->getSprintInProject($current_project);
+      $data['current_project'] = $current_project;
 //      var_dump($data['sprint_list']);
 //      exit();
       $data['has_sprint_running'] = false;
@@ -33,8 +34,8 @@ class SprintController extends BaseController {
       }
       $data['story_status_name'] = array(
           STORY_STATUS_NEW => "New",
-          STORY_STATUS_APPROVED => "Approve",
-          STORY_STATUS_ESTIMATED => "Estimate",
+          STORY_STATUS_APPROVED => "Approved",
+          STORY_STATUS_ESTIMATED => "Estimated",
           STORY_STATUS_ASIGNED => "Assigned",
           STORY_STATUS_TO_DO => "To do",
           STORY_STATUS_IN_PROGRESS => "In progress",

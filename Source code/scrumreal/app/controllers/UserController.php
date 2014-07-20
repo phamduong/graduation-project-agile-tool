@@ -55,6 +55,16 @@ class UserController extends \BaseController {
     $user->delete_flg = 1;
     if ($user->save()) {
       $data = array('status' => 200, 'message' => 'Delete user successfully!');
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.user',
+          'type' => 'remove_user',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'uid' => $user->uid,
+              'fullname' => $user->fullname              
+          )
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data = array('status' => 800, 'message' => 'Delete user unsuccessfully!');
     }
@@ -405,11 +415,24 @@ class UserController extends \BaseController {
     $date = date('Y-m-d', strtotime($input['birthday']));
     $user->birthday = $date;
     $user->timezone = $input['timezone'];
+    $user->password = Hash::make($input['login_nm']);
     if ($user->save() == 1) {
       $data['status'] = 200;
       $data['message'] = 'Create user successfully';
       $data['user']['uid'] = $user->uid;
       $data['user']['full_name'] = $user->fullname;
+      
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.user',
+          'type' => 'add_user',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'uid' => $user->uid,
+              'fullname' => $user->fullname              
+          )
+      );
+      PushController::publishData($broadcast_data);
+      
     }
     return $data;
   }

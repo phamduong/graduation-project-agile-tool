@@ -14,6 +14,7 @@ class ReportController extends BaseController {
       $team = new Team;
       $data['sprint_list'] = $sprint->getSprintInProject($current_project);
       $data['team_list'] = $team->getTeamOnProject($current_project);
+      $data['current_project'] = Session::get('current_project');
       if ($tid === '-1' || $tid === '') {
         //if overview
         if ($spid === '') {

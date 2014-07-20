@@ -127,7 +127,10 @@
     <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-precomposed.png" />
   </head>
   <body data-layout-topbar="fixed">
-    <noscript>Sorry, your browser does not support JavaScript!</noscript>
+    <noscript>
+    <div class="div-noscript">Sorry, your browser does not support JavaScript!</div>
+    </noscript>
+    
     @include('modal/error_notice')
     <div id="navigation">
       @include('layouts/main_nav')
@@ -161,14 +164,14 @@
                     </div>
                   </div>-->
 
-        <div class="span3">
+<!--        <div class="span3">
           <div class="control-group">
             <div class="controls">
               <input type="text" class="input-large" placeholder="Search" id="task_board_filter" name="task_board_filter">
             </div>
           </div>
-        </div>
-        <div class="span2">
+        </div>-->
+        <div class="span3">
           <div class="control-group">
             <div class="controls">
               <select id="sprint_filter" name="sprint_filter" class="input-medium">

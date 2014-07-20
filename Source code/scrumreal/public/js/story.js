@@ -1,5 +1,17 @@
 var oTable;
 $(document).ready(function() {
+  var callback = function(topic, data) {
+//    if(data.type == 'add'){
+//      var oTable = $("#user-story-datatable").dataTable();
+//      oTable.fnReloadAjax();
+//    }else if(data.type == 'update'){
+//      
+//    }
+    var oTable = $("#user-story-datatable").dataTable();
+    oTable.fnReloadAjax();
+  };
+  subscribeToTopic(["scrum.realtime_" + current_project + ".story"], 'localhost', '8080', callback);
+
   initUserStoryDatatable();
   //Choose edit and user story
   $("#user-story-datatable").on("click", ".view_story", function(event) {
@@ -23,7 +35,7 @@ $(document).ready(function() {
           setTimeout(function() {
             $("#modal-edit-story").modal("hide");
           }, 1000);
-          appendStoryToHTML();
+//          appendStoryToHTML();
         } else if (response.status === 200) {
           showAlert(0, true, response.message);
         }
@@ -46,7 +58,7 @@ $(document).ready(function() {
               setTimeout(function() {
                 $("#modal-edit-story").modal("hide");
               }, 1000);
-              appendStoryToHTML();
+//              appendStoryToHTML();
             } else if (response.status === 200) {
               showAlert(0, true, response.message);
             }
@@ -55,15 +67,14 @@ $(document).ready(function() {
       }
     });
   });
-  
-  $("#btn-add-story").click(function(e){
+
+  $("#btn-add-story").click(function(e) {
     e.preventDefault();
     $("#modal-add-story .attach").html('<input type="file" name="attach[]" id="story-attach-add" multiple/>');
     $("#modal-add-story").modal("show");
   });
-  
-});
 
+});
 
 function initUserStoryDatatable() {
   if ($("#user-story-datatable").length > 0) {
@@ -78,6 +89,7 @@ function initUserStoryDatatable() {
         "sLengthMenu": "_MENU_ <span>entries per page</span>"
       },
       "aoColumns": [
+        {"mData": "sid"},
         {"mData": "story_name"},
         {"mData": "priority"},
         {"mData": "time_estimate"},
@@ -90,7 +102,7 @@ function initUserStoryDatatable() {
       'aoColumnDefs': [
         {
           'bSortable': false,
-          'aTargets': [7]
+          'aTargets': [8]
         },
         {
           "mRender": function(data, type, row) {
@@ -109,7 +121,7 @@ function initUserStoryDatatable() {
                 break;
             }
           },
-          'aTargets': [1]
+          'aTargets': [2]
         },
         {
           "mRender": function(data, type, row) {
@@ -143,7 +155,7 @@ function initUserStoryDatatable() {
                 break;
             }
           },
-          'aTargets': [4]
+          'aTargets': [5]
         },
         {
           "mRender": function(data, type, row) {
@@ -151,7 +163,7 @@ function initUserStoryDatatable() {
                     + '</div>';
             return $html;
           },
-          'aTargets': [7]
+          'aTargets': [8]
         }
       ],
       "oLanguage": {

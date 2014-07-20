@@ -10,6 +10,7 @@ class StoryController extends BaseController {
       $data['cur_user'] = parent::getCurrentUser();
       $data['active_nav'] = 'story';
       $data['current_proj_name'] = Project::find(Session::get('current_project'))->name;
+      $data['current_project'] = Session::get('current_project');
       return View::make('story', $data);
     } else {
       return Redirect::to('/project');
@@ -44,6 +45,17 @@ class StoryController extends BaseController {
       $data['status'] = 800;
       $data['message'] = 'Error';
     }
+    $broadcast_data = array(
+        'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
+        'type' => 'add',
+        'time' => date('H:i:s'),
+        'content' => array(
+            'sid' => $story->sid,
+            'name' => $input['name']
+        )
+    );
+    PushController::publishData($broadcast_data);
+
     return $data;
   }
 
@@ -79,6 +91,15 @@ class StoryController extends BaseController {
         $data = array('status' => 200, 'message' => 'Appoved sucessfully');
       }
     }
+//    $story
+    $broadcast_data = array(
+        'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
+        'type' => 'approve',
+        'time' => date('H:i:s'),
+        'content' => $story->getStory($sid)
+    );
+    PushController::publishData($broadcast_data);
+
     return $data;
   }
 
@@ -99,6 +120,17 @@ class StoryController extends BaseController {
         $data = array('status' => 200, 'message' => 'Appoved sucessfully');
       }
     }
+    $broadcast_data = array(
+        'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
+        'type' => 'delete',
+        'time' => date('H:i:s'),
+        'content' => array(
+            'sid' => $story->sid,
+            'name' => $story->name
+        )
+    );
+    PushController::publishData($broadcast_data);
+
     return $data;
   }
 
@@ -115,7 +147,7 @@ class StoryController extends BaseController {
         'description' => 'Description'
     );
     foreach ($arr_match as $key => $value) {
-      if($story->$key != $input[$key]){
+      if ($story->$key != $input[$key]) {
         ActivityController::createActivityUpdate($input['sid'], ENTITY_STORY, $value, $story->$key, $input[$key]);
         $story->$key = $input[$key];
       }
@@ -129,6 +161,15 @@ class StoryController extends BaseController {
     if ($story->save()) {
       $data = array('status' => 200, 'message' => 'Save sucessfully');
     }
+    $story_model = new Story;
+    $broadcast_data = array(
+        'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
+        'type' => 'update',
+        'time' => date('H:i:s'),
+        'content' => $story_model->getStory($story->sid)
+    );
+    PushController::publishData($broadcast_data);
+
     return $data;
   }
 

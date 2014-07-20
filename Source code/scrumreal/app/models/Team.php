@@ -97,6 +97,15 @@ SQL;
     return $result;
   }
 
+  public function removeTeamMemFromProject($tid) {
+    $query = <<<SQL
+DELETE FROM project_user
+WHERE tid = ?
+SQL;
+    $result = DB::delete($query, array($tid));
+    return $result;
+  }
+
   public function moveToTeam($pid, $uid, $end_tid) {
     $query = <<<SQL
 UPDATE project_user 
@@ -157,8 +166,8 @@ SQL;
     $result = DB::delete($query, array($spid, $tid));
     return $result;
   }
-  
-  public function deleteFromStory_Team($sid, $tid){
+
+  public function deleteFromStory_Team($sid, $tid) {
     $query = <<<SQL
   DELETE FROM story_team
   WHERE sid = ? AND tid = ?
@@ -166,8 +175,8 @@ SQL;
     $result = DB::delete($query, array($sid, $tid));
     return $result;
   }
-  
-  public function removeTeamLeaderFromProject($pid, $tid){
+
+  public function removeTeamLeaderFromProject($pid, $tid) {
     $query = <<<SQL
   DELETE FROM project_user
   WHERE pid = ? AND tid = ? AND rid = ?

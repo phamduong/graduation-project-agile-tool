@@ -3,6 +3,73 @@ var end_tid;
 var select_uid;
 var ele;
 $(document).ready(function() {
+  //subscribe to realtime update
+  var callback = function(topic, data) {
+    console.log(topic);
+    console.log(data);
+    if (topic === "scrum.realtime_" + current_project + ".team") {
+      if (data.type === 'add') {
+        appendNewTeam(data.content);
+        destroyPeopleDragDrop();
+        reloadListStaff();
+        setTimeout(function() {
+          initPeopleDragDrop();
+        }, 1000);
+      } else if (data.type === 'delete') {
+        deleteTeam(data.content.tid);
+        destroyPeopleDragDrop();
+        reloadListStaff();
+        setTimeout(function() {
+          initPeopleDragDrop();
+        }, 1000);
+      } else if (data.type === 'update') {
+        reloadTeamData(data.content.tid);
+        destroyPeopleDragDrop();
+        setTimeout(function() {
+          initPeopleDragDrop();
+        }, 1000);
+      } else if (data.type === "add_member") {
+        destroyPeopleDragDrop();
+        reloadTeamData(data.content.end_tid);
+        reloadListStaff();
+        setTimeout(function() {
+          initPeopleDragDrop();
+        }, 1000);
+      } else if (data.type === "remove_member") {
+        destroyPeopleDragDrop();
+        reloadTeamData(data.content.start_tid);
+        reloadListStaff();
+        setTimeout(function() {
+          initPeopleDragDrop();
+        }, 1000);
+      } else if (data.type === "move_member") {
+        destroyPeopleDragDrop();
+        reloadTeamData(data.content.start_tid);
+        reloadTeamData(data.content.end_tid);
+//      reloadListStaff();
+        setTimeout(function() {
+          initPeopleDragDrop();
+        }, 1000);
+      }
+    } else if (topic === "scrum.realtime_" + current_project + ".user") {
+      if (data.type === "remove_user") {
+        //in people page -> reload staff list
+        destroyPeopleDragDrop();
+        reloadListStaff();
+        setTimeout(function() {
+          initPeopleDragDrop();
+        }, 1000);
+      } else if (data.type === "add_user") {
+        destroyPeopleDragDrop();
+        reloadListStaff();
+        setTimeout(function() {
+          initPeopleDragDrop();
+        }, 1000);
+      }
+    }
+  };
+  subscribeToTopic(['scrum.realtime_' + current_project + '.team', 'scrum.realtime_' + current_project + '.user'], 'localhost', '8080', callback);
+
   //Init dragable and dropable in people management page
   initPeopleDragDrop();
 
@@ -21,12 +88,11 @@ $(document).ready(function() {
               showAlert(0, true, response.message);
             } else if (response.status === 200) {
               showAlert(1, true, response.message);
-              //Append new team to HTML
+
               setTimeout(function() {
                 $("#modal-add-team").modal('hide');
               }, 1000);
               clearFormInput("#form-add-team");
-              location.reload(); //temp
             }
           }
         });
@@ -49,8 +115,7 @@ $(document).ready(function() {
           success: function(response) {
             if (response.status === 200) {
               showAlert(1, true, response.message);
-              $("#team_" + tid).html("");
-              $("#team_" + tid).load("/team/reload_team_data/" + tid);
+//              reloadTeamData(tid);
               var page = $(location).attr('pathname');
               if (page === "/people") {
                 //in people page -> reload staff list
@@ -59,7 +124,6 @@ $(document).ready(function() {
                 setTimeout(function() {
                   $("#modal-edit-team").modal("hide");
                 }, 1000);
-                location.reload(); //teamp
               }
             } else if (response.status === 200) {
               showAlert(0, true, response.message);
@@ -87,8 +151,6 @@ $(document).ready(function() {
               setTimeout(function() {
                 $("#modal-edit-team").modal("hide");
               }, 1000);
-              //appendStoryToHTML();
-              location.reload(); //temp
             } else if (response.status === 200) {
               showAlert(0, true, response.message);
             }
@@ -138,9 +200,6 @@ $(document).ready(function() {
             if (response.status === 200) {
               var page = $(location).attr('pathname');
               if (page === "/people") {
-                //in people page -> reload staff list
-                $("#staff-list .box-content").html();
-                $("#staff-list .box-content").load("/people/reload_list_staff");
                 setTimeout(function() {
                   $("#modal-edit-user").modal("hide");
                 }, 1000);
@@ -275,8 +334,8 @@ function initPeopleDragDrop() {
     tolerance: "pointer"
   });
   // there's the people and the team-members
-  var $people = $(".people-list"),
-          $team = $(".team-members");
+//  var $people = $(".people-list"),
+//          $team = $(".team-members");
   // let the people items be draggable
   $(".people-list .person").draggable({
     cancel: "a.ui-icon", // clicking an icon won't initiate dragging
@@ -323,7 +382,7 @@ function initPeopleDragDrop() {
     }
   });
   // let the team-members be droppable, accepting the people items
-  $team.droppable({
+  $(".team-members").droppable({
     accept: ".person",
     //activeClass: "ui-state-highlight",
     drop: function(event, ui) {
@@ -350,7 +409,7 @@ function initPeopleDragDrop() {
     }
   });
   // let the people be droppable as well, accepting items from the team-members
-  $people.droppable({
+  $(".people-list").droppable({
     accept: ".person",
     // activeClass: "custom-state-active",
     drop: function(event, ui) {
@@ -440,4 +499,71 @@ function moveToTeam(start_tid, end_tid, select_uid) {
       hideGlLoad();
     }
   });
+}
+
+function appendNewTeam(data) {
+  //Append new team to HTML
+  var team_temp = $(".team-temp").html();
+  $(".team-temp .team").attr("id", "team_" + data.tid);
+  $(".team-temp .team").attr("data-tid", data.tid);
+  $(".team-temp .team .box-title .team-name").attr("href", data.tid);
+  $(".team-temp .team .box-title .team-name").text(data.team_name);
+  $(".team-temp .team .leader").attr("data-name", data.master_name);
+  $(".team-temp .team .leader").attr("data-value", data.master_id);
+  $(".team-temp .team .leader img").attr("src", data.master_image);
+  $(".team-temp .team .leader .person-name").text(data.master_name);
+  $("#list_all_team").append($(".team-temp").html());
+  $(".team-temp").html(team_temp);
+}
+
+function destroyPeopleDragDrop() {
+  if ($(".people-list .scrollable").data("uiSortable")) {
+    $(".people-list .scrollable").sortable("destroy");
+  }
+
+//  if ($(".people-list .person").data("uiDraggable")) {
+//    $(".people-list .person").draggable("destroy");
+//  }
+  $(".people-list .person").each(function() {
+    if ($(this).data("uiDraggable")) {
+      $(this).draggable("destroy");
+    }
+  });
+
+//  if ($(".team-members .person").data("uiDraggable")) {
+//    $(".team-members .person").draggable("destroy");
+//  }
+  $(".team-members .person").each(function() {
+    if ($(this).data("uiDraggable")) {
+      $(this).draggable("destroy");
+    }
+  });
+
+//  if ($(".team-members").data("uiDroppable")) {
+//    $(".team-members").droppable("destroy");
+//  }
+  $(".team-members").each(function() {
+    if ($(this).data("uiDroppable")) {
+      $(this).droppable("destroy");
+    }
+  });
+
+  if ($(".people-list").data("uiDroppable")) {
+    $(".people-list").droppable("destroy");
+  }
+
+}
+
+function reloadListStaff() {
+  $("#staff-list .box-content").html();
+  $("#staff-list .box-content").load("/people/reload_list_staff");
+}
+
+function deleteTeam(tid) {
+  $("#team_" + tid).remove();
+}
+
+function reloadTeamData(tid) {
+  $("#team_" + tid).html("");
+  $("#team_" + tid).load("/team/reload_team_data/" + tid);
 }

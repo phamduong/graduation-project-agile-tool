@@ -89,8 +89,6 @@ function appendTaskToHTML(taid, has_user, sid) {
  */
 function appendStoryToHTML(locate) {
   var page = $(location).attr('pathname');
-//  console.log(locate);
-//  console.log(page);
   if (page === "/story") {
     var oTable = $("#user-story-datatable").dataTable();
     oTable.fnReloadAjax();
@@ -718,27 +716,18 @@ function removeAttach(arr_filename, entity_type, entity_id) {
   });
 }
 
-//function downloadAttach(filename, entity_type, entity_id){
-//  $.ajax({
-//    url: "attach/download_attach",
-//    type: "POST",
-//    data: {filename: filename, entity_type: entity_type, entity_id: entity_id},
-//    success: function(response){
-//      
-//    }
-//  });
-//}
-
 function subscribeToTopic(subscribe_link, host, port, callback) {
   var conn = new ab.Session('ws://' + host + ':' + port + '',
           function() {
-            conn.subscribe(subscribe_link, function(topic, data) {
-              // This is where you would add the new article to the DOM (beyond the scope of this tutorial)
-              console.log('New article published to category "' + topic + '" : ' + data.article);
-              if(typeof callback !== "undefined"){
-                callback();
-              }
-            });
+            for(var i = 0; i < subscribe_link.length; i++){
+              conn.subscribe(subscribe_link[i], function(topic, data) {
+                console.log('New article published to category "' + topic + '" : ' + data.type);
+                console.log(data);
+                if(typeof callback !== "undefined"){
+                    callback(topic, data);
+                }
+              });
+            }           
           },
           function() {
             console.warn('WebSocket connection closed');

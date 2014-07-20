@@ -49,5 +49,10 @@ Scrumtool - Permission
     </div>
   </div>
   <script src="{{asset("js/permission.js")}}"></script>
+  <script>
+    @if(isset($current_project))
+      var current_project = {{{$current_project}}};
+    @endif
+  </script>
 </div>
 @stop
