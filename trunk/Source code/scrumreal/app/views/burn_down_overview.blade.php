@@ -50,7 +50,11 @@ Scrumtool - Report
       window.report_team_list = <?php echo json_encode($team_list); ?>;
       window.report_selected_sprint = <?php echo $report_selected_sprint; ?>;
     </script>
-
+    <script>
+      @if(isset($current_project))
+        var current_project = {{{$current_project}}};
+      @endif
+    </script>
   </div>
   <script src="{{asset("js/report.js")}}"></script>
   <script src="{{asset("js/burndown_overview.js")}}"></script>

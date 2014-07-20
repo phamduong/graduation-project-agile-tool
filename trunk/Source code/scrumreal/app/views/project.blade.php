@@ -61,7 +61,7 @@ Scrumtool - Project management
   </div>
   <script>
     @if(isset($current_project))
-      var current_project = "{{{$current_project}}}";
+      var current_project = {{{$current_project}}};
       window.has_select_project = true;
     @else
       window.has_select_project = false;

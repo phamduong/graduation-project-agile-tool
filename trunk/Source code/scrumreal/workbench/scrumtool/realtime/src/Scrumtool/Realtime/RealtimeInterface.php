@@ -10,4 +10,7 @@ interface RealtimeInterface extends WampServerInterface {
   
   public function setEmitter(EventEmitterInterface $emitter);
   
+//  public function getUsers();
+//  
+//  public function getUserBySocket(ConnectionInterface $socket);
 }

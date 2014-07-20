@@ -23,7 +23,11 @@ Scrumtool - Report
         </div>
       </div>
     </div>
-
+    <script>
+      @if(isset($current_project))
+        var current_project = {{{$current_project}}};
+      @endif
+    </script>
   </div>
   <script src="{{asset("js/report.js")}}"></script>
   <script src="{{asset("js/burnup.js")}}"></script>

@@ -30,7 +30,11 @@ Scrumtool - Report
       window.report_selected_team = <?php echo json_encode($report_selected_team); ?>;
       window.report_selected_team_name = "<?php echo $report_selected_team_name; ?>";
     </script>
-
+    <script>
+      @if(isset($current_project))
+        var current_project = {{{$current_project}}};
+      @endif
+    </script>
   </div>
   <script src="{{asset("js/report.js")}}"></script>
   <script src="{{asset("js/burndown_detail.js")}}"></script>

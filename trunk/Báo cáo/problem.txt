@@ -7,9 +7,9 @@
 	(7)[khong can] chinh mau cua current project khac mau hover tr trong datatables
 	(8) cho phep thay doi role nguoi dung trong project
 	(9) project complete roi co cho chuyen sang trang thai khac duoc khong?
-10) bo tri lai cach hien thi Sotry: them thong tin ve trang thai, so ngay...
+	(10) bo tri lai cach hien thi Sotry: them thong tin ve trang thai, so ngay...
 	(11) nhan Delete cai gi cung phai confirm ca da?...
-12) check lai phan quyen, voi project ma nguoi dung khong tham gia...
+12) check lai phan quyen, voi project ma nguoi dung khong tham gia... [KHÔNG PHẢI LÀ PROJECT LEADER KHÔNG CẬP NHẬT ĐƯỢC PROJECT CHO PROJECT VỪA MỚI TẠO -> VẤN ĐỀ VỀ PHÂN QUYỀN]
 13) complete Sprint -> xac nhan : hien thi danh sach cac story chua hoan thanh a assign lai vao danh sach story
 	(14) complete project -> xac nhan
 	(15) delete story phai co thong bao xac nhan
@@ -26,10 +26,18 @@
 	(26)[???] them danh sach project
 	(27)[khong can] cap nhat thong tin user, assign role
 	(28) project tao ra ve trang thai New, them button start??
-29) CHECK lai chuc nang tao tai khoan cho nguoi dung
+	(29) CHECK lai chuc nang tao tai khoan cho nguoi dung
 
 
 30) cập nhật thời gian thực
-		project, story: reload datatables + info
+		[done] project, story: reload datatables + info
 		task, people, sprint -> drag, drop (hoặc di chuyển HTML cũng được)
 		report -> nếu có cập nhật mới (xác nhận người dùng có muốn tải lại trang không?)
+		
+		draggable and droppable: them moi DOM, khoi tao lai
+		sortable: khoi tao lai
+		
+	(31) thanh vien da assign team khac, ko duoc dua vao danh sach leader
+	(32) them ID cua project hien tai, chi subscribe vao link cua project hien tai thoi
+	(33) noscript và không có HTML 5
+34) timeout khi mạng quá chậm thì sao?	

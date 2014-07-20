@@ -93,7 +93,7 @@ WHERE user.uid NOT IN
 		SELECT user.uid
 		FROM user INNER JOIN project_user ON user.uid = project_user.uid 
 							INNER JOIN project ON project_user.pid = project.pid
-		WHERE project.status = 1
+		WHERE project.status <> 0 AND project.status <> 2 OR project.status <> 3
 	)
   AND user.delete_flg = 0
   AND user.fullname LIKE '%$name%'
@@ -102,6 +102,10 @@ SQL;
     return $result;
   }
   
+  /**
+   * Get user  IN cancel, complete, pause project
+   * @return type
+   */
   public function getNotInProject2() {
     $query = <<<SQL
 SELECT user.uid, user.fullname, user.image
@@ -111,7 +115,7 @@ WHERE user.uid NOT IN
 		SELECT user.uid
 		FROM user INNER JOIN project_user ON user.uid = project_user.uid 
 							INNER JOIN project ON project_user.pid = project.pid
-		WHERE project.status = 1
+		WHERE project.status <> 0 AND project.status <> 2 OR project.status <> 3
 	)
   AND user.delete_flg = 0
 SQL;

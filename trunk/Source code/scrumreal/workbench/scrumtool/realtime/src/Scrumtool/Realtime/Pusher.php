@@ -14,9 +14,12 @@ class Pusher implements RealtimeInterface {
 
   protected $subscribedTopics = array();
   protected $emitter;
+//  protected $users;
+//  protected $id = 1;
 
   public function __construct(EventEmitterInterface $emitter){
     $this->emitter = $emitter;
+//    $this->users   = new SplObjectStorage();
   }
 
   public function onCall(ConnectionInterface $conn, $id, $topic, array $params) {
@@ -43,6 +46,11 @@ class Pusher implements RealtimeInterface {
 
   public function onSubscribe(ConnectionInterface $conn, $topic) {
     $this->subscribedTopics[$topic->getId()] = $topic;
+    
+//    $user = new User();
+//    $user->setId($this->id++);
+//    $user->setSocket($conn);
+//    $this->users->attach($user);
     
     $this->emitter->emit('subscribe', [$conn, $topic]);
   }
@@ -72,5 +80,13 @@ class Pusher implements RealtimeInterface {
   public function setEmitter(EventEmitterInterface $emitter) {
     $this->emitter = $emitter;
   }
+
+//  public function getUserBySocket(ConnectionInterface $socket) {
+//    
+//  }
+//
+//  public function getUsers() {
+//    return $this->users;
+//  }
 
 }

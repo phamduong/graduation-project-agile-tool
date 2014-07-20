@@ -20,7 +20,7 @@ Scrumtool - Team management
             <a href="#modal-add-team" data-backdrop="static" data-keyboard="true" id="btn-add-team" role="button" class="btn btn-primary mr10" data-toggle="modal"><i class="icon-plus"></i> Add team</a>
           </div>
         </div>
-        <div class="box-content scrollable" data-height="520">
+        <div id="list_all_team" class="box-content scrollable" data-height="520">
           <div class='alert_block'></div>
           @foreach($team_list as $team)
           <div class="span12 team" id="<?php echo 'team_' . $team->tid; ?>" data-tid="{{{$team->tid}}}">
@@ -50,25 +50,31 @@ Scrumtool - Team management
             </div>
           </div>
           @endforeach
-          <div class="team-temp">
-            <div class="span12 team" id="">
-              <div class="box box-color teal box-small box-bordered">
-                <div class="box-title">
-                  <h3>
-                    <i class="glyphicon-group"></i>
-                    <span class="team-name"></span>
-                  </h3>
-                  <div class="actions">
-                  </div>
+        </div>
+        
+        <div class="team-temp">
+          <div class="span12 team" id="" data-tid="">
+            <div class="box box-color box-small box-bordered">
+              <div class="box-title">
+                <h3>
+                  <i class="glyphicon-group"></i>
+                  <a href="" class="team-name"></a>
+                </h3>
+                <div class="actions">
                 </div>
-                <div class="box-content">
-                  <div class="team-members">
+              </div>
+              <div class="box-content">
+                <div class="team-members">
+                  <div data-name="" data-value="" class="leader ui-draggable">
+                    <img src="" alt="">
+                    <p class="person-name"></p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        
       </div>
     </div>
     <div class="span4">
@@ -93,6 +99,11 @@ Scrumtool - Team management
       </div>
     </div>
   </div>
+  <script>
+    @if(isset($current_project))
+      var current_project = {{{$current_project}}};
+    @endif
+  </script>
   <script src="{{ asset("js/people.js" ) }}"></script>
   <!-- Daterangepicker -->
   <script src="{{ asset("js/plugins/daterangepicker/daterangepicker.js") }}"></script>

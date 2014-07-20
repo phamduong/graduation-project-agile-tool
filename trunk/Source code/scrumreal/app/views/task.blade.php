@@ -235,5 +235,10 @@ Scrumtool - KanBan Tool
     </table>
   </div>
   <script src="{{asset("js/task.js")}}"></script>
+  <script>
+    @if(isset($current_project))
+      var current_project = {{{$current_project}}};
+    @endif
+  </script>
 </div>
 @stop

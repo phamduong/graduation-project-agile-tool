@@ -15,6 +15,7 @@ FROM
 	LEFT OUTER JOIN sprint ON story_team.spid = sprint.spid
 	LEFT OUTER JOIN team ON story_team.tid = team.tid
 WHERE story.pid = ? AND story.delete_flg = 0
+ORDER BY story.sid DESC
 SQL;
     $result = array();
     $result["aaData"] = DB::select($query, array($pid));

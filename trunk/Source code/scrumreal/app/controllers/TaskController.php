@@ -31,6 +31,7 @@ class TaskController extends BaseController {
       }
       $data['selected_sprint'] = $spid;
       $data['sprint_status'] = Sprint::find($spid)->status;
+      $data['current_project'] = Session::get('current_project');
       //Get story in sprint
       //IF GET BY TEAM -> get all stories for that team in current sprint
       if ($entity_type === 'team') {

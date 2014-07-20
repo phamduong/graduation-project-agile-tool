@@ -54,7 +54,11 @@ Scrumtool - Report
       window.report_team_list = <?php echo json_encode($team_list); ?>;
       window.report_selected_sprint = <?php echo $sprint_list[0]->spid; ?>;
     </script>
-
+    <script>
+    @if(isset($current_project))
+      var current_project = {{{$current_project}}};
+    @endif
+    </script>
   </div>
   <script src="{{asset("js/report.js")}}"></script>
   <!-- Flot -->

@@ -14,6 +14,7 @@ class PermissionController extends BaseController {
       $data['current_proj_name'] = Session::get('current_project_nm');
       $data['list_role'] = $role->getAllRole();
       $data['list_permission'] = $permission->getAllPermission();
+      $data['current_project'] = Session::get('current_project');
       foreach ($data['list_permission'] as $p) {
         $p->role_satus = $this->mergeRole($permission->getPermissionForRole($p->peid));
       }
