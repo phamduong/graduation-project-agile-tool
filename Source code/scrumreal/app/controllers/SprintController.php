@@ -43,9 +43,6 @@ class SprintController extends BaseController {
           STORY_STATUS_DONE => "Done",
           STORY_STATUS_SPRINT_COMPLETED => "Sprint completed"
       );
-//      print '<pre>';
-//      print_r($data);
-//      exit();
       return View::make('sprint', $data);
     } else {
       return Redirect::to('/project');
@@ -72,28 +69,47 @@ class SprintController extends BaseController {
 
   public function add() {
     $input = Input::all();
-    $sprint = new Sprint;
-    $sprint->pid = Session::get('current_project');
-    $sprint->name = $input['name'];
-    $sprint->description = $input['description'];
     $date = explode(" - ", $input['sprint_time']);
-    $sprint->start_date_es = date('Y-m-d', strtotime($date[0]));
-    $sprint->end_date_es = date('Y-m-d', strtotime($date[1]));
-//    $sprint->num_day = $input['num_day'];
-    $sprint->status = SPRINT_STATUS_IN_PLAN;
-    if ($sprint->save() == 1) {
-      $data = array('status' => 200, 'message' => 'Add sprint successfully!');
-      //add to sprint_team table 
-      $team_model = new Team;
-      $team_list = $team_model->getTeamOnProject(Session::get('current_project'));
-      foreach ($team_list as $t) {
-        $team_model->addToSprint_Team($sprint->spid, $t->tid);
-      }
-      //activity
-      ActivityController::createActivityAdd(Session::get('current_project'), ENTITY_PROJECT, $sprint->spid, ENTITY_SPRINT);
-      ActivityController::createActivityCreate($sprint->spid, ENTITY_SPRINT);
+    $start_date_es = date('Y-m-d', strtotime($date[0]));
+    $end_date_es = date('Y-m-d', strtotime($date[1]));
+    $sprint_model = new Sprint;
+    $max_end_date_es = $sprint_model->getMaxEndDate(Session::get('current_project'));
+    $date1 = new DateTime($start_date_es);
+    $date2 = new DateTime($max_end_date_es);
+    if ($date1 < $date2) {
+      $data = array('status' => 802, 'message' => 'Start date in progress of other sprint, please check again!');
     } else {
-      $data = array('status' => 800, 'message' => 'Error!');
+      $sprint = new Sprint;
+      $sprint->pid = Session::get('current_project');
+      $sprint->name = $input['name'];
+      $sprint->description = $input['description'];
+      $sprint->start_date_es = $start_date_es;
+      $sprint->end_date_es = $end_date_es;
+//    $sprint->num_day = $input['num_day'];
+      $sprint->status = SPRINT_STATUS_IN_PLAN;
+      if ($sprint->save() == 1) {
+        $data = array('status' => 200, 'message' => 'Add sprint successfully!');
+        //add to sprint_team table 
+        $team_model = new Team;
+        $team_list = $team_model->getTeamOnProject(Session::get('current_project'));
+        foreach ($team_list as $t) {
+          $team_model->addToSprint_Team($sprint->spid, $t->tid);
+        }
+        //activity
+        ActivityController::createActivityAdd(Session::get('current_project'), ENTITY_PROJECT, $sprint->spid, ENTITY_SPRINT);
+        ActivityController::createActivityCreate($sprint->spid, ENTITY_SPRINT);
+
+
+        $broadcast_data = array(
+            'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+            'type' => 'add_sprint',
+            'time' => date('H:i:s'),
+            'content' => $sprint_model->getSprintDetail($sprint->spid)
+        );
+        PushController::publishData($broadcast_data);
+      } else {
+        $data = array('status' => 800, 'message' => 'Error!');
+      }
     }
     return $data;
   }
@@ -115,11 +131,29 @@ class SprintController extends BaseController {
     $input = Input::all();
     $sprint = new Sprint;
     $result = $sprint->addStoryToSprint($input['select_sid'], $input['end_spid'], $input['end_tid'], $input['order']);
+    //Update story status when assign to Sprint
+    $story = Story::find($input['select_sid']);
+    $story->status = STORY_STATUS_ASIGNED;
+    $story->save();
     if ($result != 0) {
       //activity
       ActivityController::createActivityAdd($input['end_spid'], ENTITY_SPRINT, $input['select_sid'], ENTITY_STORY);
       ActivityController::createActivityAdd($input['end_tid'], ENTITY_TEAM, $input['select_sid'], ENTITY_STORY);
       $data = array('status' => 200, 'message' => 'Successfull');
+      $story_model = new Story;
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+          'type' => 'add_story_to',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'select_sid' => $input['select_sid'],
+              'end_spid' => $input['end_spid'],
+              'end_tid' => $input['end_tid'],
+              'order' => $input['order'],
+              'story_data' => $story_model->getStory($input['select_sid'])
+          )
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
     }
@@ -130,11 +164,27 @@ class SprintController extends BaseController {
     $input = Input::all();
     $sprint = new Sprint;
     $result = $sprint->removeStoryFromSprint($input['select_sid'], $input['start_spid'], $input['start_tid']);
+    $story = Story::find($input['select_sid']);
+    $story->status = STORY_STATUS_ESTIMATED;
+    $story->save();
     if ($result != 0) {
       //activity
       ActivityController::createActivityDelete($input['start_spid'], ENTITY_SPRINT, $input['select_sid'], ENTITY_STORY);
       ActivityController::createActivityDelete($input['start_tid'], ENTITY_TEAM, $input['select_sid'], ENTITY_STORY);
       $data = array('status' => 200, 'message' => 'Successfull');
+      $story_model = new Story;
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+          'type' => 'remove_story_from',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'select_sid' => $input['select_sid'],
+              'start_spid' => $input['start_spid'],
+              'start_tid' => $input['start_tid'],
+              'story_data' => $story_model->getStory($input['select_sid'])
+          )
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
     }
@@ -154,6 +204,21 @@ class SprintController extends BaseController {
       ActivityController::createActivityDelete($input['start_tid'], ENTITY_TEAM, $input['select_sid'], ENTITY_STORY);
 
       $data = array('status' => 200, 'message' => 'Successfull');
+      $story_model = new Story;
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+          'type' => 'move_story',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'select_sid' => $input['select_sid'],
+              'start_spid' => $input['start_spid'],
+              'start_tid' => $input['start_tid'],
+              'end_spid' => $input['end_spid'],
+              'end_tid' => $input['end_tid'],
+              'story_data' => $story_model->getStory($input['select_sid'])
+          )
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
     }
@@ -165,6 +230,17 @@ class SprintController extends BaseController {
     $sprint = new Sprint;
     $sprint->updateStoryOrder($input['tid'], $input['spid'], $input['data']);
     $data = array('status' => 200, 'message' => 'Successfull');
+    $broadcast_data = array(
+        'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+        'type' => 'update_story_order',
+        'time' => date('H:i:s'),
+        'content' => array(
+            'spid' => $input['spid'],
+            'tid' => $input['tid'],
+            'list_sid' => $input['data']
+        )
+    );
+    PushController::publishData($broadcast_data);
     return $data;
   }
 
@@ -190,14 +266,16 @@ class SprintController extends BaseController {
       }
     }
 
-//    $sprint->name = $input['name'];
-//    $sprint->description = $input['description'];
-//    $date = explode(" - ", $input['sprint_time']);
-//    $sprint->start_date = date('Y-m-d', strtotime($date[0]));
-//    $sprint->end_date = date('Y-m-d', strtotime($date[1]));
-
     if ($sprint->save() == 1) {
       $data = array('status' => 200, 'message' => 'Save sprint successfully!');
+      $sprint_model = new Sprint;
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+          'type' => 'update_sprint',
+          'time' => date('H:i:s'),
+          'content' => $sprint_model->getSprintDetail($input['spid'])
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data = array('status' => 800, 'message' => 'Error!');
     }
@@ -215,7 +293,17 @@ class SprintController extends BaseController {
       $sprint->status = SPRINT_STATUS_IN_PROGRESS;
       $sprint->start_date = date('Y-m-d');
       if ($sprint->save()) {
+        $sprint_model->updateStoryStatusInSprint($spid, STORY_STATUS_TO_DO);
         $data = array('status' => 200, 'message' => 'Start sprint successfully');
+        $broadcast_data = array(
+            'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+            'type' => 'start_sprint',
+            'time' => date('H:i:s'),
+            'content' => array(
+                'spid' => $spid
+            )
+        );
+        PushController::publishData($broadcast_data);
       }
     } else {
       $data = array('status' => 801, 'message' => 'There is sprint in progress');
@@ -235,6 +323,15 @@ class SprintController extends BaseController {
       $sprint_model = new Sprint;
       $sprint_model->removeUnCompletedStory($spid);
       $data = array('status' => 200, 'message' => 'Start sprint successfully');
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+          'type' => 'complete_sprint',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'spid' => $spid
+          )
+      );
+      PushController::publishData($broadcast_data);
     }
     return $data;
   }
@@ -250,6 +347,15 @@ class SprintController extends BaseController {
       $sprint->status = SPRINT_STATUS_IN_PROGRESS;
       if ($sprint->save()) {
         $data = array('status' => 200, 'message' => 'Resume sprint successfully');
+        $broadcast_data = array(
+            'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+            'type' => 'resume_sprint',
+            'time' => date('H:i:s'),
+            'content' => array(
+                'spid' => $spid
+            )
+        );
+        PushController::publishData($broadcast_data);
       }
     } else {
       $data = array('status' => 802, 'message' => 'There is sprint in progress');
@@ -297,6 +403,17 @@ class SprintController extends BaseController {
     $sprint_model = new Sprint;
     if ($sprint_model->updateTeamDay($input['spid'], $input['tid'], $input['num_day']) > 0) {
       $data = array('status' => 200, 'message' => 'Update successfully!');
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+          'type' => 'update_team_day',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'spid' => $input['spid'],
+              'tid' => $input['tid'],
+              'num_day' => $input['num_day']
+          )
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data = array('status' => 800, 'message' => 'Fail!');
     }

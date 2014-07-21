@@ -41,21 +41,20 @@ class StoryController extends BaseController {
       $data['status'] = 200;
       $data['message'] = 'Add new user story successfully';
       $data['sid'] = $story->sid;
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
+          'type' => 'add',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'sid' => $story->sid,
+              'name' => $input['name']
+          )
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data['status'] = 800;
       $data['message'] = 'Error';
     }
-    $broadcast_data = array(
-        'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
-        'type' => 'add',
-        'time' => date('H:i:s'),
-        'content' => array(
-            'sid' => $story->sid,
-            'name' => $input['name']
-        )
-    );
-    PushController::publishData($broadcast_data);
-
     return $data;
   }
 
@@ -89,17 +88,16 @@ class StoryController extends BaseController {
         //Create activity update for current project
         ActivityController::createActivityUpdate(Session::get('current_project'), ENTITY_PROJECT, 'Status', 'New', 'Approved');
         $data = array('status' => 200, 'message' => 'Appoved sucessfully');
+        $broadcast_data = array(
+            'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
+            'type' => 'approve',
+            'time' => date('H:i:s'),
+            'content' => $story->getStory($sid)
+        );
+        PushController::publishData($broadcast_data);
       }
     }
 //    $story
-    $broadcast_data = array(
-        'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
-        'type' => 'approve',
-        'time' => date('H:i:s'),
-        'content' => $story->getStory($sid)
-    );
-    PushController::publishData($broadcast_data);
-
     return $data;
   }
 
@@ -118,19 +116,18 @@ class StoryController extends BaseController {
         //Create an activity for current project
         ActivityController::createActivityDelete(Session::get('current_project'), ENTITY_PROJECT, $story->sid, ENTITY_STORY);
         $data = array('status' => 200, 'message' => 'Appoved sucessfully');
+        $broadcast_data = array(
+            'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
+            'type' => 'delete',
+            'time' => date('H:i:s'),
+            'content' => array(
+                'sid' => $story->sid,
+                'name' => $story->name
+            )
+        );
+        PushController::publishData($broadcast_data);
       }
     }
-    $broadcast_data = array(
-        'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
-        'type' => 'delete',
-        'time' => date('H:i:s'),
-        'content' => array(
-            'sid' => $story->sid,
-            'name' => $story->name
-        )
-    );
-    PushController::publishData($broadcast_data);
-
     return $data;
   }
 
@@ -152,24 +149,24 @@ class StoryController extends BaseController {
         $story->$key = $input[$key];
       }
     }
-//    $story->name = $input['name'];
-//    $story->priority = $input['priority'];
-//    $story->time_estimate = $input['time_estimate'];
-//    $story->point = $input['point'];
-//    $story->demo = $input['demo'];
-//    $story->description = $input['description'];
+    //Update status if user input time estimate and story point
+    if ($story->time_estimate != 0 && $story->point != 0) {
+      $story->status = STORY_STATUS_ESTIMATED;
+    }else if ($story->time_estimate == 0 && $story->point == 0){
+      $story->status = STORY_STATUS_APPROVED;
+    }
+    
     if ($story->save()) {
       $data = array('status' => 200, 'message' => 'Save sucessfully');
+      $story_model = new Story;
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
+          'type' => 'update',
+          'time' => date('H:i:s'),
+          'content' => $story_model->getStory($story->sid)
+      );
+      PushController::publishData($broadcast_data);
     }
-    $story_model = new Story;
-    $broadcast_data = array(
-        'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
-        'type' => 'update',
-        'time' => date('H:i:s'),
-        'content' => $story_model->getStory($story->sid)
-    );
-    PushController::publishData($broadcast_data);
-
     return $data;
   }
 
