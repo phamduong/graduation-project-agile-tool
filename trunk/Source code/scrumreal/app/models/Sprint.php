@@ -168,4 +168,28 @@ SQL;
     return $result;
   }
 
+  public function updateStoryStatusInSprint($spid, $story_status) {
+    $query = <<<SQL
+UPDATE story
+SET status = ?
+WHERE sid IN (
+	SELECT story_team.sid
+	FROM story_team
+	WHERE story_team.spid = ?
+)
+SQL;
+    $result = DB::update($query, array($story_status, $spid));
+    return $result;
+  }
+
+  public function getMaxEndDate($pid) {
+    $query = <<<SQL
+SELECT MAX(sprint.end_date_es) AS max_end_date_es
+FROM sprint
+WHERE sprint.pid = ?
+SQL;
+    $result =  DB::select($query, array($pid));
+    return $result[0]->max_end_date_es;
+  }
+
 }

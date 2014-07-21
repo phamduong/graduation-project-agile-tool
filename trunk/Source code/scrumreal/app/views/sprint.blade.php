@@ -92,7 +92,39 @@ Scrumtool - Sprint management
             @endforeach
           </div>
         </div>
+        <div class="sprint-temp" style="display: none">
+          <div class="sprint" id="sprint_">
+            <div class="box box-color box-small box-bordered">
+              <div class="box-title">
+                <h3>
+                  <a href="" class="sprint-name"><i class="glyphicon-folder_flag"></i></a>
+                </h3>
+                <div class="actions">
+                  <button class="btn btn-darkblue btn-start-sprint" data-spid="" aria-hidden="true">Start sprint</button>
+                  <button style="display: none;" class="btn btn-darkblue btn-complete-sprint" data-spid="" aria-hidden="true">Complete sprint</button>
+                  <button style="display: none;" class="btn btn-darkblue btn-resume-sprint" data-spid="" aria-hidden="true">Resume sprint</button>
+                  <div class="sprint-status badge badge-warning">Planning</div>
+                </div>
+              </div>
+              <div class="box-content">
+                <div class="sprint-teams" data-spid="">                  
+                  @foreach($team_list as $team)
+                  <div class="s-team" id="<?php echo 's_team_' . $team->tid; ?>" data-tid="{{{$team->tid}}}" data-num-day="0">
+                    <div class="s-team-name">
+                      {{{$team->name}}}
+                      <span class="s-team-status">0 / 0</span>
+                    </div>
+                    <!--<div class="s-team-story">-->                    
+                    <!--</div>-->
+                  </div>
+                  @endforeach
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="span3">
         <div class="box box-color box-bordered sprint-story-list" id="story-not-se-list">
           <div class="box-title">
@@ -106,7 +138,7 @@ Scrumtool - Sprint management
           </div>
           <div class="box-content scrollable" data-height="520">
             @foreach($story_not_asign as $story)
-            @if($story->time_estimate == null)
+            @if($story->time_estimate == null || $story->time_estimate == 0 || $story->point == null || $story->point == 0)
             <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-unaddable" data-name="{{{$story->name}}}" data-time-estimate="{{{$story->time_estimate}}}" data-order="">
               @else
               <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-addable" data-name="{{{$story->name}}}" data-time-estimate="{{{$story->time_estimate}}}" data-order="">
@@ -119,8 +151,8 @@ Scrumtool - Sprint management
               @endforeach
             </div>
           </div>
-          <div class="story-temp">
-            <div id="" data-sid="" class="story story-addable" data-name="" data-time-estimate="" data-order="">
+          <div class="story-temp" style="display: none;">
+            <div id="" data-sid="" class="story story-unaddable" data-name="" data-time-estimate="" data-order="">
               <div class="story-name"><a href="" class="edit-story"></a></div>
               <div class="story-points badge badge-info"></div>
               <div class="story-status badge badge-info"></div>
@@ -130,8 +162,8 @@ Scrumtool - Sprint management
         </div>
         <script src="{{ asset("js/sprint.js" ) }}"></script>
         <script>
-          @if(isset($current_project))
-            var current_project = {{{$current_project}}};
+          @if (isset($current_project))
+          var current_project = {{{$current_project}}};
           @endif
         </script>
       </div>    

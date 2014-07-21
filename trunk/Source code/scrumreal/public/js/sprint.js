@@ -28,32 +28,42 @@ story_status[7] = "To test";
 story_status[8] = "Done";
 story_status[9] = "Sprint completed";
 
-function appendNewStoryHTML(story_data) {
-  var story_temp = $(".story-temp").html();
-  $(".story-temp .story").attr("id", "story_" + story_data.sid);
-  $(".story-temp .story").attr("data-sid", story_data.sid);
-  $(".story-temp .story").attr("data-name", story_data.name);
-  $(".story-temp .story").attr("data-time-estimate", story_data.time_estimate);
-  $(".story-temp .story-name a").attr("href", story_data.sid);
-  $(".story-temp .story-name a").html(story_data.name);
-  $(".story-temp .story-points").html(story_data.point + " point(s");
-  $(".story-temp .story-status").html(story_status[story_data.status]);
-  $(".story-temp .story-time_estimate").html(story_data.time_estimate + " day(s)");
+var sprint_status = {
+  1: "Planning",
+  2: "In Progress",
+  3: "Completed"
+};
 
-  $("#story-not-se-list .scrollable").append($(".story-temp").html());
-  $("story-temp").html(story_temp);
+function hideAllSprintButton() {
+  //Hide all Sprint button
+  $(".sprint .btn-start-sprint").css("display", "none");
+  $(".sprint .btn-complete-sprint").css("display", "none");
+  $(".sprint .btn-resume-sprint").css("display", "none");
+
+//$("#sprint_" + spid + " .btn-complete-sprint").css("display", "inline");
+//$("#sprint_" + spid + " .btn-resume-sprint").css("display", "none");
 }
 
-function updateStoryHTML(story_data) {
-  var id = "#story_" + story_data.sid;
-  $(id + " .story-name a").html(story_data.name);
-  $(id + " .story-points").html(story_data.point + " point(s");
-  $(id + " .story-status").html(story_status[story_data.status]);
-  $(id + " .story-time_estimate").html(story_data.time_estimate + " day(s)");
-  if (story_data.sid >= 2) {
-    $(id).removeClass("story-unaddable");
-    $(id).addClass("story-addable");
-  }
+function showStartSprintButton(spid) {
+  hideAllSprintButton();
+  $("#sprint_" + spid + " .btn-start-sprint").css("display", "inline");
+}
+
+function appendSprintHTML(sprint_data) {
+  var sprint_temp = $(".sprint-temp").html();
+  $(".sprint-temp .sprint").attr("id", "sprint_" + sprint_data.spid);
+  $(".sprint-temp .sprint a").attr("href", sprint_data.spid);
+  var title = '<i class="glyphicon-folder_flag"></i> '
+          + sprint_data.name + ' (' + sprint_data.start_date_es
+          + ' - ' + sprint_data.end_date_es + ')';
+  $(".sprint-temp .sprint a").html(title);
+  $(".sprint-tempv .btn-start-sprint").attr("data-spid", sprint_data.spid);
+  $(".sprint-tempv .btn-complete-sprint").attr("data-spid", sprint_data.spid);
+  $(".sprint-tempv .btn-resume-sprint").attr("data-spid", sprint_data.spid);
+
+  //append to list sprint
+  $("#sprint-team-list").append($(".sprint-temp").html());
+  $(".sprint-temp").html(sprint_temp);
 }
 
 $(document).ready(function() {
@@ -78,9 +88,83 @@ $(document).ready(function() {
           }
       }
     } else if (topic === "scrum.realtime_" + current_project + ".sprint") {
+      switch (data.type) {
+        case "update_sprint":
+          {
+            updateSprintHTML(data.content);
+            destroyStoryDragDrop();
+            initStoryDragDrop();
+            break;
+          }
+        case "update_team_day":
+          {
+            updateTeamDay(data.content);
+            break;
+          }
+        case "add_story_to":
+          {
+            addStoryToSprint(data.content);
+            var num_day = parseInt($("#sprint_" + data.content.end_spid + " #s_team_" + data.content.end_tid).attr("data-num-day"));
+            updateEachTeamDay(data.content.end_spid, data.content.end_tid, num_day);
+            updateStoryHTML(data.content.story_data);
+            destroyStoryDragDrop();
+            initStoryDragDrop();
+            break;
+          }
+        case "remove_story_from":
+          {
+            removeStoryFromSprint(data.content);
+            appendNewStoryHTML(data.content.story_data);
+            var num_day = parseInt($("#sprint_" + data.content.start_spid + " #s_team_" + data.content.start_tid).attr("data-num-day"));
+            updateEachTeamDay(data.content.start_spid, data.content.start_tid, num_day);
+            updateStoryHTML(data.content.story_data);
+            destroyStoryDragDrop();
+            initStoryDragDrop();
+            break;
+          }
+        case "move_story":
+          {
+            removeStoryFromSprint(data.content);
+            var num_day = parseInt($("#sprint_" + data.content.start_spid + " #s_team_" + data.content.start_tid).attr("data-num-day"));
+            updateEachTeamDay(data.content.start_spid, data.content.start_tid, num_day);
+            addStoryToSprint(data.content);
+            var num_day = parseInt($("#sprint_" + data.content.end_spid + " #s_team_" + data.content.end_tid).attr("data-num-day"));
+            updateEachTeamDay(data.content.end_spid, data.content.end_tid, num_day);
+            destroyStoryDragDrop();
+            initStoryDragDrop();
+            break;
+          }
+        case "update_story_order":
+          {
+            updateStoryOrder2(data.content);
+            break;
+          }
+        case "start_sprint":
+          {
 
+            break;
+          }
+        case "complete_sprint":
+          {
+
+            break;
+          }
+        case "resume_sprint":
+          {
+
+            break;
+          }
+        case "add_sprint":
+          {
+            appendSprintHTML(data.content);
+            destroyStoryDragDrop();
+            initStoryDragDrop();
+            break;
+          }
+      }
     }
   }
+
   var link = ["scrum.realtime_" + current_project + ".team",
     "scrum.realtime_" + current_project + ".story",
     "scrum.realtime_" + current_project + ".sprint"];
@@ -100,17 +184,14 @@ $(document).ready(function() {
         type: "POST",
         data: $(this).serialize(),
         success: function(response) {
-          if (response.status === 800) { //error
-            showAlert(0, true, response.message);
+          if (response.status !== 200) { //error
+            showAlertModal(response.message, "error");
           } else if (response.status === 200) {
             showAlert(1, true, response.message);
             setTimeout(function() {
               $("#modal-add-sprint").modal('hide');
             }, 1000);
             clearFormInput("#form-add-sprint");
-            setTimeout(function() {
-              location.reload();
-            }, 500);
 //            clearFormInput("#form-add-sprint");
           }
         }
@@ -133,9 +214,6 @@ $(document).ready(function() {
             setTimeout(function() {
               $("#modal-edit-sprint").modal('hide');
             }, 1000);
-            setTimeout(function() {
-              location.reload();
-            }, 500);
 //            clearFormInput("#form-add-sprint");
           }
         }
@@ -454,7 +532,6 @@ function updateStoryOrder(selector) {
       $(this).attr("data-order", count);
 //      data[$(this).attr("data-order")] = $(this).attr("data-sid");
       data[$(this).attr("data-sid")] = $(this).attr("data-order");
-
     }
   });
 //  console.log("selector: " + selector);
@@ -481,7 +558,7 @@ function updateStoryOrder(selector) {
 $(document).on("click", ".btn-start-sprint", function(e) {
   e.preventDefault();
   var spid = $(this).attr("data-spid");
-  bootbox.confirm("Are you sure?", function(result) {
+  bootbox.confirm("Are you sure you want to start this sprint?", function(result) {
     if (result === true) {
       $.ajax({
         url: "/sprint/start_sprint",
@@ -489,15 +566,7 @@ $(document).on("click", ".btn-start-sprint", function(e) {
         data: {spid: spid},
         success: function(response) {
           if (response.status === 200) {
-            location.reload(); //temp
-            //Hide all Sprint button
-//            $(".sprint .btn-start-sprint").css("display", "none");
-//            $(".sprint .btn-complete-sprint").css("display", "none");
-//            $(".sprint .btn-resume-sprint").css("display", "none");
-//
-//            $("#sprint_" + spid + " .btn-start-sprint").css("display", "none");
-//            $("#sprint_" + spid + " .btn-complete-sprint").css("display", "inline");
-//            $("#sprint_" + spid + " .btn-resume-sprint").css("display", "none");
+
           } else {
             showAlertModal(response.message);
           }
@@ -510,7 +579,7 @@ $(document).on("click", ".btn-start-sprint", function(e) {
 $(document).on("click", ".btn-complete-sprint", function(e) {
   e.preventDefault();
   var spid = $(this).attr("data-spid");
-  bootbox.confirm("Are you sure?", function(result) {
+  bootbox.confirm("Are you sure you want to mark this sprint as complete?", function(result) {
     if (result === true) {
       $.ajax({
         url: "/sprint/complete_sprint",
@@ -518,13 +587,6 @@ $(document).on("click", ".btn-complete-sprint", function(e) {
         data: {spid: spid},
         success: function(response) {
           if (response.status === 200) {
-            location.reload(); //temp
-//            $(".sprint .btn-start-sprint").css("display", "inline");
-//            $(".sprint .btn-resume-sprint").css("display", "inline");
-//            
-//            $("#sprint_" + spid + " .btn-start-sprint").css("display", "none");
-//            $("#sprint_" + spid + " .btn-complete-sprint").css("display", "none");
-//            $("#sprint_" + spid + " .btn-resume-sprint").css("display", "inline");
           } else {
             showAlertModal(response.message);
           }
@@ -537,7 +599,7 @@ $(document).on("click", ".btn-complete-sprint", function(e) {
 $(document).on("click", ".btn-resume-sprint", function(e) {
   e.preventDefault();
   var spid = $(this).attr("data-spid");
-  bootbox.confirm("Are you sure?", function(result) {
+  bootbox.confirm("Are you sure you want to resume this sprint?", function(result) {
     if (result === true) {
       $.ajax({
         url: "/sprint/resume_sprint",
@@ -545,14 +607,6 @@ $(document).on("click", ".btn-resume-sprint", function(e) {
         data: {spid: spid},
         success: function(response) {
           if (response.status === 200) {
-            location.reload(); //temp
-//            $(".sprint .btn-start-sprint").css("display", "none");
-//            $(".sprint .btn-complete-sprint").css("display", "none");
-//            $(".sprint .btn-resume-sprint").css("display", "none");
-//            
-//            $("#sprint_" + spid + " .btn-start-sprint").css("display", "inline");
-//            $("#sprint_" + spid + " .btn-complete-sprint").css("display", "none");
-//            $("#sprint_" + spid + " .btn-resume-sprint").css("display", "none");
           } else {
             showAlertModal(response.message);
           }
@@ -577,7 +631,6 @@ $(document).on("click", ".delete-sprint", function(e) {
           setTimeout(function() {
             $("#modal-edit-sprint").modal('hide');
           }, 1000);
-          location.reload();
         }
       });
     }
@@ -642,9 +695,10 @@ function getTeamDayAll() {
 
 function updateEachTeamDay(spid, tid, num_day) {
 //  console.log("-------num_day: " + num_day);
-
+  //numday: number of working day for team
   var selector = "#sprint_" + spid + " #s_team_" + tid;
   $(selector).attr("data-num-day", num_day);
+  //total number of story date
   var total_day = 0;
   $(selector + " .story").each(function() {
     total_day += parseInt($(this).attr("data-time-estimate"));
@@ -660,7 +714,6 @@ function updateEachTeamDay(spid, tid, num_day) {
 //  console.log(total_day);
 }
 
-
 function destroyStoryDragDrop() {
   $(".sprint-story-list .story-addable").each(function() {
     if ($(this).data("uiDraggable")) {
@@ -674,9 +727,143 @@ function destroyStoryDragDrop() {
     }
   });
 
-  $sprint_team.each(function() {
+  $(".sprint-teams .s-team").each(function() {
     if ($(this).data("uiDroppable")) {
       $(this).droppable("destroy");
     }
   });
+
+  $(".sprint-story-list").each(function() {
+    if ($(this).data("uiDroppable")) {
+      $(this).droppable("destroy");
+    }
+  });
+}
+
+function appendNewStoryHTML(story_data) {
+  var story_temp = $(".story-temp").html();
+  $(".story-temp .story").attr("id", "story_" + story_data.sid);
+  $(".story-temp .story").attr("data-sid", story_data.sid);
+  $(".story-temp .story").attr("data-name", story_data.name);
+  $(".story-temp .story").attr("data-time-estimate", story_data.time_estimate);
+  $(".story-temp .story-name a").attr("href", story_data.sid);
+  $(".story-temp .story-name a").html(story_data.name);
+  if (story_data.point !== null) {
+    $(".story-temp .story-points").html(story_data.point + " point(s");
+  } else {
+    $(".story-temp .story-points").html("point(s");
+  }
+  $(".story-temp .story-status").html(story_status[story_data.status]);
+  if (story_data.time_estimate !== null) {
+    $(".story-temp .story-time_estimate").html(story_data.time_estimate + " day(s)");
+  } else {
+    $(".story-temp .story-time_estimate").html("day(s)");
+  }
+  if (story_data.time_estimate > 0 && story_data.time_estimate !== null
+          && story_data.point > 0 && story_data.point !== null) {
+    $(".story-temp .story").removeClass("story-unaddable");
+    $(".story-temp .story").addClass("story-addable");
+  }
+
+  $("#story-not-se-list .scrollable").append($(".story-temp").html());
+  $("story-temp").html(story_temp);
+}
+
+function updateStoryHTML(story_data) {
+  var id = "#story_" + story_data.sid;
+  $(id).attr("data-time-estimate", story_data.time_estimate);
+  $(id + " .story-name a").html(story_data.name);
+  $(id + " .story-points").html(story_data.point + " point(s");
+  $(id + " .story-status").html(story_status[story_data.status]);
+  $(id + " .story-time_estimate").html(story_data.time_estimate + " day(s)");
+  if (story_data.time_estimate > 0 && story_data.point > 0
+          && story_data.time_estimate !== null && story_data.point !== null) {
+    $(id).removeClass("story-unaddable");
+    $(id).addClass("story-addable");
+  }
+}
+
+function updateSprintHTML(sprint_data) {
+  var id = "#sprint_" + sprint_data.spid;
+  $(id + " .sprint-name").html('<i class="glyphicon-folder_flag"></i> '
+          + sprint_data.name + ' (' + sprint_data.start_date_es
+          + ' - ' + sprint_data.end_date_es + ')');
+  $(id + " .sprint-status").html(sprint_status[sprint_data.status]);
+}
+
+function updateTeamDay(team_data) {
+  var ele = $("#sprint_" + team_data.spid + " #s_team_" + team_data.tid + " .s-team-status");
+  var old_value = ele.html();
+  var d = old_value.split(" / ")[1];
+  ele.html(team_data.num_day + " / " + d);
+  if (parseInt(d) <= parseInt(team_data.num_day)) {
+    ele.css("color", "#0066ff");
+  } else {
+    ele.css("color", "#ff0000");
+  }
+}
+
+function addStoryToSprint(data) {
+  //IF already append -> do nothing
+  if ($("#sprint_" + data.end_spid + " #s_team_" + data.end_tid + " #story_" + data.select_sid).length <= 0) {
+    var story_temp = $(".story-temp").html();
+    var story_data = data.story_data;
+    $(".story-temp .story").attr("id", "story_" + story_data.sid);
+    $(".story-temp .story").attr("data-sid", story_data.sid);
+    $(".story-temp .story").attr("data-name", story_data.name);
+    $(".story-temp .story").attr("data-order", data.order);
+    $(".story-temp .story").attr("data-time-estimate", story_data.time_estimate);
+    $(".story-temp .story-name a").attr("href", story_data.sid);
+    $(".story-temp .story-name a").html(story_data.name);
+    if (story_data.point !== null) {
+      $(".story-temp .story-points").html(story_data.point + " point(s");
+    } else {
+      $(".story-temp .story-points").html("point(s");
+    }
+    $(".story-temp .story-status").html(story_status[story_data.status]);
+    if (story_data.time_estimate !== null) {
+      $(".story-temp .story-time_estimate").html(story_data.time_estimate + " day(s)");
+    } else {
+      $(".story-temp .story-time_estimate").html("day(s)");
+    }
+    if (story_data.time_estimate > 0 && story_data.time_estimate !== null
+            && story_data.point > 0 && story_data.point !== null) {
+      $(".story-temp .story").removeClass("story-unaddable");
+      $(".story-temp .story").addClass("story-addable");
+    }
+
+    //remove form not assign list
+    $("#story-not-se-list #story_" + story_data.sid).remove();
+    //add to sprint list
+    $("#sprint_" + data.end_spid + " #s_team_" + data.end_tid).append($(".story-temp").html())
+    $("story-temp").html(story_temp);
+  }
+}
+
+function removeStoryFromSprint(data) {
+  var id = "#sprint_" + data.start_spid + " #s_team_" + data.start_tid + " #story_" + data.select_sid;
+  console.log($(id));
+  if ($(id).length >= 0) {
+    $(id).remove();
+  }
+}
+
+function sortByOrder(a, b) {
+  var v1 = a.getAttribute("data-order");
+  var v2 = b.getAttribute("data-order");
+  return v1 > v2;
+}
+
+function updateStoryOrder2(data) {
+  var spid = data.spid;
+  var tid = data.tid;
+  var list_sid = data.list_sid;
+  $.each(list_sid, function(key, val) {
+    $("#sprint_" + spid + " #s_team_" + tid + " #story_" + key).attr("data-order", val);
+  });
+  var list = $("#sprint_" + spid + " #s_team_" + tid + " .story").get();
+  list.sort(sortByOrder);
+  for (var i = 0; i < list.length; i++) {
+    list[i].parentNode.appendChild(list[i]);
+  }
 }

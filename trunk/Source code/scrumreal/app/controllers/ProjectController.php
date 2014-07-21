@@ -109,18 +109,16 @@ class ProjectController extends BaseController {
     $data = array('status' => 800, 'message' => 'Save unsucessfully');
     if ($project->save()) {
       $data = array('status' => 200, 'message' => 'Save sucessfully');
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.project',
+          'type' => 'update',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'pid' => $input['pid']
+          )
+      );
+      PushController::publishData($broadcast_data);
     }
-
-    $broadcast_data = array(
-        'category' => 'scrum.realtime_' . Session::get('current_project') . '.project',
-        'type' => 'update',
-        'time' => date('H:i:s'),
-        'content' => array(
-            'pid' => $input['pid']
-        )
-    );
-    PushController::publishData($broadcast_data);
-
     return $data;
   }
 
@@ -187,24 +185,23 @@ class ProjectController extends BaseController {
           'message' => 'Create project successfully!',
           'pid' => $project->pid
       );
+
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.project',
+          'type' => 'add',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'pid' => $pid,
+              'name' => $project->name
+          )
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data = array(
           'status' => 800,
           'message' => 'Error when add new project!'
       );
     }
-
-    $broadcast_data = array(
-        'category' => 'scrum.realtime_' . Session::get('current_project') . '.project',
-        'type' => 'add',
-        'time' => date('H:i:s'),
-        'content' => array(
-            'pid' => $pid,
-            'name' => $project->name
-        )
-    );
-    PushController::publishData($broadcast_data);
-
     return $data;
   }
 
@@ -219,23 +216,22 @@ class ProjectController extends BaseController {
           'status' => 200,
           'message' => 'Delete project successfully!'
       );
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.project',
+          'type' => 'delete',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'pid' => $project->pid,
+              'name' => $project->name
+          )
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data = array(
           'status' => 800,
           'message' => 'Error!'
       );
     }
-    $broadcast_data = array(
-        'category' => 'scrum.realtime_' . Session::get('current_project') . '.project',
-        'type' => 'delete',
-        'time' => date('H:i:s'),
-        'content' => array(
-            'pid' => $project->pid,
-            'name' => $project->name
-        )
-    );
-    PushController::publishData($broadcast_data);
-
     return $data;
   }
 

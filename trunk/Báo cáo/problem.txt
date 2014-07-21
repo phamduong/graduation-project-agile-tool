@@ -41,3 +41,9 @@
 	(32) them ID cua project hien tai, chi subscribe vao link cua project hien tai thoi
 	(33) noscript và không có HTML 5
 34) timeout khi mạng quá chậm thì sao?	
+
+du lieu khi du an theo dung timeline
+	khi du an tre timeline -> lam sao de biet, de thay doi, canh bao nguoi dung
+	thong ke danh sach du an da tham gia cua user
+	
+	gap GV thuong xuyen
