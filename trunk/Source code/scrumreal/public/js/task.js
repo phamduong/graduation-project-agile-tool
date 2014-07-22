@@ -1,4 +1,142 @@
+function appendTaskToHTML(task_data) {
+  var task_temp = $(".task-temp").html();
+  $(".task-temp .task-item-unsortabled").attr("data-taid", task_data.taid);
+  $(".task-temp .task-item-unsortabled").attr("id", "task_" + task_data.taid);
+  $(".task-temp .task-item-unsortabled").attr("data-current-sid", task_data.sid);
+  $(".task-temp .task-name a").attr("href", task_data.taid);
+  $(".task-temp .task-name a").html(task_data.name);
+  if (task_data.user_id != null && task_data.user_id != "") {
+    var user_info = '<img alt="" class="taskboard-user-image" src="' + task_data.user_image_path + '">';
+    user_info += '<p class="task-assign-name">' + task_data.user_name + '</p>';
+    $(".task-temp .span4").append(user_info);
+  }
+  $(".task-temp .badge-info").html(task_data.time_estimate + " d");
+  $(".task-temp .bar").css("width", task_data.progress + "%");
+  $(".task-temp .bar").html(task_data.progress + "%");
+  $("#story_" + task_data.sid + " .to-do-tasks .task-box").append($(".task-temp").html());
+//  $(".task-temp .task-item").addClass("task-item-unsortabled");
+//  $(".task-temp .task-item").removeClass("task-item");
+  $(".task-temp").html(task_temp);
+}
+
+function removeTaskHTML(taid) {
+  $("#task_" + taid).remove();
+}
+
+function appendAvailableTaskToHTML(data) {
+  var sid = data.content.task_data.sid;
+  var status = data.content.new_status;
+  var taid = data.content.taid;
+  var html = document.getElementById("task_" + taid).outerHTML;
+  var cls = getStoryStatusClass(status);
+  removeTaskHTML(taid);
+  $("#story_" + sid + " ." + cls + " .task-box").append(html);
+  //update status
+  if (status >= 3) {
+    $("#task_" + taid + " .progress-info .bar").width("100%");
+    $("#task_" + taid + " .progress-info .bar").html("100%");
+  } else if (status === 1) {
+    $("#task_" + taid + " .progress-info .bar").width("0%");
+    $("#task_" + taid + " .progress-info .bar").html("0%");
+  }
+}
+
 $(document).ready(function() {
+  var callback = function(topic, data) {
+    if (topic === "scrum.realtime_" + current_project + ".task") {
+      switch (data.type) {
+        case "update_task":
+          {
+            var task_data = data.content.task_data;
+            var has_user = false;
+            if (task_data.uid != "" && task_data.uid != null) {
+              has_user = true;
+            }
+            reloadTaskHTML(task_data.taid, has_user, task_data.sid);
+            destroyTaskSortable();
+            initTaskSortable();
+            break;
+          }
+        case "delete_task":
+          {
+            var taid = data.content.taid;
+            $("#task_" + taid).remove();
+            var sid = data.content.task_data.sid;
+            $("#story_" + sid + " .story-description .story-progress").load("/task/reload_story_progress/" + sid);
+            caculateAllStory();
+            break;
+          }
+        case "add_task":
+          {
+            appendTaskToHTML(data.content.task_data);
+            var sid = data.content.task_data.sid;
+            $("#story_" + sid + " .story-description .story-progress").load("/task/reload_story_progress/" + sid);
+            caculateAllStory();
+            destroyTaskSortable();
+            initTaskSortable();
+            break;
+          }
+        case "update_task_order":
+          {
+            updateTaskOrder2(data.content);
+            break;
+          }
+        case "move_task":
+          {
+            var sid = data.content.task_data.sid;
+            var cls = getStoryStatusClass(data.content.new_status);
+            var taid = data.content.taid;
+            if ($("#story_" + sid + " ." + cls + " #task_" + taid).length === 0) {
+              appendAvailableTaskToHTML(data);
+            }
+            var sid = data.content.task_data.sid;
+            $("#story_" + sid + " .story-description .story-progress").load("/task/reload_story_progress/" + sid);
+            break;
+          }
+      }
+    }
+  };
+
+  var link = ["scrum.realtime_" + current_project + ".task"];
+  subscribeToTopic(link, "localhost", "8080", callback);
+
+  initTaskSortable();
+
+  //Caculate height of stories
+  caculateAllStory();
+
+  //Select 2 me
+  $("#sprint_filter").select2();
+  $("#other_filter").select2({
+    width: '250px'
+  });
+
+  //Choose sprint filter
+  $("#sprint_filter").change(function() {
+    var spid = $("#sprint_filter").select2("val");
+    window.location = "/taskboard/" + spid + "/";
+  });
+
+  $("#other_filter").change(function() {
+    var temp = $("#other_filter").select2("val");
+    var spid = $("#sprint_filter").select2("val");
+    var entity_id = temp.split("_")[0];
+    var entity_type = temp.split("_")[1];
+    var url = "/taskboard/" + spid + "/" + entity_type + "/" + entity_id + "/";
+    window.location = url;
+  });
+
+});
+
+function destroyTaskSortable() {
+  $(".task-box").each(function() {
+    if ($(this).data("uiSortable")) {
+      $(this).sortable("destroy");
+    }
+  });
+}
+
+function initTaskSortable() {
   // Make taskbox sortable
   $(".task-box").sortable({
     connectWith: ".task-box",
@@ -29,6 +167,7 @@ $(document).ready(function() {
 //      console.log("stop: " + parent.attr("data-task-status"));
 //      console.log("task id: " + item.attr("data-taid"));
       var taid = item.attr("data-taid");
+      var sid = item.attr("data-current-sid");
       var end_col = parent.attr("data-task-status");
       if (end_col >= 3) {
         $("#task_" + taid + " .progress-info .bar").width("100%");
@@ -47,78 +186,20 @@ $(document).ready(function() {
             $("#story_" + story_data.sid + " .story-status").html(story_data.status);
             $("#story_" + window.start_sid_task + " .story-description .story-progress").html("");
             $("#story_" + window.start_sid_task + " .story-description .story-progress").load("/task/reload_story_progress/" + window.start_sid_task);
+            updateStoryOrder(sid, end_col);
           },
           error: function(response) {
             showAlertModal(response.message);
           }
         });
-
+      }
+      //else update task item order
+      else {
+        updateStoryOrder(sid, end_col);
       }
     }
   }).disableSelection();
-
-  //Caculate height of stories
-  caculateAllStory();
-
-  //Select 2 me
-  $("#sprint_filter").select2();
-  $("#other_filter").select2({
-    width: '250px'
-  });
-
-  //Choose sprint filter
-  $("#sprint_filter").change(function() {
-    var spid = $("#sprint_filter").select2("val");
-    window.location = "/taskboard/" + spid + "/";
-  });
-
-  $("#other_filter").change(function() {
-    var temp = $("#other_filter").select2("val");
-    var spid = $("#sprint_filter").select2("val");
-    var entity_id = temp.split("_")[0];
-    var entity_type = temp.split("_")[1];
-    var url = "/taskboard/" + spid + "/" + entity_type + "/" + entity_id + "/";
-    window.location = url;
-  });
-
-  //Submit form edit task
-//  $("#form-edit-task").submit(function(e) {
-//    e.preventDefault();
-//    $("#form-edit-task input:submit").attr("disabled", "disabled");
-//    if ($(this).valid() === true) {
-//      var data = $(this).serialize();
-//      var has_user = false;
-//      var taid = $("#form-edit-task #taid").val();
-//      if ($("#form-edit-task #uid").val() !== "") {
-//        has_user = true;
-//      }
-//      $.ajax({
-//        url: "/task/save",
-//        type: "POST",
-//        data: data,
-//        success: function(response) {
-//          if (response.status === 200) {
-//            showAlert(1, true, response.message);
-//            setTimeout(function() {
-//              $("#modal-edit-task").modal('hide');
-//            }, 1000);
-//            var sid = $("#task_" + taid).attr("data-current-sid");
-//            appendTaskToHTML(taid, has_user, sid);
-//            setTimeout(function() {
-//              clearFormInput("#form-edit-task");
-//            }, 1000);
-//          }
-//        }, complete: function() {
-//          $("#form-edit-task input:submit").removeAttr("disabled");
-//        }
-//      });
-//    }
-//  });
-//  
-//  var page = $(location).attr('pathname');
-//  console.log(page.indexOf("taskboard"));
-  
-});
+}
 
 $("#task-board").on("click", ".task_edit_task", function(e) {
   e.preventDefault();
@@ -170,4 +251,75 @@ function caculateAllStory() {
       });
     }
   });
+}
+
+function updateStoryOrder(sid, status) {
+  var count = 0;
+  var cls = getStoryStatusClass(status);
+  var data = {};
+  $("#story_" + sid + " ." + cls + " .task-ta").each(function() {
+    if (typeof $(this).attr("id") != "undefined") {
+      count++;
+      $(this).attr("data-order", count);
+      data[$(this).attr("data-taid")] = $(this).attr("data-order");
+    }
+  });
+  if (count > 0) {
+    $.ajax({
+      url: "/task/update_order",
+      type: "POST",
+      data: {data: data, sid: sid, status: status},
+      success: function() {
+
+      }
+    });
+  }
+}
+
+function sortTaskByOrder(a, b) {
+  var v1 = a.getAttribute("data-order");
+  var v2 = b.getAttribute("data-order");
+  return v1 > v2;
+}
+
+function getStoryStatusClass(status) {
+  var cls = "";
+  switch (status) {
+    case "1":
+      {
+        cls = "to-do-tasks";
+        break;
+      }
+    case "2":
+      {
+        cls = "in-progress-tasks";
+        break;
+      }
+    case "3":
+      {
+        cls = "to-test-tasks";
+        break;
+      }
+    case "4":
+      {
+        cls = "done-tasks";
+        break;
+      }
+  }
+  return cls;
+}
+
+function updateTaskOrder2(data) {
+  var sid = data.sid;
+  var status = data.status;
+  var cls = getStoryStatusClass(status);
+  var list_taid = data.list_taid;
+  $.each(list_taid, function(key, val) {
+    $("#story_" + sid + " ." + cls + " #task_" + key).attr("data-order", val);
+  });
+  var list = $("#story_" + sid + " ." + cls + " .task-ta").get();
+  list.sort(sortTaskByOrder);
+  for (var i = 0; i < list.length; i++) {
+    list[i].parentNode.appendChild(list[i]);
+  }
 }

@@ -130,7 +130,7 @@
                 <tr>
                   <th>Task name</th>
                   <th>Time estimate</th>
-                  <th></th>
+                  <th>Status</th>
                   <th>Create time</th>
                   <th>Create user</th>
                   <th>Description</th>

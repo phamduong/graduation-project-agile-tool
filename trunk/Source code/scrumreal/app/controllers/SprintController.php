@@ -133,7 +133,9 @@ class SprintController extends BaseController {
     $result = $sprint->addStoryToSprint($input['select_sid'], $input['end_spid'], $input['end_tid'], $input['order']);
     //Update story status when assign to Sprint
     $story = Story::find($input['select_sid']);
-    $story->status = STORY_STATUS_ASIGNED;
+    if($story->status < STORY_STATUS_ASIGNED){
+      $story->status = STORY_STATUS_ASIGNED;
+    }
     $story->save();
     if ($result != 0) {
       //activity
@@ -380,8 +382,16 @@ class SprintController extends BaseController {
       foreach ($team_list as $t) {
         $team_model->deleteFromStory_Team($spid, $t->tid);
       }
-
       ActivityController::createActivityDelete(Session::get('current_project'), ENTITY_PROJECT, $spid, ENTITY_SPRINT);
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+          'type' => 'delete_sprint',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'spid' => $spid
+          )
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data = array('status' => 800, 'message' => 'Error deleting sprint');
     }

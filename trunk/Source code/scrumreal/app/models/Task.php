@@ -48,9 +48,10 @@ SQL;
 
   public function getTaskInStory($sid) {
     $query = <<<SQL
-SELECT task.taid, task.`name`, task.time_estimate, task.`status`, `user`.uid, `user`.image AS user_image, `user`.fullname AS user_name, task.time_remain
+SELECT task.taid, task.`name`, task.time_estimate, task.`status`, `user`.uid, `user`.image AS user_image, `user`.fullname AS user_name, task.time_remain, task.order
 FROM task LEFT JOIN `user` ON task.uid = `user`.uid
 WHERE task.sid = ? AND task.delete_flg = 0
+ORDER BY task.order ASC
 SQL;
     $result = DB::select($query, array($sid));
     return $result;
@@ -67,10 +68,17 @@ SQL;
   }
 
   public function getTaskDetail($taid) {
+//    $query = <<<SQL
+//SELECT task.*, user.uid as user_uid, `user`.fullname as user_name, user.image as user_image
+//FROM task LEFT OUTER JOIN user ON task.uid = user.uid
+//WHERE task.taid = ?
+//SQL;
     $query = <<<SQL
-SELECT task.*, user.uid as user_uid, `user`.fullname as user_name, user.image as user_image
-FROM task LEFT OUTER JOIN user ON task.uid = user.uid
-WHERE task.taid = ? AND task.delete_flg = 0
+SELECT task.*, assign_user.uid as user_uid, assign_user.fullname as user_name, assign_user.image as user_image, create_user.fullname as create_user_name
+FROM task 
+	INNER JOIN user AS create_user ON task.create_user = create_user.uid
+	LEFT OUTER JOIN user AS assign_user ON task.uid = assign_user.uid
+WHERE task.taid = ?
 SQL;
     $result = DB::select($query, array($taid));
     return $result[0];
@@ -185,6 +193,18 @@ WHERE story_team.spid = ?
 SQL;
     $result = DB::select($query, array($spid));
     return $result;
+  }
+  
+  public function updateTaskOrder($data){
+    $query = <<<SQL
+UPDATE task
+SET task.order = ?
+WHERE
+  task.taid = ?
+SQL;
+    foreach($data as $key => $val){
+      DB::update($query, array($val, $key));
+    }
   }
   
 }

@@ -14,7 +14,7 @@ function loadTask(taid) {
         $(parent + "#name").val(task_info.name);
         $(parent + "#time_estimate").val(task_info.time_estimate);
         $(parent + "#create_date").val(task_info.create_date);
-        $(parent + "#create_user").val(task_info.user_name);
+        $(parent + "#create_user").val(task_info.create_user_name);
         $(parent + "#time_remain").val(task_info.time_remain);
         $(parent + ".delete-task").attr("data-taid", task_info.taid);
         if (task_info.status == 1) {
@@ -64,6 +64,17 @@ function loadTask(taid) {
 //      $("#modal-error-notice").modal('show');
     }
   });
+}
+
+function reloadTaskHTML(taid, has_user, sid) {
+  if (has_user === true) {
+    $("#task_" + taid).removeClass("task-item-unsortabled");
+    $("#task_" + taid).addClass("task-item");
+  }
+  $("#task_" + taid).html("");
+  $("#story_" + sid + " .story-description .story-progress").html("");
+  $("#story_" + sid + " .story-description .story-progress").load("/task/reload_story_progress/" + sid);
+  $("#task_" + taid).load("/task/reload_task_detail/" + taid);
 }
 
 function appendTaskToHTML(taid, has_user, sid) {
@@ -621,56 +632,6 @@ function checkPermission(path) {
   return check;
 }
 
-function initPlUpload(selector, path) {
-// PlUpload  
-  var $el = $(selector);
-  $el.pluploadQueue({
-    runtimes: 'html5,gears,flash,silverlight,browserplus',
-    url: path,
-    max_file_size: '10mb',
-    chunk_size: '1mb',
-    unique_names: true,
-    resize: {width: 320, height: 120, quality: 90},
-    filters: [
-      {title: "Image files", extensions: "jpg,gif,png"},
-      {title: "Zip files", extensions: "zip, rar"},
-      {title: "Doc files", extensions: "doc, docx, xls, xlsx, txt"}
-    ],
-    flash_swf_url: 'js/plupload/plupload.flash.swf',
-    silverlight_xap_url: 'js/plupload/plupload.silverlight.xap'
-  });
-  $(".plupload_header").remove();
-  var upload = $el.pluploadQueue();
-  if ($el.hasClass("pl-sidebar")) {
-    $(".plupload_filelist_header,.plupload_progress_bar,.plupload_start").remove();
-    $(".plupload_droptext").html("<span>Drop files to upload</span>");
-    $(".plupload_progress").remove();
-    $(".plupload_add").text("Or click here...");
-    upload.bind('FilesAdded', function(up, files) {
-      setTimeout(function() {
-        up.start();
-      }, 500);
-    });
-    upload.bind("QueueChanged", function(up) {
-      $(".plupload_droptext").html("<span>Drop files to upload</span>");
-    });
-    upload.bind("StateChanged", function(up) {
-      $(".plupload_upload_status").remove();
-      $(".plupload_buttons").show();
-    });
-  } else {
-    $(".plupload_progress_container").addClass("progress").addClass('progress-striped');
-    $(".plupload_progress_bar").addClass("bar");
-    $(".plupload_button").each(function() {
-      if ($(this).hasClass("plupload_add")) {
-        $(this).attr("class", 'btn pl_add btn-primary').html("<i class='icon-plus-sign'></i> " + $(this).html());
-      } else {
-        $(this).attr("class", 'btn pl_start btn-success').html("<i class='icon-cloud-upload'></i> " + $(this).html());
-      }
-    });
-  }
-}
-
 function checkFileExtension(str, ext_arr) {
   var check = true;
   var ext = str.split('.').pop().toLowerCase();
@@ -719,15 +680,15 @@ function removeAttach(arr_filename, entity_type, entity_id) {
 function subscribeToTopic(subscribe_link, host, port, callback) {
   var conn = new ab.Session('ws://' + host + ':' + port + '',
           function() {
-            for(var i = 0; i < subscribe_link.length; i++){
+            for (var i = 0; i < subscribe_link.length; i++) {
               conn.subscribe(subscribe_link[i], function(topic, data) {
                 console.log('New article published to category "' + topic + '" : ' + data.type);
                 console.log(data);
-                if(typeof callback !== "undefined"){
-                    callback(topic, data);
+                if (typeof callback !== "undefined") {
+                  callback(topic, data);
                 }
               });
-            }           
+            }
           },
           function() {
             console.warn('WebSocket connection closed');
