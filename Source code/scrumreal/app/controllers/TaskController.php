@@ -113,6 +113,22 @@ class TaskController extends BaseController {
       }
       if ($story_contain->save()) {
         $data = array('status' => 200, 'message' => '');
+        $task_data = $task_model->getTaskDetail($task->taid);
+        if ($task_data->user_image != "") {
+          $task_data->user_image_path = asset('data/image/user/' . $task_data->user_image);
+        }
+        $task_data->progress = 0;
+        $broadcast_data = array(
+            'category' => 'scrum.realtime_' . Session::get('current_project') . '.task',
+            'type' => 'add_task',
+            'time' => date('H:i:s'),
+            'content' => array(
+                'taid' => $task->taid,
+                'task_data' => $task_data
+            )
+        );
+
+        PushController::publishData($broadcast_data);
       }
     } else {
       $data = array('status' => 800, 'message' => 'Add task unsuccessfully!');
@@ -205,8 +221,19 @@ class TaskController extends BaseController {
       }
       if ($story_contain->save()) {
         $data = array('status' => 200, 'message' => '');
+        $task_model = new Task;
+        $broadcast_data = array(
+            'category' => 'scrum.realtime_' . Session::get('current_project') . '.task',
+            'type' => 'update_task',
+            'time' => date('H:i:s'),
+            'content' => array(
+                'taid' => $input['taid'],
+                'task_data' => $task_model->getTaskDetail($input['taid']
+                )
+            )
+        );
+        PushController::publishData($broadcast_data);
       }
-//      $data = array('status' => 200, 'message' => '');
     } else {
       $data = array('status' => 800, 'message' => 'Save task unsuccessfully!');
     }
@@ -233,14 +260,26 @@ class TaskController extends BaseController {
     }
 
     if ($task->save()) {
+      $task_model = new Task;
       //IF task id completed update finish date
       if ($input['status'] == 4) {
-        $task_model = new Task;
         //$task->finish_date = date('Y-m-d H:i:s');
         if ($task_model->updateTaskFinishDate($task->tid)) {
           $data = array('status' => 200, 'message' => '');
         }
       }
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.task',
+          'type' => 'move_task',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'taid' => $input['taid'],
+              'old_status' => $input['old_status'],
+              'new_status' => $input['status'],
+              'task_data' => $task_model->getTaskDetail($input['taid'])
+          )
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data = array('status' => 800, 'message' => 'Save task unsuccessfully!');
     }
@@ -308,10 +347,38 @@ class TaskController extends BaseController {
       //create activity
       ActivityController::createActivityDelete($sid, ENTITY_STORY, $taid, ENTITY_TASK);
       $data = array('status' => 200, 'message' => 'Delete task successfully');
+      $task_model = new Task;
+      $broadcast_data = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.task',
+          'type' => 'delete_task',
+          'time' => date('H:i:s'),
+          'content' => array(
+              'taid' => $input['taid'],
+              'task_data' => $task_model->getTaskDetail($input['taid'])
+          )
+      );
+      PushController::publishData($broadcast_data);
     } else {
       $data = array('status' => 800, 'message' => 'Error when delete task');
     }
     return $data;
+  }
+
+  public function updateTaskOrder() {
+    $input = Input::all();
+    $task_model = new Task;
+    $task_model->updateTaskOrder($input['data']);
+    $broadcast_data = array(
+        'category' => 'scrum.realtime_' . Session::get('current_project') . '.task',
+        'type' => 'update_task_order',
+        'time' => date('H:i:s'),
+        'content' => array(
+            'sid' => $input['sid'],
+            'status' => $input['status'],
+            'list_taid' => $input['data']                
+        )
+    );
+    PushController::publishData($broadcast_data);
   }
 
 }

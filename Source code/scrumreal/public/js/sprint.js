@@ -162,12 +162,29 @@ $(document).ready(function() {
             break;
           }
       }
+    } else if (topic === "scrum.realtime_" + current_project + ".task") {
+      switch (data.type) {
+        case "update_task":
+        case "delete_task":
+        case "add_task":
+          {
+//            var table = $.fn.dataTable.fnTables(true);
+//            var t = table.length;
+            if (taskTable !== "undefined") {
+              if ($("#modal-edit-story").hasClass("in")) {
+                taskTable.fnReloadAjax();
+              }
+            }
+            break;
+          }
+      }
     }
   }
 
   var link = ["scrum.realtime_" + current_project + ".team",
     "scrum.realtime_" + current_project + ".story",
-    "scrum.realtime_" + current_project + ".sprint"];
+    "scrum.realtime_" + current_project + ".sprint",
+    "scrum.realtime_" + current_project + ".task"];
   subscribeToTopic(link, "localhost", "8080", callback);
 
   //Show number of days for each team in sprint

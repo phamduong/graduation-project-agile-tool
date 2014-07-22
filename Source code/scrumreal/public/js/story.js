@@ -7,10 +7,31 @@ $(document).ready(function() {
 //    }else if(data.type == 'update'){
 //      
 //    }
-    var oTable = $("#user-story-datatable").dataTable();
-    oTable.fnReloadAjax();
+    if (topic === "scrum.realtime_" + current_project + ".story") {
+      var oTable = $("#user-story-datatable").dataTable();
+      oTable.fnReloadAjax();
+    } else if (topic === "scrum.realtime_" + current_project + ".task") {
+      switch (data.type) {
+        case "update_task":
+        case "delete_task":
+        case "add_task":
+          {
+//            var table = $.fn.dataTable.fnTables(true);
+//            var t = table.length;
+            if (taskTable !== "undefined") {
+              if ($("#modal-edit-story").hasClass("in")) {
+                taskTable.fnReloadAjax();
+              }
+            }
+            break;
+          }
+      }
+    }
+
   };
-  subscribeToTopic(["scrum.realtime_" + current_project + ".story"], 'localhost', '8080', callback);
+  var link = ["scrum.realtime_" + current_project + ".story",
+    "scrum.realtime_" + current_project + ".task"];
+  subscribeToTopic(link, 'localhost', '8080', callback);
 
   initUserStoryDatatable();
   //Choose edit and user story

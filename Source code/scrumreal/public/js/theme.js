@@ -256,10 +256,12 @@ $(document).on("submit", "#form-add-task", function(e) {
           setTimeout(function() {
             $("#modal-add-task").modal('hide');
           }, 1000);
-          var oTable = $("#task-datatable").dataTable();
-          oTable.fnReloadAjax();
+//          var oTable = $("#task-datatable").dataTable();
+//          oTable.fnReloadAjax();
           clearFormInput("#form-add-task");
         }
+      },complete: function(){
+        $("#form-add-task input:submit").attr("disabled", false);
       }
     });
   }
@@ -301,14 +303,14 @@ $(document).on("submit", "#form-edit-task", function(e) {
           setTimeout(function() {
             $("#modal-edit-task").modal('hide');
           }, 1000);
-          var page = $(location).attr('pathname');
-          //Make change to HTML
-          if (page.indexOf("taskboard") !== -1) {
-            var sid = $("#task_" + taid).attr("data-current-sid");
-            appendTaskToHTML(taid, has_user, sid);
-          } else {
-            appendTaskToHTML(taid, has_user);
-          }
+//          var page = $(location).attr('pathname');
+//          //Make change to HTML
+//          if (page.indexOf("taskboard") !== -1) {
+//            var sid = $("#task_" + taid).attr("data-current-sid");
+//            appendTaskToHTML(taid, has_user, sid);
+//          } else {
+//            appendTaskToHTML(taid, has_user);
+//          }
           setTimeout(function() {
             clearFormInput("#form-edit-task");
           }, 1000);
@@ -359,14 +361,14 @@ $(document).on("click", ".delete-task", function(e) {
             }, 1000);
 
             //check if page taskboard
-            if (page.indexOf("taskboard") !== -1) {
-              $("#task_" + taid).remove();
-              caculateAllStory();
-            } else {
+//            if (page.indexOf("taskboard") !== -1) {
+//              $("#task_" + taid).remove();
+//              caculateAllStory();
+//            } else {
               //if in story page -> reload task datatable
-              taskTable.fnReloadAjax("/task/get_datatables/" + window.current_story + "/");
+//              taskTable.fnReloadAjax("/task/get_datatables/" + window.current_story + "/");
               //refer to window object
-            }
+//            }
             showAlertModal(response.message, "success");
           } else {
             showAlertModal(response.message);

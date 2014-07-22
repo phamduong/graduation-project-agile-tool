@@ -10,10 +10,10 @@ Scrumtool - KanBan Tool
       <thead>
         <tr>
           <th class="span2"><h4>User stories</h4></th>
-      <th class="span2-5"><h4>To do</h4></th>
-      <th class="span2-5"><h4>In progress</h4></th>
-      <th class="span2-5"><h4>To test</h4></th>
-      <th class="span2-5"><h4>Done</h4></th>
+          <th class="span2-5"><h4>To do</h4></th>
+          <th class="span2-5"><h4>In progress</h4></th>
+          <th class="span2-5"><h4>To test</h4></th>
+          <th class="span2-5"><h4>Done</h4></th>
       </tr>
       </thead>
       <tbody>
@@ -64,9 +64,9 @@ Scrumtool - KanBan Tool
               @foreach($story->task_in_story as $task)
               @if($task->status === 1)
               @if($task->user_image != "")
-              <div class="box box-color box-bordered blue box-condensed task-item" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              <div class="box box-color box-bordered blue box-condensed task-item task-ta" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}" data-order="{{{$task->order}}}">
               @else
-              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled task-ta" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}" data-order="{{{$task->order}}}">
               @endif
                 <div class="box-title">
                 </div>
@@ -106,9 +106,9 @@ Scrumtool - KanBan Tool
               @foreach($story->task_in_story as $task)
               @if($task->status === 2)
               @if($task->user_image != "")
-              <div class="box box-color box-bordered blue box-condensed task-item" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              <div class="box box-color box-bordered blue box-condensed task-item task-ta" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}" data-order="{{{$task->order}}}">
               @else
-              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled task-ta" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}" data-order="{{{$task->order}}}">
               @endif
                 <div class="box-title">
                 </div>
@@ -148,9 +148,9 @@ Scrumtool - KanBan Tool
               @foreach($story->task_in_story as $task)
               @if($task->status === 3)
               @if($task->user_image != "")
-              <div class="box box-color box-bordered blue box-condensed task-item" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              <div class="box box-color box-bordered blue box-condensed task-item task-ta" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}" data-order="{{{$task->order}}}">
               @else
-              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled task-ta" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}" data-order="{{{$task->order}}}">
               @endif
                 <div class="box-title">
                 </div>
@@ -190,9 +190,9 @@ Scrumtool - KanBan Tool
               @foreach($story->task_in_story as $task)
               @if($task->status === 4)
               @if($task->user_image != "")
-              <div class="box box-color box-bordered blue box-condensed task-item" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              <div class="box box-color box-bordered blue box-condensed task-item task-ta" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}" data-order="{{{$task->order}}}">
               @else
-              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}">
+              <div class="box box-color box-bordered blue box-condensed task-item-unsortabled task-ta" data-taid="{{{$task->taid}}}" id="{{{'task_'. $task->taid}}}" data-current-sid="{{{$story->sid}}}" data-order="{{{$task->order}}}">
               @endif
                 <div class="box-title">
                 </div>
@@ -234,6 +234,34 @@ Scrumtool - KanBan Tool
       </tbody>
     </table>
   </div>
+
+  <div class="task-temp" style="display: none">
+    <div class="box box-color box-bordered blue box-condensed task-item-unsortabled task-ta" data-taid="" id="task_" data-current-sid="" data-order="">
+      <div class="box-title">
+      </div>
+      <div class="box-content">
+        <div class="row-fluid">
+          <div class="span8">
+            <span class="task-name">
+              <i class="icon-file"></i>
+              <a href="" class="task_edit_task"></a>
+            </span>
+          </div>
+          <div class="span4">
+            
+          </div>
+        </div>
+        <div class="row-fluid">
+          <span class="span3 badge badge-info"> d
+          </span>
+          <div class="span9 progress progress-info">
+            <div class="bar" style="width: 50%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+        
   <script src="{{asset("js/task.js")}}"></script>
   <script>
     @if(isset($current_project))

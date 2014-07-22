@@ -29,10 +29,10 @@
 	(29) CHECK lai chuc nang tao tai khoan cho nguoi dung
 
 
-30) cập nhật thời gian thực
+	(30) cập nhật thời gian thực
 		[done] project, story: reload datatables + info
-		task, people, sprint -> drag, drop (hoặc di chuyển HTML cũng được)
-		report -> nếu có cập nhật mới (xác nhận người dùng có muốn tải lại trang không?)
+		[done]task, people, sprint -> drag, drop (hoặc di chuyển HTML cũng được)
+		[khong can]report -> nếu có cập nhật mới (xác nhận người dùng có muốn tải lại trang không?)
 		
 		draggable and droppable: them moi DOM, khoi tao lai
 		sortable: khoi tao lai
@@ -46,4 +46,3 @@ du lieu khi du an theo dung timeline
 	khi du an tre timeline -> lam sao de biet, de thay doi, canh bao nguoi dung
 	thong ke danh sach du an da tham gia cua user
 	
-	gap GV thuong xuyen
