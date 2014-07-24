@@ -1,4 +1,4 @@
-if (!window.WebSocket){
+if (!window.WebSocket) {
   alert("BROWSER DOES NOT SUPPORTED WEBSOCKET, PLEASE UPDATE YOUR BROWSER TO USE FULL FEATURES OF SCRUM TOOL!");
 }
 
@@ -203,12 +203,12 @@ $(document).ready(function() {
           success: function(response) {
             if (response.status == 200) {
               showAlert(1, true, response.message);
-              
+
               //attach new file
               if (count_form_data_ele > 0) {
                 addAttach(formData, 2, sid);
               }
-              
+
               //remove old file
               if (remove_attach_name.length > 0) {
                 removeAttach(remove_attach_name, 2, sid);
@@ -260,7 +260,7 @@ $(document).on("submit", "#form-add-task", function(e) {
 //          oTable.fnReloadAjax();
           clearFormInput("#form-add-task");
         }
-      },complete: function(){
+      }, complete: function() {
         $("#form-add-task input:submit").attr("disabled", false);
       }
     });
@@ -365,13 +365,40 @@ $(document).on("click", ".delete-task", function(e) {
 //              $("#task_" + taid).remove();
 //              caculateAllStory();
 //            } else {
-              //if in story page -> reload task datatable
+            //if in story page -> reload task datatable
 //              taskTable.fnReloadAjax("/task/get_datatables/" + window.current_story + "/");
-              //refer to window object
+            //refer to window object
 //            }
             showAlertModal(response.message, "success");
           } else {
             showAlertModal(response.message);
+          }
+        }
+      });
+    }
+  });
+});
+
+//Delete user
+$(document).on("click", '.delete-user', function(e) {
+  e.preventDefault();
+  var uid = $(this).attr("data-uid");
+  bootbox.confirm("Are you sure you want to delete this user?", function(result) {
+    if (result === true) {
+      $.ajax({
+        url: "/user/delete",
+        type: "POST",
+        data: {uid: uid},
+        success: function(response) {
+          if (response.status === 200) {
+            setTimeout(function() {
+              $("#modal-edit-user").modal("hide");
+            }, 1000);
+              var page = $(location).attr('pathname');
+              if (page === "/users") {
+                var oTable = $('#users_list_datatable').dataTable();
+                oTable.fnReloadAjax();
+              }
           }
         }
       });

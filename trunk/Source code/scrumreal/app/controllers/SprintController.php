@@ -17,6 +17,7 @@ class SprintController extends BaseController {
       $data['story_not_asign'] = $sprint->getStoryNotAssign($current_project);
       $data['sprint_list'] = $sprint->getSprintInProject($current_project);
       $data['current_project'] = $current_project;
+      $data['current_proj_name'] = Session::get('current_project_nm');
 //      var_dump($data['sprint_list']);
 //      exit();
       $data['has_sprint_running'] = false;
@@ -302,7 +303,9 @@ class SprintController extends BaseController {
             'type' => 'start_sprint',
             'time' => date('H:i:s'),
             'content' => array(
-                'spid' => $spid
+                'spid' => $spid,
+                'sprint_status' => SPRINT_STATUS_IN_PROGRESS,
+                'old_status' => SPRINT_STATUS_IN_PLAN
             )
         );
         PushController::publishData($broadcast_data);
@@ -330,7 +333,9 @@ class SprintController extends BaseController {
           'type' => 'complete_sprint',
           'time' => date('H:i:s'),
           'content' => array(
-              'spid' => $spid
+              'spid' => $spid,
+              'sprint_status' => SPRINT_STATUS_COMPLETED,
+              'old_status' => SPRINT_STATUS_IN_PROGRESS
           )
       );
       PushController::publishData($broadcast_data);
@@ -354,7 +359,9 @@ class SprintController extends BaseController {
             'type' => 'resume_sprint',
             'time' => date('H:i:s'),
             'content' => array(
-                'spid' => $spid
+                'spid' => $spid,
+                'sprint_status' => SPRINT_STATUS_IN_PROGRESS,
+                'old_status' => SPRINT_STATUS_COMPLETED
             )
         );
         PushController::publishData($broadcast_data);
@@ -378,10 +385,11 @@ class SprintController extends BaseController {
       foreach ($team_list as $t) {
         $team_model->deleteFromSprint_Team($spid, $t->tid);
       }
+      $team_model->deleteFromStory_Team2($spid);
       //remove from story_team table
-      foreach ($team_list as $t) {
-        $team_model->deleteFromStory_Team($spid, $t->tid);
-      }
+//      foreach ($team_list as $t) {
+//        $team_model->deleteFromStory_Team($spid, $t->tid);
+//      }
       ActivityController::createActivityDelete(Session::get('current_project'), ENTITY_PROJECT, $spid, ENTITY_SPRINT);
       $broadcast_data = array(
           'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',

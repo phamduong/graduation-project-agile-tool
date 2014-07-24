@@ -81,7 +81,7 @@ class PermissionController extends BaseController {
         }
       }
     }
-    //test 
+    //test
     Session::forget('user_permission');
 
     if (Session::has('user_permission') == false) {

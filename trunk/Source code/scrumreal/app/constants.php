@@ -6,6 +6,7 @@ define('PROJECT_ACTIVE_STATUS', 1);
 define('PROJECT_COMPLETE_STATUS', 2);
 define('PROJECT_PAUSE_STATUS', 3);
 
+define('ROLE_NOT_IN_PROJECT', 0);
 define('ROLE_LEADER', 1);
 define('ROLE_SCRUM_MASTER', 2);
 define('ROLE_MEMBER', 3);

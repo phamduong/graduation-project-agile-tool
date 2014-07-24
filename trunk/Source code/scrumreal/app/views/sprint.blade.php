@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumtool - Sprint management
+{{{$current_proj_name}}}
 @stop
 @section('content')
 @include('modal/sprint_add')
@@ -25,7 +25,7 @@ Scrumtool - Sprint management
         </div>
         <div class="box-content scrollable" data-height="520" id="sprint-team-list">
           @foreach($sprint_list as $sprint)
-          <div class="sprint" id="<?php echo 'sprint_' . $sprint->spid; ?>">
+          <div class="sprint" id="<?php echo 'sprint_' . $sprint->spid; ?>" data-sprint-status="{{{$sprint->status}}}">
             <div class="box box-color box-small box-bordered">
               <div class="box-title">
                 <h3>
@@ -73,7 +73,6 @@ Scrumtool - Sprint management
                         {{{$team->name}}}
                         <span class="s-team-status"></span>
                       </div>
-                      <!--<div class="s-team-story">-->
                       @foreach($story_list[$sprint->spid][$team->tid] as $story)
                       <div id="<?php echo 'story_' . $story->sid; ?>" data-sid="{{{$story->sid}}}" class="story story-addable" data-name="{{{$story->name}}}" data-order="{{{$story->order}}}" data-time-estimate="{{{$story->time_estimate}}}">
                         <div class="story-name"><a href="{{{$story->sid}}}" class="edit-story">{{{$story->name}}}</a></div>
@@ -82,7 +81,6 @@ Scrumtool - Sprint management
                         <div class="story-time_estimate badge badge-info">{{{$story->time_estimate}}} day(s)</div>
                       </div>
                       @endforeach
-                      <!--</div>-->
                     </div>
                     @endforeach
                   </div>
@@ -93,7 +91,7 @@ Scrumtool - Sprint management
           </div>
         </div>
         <div class="sprint-temp" style="display: none">
-          <div class="sprint" id="sprint_">
+          <div class="sprint" id="sprint_" data-sprint-status="">
             <div class="box box-color box-small box-bordered">
               <div class="box-title">
                 <h3>
@@ -114,8 +112,6 @@ Scrumtool - Sprint management
                       {{{$team->name}}}
                       <span class="s-team-status">0 / 0</span>
                     </div>
-                    <!--<div class="s-team-story">-->                    
-                    <!--</div>-->
                   </div>
                   @endforeach
                 </div>

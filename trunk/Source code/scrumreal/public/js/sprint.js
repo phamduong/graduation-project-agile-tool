@@ -35,36 +35,65 @@ var sprint_status = {
 };
 
 function hideAllSprintButton() {
-  //Hide all Sprint button
-  $(".sprint .btn-start-sprint").css("display", "none");
-  $(".sprint .btn-complete-sprint").css("display", "none");
-  $(".sprint .btn-resume-sprint").css("display", "none");
-
-//$("#sprint_" + spid + " .btn-complete-sprint").css("display", "inline");
-//$("#sprint_" + spid + " .btn-resume-sprint").css("display", "none");
+  $("#sprint-team-list .sprint .btn-start-sprint").css("display", "none");
+  $("#sprint-team-list .sprint .btn-complete-sprint").css("display", "none");
+  $("#sprint-team-list .sprint .btn-resume-sprint").css("display", "none");
 }
 
-function showStartSprintButton(spid) {
-  hideAllSprintButton();
-  $("#sprint_" + spid + " .btn-start-sprint").css("display", "inline");
+function updateAllSprintStatus(data) {
+  if (data.sprint_status == 2) {
+    //If start 1 sprint, hide all other sprint button
+    hideAllSprintButton();
+    $("#sprint_" + data.spid + " .btn-complete-sprint").css("display", "inline");
+  } else {
+    $("#sprint-team-list .sprint").each(function() {
+      var id = $(this).attr("id");
+      var status = $(this).attr("data-sprint-status");
+      $("#" + id + " .actions .btn").css("display", "none");
+      if (status == 1) {
+        $("#" + id + " .actions .btn-start-sprint").css("display", "inline");
+      } else if (status == 2) {
+        $("#" + id + " .actions .btn-complete-sprint").css("display", "inline");
+      } else if (status == 3) {
+        $("#" + id + " .actions .btn-resume-sprint").css("display", "inline");
+      }
+      $("#" + id + " .sprint-status").html(sprint_status[status]);
+    });
+    
+    if (data.old_status == 3) {
+      //If resume a completed sprint
+      $("#sprint_" + data.spid + " .box-content div:first-child").removeClass(".sprint-teams-disabled");
+      destroyStoryDragDrop();
+      initStoryDragDrop();
+    }else if(data.status == 3){
+      //If complete a sprint
+      $("#sprint_" + data.spid + " .box-content div:first-child").addClass(".sprint-teams-disabled");
+      $("#sprint_" + data.spid + " .box-content div:first-child").removeClass(".sprint-teams-disabled");
+      destroyStoryDragDrop();
+      initStoryDragDrop();
+    }
+  }
 }
 
 function appendSprintHTML(sprint_data) {
   var sprint_temp = $(".sprint-temp").html();
   $(".sprint-temp .sprint").attr("id", "sprint_" + sprint_data.spid);
+  $(".sprint-temp .sprint").attr("data-sprint-status", sprint_data.status);
   $(".sprint-temp .sprint a").attr("href", sprint_data.spid);
+  $(".sprint-temp .sprint-teams").attr("data-spid", sprint_data.spid);
   var title = '<i class="glyphicon-folder_flag"></i> '
           + sprint_data.name + ' (' + sprint_data.start_date_es
           + ' - ' + sprint_data.end_date_es + ')';
   $(".sprint-temp .sprint a").html(title);
-  $(".sprint-tempv .btn-start-sprint").attr("data-spid", sprint_data.spid);
-  $(".sprint-tempv .btn-complete-sprint").attr("data-spid", sprint_data.spid);
-  $(".sprint-tempv .btn-resume-sprint").attr("data-spid", sprint_data.spid);
+  $(".sprint-temp .btn-start-sprint").attr("data-spid", sprint_data.spid);
+  $(".sprint-temp .btn-complete-sprint").attr("data-spid", sprint_data.spid);
+  $(".sprint-temp .btn-resume-sprint").attr("data-spid", sprint_data.spid);
 
   //append to list sprint
   $("#sprint-team-list").append($(".sprint-temp").html());
   $(".sprint-temp").html(sprint_temp);
 }
+
 
 $(document).ready(function() {
   var callback = function(topic, data) {
@@ -114,7 +143,9 @@ $(document).ready(function() {
         case "remove_story_from":
           {
             removeStoryFromSprint(data.content);
-            appendNewStoryHTML(data.content.story_data);
+            if ($("#story-not-se-list #story_" + data.content.select_sid).length === 0) {
+              appendNewStoryHTML(data.content.story_data);
+            }
             var num_day = parseInt($("#sprint_" + data.content.start_spid + " #s_team_" + data.content.start_tid).attr("data-num-day"));
             updateEachTeamDay(data.content.start_spid, data.content.start_tid, num_day);
             updateStoryHTML(data.content.story_data);
@@ -139,24 +170,26 @@ $(document).ready(function() {
             updateStoryOrder2(data.content);
             break;
           }
+        case "complete_sprint":
+        case "resume_sprint":
         case "start_sprint":
           {
-
-            break;
-          }
-        case "complete_sprint":
-          {
-
-            break;
-          }
-        case "resume_sprint":
-          {
-
+            var sid = data.content.spid;
+            $("#sprint_" + sid).attr("data-sprint-status", data.content.sprint_status);
+            updateAllSprintStatus(data.content);
             break;
           }
         case "add_sprint":
           {
             appendSprintHTML(data.content);
+            getTeamDayAll();
+            destroyStoryDragDrop();
+            initStoryDragDrop();
+            break;
+          }
+        case "delete_sprint":
+          {
+            deleteSprintHTML(data.content.spid);
             destroyStoryDragDrop();
             initStoryDragDrop();
             break;
@@ -378,6 +411,7 @@ function initStoryDragDrop() {
   });
 
   $sprint_team.droppable({
+    accept: ".story",
 //    activeClass: "ui-state-highlight",
     drop: function(event, ui) {
       $(this).append(ui.draggable);
@@ -883,4 +917,17 @@ function updateStoryOrder2(data) {
   for (var i = 0; i < list.length; i++) {
     list[i].parentNode.appendChild(list[i]);
   }
+}
+
+function deleteSprintHTML(spid) {
+  var html;
+  var id;
+  $("#sprint_" + spid + " .story").each(function() {
+    id = $(this).attr("id");
+    var ele = document.getElementById(id);
+    html = ele.outerHTML;
+    $("#story-not-se-list .scrollable").append(html);
+    $(this).remove();
+  });
+  $("#sprint_" + spid).remove();
 }

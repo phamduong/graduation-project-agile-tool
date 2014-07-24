@@ -1,0 +1,8 @@
+1) Môi trường triển khai dự án yêu cầu
+	- PHP > 5.3
+	- MySql > 5.0
+	- Apache > 2.2
+2) Tạo 1 Mysql database có tên là: scrumreal2. Với encoding là utf8_unicode_ci
+3) Import file sql scrumreal2.sql vào database vừa tạo
+4) Tạo virtual host đến  folder: public/index.php
+5) Truy cập vào trang web theo đường dẫn vừa tạo

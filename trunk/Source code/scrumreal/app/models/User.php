@@ -101,7 +101,7 @@ SQL;
     $result = DB::select($query);
     return $result;
   }
-  
+
   /**
    * Get user  IN cancel, complete, pause project
    * @return type
@@ -161,6 +161,48 @@ WHERE project_user.pid = ? AND user.delete_flg = 0
 SQL;
     $result = DB::select($query, array($pid));
     return $result;
+  }
+
+  public function getUserDataTables() {
+    $query = <<<SQL
+SELECT `user`.uid, `user`.image, `user`.fullname AS user_name, `user`.birthday, prj.`name` AS project_name, COUNT(project_user.pid) AS count_project
+FROM `user` LEFT JOIN project_user ON `user`.uid = project_user.uid
+		LEFT JOIN ( SELECT project.* FROM project WHERE project.`status` = 1 ) AS prj ON project_user.pid = prj.pid
+WHERE user.delete_flg = 0
+GROUP BY `user`.uid
+SQL;
+    $result = DB::select($query);
+    return $result;
+  }
+
+  public function getAttendProject($uid) {
+    $query = <<<SQL
+SELECT project.name, project.start_date,
+	CASE
+	WHEN project.`status` = 2 THEN
+		project.end_date_real
+	ELSE
+		project.end_date_es
+	END AS end_date
+	,project.`status`	
+FROM project INNER JOIN project_user ON project_user.pid = project.pid
+WHERE project_user.uid = ? AND project.delete_flg = 0
+SQL;
+    $result = DB::select($query, array($uid));
+    return $result;
+  }
+  
+  public function getUserRoleInProject($pid, $uid){
+    $query = <<<SQL
+SELECT rid
+FROM project_user
+WHERE pid = ? and uid = ?
+SQL;
+    $result = DB::select($query, array($pid, $uid));
+    if(count($result) != 0){
+      return $result[0]->rid;
+    }
+    return ROLE_NOT_IN_PROJECT;
   }
 
 }

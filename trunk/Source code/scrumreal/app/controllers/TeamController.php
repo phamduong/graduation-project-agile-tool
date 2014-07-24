@@ -16,6 +16,7 @@ class TeamController extends BaseController {
       $data['free_user'] = $user->getNotInProject2();
       $data['team_list'] = $team->getTeamList($current_project);
       $data['current_project'] = Session::get('current_project');
+      $data['current_proj_name'] = Session::get('current_project_nm');
       foreach ($data['team_list'] as $item) {
         $data['team_members'][$item->tid] = $team->getTeamMembers($item->tid, $current_project);
       }
@@ -59,7 +60,7 @@ class TeamController extends BaseController {
         //get team leader data
         $master = User::find($input['master']);
         $broadcast_data = array(
-            'category' => 'scrum.realtime.team',
+            'category' => 'scrum.realtime_' . Session::get('current_project') . '.team',
             'type' => 'add',
             'time' => date('H:i:s'),
             'content' => array(
@@ -106,7 +107,7 @@ class TeamController extends BaseController {
       ActivityController::createActivityDelete(Session::get('current_project'), ENTITY_PROJECT, $team->tid, ENTITY_TEAM);
       $data = array('status' => 200, 'message' => 'Successfull');
       $broadcast_data = array(
-          'category' => 'scrum.realtime.team',
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.team',
           'type' => 'delete',
           'time' => date('H:i:s'),
           'content' => array(
@@ -128,7 +129,7 @@ class TeamController extends BaseController {
       ActivityController::createActivityDelete($input['tid'], ENTITY_TEAM, $input['select_uid'], ENTITY_USER);
       $data = array('status' => 200, 'message' => 'Successfull');
       $broadcast_data = array(
-          'category' => 'scrum.realtime.team',
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.team',
           'type' => 'remove_member',
           'time' => date('H:i:s'),
           'content' => array(
@@ -172,7 +173,7 @@ class TeamController extends BaseController {
       $data = array('status' => 200, 'message' => 'Save team sucessfully');
 
       $broadcast_data = array(
-          'category' => 'scrum.realtime.team',
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.team',
           'type' => 'update',
           'time' => date('H:i:s'),
           'content' => array(
@@ -218,7 +219,7 @@ class TeamController extends BaseController {
       ActivityController::createActivityAdd($input['end_tid'], ENTITY_TEAM, $input['select_uid'], ENTITY_USER);
       $data = array('status' => 200, 'message' => 'Successfull');
       $broadcast_data = array(
-          'category' => 'scrum.realtime.team',
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.team',
           'type' => 'add_member',
           'time' => date('H:i:s'),
           'content' => array(
@@ -242,7 +243,7 @@ class TeamController extends BaseController {
       ActivityController::createActivityAdd($input['end_tid'], ENTITY_TEAM, $input['select_uid'], ENTITY_USER);
       $data = array('status' => 200, 'message' => 'Successfull');
       $broadcast_data = array(
-          'category' => 'scrum.realtime.team',
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.team',
           'type' => 'move_member',
           'time' => date('H:i:s'),
           'content' => array(

@@ -101,7 +101,7 @@ function appendTaskToHTML(taid, has_user, sid) {
 function appendStoryToHTML(locate) {
   var page = $(location).attr('pathname');
   if (page === "/story") {
-    var oTable = $("#user-story-datatable").dataTable();
+    var oTable = $("#user_story_datatable").dataTable();
     oTable.fnReloadAjax();
   } else if (page === '/sprint') {
     if (locate === "sprint_page_right") {
@@ -450,8 +450,10 @@ function showAlertModal(message, status) {
     case "notice":
       {
         $("#modal-error-notice .modal-header").css("background-color", "#FF6600");
+        $("#modal-error-notice .modal-header #myModalLabel").css("color", "#000000");
         $("#modal-error-notice").css("border-color", "#FF6600");
         $("#modal-error-notice .modal-header #myModalLabel").html("Notice");
+        
         break;
       }
   }
@@ -695,4 +697,24 @@ function subscribeToTopic(subscribe_link, host, port, callback) {
           },
           {'skipSubprotocolCheck': true}
   );
+}
+
+function loadFormEditUserData(data) {
+  var parent = "#modal-edit-user ";
+  var user_info = data.user_info;
+  $(parent + "#fullname").val(user_info.fullname);
+  $(parent + "#birthday").val(user_info.birthday);
+  $(parent + "#user_image").attr("src", user_info.user_image);
+  $(parent + ".delete-user").attr("data-uid", user_info.uid);
+  var attended_project = data.attended_project;
+  $("#project-attend-table tbody").html("");
+  $.each(attended_project, function(key, val) {
+    var html = "<tr>";
+    for (var k in val) {
+      html += "<td>" + val[k] + "</td>";
+    }
+    html += "</tr>";
+    $("#project-attend-table tbody").append(html);
+  });
+  $("#modal-edit-user").modal('show');
 }

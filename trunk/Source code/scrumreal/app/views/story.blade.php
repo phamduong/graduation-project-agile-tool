@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumtool - User story management
+{{{$current_proj_name}}}
 @stop
 @section('content')
 @include('modal/story_add')
@@ -23,7 +23,7 @@ Scrumtool - User story management
               <!--<button id="btn-download-excel" class="btn btn-primary pull-right mr10"><i class="icon-download-alt"></i> Excel</button>-->
             </div>
           </div>
-          <table class="table table-hover table-nomargin table-bordered usertable" id="user-story-datatable">
+          <table class="table table-hover table-nomargin table-bordered usertable" id="user_story_datatable">
             <thead>
               <tr class='thefilter'>
                 <th>Story id</th>

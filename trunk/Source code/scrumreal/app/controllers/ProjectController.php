@@ -22,6 +22,8 @@ class ProjectController extends BaseController {
       //$data['free_user'] = $user->getNotInProject();
       //$data['candicate_leader'] = $user->getCandicate();
       $data['current_project'] = Session::get('current_project');
+      $data['current_proj_name'] = Session::get('current_project_nm');
+      $data['current_role'] = Session::get('current_role');
       return View::make('project', $data);
     }
   }
@@ -65,7 +67,8 @@ class ProjectController extends BaseController {
         'start_date' => 'Start date',
         'end_date_es' => 'Estimate end date',
         'description' => 'Desciption',
-        'note' => 'Note'
+        'note' => 'Note',
+        'allow_out_view' => 'Allow user not in project to view this project'
     );
     //change date to same format
     $project->start_date = date('Y-m-d', strtotime($project->start_date));
@@ -152,7 +155,7 @@ class ProjectController extends BaseController {
    */
   public function getDatatables() {
     $project = new Project;
-    $p_list = $project->getAll();
+    $p_list = $project->getProjectDatatables(Auth::user()->uid);
     return json_encode($p_list);
   }
 
@@ -170,6 +173,7 @@ class ProjectController extends BaseController {
     $project->note = $input['note'];
     $project->status = PROJECT_NEW_STATUS; //active
     $project->description = $input['description'];
+    $project->allow_out_view = $input['allow_out_view'];
     if ($project->save() == 1) {
       $pid = $project->pid;
       $project_model = new Project;
@@ -265,7 +269,13 @@ class ProjectController extends BaseController {
     Session::put('current_project', $input['pid']);
     $proj_nm = Project::find($input['pid'])->name;
     Session::put('current_project_nm', $proj_nm);
-    $data = array('status' => 200, 'message' => 'Set current project successfully');
+    $user_model = new User;
+    Session::put('current_role', $user_model->getUserRoleInProject($input['pid'], Auth::user()->uid));
+    $data = array(
+        'status' => 200,
+        'message' => 'Set current project successfully',
+        'rid' => Session::get('current_role')
+      );
     return $data;
   }
 

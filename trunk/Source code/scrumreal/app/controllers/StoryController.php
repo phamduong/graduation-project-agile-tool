@@ -9,7 +9,8 @@ class StoryController extends BaseController {
       $data['lang'] = parent::getLanguage();
       $data['cur_user'] = parent::getCurrentUser();
       $data['active_nav'] = 'story';
-      $data['current_proj_name'] = Project::find(Session::get('current_project'))->name;
+//      $data['current_proj_name'] = Project::find(Session::get('current_project'))->name;
+      $data['current_proj_name'] = Session::get('current_project_nm');
       $data['current_project'] = Session::get('current_project');
       return View::make('story', $data);
     } else {

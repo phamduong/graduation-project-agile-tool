@@ -38,10 +38,39 @@ SQL;
     $result["aaData"] = DB::select($query);
     return $result;
   }
+  
+  public function getProjectDatatables($uid){
+    $query = <<<SQL
+SELECT project.name, project_owner.owner,  project_leader.leader, project.start_date,
+IF (project.status = 2, project.end_date_real, project.end_date_es) as end_date, project.status,
+  project.pid
+FROM project
+LEFT JOIN project_user ON project.pid = project_user.pid
+LEFT JOIN 
+	(
+		SELECT user.fullname as leader, project.pid as pid
+		FROM project JOIN project_user ON project.pid = project_user.pid
+									JOIN user ON project_user.uid = user.uid
+		WHERE project_user.rid = 1
+	)project_leader
+ON project_leader.pid = project.pid
+LEFT JOIN
+	(
+		SELECT user.fullname as owner, project.pid as pid
+		FROM project JOIN project_user ON project.pid = project_user.pid
+									JOIN user ON project_user.uid = user.uid
+		WHERE project_user.rid = 4
+	)project_owner
+ON project_owner.pid = project.pid
+WHERE project.delete_flg = 0 AND (project_user.uid = ? OR project.allow_out_view = 1)
+SQL;
+    $result["aaData"] = DB::select($query, array($uid));
+    return $result;
+  }
 
   public function getProject($pid) {
     $query = <<<SQL
-SELECT project.pid, project.name, project.start_date, project.end_date_es, project.note, project.description,
+SELECT project.pid, project.name, project.start_date, project.end_date_es, project.note, project.description, project.allow_out_view,
 IF (project.status = 2, project.end_date_real, project.end_date_es) as end_date, project.status,
 project_leader.fullname as leader_name, project_leader.uid as leader_id, project_owner.fullname as owner_name, project_owner.uid as owner_id
 FROM project
@@ -140,5 +169,5 @@ SQL;
     $result = DB::delete($query, array($pid));
     return $result;
   }
-
+  
 }

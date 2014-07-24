@@ -13,7 +13,7 @@ $("#save-permission").click(function(e) {
     type: "POST",
     data: data,
     success: function(response) {
-      showAlertModal(response.message);
+      showAlertModal(response.message, "success");
     }, error: function(response) {
       showAlertModal(response.message);
     }

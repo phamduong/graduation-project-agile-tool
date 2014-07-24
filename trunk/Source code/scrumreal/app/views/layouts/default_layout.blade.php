@@ -136,8 +136,6 @@
       @include('layouts/main_nav')
     </div>
 
-
-
     <!--<div class="container-fluid" id="content">-->
     <div class="container-fluid nav-hidden" id="content">
       <div id="main">
@@ -147,30 +145,7 @@
 
     @if($active_nav == 'taskboard')
     <div id="task-control-bar" class="container-fluid">
-      <div class="row-fluid">
-        <!--<form class="form-horizontal form-column form-bordered" method="POST" action="#">-->
-        <!--          <div class="span3">
-                    <div class="control-group">
-                      <label class="control-label" for="sprint-status">Sprint status</label>
-                      <div class="controls">
-                        @if($sprint_status === 1)
-                          <input type="text" disabled="" class="input-large" value="In plan" id="sprint-status" name="sprint-status">
-                        @elseif($sprint_status === 2)
-                          <input type="text" disabled="" class="input-large" value="In progress" id="sprint-status" name="sprint-status">
-                        @elseif($sprint_status === 3)
-                          <input type="text" disabled="" class="input-large" value="Completed" id="sprint-status" name="sprint-status">
-                        @endif
-                      </div>
-                    </div>
-                  </div>-->
-
-<!--        <div class="span3">
-          <div class="control-group">
-            <div class="controls">
-              <input type="text" class="input-large" placeholder="Search" id="task_board_filter" name="task_board_filter">
-            </div>
-          </div>
-        </div>-->
+      <div class="row-fluid">        
         <div class="span3">
           <div class="control-group">
             <div class="controls">

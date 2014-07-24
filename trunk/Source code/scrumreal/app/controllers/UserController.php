@@ -2,6 +2,29 @@
 
 class UserController extends \BaseController {
 
+  public function index() {
+    if (Session::has('current_project')) {
+      $data = array();
+      $data['lang'] = parent::getLanguage();
+      $data['cur_user'] = parent::getCurrentUser();
+      $data['active_nav'] = 'users';
+//      $data['current_proj_name'] = Project::find(Session::get('current_project'))->name;
+//      if(isset(Session::get('current_project'))){
+      $data['current_project'] = Session::get('current_project');
+      $data['current_proj_name'] = Session::get('current_project_nm');
+//      }
+      return View::make('users', $data);
+    } else {
+      return Redirect::to('/project');
+    }
+  }
+
+  public function getDatatables() {
+    $user_model = new User;
+    $data['aaData'] = $user_model->getUserDataTables();
+    return json_encode($data);
+  }
+
   /**
    * Login function
    * @return array(status, message)
@@ -38,13 +61,16 @@ class UserController extends \BaseController {
   public function edit() {
     $input = Input::all();
     $user = User::find($input['uid']);
+    $user_model = new User;
     $data = array(
         'status' => 200,
         'user_info' => array(
             'uid' => $user->uid,
             'fullname' => $user->fullname,
-            'birthday' => $user->birthday
-        )
+            'birthday' => $user->birthday,
+            'user_image' => asset('data/image/user/' . $user->image)
+        ),
+        'attended_project' => $user_model->getAttendProject($input['uid'])
     );
     return $data;
   }
@@ -61,7 +87,7 @@ class UserController extends \BaseController {
           'time' => date('H:i:s'),
           'content' => array(
               'uid' => $user->uid,
-              'fullname' => $user->fullname              
+              'fullname' => $user->fullname
           )
       );
       PushController::publishData($broadcast_data);
@@ -421,18 +447,17 @@ class UserController extends \BaseController {
       $data['message'] = 'Create user successfully';
       $data['user']['uid'] = $user->uid;
       $data['user']['full_name'] = $user->fullname;
-      
+
       $broadcast_data = array(
           'category' => 'scrum.realtime_' . Session::get('current_project') . '.user',
           'type' => 'add_user',
           'time' => date('H:i:s'),
           'content' => array(
               'uid' => $user->uid,
-              'fullname' => $user->fullname              
+              'fullname' => $user->fullname
           )
       );
       PushController::publishData($broadcast_data);
-      
     }
     return $data;
   }

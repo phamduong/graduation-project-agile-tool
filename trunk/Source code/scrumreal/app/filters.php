@@ -16,10 +16,15 @@ App::before(function($request) {
   if (Session::has('current_project')) {
     $uid = Auth::user()->uid;
     if (PermissionController::checkPermission($uid, $path) == false) {
-      $data = array('status' => 801,
-          'message' => "You don't have permission to perform this action",
-          'url' => $path);
-      return $data;
+      if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        /* if ajax request */
+        $data = array('status' => 801,
+            'message' => "You don't have permission to perform this action",
+            'url' => urldecode($path));
+        return $data;
+      } else {
+        return Response::view('errors_permision', array());
+      }
     }
   } else {
     if ($path != '/' && $path != '/login') {
@@ -87,4 +92,8 @@ Route::filter('csrf', function() {
   if (Session::token() != Input::get('_token')) {
     throw new Illuminate\Session\TokenMismatchException;
   }
+});
+
+App::missing(function($exception) {
+  return Response::view('errors_404', array(), 404);
 });
