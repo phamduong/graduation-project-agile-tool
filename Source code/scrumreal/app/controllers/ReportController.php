@@ -19,7 +19,11 @@ class ReportController extends BaseController {
         //if overview
         if ($spid === '') {
           //first sprint
-          $data['report_selected_sprint'] = $data['sprint_list'][0]->spid;
+          if (count($data['sprint_list'])) {
+            $data['report_selected_sprint'] = $data['sprint_list'][0]->spid;
+          } else {
+            $data['report_selected_sprint'] = '';
+          }
         } else {
           $data['report_selected_sprint'] = $spid;
         }
@@ -27,7 +31,11 @@ class ReportController extends BaseController {
       } else {
         if ($spid === '') {
           //first sprint
-          $data['report_selected_sprint'] = $data['sprint_list'][0]->spid;
+          if (count($data['sprint_list'])) {
+            $data['report_selected_sprint'] = $data['sprint_list'][0]->spid;
+          } else {
+            $data['report_selected_sprint'] = '';
+          }
         } else {
           //selected sprint
           $data['report_selected_sprint'] = $spid;
@@ -48,24 +56,26 @@ class ReportController extends BaseController {
 
   public function sprintAllTeamBurnDown() {
     $input = Input::all();
-    $spid = $input['spid'];
-
-    $sprint = Sprint::find($spid);
     $data = array();
-    $sprint_start_str = strtotime($sprint->start_date_es);
-    $sprint_end_str = strtotime($sprint->end_date_es);
-    //xaxis
-    $data['xaxis']['sprint_start_date'] = $sprint_start_str;
-    $data['xaxis']['sprint_end_date'] = $sprint_end_str;
-    //yaxis
-    $task_model = new Task;
-    $total_day_in_sprint = $task_model->getTotalDaysInSprintAll($spid);
-    $data['yaxis'][] = array('time' => $sprint_start_str, 'days' => $total_day_in_sprint);
-    $current_date = strtotime(date('Y-m-d H:i:s'));
-    for ($i = $sprint_start_str + (2 * 86400); $i <= $sprint_end_str; $i += (2 * 86400)) {
-      if ($i <= $current_date) {
-        $temp = date('Y-m-d H:i:s', $i);
-        $data['yaxis'][] = array('time' => $i, 'days' => $total_day_in_sprint - ($task_model->getTotalDaysInSprintDoneAll($spid, $temp)));
+    if (isset($input['spid'])) {
+      $spid = $input['spid'];
+      $sprint = Sprint::find($spid);
+
+      $sprint_start_str = strtotime($sprint->start_date_es);
+      $sprint_end_str = strtotime($sprint->end_date_es);
+      //xaxis
+      $data['xaxis']['sprint_start_date'] = $sprint_start_str;
+      $data['xaxis']['sprint_end_date'] = $sprint_end_str;
+      //yaxis
+      $task_model = new Task;
+      $total_day_in_sprint = $task_model->getTotalDaysInSprintAll($spid);
+      $data['yaxis'][] = array('time' => $sprint_start_str, 'days' => $total_day_in_sprint);
+      $current_date = strtotime(date('Y-m-d H:i:s'));
+      for ($i = $sprint_start_str + (2 * 86400); $i <= $sprint_end_str; $i += (2 * 86400)) {
+        if ($i <= $current_date) {
+          $temp = date('Y-m-d H:i:s', $i);
+          $data['yaxis'][] = array('time' => $i, 'days' => $total_day_in_sprint - ($task_model->getTotalDaysInSprintDoneAll($spid, $temp)));
+        }
       }
     }
     return $data;
@@ -129,10 +139,9 @@ class ReportController extends BaseController {
         $temp = date('Y-m-d H:i:s', $i);
         $data['yaxis'][] = array('time' => $i, 'points' => $story_model->getStoryPointDoneInTime($pid, $temp));
       }
-      
     }
     //get total line
-    for($i = $project_start_str; $i <= $project_end_str; $i += (2 * 86400)){
+    for ($i = $project_start_str; $i <= $project_end_str; $i += (2 * 86400)) {
       $temp = date('Y-m-d H:i:s', $i);
       $data['yaxis_total'][] = array('time' => $i, 'points' => $story_model->getTotalStoryPointAtTime($pid, $temp));
     }

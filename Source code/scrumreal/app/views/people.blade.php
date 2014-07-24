@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumtool - Team management
+{{{$current_proj_name}}}
 @stop
 @section('content')
 @include('modal/team_add')

@@ -6,11 +6,11 @@
         <h3 id="myModalLabel"><i class="icon-plus-sign-alt"></i>Add new project</h3>
         <ul class="tabs">
           <li class="active">
-            <a href="#tab-proj-info-add" data-toggle="tab">Project infomations</a>
+            <a href="#tab-proj-info-add" data-toggle="tab">Project informations</a>
           </li>
-<!--          <li>
+          <li>
             <a href="#tab-proj-settings-add" data-toggle="tab">Project settings</a>
-          </li>-->
+          </li>
         </ul>
       </div>
       <div class="box-content">
@@ -69,41 +69,31 @@
                   <input type="file" name="attach[]" id="project-attach-add" multiple/>
                 </div>
               </div>
-
             </div>
-
+            <div class="modal-footer">
+              <input type="submit" class="btn btn-primary" value="Add project">
+              <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            </div>
           </div>
-<!--          <div class="tab-pane" id="tab-proj-settings-add">
+
+          <div class="tab-pane" id="tab-proj-settings-add">
             <div class="modal-body">
-               <form action="#" method="POST" class='form-horizontal'> 
               <div class="control-group">
-                 <div class="controls"> 
+                <!--<div class="controls">-->
                 <div class="check-demo-col">
                   <div class="check-line">
-                    <input type="checkbox" id="c5" class='icheck-me' data-skin="square" data-color="blue"> <label class='inline' for="c5">Default</label>
-                  </div>
-                  <div class="check-line">
-                    <input type="checkbox" id="c6" class='icheck-me' data-skin="square" data-color="blue" checked> <label class='inline' for="c6">Checked</label>
-                  </div>
-                  <div class="check-line">
-                    <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" disabled> <label class='inline'>Disabled</label>
-                  </div>
-                  <div class="check-line">
-                    <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" checked disabled> <label class='inline'>Disabled &amp; checked</label>
-                  </div>
+                    <input type="checkbox" id="allow_out_view" checked="checked"> 
+                    <label class='inline' for="allow_out_view">Allow user not in project to view this project</label>
+                  </div>                  
                 </div>
-                 </div> 
+                <!--</div>-->
               </div>
-               </form> 
             </div>
-          </div>-->
+          </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <input type="submit" class="btn btn-primary" value="Add project">
-        <span class="loader"><img src="{{asset("img/loading.gif")}}" /></span>
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-      </div>
     </form>
+
   </div>
 </div>

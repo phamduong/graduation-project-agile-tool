@@ -46,3 +46,14 @@ du lieu khi du an theo dung timeline
 	khi du an tre timeline -> lam sao de biet, de thay doi, canh bao nguoi dung
 	thong ke danh sach du an da tham gia cua user
 	
+	
+	
+	
+	
+	1) Quay phim demo nếu cần thiết
+	2) Chỉnh sửa báo cáo và in lại nếu cần thiết
+	3) Bồ sung slide tài liệu tham khảo trước slide cám ơn
+	4) gủi báo cáo cho cô
+	5) viết 1 trang a4 trình bày những gì đã làm rồi gửi cho cô
+	6) làm lại slide
+	7) tao dữ liệu mẫu cho dự án

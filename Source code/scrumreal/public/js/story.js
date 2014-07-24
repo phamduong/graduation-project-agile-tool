@@ -2,13 +2,13 @@ var oTable;
 $(document).ready(function() {
   var callback = function(topic, data) {
 //    if(data.type == 'add'){
-//      var oTable = $("#user-story-datatable").dataTable();
+//      var oTable = $("#user_story_datatable").dataTable();
 //      oTable.fnReloadAjax();
 //    }else if(data.type == 'update'){
 //      
 //    }
     if (topic === "scrum.realtime_" + current_project + ".story") {
-      var oTable = $("#user-story-datatable").dataTable();
+      var oTable = $("#user_story_datatable").dataTable();
       oTable.fnReloadAjax();
     } else if (topic === "scrum.realtime_" + current_project + ".task") {
       switch (data.type) {
@@ -35,7 +35,7 @@ $(document).ready(function() {
 
   initUserStoryDatatable();
   //Choose edit and user story
-  $("#user-story-datatable").on("click", ".view_story", function(event) {
+  $("#user_story_datatable").on("click", ".view_story", function(event) {
     event.preventDefault();
     var sid = $(this).attr('href');
     window.current_story = sid;
@@ -98,17 +98,12 @@ $(document).ready(function() {
 });
 
 function initUserStoryDatatable() {
-  if ($("#user-story-datatable").length > 0) {
+  if ($("#user_story_datatable").length > 0) {
     var sAjaxSource = "/story/datatables";
     var opt = {
       "sAjaxSource": sAjaxSource,
       "sDom": "<'row-fluid well-search'<'span5'Ti><'span2'f><'span5'pl><'clear'><'container-processing'r>>t<'row-fluid'<'span6'i><'span6'p>>",
       "sPaginationType": "full_numbers",
-      "oLanguage": {
-        "sSearch": "<span>Search:</span> ",
-        "sInfo": "Showing <span>_START_</span> to <span>_END_</span> of <span>_TOTAL_</span> entries",
-        "sLengthMenu": "_MENU_ <span>entries per page</span>"
-      },
       "aoColumns": [
         {"mData": "sid"},
         {"mData": "story_name"},
@@ -180,9 +175,9 @@ function initUserStoryDatatable() {
         },
         {
           "mRender": function(data, type, row) {
-            $html = '<div id="story_' + row['sid'] + '_ac"><a href="' + row['sid'] + '" class="btn view_story" rel="tooltip" title="View"><i class="icon-edit"></i></a>'
+            var html = '<div id="story_' + row['sid'] + '_ac"><a href="' + row['sid'] + '" class="btn view_story" rel="tooltip" title="View"><i class="icon-edit"></i></a>'
                     + '</div>';
-            return $html;
+            return html;
           },
           'aTargets': [8]
         }
@@ -210,7 +205,7 @@ function initUserStoryDatatable() {
         //"sSelectedClass": 'row_selected',
       }
     };
-    oTable = $('#user-story-datatable').dataTable(opt);
+    oTable = $('#user_story_datatable').dataTable(opt);
 
     $('.dataTables_filter input').attr("placeholder", "Search here...");
     $(".dataTables_length select").wrap("<div class='input-mini'></div>").chosen({
@@ -255,14 +250,14 @@ function initUserStoryDatatable() {
         null
       ]
     });
-    $("#user-story-datatable").css("width", '100%');
-    $('table#user-story-datatable > thead > tr:last-child').hide();
+    $("#user_story_datatable").css("width", '100%');
+    $('table#user_story_datatable > thead > tr:last-child').hide();
 
     var html = '<button id="advanceFilter" class="advance-filter mr10 pull-right"><i class="icon-filter"></i></button>';
-    $('#user-story-datatable_wrapper > div.well-search > div:nth-child(3)').prepend(html);
+    $('#user_story_datatable_wrapper > div.well-search > div:nth-child(3)').prepend(html);
 
     $('#advanceFilter').click(function() {
-      $('table#user-story-datatable > thead > tr:last-child').toggle();
+      $('table#user_story_datatable > thead > tr:last-child').toggle();
       if ($('#advanceFilter').hasClass('advance-filter-active')) {
         $('#advanceFilter').removeClass('advance-filter-active');
         // reset_dt_view(oTable);

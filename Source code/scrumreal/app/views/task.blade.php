@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumtool - KanBan Tool
+{{{$current_proj_name}}}
 @stop
 @section('content')
 @include('modal/task_edit')

@@ -5,11 +5,11 @@
       <h3 id="myModalLabel"><i class="icon-edit"></i>Edit project</h3>
       <ul class="tabs">
         <li class="active">
-          <a href="#tab-proj-info-edit" data-toggle="tab">Project infomations</a>
+          <a href="#tab-proj-info-edit" data-toggle="tab">Project informations</a>
         </li>
-<!--        <li>
+        <li>
           <a href="#tab-proj-settings-edit" data-toggle="tab">Project settings</a>
-        </li>-->
+        </li>
         <li>
           <a href="#tab-proj-comment" data-toggle="tab">Comment</a>
         </li>
@@ -21,6 +21,7 @@
     <div class="box-content">
       <div class="tab-content row-fluid">
         <div class="alert_block"></div>
+
         <div class="tab-pane active" id="tab-proj-info-edit">
           <form action="#" method="POST" class="form-horizontal form-validate" id="form-edit-project">
             <input type="hidden" id="pid" val="" />
@@ -39,7 +40,7 @@
                   <input type="text" name="project_date_range" id="project_date_range" class="span8 daterangepick" data-rule-required="true" data-msg-required="Please pick project's start date and project's end date">
                 </div>
               </div>
-              
+
               <div class="control-group">
                 <label for="status" class="control-label">Status</label>
                 <div class="controls">
@@ -86,17 +87,17 @@
                   <textarea name="note" id="note" class="input-block-level span11" placeholder="Input project's note here"></textarea>
                 </div>
               </div>
-              
+
               <div class="control-group">
                 <label for="note" class="control-label">Attach</label>
                 <div class="controls attach_files" id="">
-                  
+
                 </div>
                 <div class="controls">
                   <input type="file" name="attach[]" id="project-attach-update" multiple/>
                 </div>
               </div>
-              
+
             </div>
             <div class="modal-footer">
               <input type="submit" class="btn btn-primary" value="Save project infomation">
@@ -106,34 +107,22 @@
             </div>
           </form>
         </div>
-<!--        <div class="tab-pane" id="tab-proj-settings-edit">
-          <form action="#" method="POST" class='form-horizontal'>
-            <div class="modal-body">
-              <div class="control-group">
-                 <div class="controls"> 
-                <div class="check-demo-col">
-                  <div class="check-line">
-                    <input type="checkbox" id="c5" class='icheck-me' data-skin="square" data-color="blue"> <label class='inline' for="c5">Default</label>
-                  </div>
-                  <div class="check-line">
-                    <input type="checkbox" id="c6" class='icheck-me' data-skin="square" data-color="blue" checked> <label class='inline' for="c6">Checked</label>
-                  </div>
-                  <div class="check-line">
-                    <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" disabled> <label class='inline'>Disabled</label>
-                  </div>
-                  <div class="check-line">
-                    <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" checked disabled> <label class='inline'>Disabled &amp; checked</label>
-                  </div>
-                </div>
-                 </div> 
+        <div class="tab-pane" id="tab-proj-settings-edit">
+          <!--<form action="#" method="POST" class='form-horizontal'>-->
+          <div class="modal-body">
+            <div class="control-group">
+              <!--<div class="controls">--> 
+              <div class="check-demo-col">
+                <div class="check-line">
+                  <input type="checkbox" id="allow_out_view"> 
+                  <label class='inline' for="allow_out_view">Allow user not in project to view this project</label>
+                </div>                  
               </div>
+              <!--</div>--> 
             </div>
-            <div class="modal-footer">
-              <input type="submit" class="btn btn-primary" value="Save project settings">
-              <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-            </div>
-          </form>
-        </div>-->
+          </div>
+        </div>
+        <!--        </form>-->
         <div class="tab-pane tab-activity" id="tab-proj-activity">
           <div class="modal-body">
             <div class="activity-temp" style="display: none;">

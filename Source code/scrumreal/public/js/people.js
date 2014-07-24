@@ -170,43 +170,13 @@ $(document).ready(function() {
       global: false,
       success: function(response) {
         if (response.status === 200) {
-          var parent = "#modal-edit-user #form-edit-user ";
-          var user_info = response.user_info;
-          $(parent + "#fullname").val(user_info.fullname);
-          $(parent + "#birthday").val(user_info.birthday);
-          $(parent + ".delete-user").attr("data-uid", user_info.uid);
-          $("#modal-edit-user").modal('show');
+          loadFormEditUserData(response);
         }
       }, error: function(response) {
         var err = jQuery.parseJSON(response.responseText);
         showAlertModal(err.error.message);
 //        $("#modal-error-notice .error-content").html(err.error.message);
 //        $("#modal-error-notice").modal('show');
-      }
-    });
-  });
-
-  //Delete user
-  $(document).on("click", '.delete-user', function(e) {
-    e.preventDefault();
-    var uid = $(this).attr("data-uid");
-    bootbox.confirm("Are you sure you want to delete this user?", function(result) {
-      if (result === true) {
-        $.ajax({
-          url: "/user/delete",
-          type: "POST",
-          data: {uid: uid},
-          success: function(response) {
-            if (response.status === 200) {
-              var page = $(location).attr('pathname');
-              if (page === "/people") {
-                setTimeout(function() {
-                  $("#modal-edit-user").modal("hide");
-                }, 1000);
-              }
-            }
-          }
-        });
       }
     });
   });

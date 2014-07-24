@@ -618,3 +618,13 @@ input[disabled=disabled]{
   text-align: center;
   padding-top: 20px;
 }
+#project-attend-table{
+  width: 100%;
+}
+
+#project-attend-table tr th, #project-attend-table tr td{
+  border-top: 1px dotted #ddd;
+  border-left: 1px dotted #ddd;
+  padding: 10px;
+  vertical-align: middle;
+}

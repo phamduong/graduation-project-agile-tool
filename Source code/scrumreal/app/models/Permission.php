@@ -7,7 +7,18 @@ class Permission extends Eloquent {
   public $primaryKey = 'peid';
 
   public function getUserPermission($uid, $pid) {
-    $query = <<<SQL
+    if (Session::get('current_role') == ROLE_NOT_IN_PROJECT) {
+      $query = <<<SQL
+SELECT access_link.path, access_link.type
+FROM access_link 
+  INNER JOIN permission ON access_link.peid = permission.peid
+  INNER JOIN role_permission ON permission.peid = role_permission.peid
+  INNER JOIN role ON role_permission.rid = role.rid
+WHERE role.rid = 0
+SQL;
+      $result = DB::select($query);
+    } else {
+      $query = <<<SQL
 SELECT access_link.path, access_link.type
 FROM `user` INNER JOIN project_user ON `user`.uid = project_user.uid
 	INNER JOIN role_permission ON project_user.rid = role_permission.rid
@@ -16,7 +27,8 @@ FROM `user` INNER JOIN project_user ON `user`.uid = project_user.uid
 WHERE `user`.uid = ? AND project_user.pid = ?
 HAVING access_link.path IS NOT NULL
 SQL;
-    $result = DB::select($query, array($uid, $pid));
+      $result = DB::select($query, array($uid, $pid));
+    }
     return $result;
   }
 

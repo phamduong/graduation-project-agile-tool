@@ -48,6 +48,12 @@ SQL;
     $result = DB::select($query, array($tid, $spid));
     return $result;
   }
+  
+//  public function getAllStoryInSprint($spid){
+//    $query = <<<SQL
+//
+//SQL;
+//  }
 
   public function getSprintDetail($spid) {
     $query = <<<SQL
@@ -162,7 +168,12 @@ SQL;
   public function removeUnCompletedStory($spid) {
     $query = <<<SQL
 DELETE FROM story_team
-WHERE spid = ?
+WHERE sid IN (
+    SELECT story_team.sid
+    FROM story_team INNER JOIN story ON story_team.sid = story.sid
+    WHERE story.status <> 8
+  )
+  AND spid = ?
 SQL;
     $result = DB::delete($query, array($spid));
     return $result;
@@ -186,7 +197,7 @@ SQL;
     $query = <<<SQL
 SELECT MAX(sprint.end_date_es) AS max_end_date_es
 FROM sprint
-WHERE sprint.pid = ?
+WHERE sprint.pid = ? AND sprint.delete_flg = 0
 SQL;
     $result =  DB::select($query, array($pid));
     return $result[0]->max_end_date_es;

@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumtool - Report
+{{{$current_proj_name}}}
 @stop
 @section('content')
 <div class="container-fluid">

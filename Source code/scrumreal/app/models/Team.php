@@ -176,6 +176,15 @@ SQL;
     return $result;
   }
 
+  public function deleteFromStory_Team2($spid) {
+    $query = <<<SQL
+  DELETE FROM story_team
+  WHERE spid = ?
+SQL;
+    $result = DB::delete($query, array($spid));
+    return $result;
+  }
+
   public function removeTeamLeaderFromProject($pid, $tid) {
     $query = <<<SQL
   DELETE FROM project_user

@@ -317,6 +317,15 @@ Route::get('/download_attach/{atid}', 'AttachController@downloadAttach');
 Route::any('/task/delete', [
     'uses' => 'TaskController@deleteTask'
 ]);
+
 Route::any('/task/update_order', [
     'uses' => 'TaskController@updateTaskOrder'
+]);
+
+Route::any('/user/datatables', [
+    'uses' => 'UserController@getDatatables'
+]);
+
+Route::any('/users', [
+    'uses' => 'UserController@index'
 ]);

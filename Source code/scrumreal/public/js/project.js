@@ -1,5 +1,20 @@
 var oTable;
 var current_project;
+if (typeof current_role !== "undefined") {
+  updateHTMLFollowRole(current_role);
+}
+
+function updateHTMLFollowRole(role) {
+  if (role == 1) {
+    $("#btn-add-project").css("display", "inline");
+    $("#permission_link").css("display", "inline");
+    $("#user_link").css("display", "inline");
+  } else {
+    $("#btn-add-project").css("display", "none");
+    $("#permission_link").css("display", "none");
+    $("#user_link").css("display", "none");
+  }
+}
 
 $(document).ready(function() {
   //init plupload
@@ -127,10 +142,14 @@ $(document).ready(function() {
       if (name_err.length > 0) {
         alert("Some file extension are not valid, pls check a again: " + name_err.toString());
       } else {
+        var allow_out_view = 1;
+        if ($("#form-add-project #allow_out_view").is(':checked') == false) {
+          allow_out_view = 0;
+        }
         $.ajax({
           url: "/project/add",
           type: "POST",
-          data: $(this).serialize(),
+          data: $(this).serialize() + "&allow_out_view=" + allow_out_view,
           success: function(response) {
             if (response.status === 800) { //error
               showAlert(0, true, response.message);
@@ -183,10 +202,14 @@ $(document).ready(function() {
       if (name_err.length > 0) {
         alert("Some file extension are not valid, pls check a again: " + name_err.toString());
       } else {
+        var allow_out_view = 1;
+        if ($("#modal-edit-project #allow_out_view").is(':checked') == false) {
+          allow_out_view = 0;
+        }
         $.ajax({
           url: "/project/save",
           type: "POST",
-          data: $(this).serialize(),
+          data: $(this).serialize() + "&allow_out_view=" + allow_out_view,
           success: function(response) {
             if (response.status === 200) {
               showAlert(1, true, response.message);
@@ -327,6 +350,11 @@ $(document).ready(function() {
           $(parent + "#note").val(project_info.note);
           $(parent + ".delete-project").attr("data-pid", project_info.pid);
           $(parent + ".complete-project").attr("data-pid", project_info.pid);
+          if (project_info.allow_out_view == 1) {
+            $("#modal-edit-project #allow_out_view").prop("checked", true);
+          } else {
+            $("#modal-edit-project #allow_out_view").prop("checked", false);
+          }
           $(".attach_files").html("");
           $.each(response.attachment, function(key, val) {
             var link = '<div class="file_attach"><a href="' + val.taid + '" class="file_attach_link">' + val.name + '</a> <i class="glyphicon-remove_2 remove_attach"></i></div>';
@@ -363,6 +391,8 @@ $(document).ready(function() {
           $(".row_selected").removeClass("row_selected");
           $(wrapper).parent().parent().addClass("row_selected");
           current_project = pid;
+          current_role = response.rid;
+          updateHTMLFollowRole(current_role)
           window.has_select_project = true;
         }
       }, error: function(response) {

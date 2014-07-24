@@ -23,13 +23,14 @@ Scrumtool - Permission
                 <th>Scrum Master</th>
                 <th>Team member</th>
                 <th>Product owner</th>
+                <th>Not in project</th>
               </tr>
             </thead>
             <tbody>
               @foreach($list_permission as $permission)
               <tr>
                 <td>{{{$permission->name}}}</td>
-                @for($i = 1; $i <= 4; $i++)
+                @for($i = 1; $i <= 5; $i++)
                 @if(in_array($i, $permission->role_satus))
                 <td><input type="checkbox" value="{{{$permission->peid . '_' . $i}}}" checked class="check_permission" /></td>
                 @else

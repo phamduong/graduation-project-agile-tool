@@ -51,8 +51,11 @@
         <li>
           <a href="/user-settings">{{{Lang::get('layout.account_settings')}}}</a>
         </li>
-        <li>
+        <li id="permission_link">
           <a href="/permission">Permission</a>
+        </li>
+        <li id="user_link">
+          <a href="/users">User management</a>
         </li>
         <li>
           <a href="/logout">{{{Lang::get('layout.sign_out')}}}</a>
