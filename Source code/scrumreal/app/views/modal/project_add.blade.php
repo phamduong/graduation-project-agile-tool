@@ -34,7 +34,7 @@
                 <label for="leader" class="control-label">Select product leader</label>
                 <div class="controls">
                   <div class="add-min-height">
-                    <input type="hidden" name="leader" id="leader1" class="span8" />
+                    <input type="hidden" name="leader" id="leader1" class="span8" data-rule-required="true"/>
                   </div>
                   <span class="help-block"><a href="#" data-selected="leader" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="btn-add-user" data-toggle="modal"><i class="icon-plus"></i> Or add product leader here</a></span>
                 </div>
@@ -44,7 +44,7 @@
                 <label for="owner" class="control-label">Select product owner</label>
                 <div class="controls">
                   <div class="add-min-height">
-                    <input type="hidden" name="owner" id="owner1" class="span8" />
+                    <input type="hidden" name="owner" id="owner1" class="span8" data-rule-required="true"/>
                   </div>
                   <span class="help-block"><a href="#" data-selected="owner" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="btn-add-user" data-toggle="modal"><i class="icon-plus"></i> Or add product owner here</a></span>
                 </div>

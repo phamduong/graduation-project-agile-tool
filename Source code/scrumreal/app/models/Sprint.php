@@ -48,7 +48,7 @@ SQL;
     $result = DB::select($query, array($tid, $spid));
     return $result;
   }
-  
+
 //  public function getAllStoryInSprint($spid){
 //    $query = <<<SQL
 //
@@ -167,15 +167,19 @@ SQL;
 
   public function removeUnCompletedStory($spid) {
     $query = <<<SQL
-DELETE FROM story_team
-WHERE sid IN (
-    SELECT story_team.sid
+SELECT story.sid
     FROM story_team INNER JOIN story ON story_team.sid = story.sid
-    WHERE story.status <> 8
-  )
-  AND spid = ?
+    WHERE story.status <> 8 AND story_team.spid = ?
 SQL;
-    $result = DB::delete($query, array($spid));
+    $result = DB::select($query, array($spid));
+
+    $query = <<<SQL
+DELETE FROM story_team
+WHERE sid = ?
+SQL;
+    foreach ($result as $key => $val) {
+      DB::delete($query, array($val->sid));
+    }
     return $result;
   }
 
@@ -199,8 +203,19 @@ SELECT MAX(sprint.end_date_es) AS max_end_date_es
 FROM sprint
 WHERE sprint.pid = ? AND sprint.delete_flg = 0
 SQL;
-    $result =  DB::select($query, array($pid));
+    $result = DB::select($query, array($pid));
     return $result[0]->max_end_date_es;
+  }
+
+  public function getUncompletedStory($spid) {
+    $query = <<<SQL
+SELECT story.sid, story.`name`
+FROM story INNER JOIN story_team
+ON story.sid = story_team.sid
+WHERE story_team.spid = ? AND story.`status` < 8
+SQL;
+    $result = DB::select($query, array($spid));
+    return $result;
   }
 
 }

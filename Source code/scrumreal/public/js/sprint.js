@@ -45,6 +45,7 @@ function updateAllSprintStatus(data) {
     //If start 1 sprint, hide all other sprint button
     hideAllSprintButton();
     $("#sprint_" + data.spid + " .btn-complete-sprint").css("display", "inline");
+    $("#sprint_" + data.spid + " .sprint-status").html(sprint_status[2]);
   } else {
     $("#sprint-team-list .sprint").each(function() {
       var id = $(this).attr("id");
@@ -59,13 +60,13 @@ function updateAllSprintStatus(data) {
       }
       $("#" + id + " .sprint-status").html(sprint_status[status]);
     });
-    
+
     if (data.old_status == 3) {
       //If resume a completed sprint
       $("#sprint_" + data.spid + " .box-content div:first-child").removeClass(".sprint-teams-disabled");
       destroyStoryDragDrop();
       initStoryDragDrop();
-    }else if(data.status == 3){
+    } else if (data.status == 3) {
       //If complete a sprint
       $("#sprint_" + data.spid + " .box-content div:first-child").addClass(".sprint-teams-disabled");
       $("#sprint_" + data.spid + " .box-content div:first-child").removeClass(".sprint-teams-disabled");
@@ -94,6 +95,24 @@ function appendSprintHTML(sprint_data) {
   $(".sprint-temp").html(sprint_temp);
 }
 
+function removeUncompletedStoryHTML(data) {
+  var uncompleted_story = data.uncompleted_story;
+  var spid = data.spid;
+  if (uncompleted_story.length > 0) {
+    $.each(uncompleted_story, function(key, val) {
+      var html = $("#sprint_" + spid + " #story_" + val.sid).remove();
+      $("#story-not-se-list .scrollable").append(html);
+    });
+  }
+  $("#sprint_" + spid + " .sprint-teams").addClass("sprint-teams-disabled");
+  $("#sprint_" + spid + " .sprint-teams-disabled").removeClass("sprint-teams");
+}
+
+function resumeSprintHTML(data) {
+  var spid = data.spid;
+  $("#sprint_" + spid + " .sprint-teams-disabled").addClass("sprint-teams");
+  $("#sprint_" + spid + " .sprint-teams").removeClass("sprint-teams-disabled");
+}
 
 $(document).ready(function() {
   var callback = function(topic, data) {
@@ -171,7 +190,25 @@ $(document).ready(function() {
             break;
           }
         case "complete_sprint":
+          {
+            var sid = data.content.spid;
+            $("#sprint_" + sid).attr("data-sprint-status", data.content.sprint_status);
+            updateAllSprintStatus(data.content);
+            destroyStoryDragDrop();
+            removeUncompletedStoryHTML(data.content);
+            initStoryDragDrop();
+            break;
+          }
         case "resume_sprint":
+          {
+            var sid = data.content.spid;
+            $("#sprint_" + sid).attr("data-sprint-status", data.content.sprint_status);
+            updateAllSprintStatus(data.content);
+            resumeSprintHTML(data.content);
+            destroyStoryDragDrop();
+            initStoryDragDrop();
+            break;
+          }
         case "start_sprint":
           {
             var sid = data.content.spid;
@@ -212,7 +249,7 @@ $(document).ready(function() {
           }
       }
     }
-  }
+  };
 
   var link = ["scrum.realtime_" + current_project + ".team",
     "scrum.realtime_" + current_project + ".story",
@@ -333,7 +370,10 @@ function sortStoryList() {
   var list_story_sortable = $(".sprint-story-list .scrollable");
   var list_story = $(".story", list_story_sortable);
   list_story.sort(function(a, b) {
-    return a.getAttribute("data-name").toUpperCase() > b.getAttribute("data-name").toUpperCase();
+    var str1 = a.getAttribute("data-name").toUpperCase().trim();
+    var str2 = b.getAttribute("data-name").toUpperCase().trim();
+    var r = str1.localeCompare(str2);
+    return r;
   });
   list_story_sortable.append(list_story);
 }
@@ -410,7 +450,7 @@ function initStoryDragDrop() {
     }
   });
 
-  $sprint_team.droppable({
+  $(".sprint-teams .s-team").droppable({
     accept: ".story",
 //    activeClass: "ui-state-highlight",
     drop: function(event, ui) {
@@ -454,7 +494,7 @@ function initStoryDragDrop() {
     }
   });
 
-  $story_list.droppable({
+  $(".sprint-story-list").droppable({
     accept: ".story",
     // activeClass: "custom-state-active",
     drop: function(event, ui) {
@@ -627,22 +667,52 @@ $(document).on("click", ".btn-start-sprint", function(e) {
   });
 });
 
+function completeSprint(spid) {
+  $.ajax({
+    url: "/sprint/complete_sprint",
+    type: "POST",
+    data: {spid: spid, check: 0},
+    success: function(response) {
+      if (response.status === 200) {
+      } else {
+        showAlertModal(response.message);
+      }
+    }
+  });
+}
+
 $(document).on("click", ".btn-complete-sprint", function(e) {
   e.preventDefault();
   var spid = $(this).attr("data-spid");
   bootbox.confirm("Are you sure you want to mark this sprint as complete?", function(result) {
     if (result === true) {
+      /*Check if sprint contain any uncompleted story*/
       $.ajax({
         url: "/sprint/complete_sprint",
         type: "POST",
-        data: {spid: spid},
+        data: {spid: spid, check: 1},
         success: function(response) {
-          if (response.status === 200) {
+          if (response.status === 201) {
+            if (response.data.length > 0) {
+              var mes = "Sprint contains uncompleted story: <b>";
+              $.each(response.data, function(key, val) {
+                mes += val.name + ", ";
+              });
+              mes += "</b>Are you sure you still want to complete this sprint";
+              bootbox.confirm(mes, function(result) {
+                if (result === true) {
+                  completeSprint(spid);
+                }
+              });
+            } else {
+              completeSprint(spid);
+            }
           } else {
             showAlertModal(response.message);
           }
         }
       });
+
     }
   });
 });

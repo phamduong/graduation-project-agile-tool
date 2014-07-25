@@ -1,46 +1,3 @@
-function appendTaskToHTML(task_data) {
-  var task_temp = $(".task-temp").html();
-  $(".task-temp .task-item-unsortabled").attr("data-taid", task_data.taid);
-  $(".task-temp .task-item-unsortabled").attr("id", "task_" + task_data.taid);
-  $(".task-temp .task-item-unsortabled").attr("data-current-sid", task_data.sid);
-  $(".task-temp .task-name a").attr("href", task_data.taid);
-  $(".task-temp .task-name a").html(task_data.name);
-  if (task_data.user_id != null && task_data.user_id != "") {
-    var user_info = '<img alt="" class="taskboard-user-image" src="' + task_data.user_image_path + '">';
-    user_info += '<p class="task-assign-name">' + task_data.user_name + '</p>';
-    $(".task-temp .span4").append(user_info);
-  }
-  $(".task-temp .badge-info").html(task_data.time_estimate + " d");
-  $(".task-temp .bar").css("width", task_data.progress + "%");
-  $(".task-temp .bar").html(task_data.progress + "%");
-  $("#story_" + task_data.sid + " .to-do-tasks .task-box").append($(".task-temp").html());
-//  $(".task-temp .task-item").addClass("task-item-unsortabled");
-//  $(".task-temp .task-item").removeClass("task-item");
-  $(".task-temp").html(task_temp);
-}
-
-function removeTaskHTML(taid) {
-  $("#task_" + taid).remove();
-}
-
-function appendAvailableTaskToHTML(data) {
-  var sid = data.content.task_data.sid;
-  var status = data.content.new_status;
-  var taid = data.content.taid;
-  var html = document.getElementById("task_" + taid).outerHTML;
-  var cls = getStoryStatusClass(status);
-  removeTaskHTML(taid);
-  $("#story_" + sid + " ." + cls + " .task-box").append(html);
-  //update status
-  if (status >= 3) {
-    $("#task_" + taid + " .progress-info .bar").width("100%");
-    $("#task_" + taid + " .progress-info .bar").html("100%");
-  } else if (status === 1) {
-    $("#task_" + taid + " .progress-info .bar").width("0%");
-    $("#task_" + taid + " .progress-info .bar").html("0%");
-  }
-}
-
 $(document).ready(function() {
   var callback = function(topic, data) {
     if (topic === "scrum.realtime_" + current_project + ".task") {
@@ -94,10 +51,20 @@ $(document).ready(function() {
             break;
           }
       }
+    } else if (topic === "scrum.realtime_" + current_project + ".story") {
+//      switch (data.type) {
+//        case "add":{}
+//      }
+    } else if (topic === "scrum.realtime_" + current_project + ".sprint") {
+//      switch (data.type) {
+//        
+//      }
     }
   };
 
-  var link = ["scrum.realtime_" + current_project + ".task"];
+  var link = ["scrum.realtime_" + current_project + ".task",
+    "scrum.realtime_" + current_project + ".story",
+    "scrum.realtime_" + current_project + ".sprint"];
   subscribeToTopic(link, "localhost", "8080", callback);
 
   initTaskSortable();
@@ -180,6 +147,7 @@ function initTaskSortable() {
         $.ajax({
           url: "/task/update_status",
           type: "POST",
+          async: false,
           data: {taid: taid, old_status: window.start_col, status: end_col},
           success: function(response) {
             var story_data = response.story;
@@ -268,6 +236,7 @@ function updateStoryOrder(sid, status) {
     $.ajax({
       url: "/task/update_order",
       type: "POST",
+      async: false,
       data: {data: data, sid: sid, status: status},
       success: function() {
 
@@ -321,5 +290,48 @@ function updateTaskOrder2(data) {
   list.sort(sortTaskByOrder);
   for (var i = 0; i < list.length; i++) {
     list[i].parentNode.appendChild(list[i]);
+  }
+}
+
+function appendTaskToHTML(task_data) {
+  var task_temp = $(".task-temp").html();
+  $(".task-temp .task-item-unsortabled").attr("data-taid", task_data.taid);
+  $(".task-temp .task-item-unsortabled").attr("id", "task_" + task_data.taid);
+  $(".task-temp .task-item-unsortabled").attr("data-current-sid", task_data.sid);
+  $(".task-temp .task-name a").attr("href", task_data.taid);
+  $(".task-temp .task-name a").html(task_data.name);
+  if (task_data.user_id != null && task_data.user_id != "") {
+    var user_info = '<img alt="" class="taskboard-user-image" src="' + task_data.user_image_path + '">';
+    user_info += '<p class="task-assign-name">' + task_data.user_name + '</p>';
+    $(".task-temp .span4").append(user_info);
+  }
+  $(".task-temp .badge-info").html(task_data.time_estimate + " d");
+  $(".task-temp .bar").css("width", task_data.progress + "%");
+  $(".task-temp .bar").html(task_data.progress + "%");
+  $("#story_" + task_data.sid + " .to-do-tasks .task-box").append($(".task-temp").html());
+//  $(".task-temp .task-item").addClass("task-item-unsortabled");
+//  $(".task-temp .task-item").removeClass("task-item");
+  $(".task-temp").html(task_temp);
+}
+
+function removeTaskHTML(taid) {
+  $("#task_" + taid).remove();
+}
+
+function appendAvailableTaskToHTML(data) {
+  var sid = data.content.task_data.sid;
+  var status = data.content.new_status;
+  var taid = data.content.taid;
+  var html = document.getElementById("task_" + taid).outerHTML;
+  var cls = getStoryStatusClass(status);
+  removeTaskHTML(taid);
+  $("#story_" + sid + " ." + cls + " .task-box").append(html);
+  //update status
+  if (status >= 3) {
+    $("#task_" + taid + " .progress-info .bar").width("100%");
+    $("#task_" + taid + " .progress-info .bar").html("100%");
+  } else if (status === 1) {
+    $("#task_" + taid + " .progress-info .bar").width("0%");
+    $("#task_" + taid + " .progress-info .bar").html("0%");
   }
 }

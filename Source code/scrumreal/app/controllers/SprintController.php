@@ -134,7 +134,7 @@ class SprintController extends BaseController {
     $result = $sprint->addStoryToSprint($input['select_sid'], $input['end_spid'], $input['end_tid'], $input['order']);
     //Update story status when assign to Sprint
     $story = Story::find($input['select_sid']);
-    if($story->status < STORY_STATUS_ASIGNED){
+    if ($story->status < STORY_STATUS_ASIGNED) {
       $story->status = STORY_STATUS_ASIGNED;
     }
     $story->save();
@@ -168,7 +168,10 @@ class SprintController extends BaseController {
     $sprint = new Sprint;
     $result = $sprint->removeStoryFromSprint($input['select_sid'], $input['start_spid'], $input['start_tid']);
     $story = Story::find($input['select_sid']);
-    $story->status = STORY_STATUS_ESTIMATED;
+    if ($story->status < STORY_STATUS_ESTIMATED) {
+      $story->status = STORY_STATUS_ESTIMATED;
+    }
+
     $story->save();
     if ($result != 0) {
       //activity
@@ -319,26 +322,43 @@ class SprintController extends BaseController {
   public function completeSprint() {
     $input = Input::all();
     $spid = $input['spid'];
-    $sprint = Sprint::find($spid);
-    $sprint->status = SPRINT_STATUS_COMPLETED;
-    $sprint->end_date = date('Y-m-d');
-    $data = array('status' => 800, 'message' => 'Error!');
-    if ($sprint->save()) {
-      //remove uncomplete story form this sprint
-      $sprint_model = new Sprint;
-      $sprint_model->removeUnCompletedStory($spid);
-      $data = array('status' => 200, 'message' => 'Start sprint successfully');
-      $broadcast_data = array(
-          'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
-          'type' => 'complete_sprint',
-          'time' => date('H:i:s'),
-          'content' => array(
-              'spid' => $spid,
-              'sprint_status' => SPRINT_STATUS_COMPLETED,
-              'old_status' => SPRINT_STATUS_IN_PROGRESS
-          )
-      );
-      PushController::publishData($broadcast_data);
+    $check = $input['check'];
+    $sprint_model = new Sprint;
+    if ($check == 1) {
+      //Check for uncomplete story in sprint
+      $list_sid = $sprint_model->getUncompletedStory($spid);
+      $data = array('status' => 201, 'data' => $list_sid);
+//      foreach($list_sid as $val){
+//        $data['data'][] = $val->sid;
+//      }
+    } else {
+      $sprint = Sprint::find($spid);
+      $sprint->status = SPRINT_STATUS_COMPLETED;
+      $sprint->end_date = date('Y-m-d');
+      $data = array('status' => 800, 'message' => 'Error!');
+      if ($sprint->save()) {
+        //remove uncomplete story form this sprint        
+        $list_story = $sprint_model->getUncompletedStory($spid);
+        $sprint_model->removeUnCompletedStory($spid);
+        $data = array(
+            'status' => 200,
+            'message' => 'Start sprint successfully',
+            'uncompleted_story' => $list_story);
+        $broadcast_data = array(
+            'category' => 'scrum.realtime_' . Session::get('current_project') . '.sprint',
+            'type' => 'complete_sprint',
+            'time' => date('H:i:s'),
+            'content' => array(
+                'spid' => $spid,
+                'sprint_status' => SPRINT_STATUS_COMPLETED,
+                'old_status' => SPRINT_STATUS_IN_PROGRESS,
+                'uncompleted_story' => $list_story
+            )
+        );
+//        return $broadcast_data;
+//        exit();
+        PushController::publishData($broadcast_data);
+      }
     }
     return $data;
   }
