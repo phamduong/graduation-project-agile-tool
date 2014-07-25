@@ -280,12 +280,22 @@ class TaskController extends BaseController {
           )
       );
       PushController::publishData($broadcast_data);
+
+      //update status of story that contains task
+      $story = new Story;
+      $story_info = $data['story'] = $story->updateStatusFollowTasks($task->sid);
+      
+      $broadcast_data_2 = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
+          'type' => 'update',
+          'time' => date('H:i:s'),
+          'content' => $story->getStory($story_info['sid'])
+      );
+      PushController::publishData($broadcast_data_2);
+      
     } else {
       $data = array('status' => 800, 'message' => 'Save task unsuccessfully!');
     }
-    //update status of story that contains task
-    $story = new Story;
-    $data['story'] = $story->updateStatusFollowTasks($task->sid);
     return $data;
   }
 
@@ -375,7 +385,7 @@ class TaskController extends BaseController {
         'content' => array(
             'sid' => $input['sid'],
             'status' => $input['status'],
-            'list_taid' => $input['data']                
+            'list_taid' => $input['data']
         )
     );
     PushController::publishData($broadcast_data);
