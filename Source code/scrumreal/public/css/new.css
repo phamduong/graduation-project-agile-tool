@@ -628,3 +628,6 @@ input[disabled=disabled]{
   padding: 10px;
   vertical-align: middle;
 }
+#role-permission tbody tr:hover td{
+  background-color: #D1F0FF;
+}

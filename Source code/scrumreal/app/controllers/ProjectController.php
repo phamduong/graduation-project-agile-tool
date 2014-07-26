@@ -113,7 +113,7 @@ class ProjectController extends BaseController {
     if ($project->save()) {
       $data = array('status' => 200, 'message' => 'Save sucessfully');
       $broadcast_data = array(
-          'category' => 'scrum.realtime_' . Session::get('current_project') . '.project',
+          'category' => 'scrum.realtime.project',
           'type' => 'update',
           'time' => date('H:i:s'),
           'content' => array(
@@ -176,6 +176,8 @@ class ProjectController extends BaseController {
     $project->allow_out_view = $input['allow_out_view'];
     if ($project->save() == 1) {
       $pid = $project->pid;
+      $permission_model = new Permission;
+      $permission_model->insertDefaultPermission($pid);
       $project_model = new Project;
       if ($input['leader'] != '') {
         $project_model->insertProjectUser($pid, $input['leader'], ROLE_LEADER);
@@ -191,7 +193,7 @@ class ProjectController extends BaseController {
       );
 
       $broadcast_data = array(
-          'category' => 'scrum.realtime_' . Session::get('current_project') . '.project',
+          'category' => 'scrum.realtime.project',
           'type' => 'add',
           'time' => date('H:i:s'),
           'content' => array(
@@ -215,13 +217,15 @@ class ProjectController extends BaseController {
     $project->delete_flg = 1;
     $project_model = new Project;
     $project_model->deleteProjectUser($input['pid']);
+    $permission_model = new Permission;
+    $permission_model->deleteProjectPermission($input['pid']);
     if ($project->save()) {
       $data = array(
           'status' => 200,
           'message' => 'Delete project successfully!'
       );
       $broadcast_data = array(
-          'category' => 'scrum.realtime_' . Session::get('current_project') . '.project',
+          'category' => 'scrum.realtime.project',
           'type' => 'delete',
           'time' => date('H:i:s'),
           'content' => array(

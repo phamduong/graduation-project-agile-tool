@@ -280,7 +280,7 @@ function getActivity(selector, entity_type, entity_id, offset, limit) {
       $(selector + " .tab-activity .timeline").html("");
       var count = 0;
       $.each(act_list, function(key, act) {
-        $(act_temp + " .img-user-info").attr("src", "data/image/user/" + act.user_image);
+        $(act_temp + " .img-user-info").attr("src", "/data/image/user/" + act.user_image);
         $(act_temp + " .activity-text").html(act.text);
         $(act_temp + " .activity-time").html(act.time);
         $(selector + " .tab-activity .timeline").append($(act_temp).html());
@@ -449,9 +449,9 @@ function showAlertModal(message, status) {
       }
     case "notice":
       {
-        $("#modal-error-notice .modal-header").css("background-color", "#FF6600");
-        $("#modal-error-notice .modal-header #myModalLabel").css("color", "#000000");
-        $("#modal-error-notice").css("border-color", "#FF6600");
+        $("#modal-error-notice .modal-header").css("background-color", "#FF9900");
+//        $("#modal-error-notice .modal-header #myModalLabel").css("color", "#000000");
+        $("#modal-error-notice").css("border-color", "#FF9900");
         $("#modal-error-notice .modal-header #myModalLabel").html("Notice");
         
         break;
@@ -625,9 +625,9 @@ function checkPermission(path) {
       if (response.status == 200) {
         check = true;
       } else {
-//        showAlert(0, true, response.message);
-        $("#modal-error-notice .error-content").html(response.message);
-        $("#modal-error-notice").modal('show');
+        showAlertModal(response.message, "notice");
+//        $("#modal-error-notice .error-content").html(response.message);
+//        $("#modal-error-notice").modal('show');
       }
     }
   });

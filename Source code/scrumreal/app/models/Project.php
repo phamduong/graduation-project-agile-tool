@@ -41,7 +41,7 @@ SQL;
   
   public function getProjectDatatables($uid){
     $query = <<<SQL
-SELECT project.name, project_owner.owner,  project_leader.leader, project.start_date,
+SELECT DISTINCT project.name, project_owner.owner,  project_leader.leader, project.start_date,
 IF (project.status = 2, project.end_date_real, project.end_date_es) as end_date, project.status,
   project.pid
 FROM project

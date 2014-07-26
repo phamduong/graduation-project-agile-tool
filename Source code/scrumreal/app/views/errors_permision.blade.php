@@ -10,19 +10,19 @@
 
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
     <!-- Bootstrap responsive -->
-    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="{{ asset("css/bootstrap-responsive.min.css") }}">
     <!-- Theme CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset("css/style.css") }}">
     <!-- Color CSS -->
-    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="{{ asset("css/themes.css") }}">
 
 
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
+    <script src="{{ asset("js/jquery.min.js") }}"></script>
     <!-- Bootstrap -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{{ asset("js/bootstrap.min.js") }}"></script>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon.ico" />
@@ -33,7 +33,7 @@
 
   <body class='error'>
     <div class="wrapper">
-      <div class="code"><span>Restricted</span><i class="icon-warning-sign"></i></div>
+      <div class="code"><span></span><i class="icon-warning-sign"></i></div>
       <div class="desc">Sorry, you don't have permisson to access this page.</div>
     </div>
     <script type="text/javascript">

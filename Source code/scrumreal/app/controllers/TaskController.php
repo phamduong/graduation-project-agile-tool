@@ -26,8 +26,6 @@ class TaskController extends BaseController {
           //If current project does not have any sprint
           return View::make('task', $data);
         }
-      } else {
-//        $data['selected_sprint'] = $spid;
       }
       $data['selected_sprint'] = $spid;
       $data['sprint_status'] = Sprint::find($spid)->status;
@@ -40,6 +38,14 @@ class TaskController extends BaseController {
       } else {
         $data['story_in_sprint'] = $task->getStoryTask($spid);
       }
+      //Get selected sprint status
+      $sprint_status = array(
+          SPRINT_STATUS_IN_PLAN => 'Planning',
+          SPRINT_STATUS_IN_PROGRESS => 'In progress',
+          SPRINT_STATUS_COMPLETED => 'Completed'
+      );
+      $sp = Sprint::find($data['selected_sprint']);
+      $data['selected_sprint_status'] = $sprint_status[$sp->status];
       //IF GET BY USR -> get all tasks for that user in current sprint
       if ($entity_type === 'user') {
         $data['selected_user'] = $entity_id . '_user';
@@ -111,6 +117,9 @@ class TaskController extends BaseController {
       if ($num_day != $story_contain->time_estimate) {
         $story_contain->time_estimate = $num_day;
       }
+      //update story contain task status tu TO DO
+      $story_contain->status = STORY_STATUS_TO_DO;
+
       if ($story_contain->save()) {
         $data = array('status' => 200, 'message' => '');
         $task_data = $task_model->getTaskDetail($task->taid);
@@ -127,8 +136,16 @@ class TaskController extends BaseController {
                 'task_data' => $task_data
             )
         );
-
         PushController::publishData($broadcast_data);
+
+        $story_model = new Story;
+        $broadcast_data_2 = array(
+            'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
+            'type' => 'update',
+            'time' => date('H:i:s'),
+            'content' => $story_model->getStory($input['sid'])
+        );
+        PushController::publishData($broadcast_data_2);
       }
     } else {
       $data = array('status' => 800, 'message' => 'Add task unsuccessfully!');
@@ -198,6 +215,9 @@ class TaskController extends BaseController {
     }
     if (count($story->getStoryThatAssigned($task->sid)) != 0) {
       if ($task->uid != $input['uid']) {
+//        echo $task->uid;
+//        echo $input['uid'];
+//        exit();
         $new_user = User::find($input['uid'])->fullname;
         $old_user = User::find($task->uid);
         if ($old_user != null) {
@@ -284,7 +304,7 @@ class TaskController extends BaseController {
       //update status of story that contains task
       $story = new Story;
       $story_info = $data['story'] = $story->updateStatusFollowTasks($task->sid);
-      
+
       $broadcast_data_2 = array(
           'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
           'type' => 'update',
@@ -292,7 +312,6 @@ class TaskController extends BaseController {
           'content' => $story->getStory($story_info['sid'])
       );
       PushController::publishData($broadcast_data_2);
-      
     } else {
       $data = array('status' => 800, 'message' => 'Save task unsuccessfully!');
     }
@@ -368,6 +387,18 @@ class TaskController extends BaseController {
           )
       );
       PushController::publishData($broadcast_data);
+
+      //update status of story that contains task
+      $story = new Story;
+      $story_info = $data['story'] = $story->updateStatusFollowTasks($sid);
+      $broadcast_data_2 = array(
+          'category' => 'scrum.realtime_' . Session::get('current_project') . '.story',
+          'type' => 'update',
+          'time' => date('H:i:s'),
+          'content' => $story->getStory($story_info['sid'])
+      );
+      PushController::publishData($broadcast_data_2);
+      
     } else {
       $data = array('status' => 800, 'message' => 'Error when delete task');
     }

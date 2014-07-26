@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  updateSelectedSprint(window.report_selected_sprint);
   //Init all team chart
   initAllTeam(window.report_selected_sprint);
   //Init each team chart

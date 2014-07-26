@@ -18,6 +18,7 @@ class SprintController extends BaseController {
       $data['sprint_list'] = $sprint->getSprintInProject($current_project);
       $data['current_project'] = $current_project;
       $data['current_proj_name'] = Session::get('current_project_nm');
+      $data['current_role'] = Session::get('current_role');
 //      var_dump($data['sprint_list']);
 //      exit();
       $data['has_sprint_running'] = false;

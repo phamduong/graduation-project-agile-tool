@@ -16,7 +16,7 @@ class PermissionController extends BaseController {
       $data['list_permission'] = $permission->getAllPermission();
       $data['current_project'] = Session::get('current_project');
       foreach ($data['list_permission'] as $p) {
-        $p->role_satus = $this->mergeRole($permission->getPermissionForRole($p->peid));
+        $p->role_satus = $this->mergeRole($permission->getPermissionForRole($p->peid, Session::get('current_project')));
       }
 //      print '<pre>';
 //      print_r($data['list_permission']);
@@ -38,7 +38,7 @@ class PermissionController extends BaseController {
   public function save() {
     $list_input = Input::all();
     $permission = new Permission;
-    $list_db = $permission->getPer_Role();
+    $list_db = $permission->getPer_Role(Session::get('current_project'));
     $list_db_key = array();
     foreach ($list_db as $val) {
       $list_db_key[] = $val->per_role;
@@ -47,10 +47,10 @@ class PermissionController extends BaseController {
       if ($val == 1 && in_array($key, $list_db_key) == false) {
         $data = explode('_', $key);
 //        print_r($data);
-        $permission->insertPermission($data[1], $data[0]);
+        $permission->insertPermission($data[1], $data[0], Session::get('current_project'));
       } else if ($val == 0 && in_array($key, $list_db_key) == true) {
         $data = explode('_', $key);
-        $permission->deletePermission($data[1], $data[0]);
+        $permission->deletePermission($data[1], $data[0], Session::get('current_project'));
       }
     }
     $data = array('status' => 200, 'message' => 'Successfull!');
@@ -70,7 +70,8 @@ class PermissionController extends BaseController {
         '/permission/check' => 0,
         '/attach\/\d+\/\d+/' => 1,
         '/attach/remove_attach' => 0,
-        '/download_attach\/\d+/' => 1
+        '/download_attach\/\d+/' => 1,
+        '/public\/data\/attach\/.*/' => 1        
     );
     foreach ($arr_ignore_path as $key => $val) {
       if ($path == $key) {

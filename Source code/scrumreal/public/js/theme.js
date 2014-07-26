@@ -2,10 +2,30 @@ if (!window.WebSocket) {
   alert("BROWSER DOES NOT SUPPORTED WEBSOCKET, PLEASE UPDATE YOUR BROWSER TO USE FULL FEATURES OF SCRUM TOOL!");
 }
 
+function updateHTMLFollowRole(role) {
+  if (role == 1) {
+    $("#btn-add-project").css("display", "inline");
+    $("#permission_link").css("display", "inline");
+    $("#user_link").css("display", "inline");
+  } else {
+    $("#btn-add-project").css("display", "none");
+    $("#permission_link").css("display", "none");
+    $("#user_link").css("display", "none");
+  }
+}
+
 var current_sid;
 var taskTable; //global object to easily reference
 
 $(document).ready(function() {
+  if (typeof current_role !== "undefined") {
+    updateHTMLFollowRole(current_role);
+  }else{
+    $("#btn-add-project").css("display", "none");
+    $("#permission_link").css("display", "none");
+    $("#user_link").css("display", "none");
+  }
+
   //Init comment form submit event handler
   initComment();
 
@@ -394,11 +414,11 @@ $(document).on("click", '.delete-user', function(e) {
             setTimeout(function() {
               $("#modal-edit-user").modal("hide");
             }, 1000);
-              var page = $(location).attr('pathname');
-              if (page === "/users") {
-                var oTable = $('#users_list_datatable').dataTable();
-                oTable.fnReloadAjax();
-              }
+            var page = $(location).attr('pathname');
+            if (page === "/users") {
+              var oTable = $('#users_list_datatable').dataTable();
+              oTable.fnReloadAjax();
+            }
           }
         }
       });

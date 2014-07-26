@@ -109,3 +109,16 @@ function initAllTeam(spid) {
     }
   });
 }
+
+function updateSelectedSprint(select) {
+  if (typeof select != "undefined" && select != "") {
+    $("#sprint_filter").val(select);
+  }
+
+}
+
+function updateOtherfilterReport(select) {
+  if (typeof select != "undefined" && select != "") {
+    $("#other_filter").val(select);
+  }
+}

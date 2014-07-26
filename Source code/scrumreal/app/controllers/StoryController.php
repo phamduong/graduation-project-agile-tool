@@ -11,6 +11,7 @@ class StoryController extends BaseController {
       $data['active_nav'] = 'story';
 //      $data['current_proj_name'] = Project::find(Session::get('current_project'))->name;
       $data['current_proj_name'] = Session::get('current_project_nm');
+      $data['current_role'] = Session::get('current_role');
       $data['current_project'] = Session::get('current_project');
       return View::make('story', $data);
     } else {

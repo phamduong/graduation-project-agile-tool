@@ -9,6 +9,7 @@ class ReportController extends BaseController {
       $data['cur_user'] = parent::getCurrentUser();
       $data['active_nav'] = 'burndown';
       $data['current_proj_name'] = Session::get('current_project_nm');
+      $data['current_role'] = Session::get('current_role');
       $current_project = Session::get('current_project');
       $sprint = new Sprint;
       $team = new Team;
@@ -114,6 +115,7 @@ class ReportController extends BaseController {
       $data['cur_user'] = parent::getCurrentUser();
       $data['active_nav'] = 'burnup';
       $data['current_proj_name'] = Session::get('current_project_nm');
+      $data['current_role'] = Session::get('current_role');
       return View::make('burn_up', $data);
     } else {
       return Redirect::to('/project');
