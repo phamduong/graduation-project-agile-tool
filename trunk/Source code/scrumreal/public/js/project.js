@@ -1,28 +1,27 @@
 var oTable;
 var current_project;
-if (typeof current_role !== "undefined") {
-  updateHTMLFollowRole(current_role);
-}
 
-function updateHTMLFollowRole(role) {
-  if (role == 1) {
-    $("#btn-add-project").css("display", "inline");
-    $("#permission_link").css("display", "inline");
-    $("#user_link").css("display", "inline");
-  } else {
-    $("#btn-add-project").css("display", "none");
-    $("#permission_link").css("display", "none");
-    $("#user_link").css("display", "none");
-  }
-}
+//if (typeof current_role !== "undefined") {
+//  updateHTMLFollowRole(current_role);
+//}
+//
+//function updateHTMLFollowRole(role) {
+//  if (role == 1) {
+//    $("#btn-add-project").css("display", "inline");
+//    $("#permission_link").css("display", "inline");
+//    $("#user_link").css("display", "inline");
+//  } else {
+//    $("#btn-add-project").css("display", "none");
+//    $("#permission_link").css("display", "none");
+//    $("#user_link").css("display", "none");
+//  }
+//}
 
 $(document).ready(function() {
   //init plupload
   initProjectDatatable();
   //subscribe to realtime update
   var callback = function(topic, data) {
-//    console.log(topic);
-//    console.log(data);
     if (data.type === 'add') {
       var oTable = $("#project-datatable").dataTable();
       oTable.fnReloadAjax();
@@ -34,7 +33,7 @@ $(document).ready(function() {
       oTable.fnReloadAjax();
     }
   };
-  subscribeToTopic(["scrum.realtime_" + current_project + ".project"], 'localhost', '8080', callback);
+  subscribeToTopic(["scrum.realtime.project"], 'localhost', '8080', callback);
   //Add user in project add modal
   $("#modal-add-project a.btn-add-user").click(function() {
     $("#selected-role").val($(this).attr('data-selected'));
@@ -315,6 +314,8 @@ $(document).ready(function() {
   //Edit project 
   $("#project-datatable").on("click", ".view_prj", function(event) {
     event.preventDefault();
+    $("#leader2").select2("val", "");
+    $("#owner2").select2("val", "");
     clearFormInput("#form-edit-project");
 //    if (window.has_select_project === false) {
 //      $("#modal-error-notice .error-content").html("Please select working project!");
@@ -367,6 +368,8 @@ $(document).ready(function() {
           getActivity("#modal-edit-project", 1, pid, 0, 10);
 
           $("#modal-edit-project").modal("show");
+        } else {
+          showAlertModal(response.message, "notice");
         }
       }, error: function(response) {
         var err = jQuery.parseJSON(response.responseText);

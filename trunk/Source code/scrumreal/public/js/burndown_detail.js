@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  updateSelectedSprint(window.report_selected_sprint);
   $("#sprint-control-bar #sprint_filter").val(window.report_selected_sprint);
   $("#sprint-control-bar #other_filter").val(window.report_selected_team);
 

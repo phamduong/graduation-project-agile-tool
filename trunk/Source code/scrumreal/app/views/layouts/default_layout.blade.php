@@ -18,10 +18,10 @@
     <link rel="stylesheet" href="{{ asset("css/plugins/jquery-ui/smoothness/jquery-ui.css" ) }}">
     <link rel="stylesheet" href="{{ asset("css/plugins/jquery-ui/smoothness/jquery.ui.theme.css" ) }}">
     <!-- PageGuide -->
-    <link rel="stylesheet" href="{{ asset("css/plugins/pageguide/pageguide.css" ) }}">
+    <!--<link rel="stylesheet" href="{{ asset("css/plugins/pageguide/pageguide.css" ) }}">-->
     <!-- Fullcalendar -->
-    <link rel="stylesheet" href="{{ asset("css/plugins/fullcalendar/fullcalendar.css" ) }}">
-    <link rel="stylesheet" href="{{ asset("css/plugins/fullcalendar/fullcalendar.print.css") }}" media="print">
+    <!--<link rel="stylesheet" href="{{ asset("css/plugins/fullcalendar/fullcalendar.css" ) }}">-->
+    <!--<link rel="stylesheet" href="{{ asset("css/plugins/fullcalendar/fullcalendar.print.css") }}" media="print">-->
     <!-- chosen -->
     <link rel="stylesheet" href="{{ asset("css/plugins/chosen/chosen.css" ) }}">
     <!-- select2 -->
@@ -56,9 +56,9 @@
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.resizable.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.sortable.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.datepicker.min.js" ) }}"></script>
-    <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.dialog.min.js" ) }}"></script>
+    <!--<script src="{{ asset("js/plugins/jquery-ui/jquery.ui.dialog.min.js" ) }}"></script>-->
     <!-- Touch enable for jquery UI -->
-    <script src="{{ asset("js/plugins/touch-punch/jquery.touch-punch.min.js" ) }}"></script>
+    <!--<script src="{{ asset("js/plugins/touch-punch/jquery.touch-punch.min.js" ) }}"></script>-->
     <!-- slimScroll -->
     <script src="{{ asset("js/plugins/slimscroll/jquery.slimscroll.min.js" ) }}"></script>
     <!-- Bootstrap -->
@@ -67,17 +67,17 @@
     <script src="{{ asset("js/plugins/bootstrap-modal/bootstrap-modal.js")}}"></script>
     <script src="{{ asset("js/plugins/bootstrap-modal/bootstrap-modalmanager.js")}}"></script>
     <!-- vmap -->
-    <script src="{{ asset("js/plugins/vmap/jquery.vmap.min.js" ) }}"></script>
-    <script src="{{ asset("js/plugins/vmap/jquery.vmap.world.js" ) }}"></script>
-    <script src="{{ asset("js/plugins/vmap/jquery.vmap.sampledata.js" ) }}"></script>
+    <!--<script src="{{ asset("js/plugins/vmap/jquery.vmap.min.js" ) }}"></script>-->
+    <!--<script src="{{ asset("js/plugins/vmap/jquery.vmap.world.js" ) }}"></script>-->
+    <!--<script src="{{ asset("js/plugins/vmap/jquery.vmap.sampledata.js" ) }}"></script>-->
     <!-- Bootbox -->
     <script src="{{ asset("js/plugins/bootbox/jquery.bootbox.js" ) }}"></script>
     <!-- Notify -->
-    <script src="{{ asset("js/plugins/gritter/jquery.gritter.min.js")}}"></script>
+    <!--<script src="{{ asset("js/plugins/gritter/jquery.gritter.min.js")}}"></script>-->
     <!-- imagesLoaded -->
-    <script src="{{ asset("js/plugins/imagesLoaded/jquery.imagesloaded.min.js" ) }}"></script>
+    <!--<script src="{{ asset("js/plugins/imagesLoaded/jquery.imagesloaded.min.js" ) }}"></script>-->
     <!-- PageGuide -->
-    <script src="{{ asset("js/plugins/pageguide/jquery.pageguide.js" ) }}"></script>
+    <!--<script src="{{ asset("js/plugins/pageguide/jquery.pageguide.js" ) }}"></script>-->
     <!-- Chosen -->
     <script src="{{ asset("js/plugins/chosen/chosen.jquery.min.js" ) }}"></script>
     <!-- select2 -->
@@ -85,7 +85,7 @@
     <!-- icheck -->
     <script src="{{ asset("js/plugins/icheck/jquery.icheck.min.js" ) }}"></script>
     <!-- Jquery form -->
-    <script src="{{ asset("js/plugins/form/jquery.form.min.js" ) }}"></script>
+    <!--<script src="{{ asset("js/plugins/form/jquery.form.min.js" ) }}"></script>-->
     <!-- Validation -->
     <script src="{{ asset("js/plugins/validation/jquery.validate.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/validation/additional-methods.min.js" ) }}"></script>
@@ -94,9 +94,7 @@
     <!--<script src="{{ asset("js/plugins/daterangepicker/moment.min.js" ) }}"></script>-->
     <script src="{{ asset("js/plugins/daterangepicker/daterangepicker.js" ) }}"></script>
     <!-- FullCalendar -->
-    <script src="{{ asset("js/plugins/fullcalendar/fullcalendar.min.js" ) }}"></script>
-    <!-- icheck -->
-    <script src="{{ asset("js/plugins/icheck/jquery.icheck.min.js") }}"></script>
+    <!--<script src="{{ asset("js/plugins/fullcalendar/fullcalendar.min.js" ) }}"></script>-->    
     <!-- Sparkline -->
     <script src="{{ asset("js/plugins/sparklines/jquery.sparklines.min.js" ) }}"></script>
     <!-- Custom file upload -->
@@ -115,22 +113,22 @@
     <!-- Just for demonstration -->
     <script src="{{ asset("js/demonstration.js" ) }}"></script>
     <!-- Dashboard javascript -->
-    <script src="{{ asset("js/dash_board.js" ) }}"></script>
+    <!--<script src="{{ asset("js/dash_board.js" ) }}"></script>-->
     <!--Scrumreal common-->
     <script src="{{ asset("js/common.js" ) }}"></script>
     <script src="{{ asset("js/comment.js" ) }}"></script>
     <script src="{{ asset("js/theme.js" ) }}"></script>
-    
+
     <!-- Favicon -->
-    <link rel="shortcut icon" href="img/favicon.ico" />
+    <!--<link rel="shortcut icon" href="img/favicon.ico" />-->
     <!-- Apple devices Homescreen icon -->
-    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-precomposed.png" />
+    <!--<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-precomposed.png" />-->
   </head>
   <body data-layout-topbar="fixed">
     <noscript>
     <div class="div-noscript">Sorry, your browser does not support JavaScript!</div>
     </noscript>
-    
+
     @include('modal/error_notice')
     <div id="navigation">
       @include('layouts/main_nav')
@@ -164,6 +162,13 @@
                 @endforeach
                 @endif
               </select>
+            </div>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="control-group">
+            <div class="controls">
+              <input type="text" disabled="disabled" value="{{{$selected_sprint_status}}}" />
             </div>
           </div>
         </div>
@@ -261,5 +266,11 @@
       </div>
     </div>
     @endif
+    <script>
+      var current_role;
+      @if(isset($current_role))
+        var current_role = {{$current_role}};
+      @endif
+    </script>    
   </body>
 </html>

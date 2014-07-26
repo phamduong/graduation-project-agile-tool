@@ -17,6 +17,7 @@ class TeamController extends BaseController {
       $data['team_list'] = $team->getTeamList($current_project);
       $data['current_project'] = Session::get('current_project');
       $data['current_proj_name'] = Session::get('current_project_nm');
+      $data['current_role'] = Session::get('current_role');
       foreach ($data['team_list'] as $item) {
         $data['team_members'][$item->tid] = $team->getTeamMembers($item->tid, $current_project);
       }

@@ -13,24 +13,23 @@
 
 App::before(function($request) {
   $path = $_SERVER['REQUEST_URI'];
-  if (Session::has('current_project')) {
-    $uid = Auth::user()->uid;
-    if (PermissionController::checkPermission($uid, $path) == false) {
-      if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-        /* if ajax request */
-        $data = array('status' => 801,
-            'message' => "You don't have permission to perform this action",
-            'url' => urldecode($path));
-        return $data;
-      } else {
-        return Response::view('errors_permision', array());
-      }
-    }
-  } else {
-    if ($path != '/' && $path != '/login') {
-      //if login -> not check user login status
-      if (!Auth::check()) {
-        return Redirect::to('/');
+  if ($path != '/' && $path != '/login') {
+    //if login -> not check user login status
+    if (!Auth::check()) {
+      //in user has not logined yet, redirect to login page
+      return Redirect::to('/');
+    } else {      
+      $uid = Auth::user()->uid;
+      if (PermissionController::checkPermission($uid, $path) == false) {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+          /* if ajax request */
+          $data = array('status' => 801,
+              'message' => "You don't have permission to perform this action",
+              'url' => urldecode($path));
+          return $data;
+        } else {
+          return Response::view('errors_permision', array());
+        }
       }
     }
   }

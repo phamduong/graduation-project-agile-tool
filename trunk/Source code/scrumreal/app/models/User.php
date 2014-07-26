@@ -191,15 +191,15 @@ SQL;
     $result = DB::select($query, array($uid));
     return $result;
   }
-  
-  public function getUserRoleInProject($pid, $uid){
+
+  public function getUserRoleInProject($pid, $uid) {
     $query = <<<SQL
 SELECT rid
 FROM project_user
 WHERE pid = ? and uid = ?
 SQL;
     $result = DB::select($query, array($pid, $uid));
-    if(count($result) != 0){
+    if (count($result) != 0) {
       return $result[0]->rid;
     }
     return ROLE_NOT_IN_PROJECT;

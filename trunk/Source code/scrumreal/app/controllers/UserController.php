@@ -12,6 +12,7 @@ class UserController extends \BaseController {
 //      if(isset(Session::get('current_project'))){
       $data['current_project'] = Session::get('current_project');
       $data['current_proj_name'] = Session::get('current_project_nm');
+      $data['current_role'] = Session::get('current_role');
 //      }
       return View::make('users', $data);
     } else {
@@ -43,6 +44,7 @@ class UserController extends \BaseController {
           $lang = Auth::user()->lang;
           Session::put('lang', $lang);
           $data['status'] = 200;
+          Session::put('current_role', ROLE_NOT_IN_PROJECT);
         } else {
           $data['status'] = 800;
           $data['message'] = Lang::get('message.login_err');

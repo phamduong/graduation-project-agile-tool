@@ -65,12 +65,7 @@ Scrumtool - Project management
       window.has_select_project = true;
     @else
       window.has_select_project = false;
-    @endif
-    
-    var current_role;
-    @if(isset($current_role))
-      var current_role = {{$current_role}};
-    @endif
+    @endif       
   </script>
   <script src="{{ asset("js/project.js" ) }}"></script>
   <!-- dataTables -->

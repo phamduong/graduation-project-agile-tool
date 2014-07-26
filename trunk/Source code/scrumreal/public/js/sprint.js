@@ -34,86 +34,6 @@ var sprint_status = {
   3: "Completed"
 };
 
-function hideAllSprintButton() {
-  $("#sprint-team-list .sprint .btn-start-sprint").css("display", "none");
-  $("#sprint-team-list .sprint .btn-complete-sprint").css("display", "none");
-  $("#sprint-team-list .sprint .btn-resume-sprint").css("display", "none");
-}
-
-function updateAllSprintStatus(data) {
-  if (data.sprint_status == 2) {
-    //If start 1 sprint, hide all other sprint button
-    hideAllSprintButton();
-    $("#sprint_" + data.spid + " .btn-complete-sprint").css("display", "inline");
-    $("#sprint_" + data.spid + " .sprint-status").html(sprint_status[2]);
-  } else {
-    $("#sprint-team-list .sprint").each(function() {
-      var id = $(this).attr("id");
-      var status = $(this).attr("data-sprint-status");
-      $("#" + id + " .actions .btn").css("display", "none");
-      if (status == 1) {
-        $("#" + id + " .actions .btn-start-sprint").css("display", "inline");
-      } else if (status == 2) {
-        $("#" + id + " .actions .btn-complete-sprint").css("display", "inline");
-      } else if (status == 3) {
-        $("#" + id + " .actions .btn-resume-sprint").css("display", "inline");
-      }
-      $("#" + id + " .sprint-status").html(sprint_status[status]);
-    });
-
-    if (data.old_status == 3) {
-      //If resume a completed sprint
-      $("#sprint_" + data.spid + " .box-content div:first-child").removeClass(".sprint-teams-disabled");
-      destroyStoryDragDrop();
-      initStoryDragDrop();
-    } else if (data.status == 3) {
-      //If complete a sprint
-      $("#sprint_" + data.spid + " .box-content div:first-child").addClass(".sprint-teams-disabled");
-      $("#sprint_" + data.spid + " .box-content div:first-child").removeClass(".sprint-teams-disabled");
-      destroyStoryDragDrop();
-      initStoryDragDrop();
-    }
-  }
-}
-
-function appendSprintHTML(sprint_data) {
-  var sprint_temp = $(".sprint-temp").html();
-  $(".sprint-temp .sprint").attr("id", "sprint_" + sprint_data.spid);
-  $(".sprint-temp .sprint").attr("data-sprint-status", sprint_data.status);
-  $(".sprint-temp .sprint a").attr("href", sprint_data.spid);
-  $(".sprint-temp .sprint-teams").attr("data-spid", sprint_data.spid);
-  var title = '<i class="glyphicon-folder_flag"></i> '
-          + sprint_data.name + ' (' + sprint_data.start_date_es
-          + ' - ' + sprint_data.end_date_es + ')';
-  $(".sprint-temp .sprint a").html(title);
-  $(".sprint-temp .btn-start-sprint").attr("data-spid", sprint_data.spid);
-  $(".sprint-temp .btn-complete-sprint").attr("data-spid", sprint_data.spid);
-  $(".sprint-temp .btn-resume-sprint").attr("data-spid", sprint_data.spid);
-
-  //append to list sprint
-  $("#sprint-team-list").append($(".sprint-temp").html());
-  $(".sprint-temp").html(sprint_temp);
-}
-
-function removeUncompletedStoryHTML(data) {
-  var uncompleted_story = data.uncompleted_story;
-  var spid = data.spid;
-  if (uncompleted_story.length > 0) {
-    $.each(uncompleted_story, function(key, val) {
-      var html = $("#sprint_" + spid + " #story_" + val.sid).remove();
-      $("#story-not-se-list .scrollable").append(html);
-    });
-  }
-  $("#sprint_" + spid + " .sprint-teams").addClass("sprint-teams-disabled");
-  $("#sprint_" + spid + " .sprint-teams-disabled").removeClass("sprint-teams");
-}
-
-function resumeSprintHTML(data) {
-  var spid = data.spid;
-  $("#sprint_" + spid + " .sprint-teams-disabled").addClass("sprint-teams");
-  $("#sprint_" + spid + " .sprint-teams").removeClass("sprint-teams-disabled");
-}
-
 $(document).ready(function() {
   var callback = function(topic, data) {
     if (topic === "scrum.realtime_" + current_project + ".team") {
@@ -130,6 +50,7 @@ $(document).ready(function() {
         case "update":
           {
             updateStoryHTML(data.content);
+            getTeamDayAll();
             destroyStoryDragDrop();
             initStoryDragDrop();
             break;
@@ -196,6 +117,7 @@ $(document).ready(function() {
             updateAllSprintStatus(data.content);
             destroyStoryDragDrop();
             removeUncompletedStoryHTML(data.content);
+            getTeamDayAll();
             initStoryDragDrop();
             break;
           }
@@ -205,6 +127,7 @@ $(document).ready(function() {
             $("#sprint_" + sid).attr("data-sprint-status", data.content.sprint_status);
             updateAllSprintStatus(data.content);
             resumeSprintHTML(data.content);
+            getTeamDayAll();
             destroyStoryDragDrop();
             initStoryDragDrop();
             break;
@@ -1000,4 +923,84 @@ function deleteSprintHTML(spid) {
     $(this).remove();
   });
   $("#sprint_" + spid).remove();
+}
+
+function hideAllSprintButton() {
+  $("#sprint-team-list .sprint .btn-start-sprint").css("display", "none");
+  $("#sprint-team-list .sprint .btn-complete-sprint").css("display", "none");
+  $("#sprint-team-list .sprint .btn-resume-sprint").css("display", "none");
+}
+
+function updateAllSprintStatus(data) {
+  if (data.sprint_status == 2) {
+    //If start 1 sprint, hide all other sprint button
+    hideAllSprintButton();
+    $("#sprint_" + data.spid + " .btn-complete-sprint").css("display", "inline");
+    $("#sprint_" + data.spid + " .sprint-status").html(sprint_status[2]);
+  } else {
+    $("#sprint-team-list .sprint").each(function() {
+      var id = $(this).attr("id");
+      var status = $(this).attr("data-sprint-status");
+      $("#" + id + " .actions .btn").css("display", "none");
+      if (status == 1) {
+        $("#" + id + " .actions .btn-start-sprint").css("display", "inline");
+      } else if (status == 2) {
+        $("#" + id + " .actions .btn-complete-sprint").css("display", "inline");
+      } else if (status == 3) {
+        $("#" + id + " .actions .btn-resume-sprint").css("display", "inline");
+      }
+      $("#" + id + " .sprint-status").html(sprint_status[status]);
+    });
+
+    if (data.old_status == 3) {
+      //If resume a completed sprint
+      $("#sprint_" + data.spid + " .box-content div:first-child").removeClass(".sprint-teams-disabled");
+      destroyStoryDragDrop();
+      initStoryDragDrop();
+    } else if (data.status == 3) {
+      //If complete a sprint
+      $("#sprint_" + data.spid + " .box-content div:first-child").addClass(".sprint-teams-disabled");
+      $("#sprint_" + data.spid + " .box-content div:first-child").removeClass(".sprint-teams-disabled");
+      destroyStoryDragDrop();
+      initStoryDragDrop();
+    }
+  }
+}
+
+function appendSprintHTML(sprint_data) {
+  var sprint_temp = $(".sprint-temp").html();
+  $(".sprint-temp .sprint").attr("id", "sprint_" + sprint_data.spid);
+  $(".sprint-temp .sprint").attr("data-sprint-status", sprint_data.status);
+  $(".sprint-temp .sprint a").attr("href", sprint_data.spid);
+  $(".sprint-temp .sprint-teams").attr("data-spid", sprint_data.spid);
+  var title = '<i class="glyphicon-folder_flag"></i> '
+          + sprint_data.name + ' (' + sprint_data.start_date_es
+          + ' - ' + sprint_data.end_date_es + ')';
+  $(".sprint-temp .sprint a").html(title);
+  $(".sprint-temp .btn-start-sprint").attr("data-spid", sprint_data.spid);
+  $(".sprint-temp .btn-complete-sprint").attr("data-spid", sprint_data.spid);
+  $(".sprint-temp .btn-resume-sprint").attr("data-spid", sprint_data.spid);
+
+  //append to list sprint
+  $("#sprint-team-list").append($(".sprint-temp").html());
+  $(".sprint-temp").html(sprint_temp);
+}
+
+function removeUncompletedStoryHTML(data) {
+  var uncompleted_story = data.uncompleted_story;
+  var spid = data.spid;
+  if (uncompleted_story.length > 0) {
+    $.each(uncompleted_story, function(key, val) {
+      var html = $("#sprint_" + spid + " #story_" + val.sid).remove();
+      $("#story-not-se-list .scrollable").append(html);
+    });
+  }
+  $("#sprint_" + spid + " .sprint-teams").addClass("sprint-teams-disabled");
+  $("#sprint_" + spid + " .sprint-teams-disabled").removeClass("sprint-teams");
+}
+
+function resumeSprintHTML(data) {
+  var spid = data.spid;
+  $("#sprint_" + spid + " .sprint-teams-disabled").addClass("sprint-teams");
+  $("#sprint_" + spid + " .sprint-teams").removeClass("sprint-teams-disabled");
 }

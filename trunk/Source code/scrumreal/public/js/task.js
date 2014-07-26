@@ -1,3 +1,21 @@
+var story_status = {};
+story_status[1] = "New";
+story_status[2] = "Approved";
+story_status[3] = "Estimated";
+story_status[4] = "Assigned";
+story_status[5] = "To do";
+story_status[6] = "In progress";
+story_status[7] = "To test";
+story_status[8] = "Done";
+story_status[9] = "Sprint completed";
+
+function updateStoryHTML(story_data) {
+  var sid = story_data.sid;
+  $("#story_" + sid + " .story-point").html('<i class="icon-user"></i>' + story_data.point);
+  $("#story_" + sid + " .story-name .task_edit_story").html(story_data.name);
+  $("#story_" + sid + " .story-days").html(story_data.time_estimate);
+  $("#story_" + sid + " .story-status").html(story_status[story_data.status]);
+}
 $(document).ready(function() {
   var callback = function(topic, data) {
     if (topic === "scrum.realtime_" + current_project + ".task") {
@@ -52,9 +70,15 @@ $(document).ready(function() {
           }
       }
     } else if (topic === "scrum.realtime_" + current_project + ".story") {
-//      switch (data.type) {
-//        case "add":{}
-//      }
+      switch (data.type) {
+        case "update":
+          {
+            updateStoryHTML(data.content);
+            var sid = data.content.sid;
+            $("#story_" + sid + " .story-description .story-progress").load("/task/reload_story_progress/" + sid);
+            break;
+          }
+      }
     } else if (topic === "scrum.realtime_" + current_project + ".sprint") {
 //      switch (data.type) {
 //        

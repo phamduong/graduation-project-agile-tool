@@ -1,6 +1,6 @@
 @extends('layouts.default_layout')
 @section('title')
-Scrumtool - Permission
+{{{$current_proj_name}}}
 @stop
 @section('content')
 <div class="container-fluid">
@@ -19,18 +19,18 @@ Scrumtool - Permission
             <thead>
               <tr>
                 <th>Permission name</th>                
+                <th>Not in project</th>
                 <th>Project Leader</th>
                 <th>Scrum Master</th>
                 <th>Team member</th>
-                <th>Product owner</th>
-                <th>Not in project</th>
+                <th>Product owner</th>                
               </tr>
             </thead>
             <tbody>
               @foreach($list_permission as $permission)
               <tr>
                 <td>{{{$permission->name}}}</td>
-                @for($i = 1; $i <= 5; $i++)
+                @for($i = 0; $i <= 4; $i++)
                 @if(in_array($i, $permission->role_satus))
                 <td><input type="checkbox" value="{{{$permission->peid . '_' . $i}}}" checked class="check_permission" /></td>
                 @else

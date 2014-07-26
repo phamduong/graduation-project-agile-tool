@@ -26,11 +26,27 @@ $(document).ready(function() {
             break;
           }
       }
+    } else if (topic === "scrum.realtime_" + current_project + ".sprint") {
+      switch (data.type) {
+        case "add_story_to":
+        case "remove_story_from":
+        case "move_story":
+        case "update_sprint":
+        case "complete_sprint":
+        case "resume_sprint":
+        case "start_sprint":
+        case "delete_sprint":
+          {
+            var oTable = $("#user_story_datatable").dataTable();
+            oTable.fnReloadAjax();
+            break;
+          }
+      }
     }
-
   };
   var link = ["scrum.realtime_" + current_project + ".story",
-    "scrum.realtime_" + current_project + ".task"];
+    "scrum.realtime_" + current_project + ".task",
+    "scrum.realtime_" + current_project + ".sprint"];
   subscribeToTopic(link, 'localhost', '8080', callback);
 
   initUserStoryDatatable();
