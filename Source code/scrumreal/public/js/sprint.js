@@ -34,6 +34,23 @@ var sprint_status = {
   3: "Completed"
 };
 
+function updateSprintDatetime(sprint_data){
+  var spid = sprint_data.spid;
+  var html = "";
+  if(sprint_data.status > 1 && sprint_data.start_date != ""){
+    html += " (" + sprint_data.start_date + " - ";
+  }else{
+    html += " (" + sprint_data.start_date_es + " - ";
+  }
+  if(sprint_data.status == 3){ //if sprint completed show real end date
+    html += sprint_data.end_date + ")";
+  }else{
+    html += sprint_data.end_date_es + ")";
+  }
+  html = sprint_data.name + html;
+  $("#sprint_" + spid + " .sprint-name").html('<i class="glyphicon-folder_flag"></i>' + html);
+}
+
 $(document).ready(function() {
   var callback = function(topic, data) {
     if (topic === "scrum.realtime_" + current_project + ".team") {
@@ -116,8 +133,9 @@ $(document).ready(function() {
             $("#sprint_" + sid).attr("data-sprint-status", data.content.sprint_status);
             updateAllSprintStatus(data.content);
             destroyStoryDragDrop();
-            removeUncompletedStoryHTML(data.content);
+            removeUncompletedStoryHTML(data.content);            
             getTeamDayAll();
+            updateSprintDatetime(data.content.sprint_data);
             initStoryDragDrop();
             break;
           }
@@ -128,6 +146,7 @@ $(document).ready(function() {
             updateAllSprintStatus(data.content);
             resumeSprintHTML(data.content);
             getTeamDayAll();
+            updateSprintDatetime(data.content.sprint_data);
             destroyStoryDragDrop();
             initStoryDragDrop();
             break;
@@ -137,6 +156,7 @@ $(document).ready(function() {
             var sid = data.content.spid;
             $("#sprint_" + sid).attr("data-sprint-status", data.content.sprint_status);
             updateAllSprintStatus(data.content);
+            updateSprintDatetime(data.content.sprint_data);
             break;
           }
         case "add_sprint":
@@ -190,7 +210,7 @@ $(document).ready(function() {
     event.preventDefault();
     if ($(this).valid() === true) {
       $.ajax({
-        url: "sprint/add",
+        url: "/sprint/add",
         type: "POST",
         data: $(this).serialize(),
         success: function(response) {
@@ -213,7 +233,7 @@ $(document).ready(function() {
     e.preventDefault();
     if ($(this).valid() === true) {
       $.ajax({
-        url: "sprint/save",
+        url: "/sprint/save",
         type: "POST",
         data: $(this).serialize(),
         success: function(response) {
@@ -237,7 +257,7 @@ $(document).ready(function() {
     $('body').modalmanager('loading');
     var spid = $(this).attr("href");
     $.ajax({
-      url: "sprint/edit",
+      url: "/sprint/edit",
       type: "POST",
       data: {spid: spid},
       global: false,
@@ -553,7 +573,7 @@ function updateStoryOrder(selector) {
   if (count > 0) {
     //Send ajax update order
     $.ajax({
-      url: "sprint/update_order",
+      url: "/sprint/update_order",
       type: "POST",
       data: {tid: tid, spid: spid, data: data},
       success: function() {
@@ -667,7 +687,7 @@ $(document).on("click", ".delete-sprint", function(e) {
   bootbox.confirm("Are you sure you want to delete that sprint?", function(result) {
     if (result === true) {
       $.ajax({
-        url: "sprint/delete",
+        url: "/sprint/delete",
         type: "POST",
         data: {spid: spid},
         success: function(response) {
@@ -686,7 +706,7 @@ $(document).on("click", ".s-team-name", function(e) {
   var tid = $(this).parent().attr("data-tid");
   var spid = $(this).parent().parent().attr("data-spid");
   $.ajax({
-    url: "sprint/get_team_day",
+    url: "/sprint/get_team_day",
     type: "POST",
     data: {tid: tid, spid: spid},
     success: function(response) {
@@ -707,7 +727,7 @@ $("#form-edit-team-day").submit(function(e) {
   var num_day = $("#form-edit-team-day #num_day").val();
   if ($(this).valid() === true) {
     $.ajax({
-      url: "sprint/update_team_day",
+      url: "/sprint/update_team_day",
       type: "POST",
       data: $(this).serialize(),
       success: function(response) {
@@ -725,7 +745,7 @@ $("#form-edit-team-day").submit(function(e) {
 
 function getTeamDayAll() {
   $.ajax({
-    url: "sprint/get_team_day_all",
+    url: "/sprint/get_team_day_all",
     type: "POST",
     success: function(response) {
 //      console.log(response);

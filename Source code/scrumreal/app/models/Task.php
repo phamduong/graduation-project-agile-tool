@@ -158,7 +158,7 @@ SQL;
    */
   public function getTotalDaysInSprintDoneAll($spid, $time) {
     $query = <<<SQL
-SELECT SUM(task.time_estimate) AS total_day
+SELECT IFNULL(SUM(task.time_estimate), 0) AS total_day
 FROM task INNER JOIN story_team ON task.sid = story_team.sid
 WHERE task.`status` = 4 
 	AND story_team.spid = ?

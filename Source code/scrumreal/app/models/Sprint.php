@@ -30,7 +30,8 @@ SQL;
 
   public function getSprintInProject($pid) {
     $query = <<<SQL
-SELECT *
+SELECT spid, pid, name, description, IFNULL(start_date, start_date_es) AS start_date, 
+IF(`status` = 3, end_date, end_date_es) AS end_date, `status`, delete_flg, start_date_es
 FROM sprint
 WHERE sprint.pid = ? AND delete_flg = 0
 SQL;

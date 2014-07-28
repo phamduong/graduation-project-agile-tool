@@ -94,7 +94,7 @@
     <!--<script src="{{ asset("js/plugins/daterangepicker/moment.min.js" ) }}"></script>-->
     <script src="{{ asset("js/plugins/daterangepicker/daterangepicker.js" ) }}"></script>
     <!-- FullCalendar -->
-    <!--<script src="{{ asset("js/plugins/fullcalendar/fullcalendar.min.js" ) }}"></script>-->    
+    <script src="{{ asset("js/plugins/fullcalendar/fullcalendar.min.js" ) }}"></script>    
     <!-- Sparkline -->
     <script src="{{ asset("js/plugins/sparklines/jquery.sparklines.min.js" ) }}"></script>
     <!-- Custom file upload -->

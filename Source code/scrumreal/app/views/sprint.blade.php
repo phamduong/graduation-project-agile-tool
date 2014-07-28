@@ -30,7 +30,7 @@
               <div class="box-title">
                 <h3>
                   <a href="{{{$sprint->spid}}}" class="sprint-name"><i class="glyphicon-folder_flag"></i>
-                    {{{$sprint->name . ' ('. $sprint->start_date_es . ' - ' . $sprint->end_date_es  .') '}}}</a>
+                    {{{$sprint->name . ' ('. $sprint->start_date . ' - ' . $sprint->end_date  .') '}}}</a>
                 </h3>
                 <div class="actions">
                   @if($sprint->status == SPRINT_STATUS_IN_PLAN)

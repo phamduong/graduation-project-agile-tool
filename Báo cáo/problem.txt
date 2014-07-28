@@ -1,5 +1,5 @@
 ﻿1) task da assign cho 1 user -> user nay chuyen team khac (thanh phan team van giu nguyen trong Sprint)
-2) story chua hoan thanh, van con task nhung sprint da hoan thanh
+	(2) story chua hoan thanh, van con task nhung sprint da hoan thanh
 	(3) khi them 1 story thi se them 1 activity la no duoc tao cho chinh story do thay vi chi cho project chua no
 	(4) chi co product owner moi duoc them story
 	(5) product owner va project leader thi khong the assign vao Team
@@ -9,8 +9,8 @@
 	(9) project complete roi co cho chuyen sang trang thai khac duoc khong?
 	(10) bo tri lai cach hien thi Sotry: them thong tin ve trang thai, so ngay...
 	(11) nhan Delete cai gi cung phai confirm ca da?...
-12) check lai phan quyen, voi project ma nguoi dung khong tham gia... [KHÔNG PHẢI LÀ PROJECT LEADER KHÔNG CẬP NHẬT ĐƯỢC PROJECT CHO PROJECT VỪA MỚI TẠO -> VẤN ĐỀ VỀ PHÂN QUYỀN]
-13) complete Sprint -> xac nhan : hien thi danh sach cac story chua hoan thanh a assign lai vao danh sach story
+	(12) check lai phan quyen, voi project ma nguoi dung khong tham gia... [KHÔNG PHẢI LÀ PROJECT LEADER KHÔNG CẬP NHẬT ĐƯỢC PROJECT CHO PROJECT VỪA MỚI TẠO -> VẤN ĐỀ VỀ PHÂN QUYỀN]
+	(13) complete Sprint -> xac nhan : hien thi danh sach cac story chua hoan thanh a assign lai vao danh sach story
 	(14) complete project -> xac nhan
 	(15) delete story phai co thong bao xac nhan
 	(16)[khong can] neu team da duoc assign story dang chay, hoac sap chay thi khong cho xoa nua
@@ -52,8 +52,15 @@ du lieu khi du an theo dung timeline
 	
 	1) Quay phim demo nếu cần thiết
 	2) Chỉnh sửa báo cáo và in lại nếu cần thiết
-	3) Bồ sung slide tài liệu tham khảo trước slide cám ơn
-	4) gủi báo cáo cho cô
-	5) viết 1 trang a4 trình bày những gì đã làm rồi gửi cho cô
-	6) làm lại slide
+	--3) Bồ sung slide tài liệu tham khảo trước slide cám ơn
+	--4) gủi báo cáo cho cô
+	--5) viết 1 trang a4 trình bày những gì đã làm rồi gửi cho cô
+	--6) làm lại slide
 	7) tao dữ liệu mẫu cho dự án
+	
+	
+	--8) add team nhung hien dang o trang sprint
+	--9) add story nhung hien dang o trang task
+	--10) add sprint nhung hien dang o tyrang task
+	
+	

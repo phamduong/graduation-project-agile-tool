@@ -309,7 +309,8 @@ class SprintController extends BaseController {
             'content' => array(
                 'spid' => $spid,
                 'sprint_status' => SPRINT_STATUS_IN_PROGRESS,
-                'old_status' => SPRINT_STATUS_IN_PLAN
+                'old_status' => SPRINT_STATUS_IN_PLAN,
+                'sprint_data' => $sprint_model->getSprintDetail($spid)
             )
         );
         PushController::publishData($broadcast_data);
@@ -353,7 +354,8 @@ class SprintController extends BaseController {
                 'spid' => $spid,
                 'sprint_status' => SPRINT_STATUS_COMPLETED,
                 'old_status' => SPRINT_STATUS_IN_PROGRESS,
-                'uncompleted_story' => $list_story
+                'uncompleted_story' => $list_story,
+                'sprint_data' => $sprint_model->getSprintDetail($spid)
             )
         );
 //        return $broadcast_data;
@@ -382,7 +384,8 @@ class SprintController extends BaseController {
             'content' => array(
                 'spid' => $spid,
                 'sprint_status' => SPRINT_STATUS_IN_PROGRESS,
-                'old_status' => SPRINT_STATUS_COMPLETED
+                'old_status' => SPRINT_STATUS_COMPLETED,
+                'sprint_data' => $sprint_model->getSprintDetail($spid)
             )
         );
         PushController::publishData($broadcast_data);
