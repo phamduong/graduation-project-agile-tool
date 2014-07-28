@@ -83,6 +83,10 @@ class ProjectController extends BaseController {
       if ($project->$key != $input[$key]) {
         ActivityController::createActivityUpdate($input['pid'], ENTITY_PROJECT, $value, $project->$key, $input[$key]);
         $project->$key = $input[$key];
+        if ($key == 'status' && $input['status'] == PROJECT_COMPLETE_STATUS) {
+          //If project complete update complete date
+          $project->end_date_real = date('Y-m-d');
+        }
       }
     }
 
@@ -279,7 +283,7 @@ class ProjectController extends BaseController {
         'status' => 200,
         'message' => 'Set current project successfully',
         'rid' => Session::get('current_role')
-      );
+    );
     return $data;
   }
 

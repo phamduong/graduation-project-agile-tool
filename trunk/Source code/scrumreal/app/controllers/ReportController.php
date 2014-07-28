@@ -62,22 +62,36 @@ class ReportController extends BaseController {
       $spid = $input['spid'];
       $sprint = Sprint::find($spid);
 
-      $sprint_start_str = strtotime($sprint->start_date_es);
-      $sprint_end_str = strtotime($sprint->end_date_es);
+      if ($sprint->start_date != null) {
+        $sprint_start_str = strtotime($sprint->start_date);   //real start date
+      } else {
+        $sprint_start_str = strtotime($sprint->start_date_es);
+      }
+      if ($sprint->end_date != null) {
+        $sprint_end_str = strtotime($sprint->end_date); //real end date
+      } else {
+        $sprint_end_str = strtotime($sprint->end_date_es);
+      }
+
       //xaxis
       $data['xaxis']['sprint_start_date'] = $sprint_start_str;
       $data['xaxis']['sprint_end_date'] = $sprint_end_str;
       //yaxis
       $task_model = new Task;
       $total_day_in_sprint = $task_model->getTotalDaysInSprintAll($spid);
-      $data['yaxis'][] = array('time' => $sprint_start_str, 'days' => $total_day_in_sprint);
+      //first day start sprint
+      $data['yaxis'][] = array('time' => $sprint_start_str, 'days' => $total_day_in_sprint, 'test' => $sprint->start_date_es);
       $current_date = strtotime(date('Y-m-d H:i:s'));
       for ($i = $sprint_start_str + (2 * 86400); $i <= $sprint_end_str; $i += (2 * 86400)) {
         if ($i <= $current_date) {
           $temp = date('Y-m-d H:i:s', $i);
-          $data['yaxis'][] = array('time' => $i, 'days' => $total_day_in_sprint - ($task_model->getTotalDaysInSprintDoneAll($spid, $temp)));
+          $date_left = $total_day_in_sprint - ($task_model->getTotalDaysInSprintDoneAll($spid, $temp));
+          $data['yaxis'][] = array('time' => $i, 'days' => $date_left, 'test' => $temp);
         }
       }
+      //today
+      $date_left = $total_day_in_sprint - ($task_model->getTotalDaysInSprintDoneAll($spid, date('Y-m-d H:i:s')));
+      $data['yaxis'][] = array('time' => $current_date, 'days' => $date_left, 'test' => date('Y-m-d H:i:s'));
     }
     return $data;
   }
@@ -89,14 +103,24 @@ class ReportController extends BaseController {
 
     $sprint = Sprint::find($spid);
     $data = array();
-    $sprint_start_str = strtotime($sprint->start_date_es);
-    $sprint_end_str = strtotime($sprint->end_date_es);
+    if ($sprint->start_date != null) {
+      $sprint_start_str = strtotime($sprint->start_date);   //real start date
+    } else {
+      $sprint_start_str = strtotime($sprint->start_date_es);
+    }
+    if ($sprint->end_date != null) {
+      $sprint_end_str = strtotime($sprint->end_date); //real end date
+    } else {
+      $sprint_end_str = strtotime($sprint->end_date_es);
+    }
+
     //xaxis
     $data['xaxis']['sprint_start_date'] = $sprint_start_str;
     $data['xaxis']['sprint_end_date'] = $sprint_end_str;
     //yaxis
     $task_model = new Task;
     $total_day_in_sprint = $task_model->getTotalDaysInSprintTeam($spid, $tid);
+    //first day in sprint
     $data['yaxis'][] = array('time' => $sprint_start_str, 'days' => $total_day_in_sprint);
     $current_date = strtotime(date('Y-m-d H:i:s'));
     for ($i = $sprint_start_str + (2 * 86400); $i <= $sprint_end_str; $i += (2 * 86400)) {
@@ -105,6 +129,9 @@ class ReportController extends BaseController {
         $data['yaxis'][] = array('time' => $i, 'days' => $total_day_in_sprint - ($task_model->getTotalDaysInSprintDoneTeam($spid, $tid, $temp)));
       }
     }
+    //today
+    $date_left = $total_day_in_sprint - ($task_model->getTotalDaysInSprintDoneTeam($spid, $tid, date('Y-m-d H:i:s')));
+    $data['yaxis'][] = array('time' => $current_date, 'days' => $date_left);
     return $data;
   }
 
@@ -127,13 +154,18 @@ class ReportController extends BaseController {
     $project = Project::find($pid);
     $data = array();
     $project_start_str = strtotime($project->start_date);
-    $project_end_str = strtotime($project->end_date_es);
+    if($project->end_date != null){
+      $project_end_str = strtotime($project->end_date);
+    }else{
+      $project_end_str = strtotime($project->end_date_es);
+    }
     //xaxis
     $data['xaxis']['project_start_date'] = $project_start_str;
     $data['xaxis']['project_end_date'] = $project_end_str;
     //yaxis
     $story_model = new Story;
     $total_point = $story_model->getTotalStoryPoint($pid);
+    //first day of project
     $data['yaxis'][] = array('time' => $project_start_str, 'points' => 0);
     $current_date = strtotime(date('Y-m-d H:i:s'));
     for ($i = $project_start_str + (2 * 86400); $i <= $project_end_str; $i += (2 * 86400)) {
@@ -142,6 +174,11 @@ class ReportController extends BaseController {
         $data['yaxis'][] = array('time' => $i, 'points' => $story_model->getStoryPointDoneInTime($pid, $temp));
       }
     }
+    //today
+    $data['yaxis'][] = array(
+        'time' => $current_date,
+        'points' => $story_model->getStoryPointDoneInTime($pid, date('Y-m-d H:i:s')),
+        'test' => date('Y-m-d H:i:s'));
     //get total line
     for ($i = $project_start_str; $i <= $project_end_str; $i += (2 * 86400)) {
       $temp = date('Y-m-d H:i:s', $i);
