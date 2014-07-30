@@ -154,9 +154,9 @@ class ReportController extends BaseController {
     $project = Project::find($pid);
     $data = array();
     $project_start_str = strtotime($project->start_date);
-    if($project->end_date != null){
+    if ($project->end_date != null) {
       $project_end_str = strtotime($project->end_date);
-    }else{
+    } else {
       $project_end_str = strtotime($project->end_date_es);
     }
     //xaxis
@@ -171,14 +171,17 @@ class ReportController extends BaseController {
     for ($i = $project_start_str + (2 * 86400); $i <= $project_end_str; $i += (2 * 86400)) {
       if ($i <= $current_date) {
         $temp = date('Y-m-d H:i:s', $i);
-        $data['yaxis'][] = array('time' => $i, 'points' => $story_model->getStoryPointDoneInTime($pid, $temp));
+        $point = $story_model->getStoryPointDoneInTime($pid, $temp) == null ? 0 : $story_model->getStoryPointDoneInTime($pid, $temp);
+        $data['yaxis'][] = array('time' => $i, 'points' => $point);
       }
     }
     //today
+    $point = $story_model->getStoryPointDoneInTime($pid, date('Y-m-d H:i:s')) == null ? 0 : $story_model->getStoryPointDoneInTime($pid, date('Y-m-d H:i:s'));
     $data['yaxis'][] = array(
         'time' => $current_date,
-        'points' => $story_model->getStoryPointDoneInTime($pid, date('Y-m-d H:i:s')),
-        'test' => date('Y-m-d H:i:s'));
+        'points' => $point,
+        'test' => date('Y-m-d H:i:s')
+    );
     //get total line
     for ($i = $project_start_str; $i <= $project_end_str; $i += (2 * 86400)) {
       $temp = date('Y-m-d H:i:s', $i);

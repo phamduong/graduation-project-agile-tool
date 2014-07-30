@@ -76,9 +76,11 @@ class SprintController extends BaseController {
     $end_date_es = date('Y-m-d', strtotime($date[1]));
     $sprint_model = new Sprint;
     $max_end_date_es = $sprint_model->getMaxEndDate(Session::get('current_project'));
+//    var_dump($max_end_date_es);
+//    exit();
     $date1 = new DateTime($start_date_es);
     $date2 = new DateTime($max_end_date_es);
-    if ($date1 < $date2) {
+    if ($date1 < $date2 && $max_end_date_es != NULL) {
       $data = array('status' => 802, 'message' => 'Start date in progress of other sprint, please check again!');
     } else {
       $sprint = new Sprint;

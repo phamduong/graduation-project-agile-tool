@@ -103,6 +103,15 @@ SQL;
   WHERE sid = ?
 SQL;
     $result = DB::update($query, array($story_status, $sid));
+    if($story_status == STORY_STATUS_DONE){
+      //IF story is DONE -> update finish date
+      $query = <<<SQL
+UPDATE story
+SET finish_date = NOW()
+WHERE sid = ?
+SQL;
+      DB::update($query, array($sid));
+    }
     $story_status_name = '';
     switch ($story_status) {
       case STORY_STATUS_TO_DO:
@@ -137,7 +146,10 @@ SQL;
 SELECT SUM(story.point) AS point
 FROM story
 WHERE story.pid = ?
-	AND story.finish_date < ? AND story.delete_flg = 0
+  AND story.finish_date IS NOT NULL
+	AND story.finish_date < ?
+  AND story.delete_flg = 0
+  AND story.status = 8
 SQL;
     $result = DB::select($query, array($pid, $time));
     return $result[0]->point;
