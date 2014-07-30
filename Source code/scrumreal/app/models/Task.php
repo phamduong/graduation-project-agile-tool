@@ -59,7 +59,7 @@ SQL;
 
   public function getTaskInStoryByUser($sid, $uid) {
     $query = <<<SQL
-SELECT task.taid, task.`name`, task.time_estimate, task.`status`, `user`.uid, `user`.image AS user_image, `user`.fullname AS user_name, task.time_remain
+SELECT task.taid, task.`name`, task.time_estimate, task.`status`, `user`.uid, `user`.image AS user_image, `user`.fullname AS user_name, task.time_remain, task.order
 FROM task LEFT JOIN `user` ON task.uid = `user`.uid
 WHERE task.sid = ? AND task.uid = ? AND task.delete_flg = 0
 SQL;
@@ -114,12 +114,13 @@ SQL;
     return $result;
   }
 
-  public function updateTaskFinishDate($tid) {
+  public function updateTaskFinishDate($taid) {
     $query = <<<SQL
   UPDATE task
   SET finish_date = NOW()
+  WHERE taid = ?
 SQL;
-    $result = DB::update($query);
+    $result = DB::update($query, array($taid));
     return $result;
   }
 

@@ -107,16 +107,17 @@ class TaskController extends BaseController {
       ActivityController::createActivityAdd($input['sid'], ENTITY_STORY, $task->taid, ENTITY_TASK);
       ActivityController::createActivityCreate($task->taid, ENTITY_TASK);
       //If number of day in task exceed number of date for sprint, update sprint estimate day
+      //NO NEED: because task is done by 1 person, but story is done by many people
       $task_model = new Task;
-      $same_story = $task_model->getTaskInStory($input['sid']);
-      $num_day = 0;
-      foreach ($same_story as $t) {
-        $num_day += $t->time_estimate;
-      }
+//      $same_story = $task_model->getTaskInStory($input['sid']);
+//      $num_day = 0;
+//      foreach ($same_story as $t) {
+//        $num_day += $t->time_estimate;
+//      }
       $story_contain = Story::find($input['sid']);
-      if ($num_day != $story_contain->time_estimate) {
-        $story_contain->time_estimate = $num_day;
-      }
+//      if ($num_day != $story_contain->time_estimate) {
+//        $story_contain->time_estimate = $num_day;
+//      }
       //update story contain task status tu TO DO
       $story_contain->status = STORY_STATUS_TO_DO;
 
@@ -284,7 +285,7 @@ class TaskController extends BaseController {
       //IF task id completed update finish date
       if ($input['status'] == 4) {
         //$task->finish_date = date('Y-m-d H:i:s');
-        if ($task_model->updateTaskFinishDate($task->tid)) {
+        if ($task_model->updateTaskFinishDate($task->taid)) {
           $data = array('status' => 200, 'message' => '');
         }
       }

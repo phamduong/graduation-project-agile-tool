@@ -36,6 +36,7 @@ class StoryController extends BaseController {
     $story->status = STORY_STATUS_NEW;
     $story->pid = Session::get('current_project');
     $story->create_user = Auth::user()->uid;
+    $story->create_date = date('Y-m-d H:i:s');
     if ($story->save() == 1) {
       //Add new activity to project
       ActivityController::createActivityAdd(Session::get('current_project'), ENTITY_PROJECT, $story->sid, ENTITY_STORY);
