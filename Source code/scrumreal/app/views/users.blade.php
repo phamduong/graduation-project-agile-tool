@@ -63,4 +63,5 @@
   <script src="{{ asset("js/plugins/daterangepicker/moment.min.js") }}"></script>
 </div>
 @include('modal/user_edit')
+@include('modal/user_add')
 @stop

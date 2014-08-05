@@ -19,25 +19,25 @@
         <div class="box-content nopadding">
           <div id="action_bar" class="row-fluid">
             <div class="span12">
-              <a href="#" data-backdrop="static" id="btn-add-story" role="button" class="btn btn-primary pull-left btn-lightred mr10" data-toggle="modal"><i class="icon-plus"></i> Add story</a>
+              <a href="#" data-backdrop="static" id="btn-add-story" role="button" class="btn btn-primary pull-left btn-lightred mr10" data-toggle="modal"><i class="icon-plus"></i> Add backlog</a>
               <!--<button id="btn-download-excel" class="btn btn-primary pull-right mr10"><i class="icon-download-alt"></i> Excel</button>-->
             </div>
           </div>
           <table class="table table-hover table-nomargin table-bordered usertable" id="user_story_datatable">
             <thead>
               <tr class='thefilter'>
-                <th>Story id</th>
+                <!--<th>Story id</th>-->
                 <th>Story name</th>
-                <th>Priority</th>
+                <th></th>
                 <th>Time estimate</th>
                 <th>Point</th>
-                <th>Status</th>
+                <th></th>
                 <th>Sprint</th>
                 <th>Team</th>
                 <th>Options</th>
               </tr>
               <tr>
-                <th>Story id</th>
+                <!--<th>Story id</th>-->
                 <th>Story name</th>
                 <th>Priority</th>
                 <th>Time estimate</th>

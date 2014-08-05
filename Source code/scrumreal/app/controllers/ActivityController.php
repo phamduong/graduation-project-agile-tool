@@ -14,7 +14,7 @@ class ActivityController extends BaseController {
 
     $type_list = array(
         1 => 'project',
-        2 => 'story',
+        2 => 'backlog',
         3 => 'team',
         4 => 'sprint',
         5 => 'comment',
@@ -38,7 +38,7 @@ class ActivityController extends BaseController {
           switch ($type) {
             case 2: //story
               $story = Story::find($id);
-              $text = '<a class="user" href="#">' . $act->user_name . '</a> adds a new story to this ' . $type_list[$entity_type] . ': <i>' . $story->name . '</i>';
+              $text = '<a class="user" href="#">' . $act->user_name . '</a> adds a new backlog to this ' . $type_list[$entity_type] . ': <i>' . $story->name . '</i>';
               $act->text = $text;
               break;
             case 3: //team
@@ -75,7 +75,7 @@ class ActivityController extends BaseController {
           switch ($type) {
             case 2: //story
               $story = Story::find($id);
-              $text = '<a class="user" href="#">' . $act->user_name . '</a> removes 1 story from this ' . $type_list[$entity_type] . ': <i>' . $story->name . '</i>';
+              $text = '<a class="user" href="#">' . $act->user_name . '</a> removes 1 backlog from this ' . $type_list[$entity_type] . ': <i>' . $story->name . '</i>';
               $act->text = $text;
               break;
             case 3: //team

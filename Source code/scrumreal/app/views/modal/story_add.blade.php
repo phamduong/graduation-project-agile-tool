@@ -3,15 +3,15 @@
     <form action="#" method="POST" class='form-horizontal form-validate' id="form-add-story" autocomplete="off">
       <div class="box-title">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel"><i class="user_add"></i>Add story</h3>
+        <h3 id="myModalLabel"><i class="user_add"></i>Add backlog</h3>
       </div>
       <div class="box-content row-fluid">
         <div class="modal-body">
           <div class='alert_block'></div>
           <div class="control-group">
-            <label for="name" class="control-label">Story name <small>Require</small></label>
+            <label for="name" class="control-label">Backlog name <small>Require</small></label>
             <div class="controls">
-              <input type="text" placeholder="Input story name here" name="name" id="name" class="span8" data-rule-required="true">
+              <input type="text" placeholder="Input backlog name here" name="name" id="name" class="span8" data-rule-required="true">
             </div>
           </div>
           <div class="control-group">

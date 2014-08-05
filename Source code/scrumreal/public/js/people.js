@@ -5,8 +5,8 @@ var ele;
 $(document).ready(function() {
   //subscribe to realtime update
   var callback = function(topic, data) {
-    console.log(topic);
-    console.log(data);
+//    console.log(topic);
+//    console.log(data);
     if (topic === "scrum.realtime_" + current_project + ".team") {
       if (data.type === 'add') {
         appendNewTeam(data.content);
@@ -51,7 +51,7 @@ $(document).ready(function() {
           initPeopleDragDrop();
         }, 1000);
       }
-    } else if (topic === "scrum.realtime_" + current_project + ".user") {
+    } else if (topic === "scrum.realtime.user") {
       if (data.type === "remove_user") {
         //in people page -> reload staff list
         destroyPeopleDragDrop();
@@ -68,7 +68,7 @@ $(document).ready(function() {
       }
     }
   };
-  subscribeToTopic(['scrum.realtime_' + current_project + '.team', 'scrum.realtime_' + current_project + '.user'], 'localhost', '8080', callback);
+  subscribeToTopic(['scrum.realtime_' + current_project + '.team', 'scrum.realtime.user'], 'localhost', '8080', callback);
 
   //Init dragable and dropable in people management page
   initPeopleDragDrop();

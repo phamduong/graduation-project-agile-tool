@@ -39,7 +39,7 @@ Scrumtool - Project management
                 <th>Project Leader</th>
                 <th>Start date</th>
                 <th>End date</th>
-                <th>Status</th>
+                <th></th>
                 <th>Options</th>
               </tr>
               <tr>

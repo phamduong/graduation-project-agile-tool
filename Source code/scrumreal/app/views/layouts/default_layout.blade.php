@@ -56,7 +56,7 @@
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.resizable.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.sortable.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.datepicker.min.js" ) }}"></script>
-    <!--<script src="{{ asset("js/plugins/jquery-ui/jquery.ui.dialog.min.js" ) }}"></script>-->
+    <script src="{{ asset("js/plugins/jquery-ui/jquery.ui.dialog.min.js" ) }}"></script>
     <!-- Touch enable for jquery UI -->
     <!--<script src="{{ asset("js/plugins/touch-punch/jquery.touch-punch.min.js" ) }}"></script>-->
     <!-- slimScroll -->
@@ -85,13 +85,13 @@
     <!-- icheck -->
     <script src="{{ asset("js/plugins/icheck/jquery.icheck.min.js" ) }}"></script>
     <!-- Jquery form -->
-    <!--<script src="{{ asset("js/plugins/form/jquery.form.min.js" ) }}"></script>-->
+    <script src="{{ asset("js/plugins/form/jquery.form.min.js" ) }}"></script>
     <!-- Validation -->
     <script src="{{ asset("js/plugins/validation/jquery.validate.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/validation/additional-methods.min.js" ) }}"></script>
     <!-- Daterangepicker -->
-    <script src="{{ asset("js/plugins/fullcalendar/moment.min.js" ) }}"></script>
-    <!--<script src="{{ asset("js/plugins/daterangepicker/moment.min.js" ) }}"></script>-->
+    <!--<script src="{{ asset("js/plugins/fullcalendar/moment.min.js" ) }}"></script>-->
+    <script src="{{ asset("js/plugins/daterangepicker/moment.min.js" ) }}"></script>
     <script src="{{ asset("js/plugins/daterangepicker/daterangepicker.js" ) }}"></script>
     <!-- FullCalendar -->
     <script src="{{ asset("js/plugins/fullcalendar/fullcalendar.min.js" ) }}"></script>    

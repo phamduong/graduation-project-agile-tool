@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg">
     <div class="box-title">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel"><i class="icon-edit"></i>Edit Story</h3>
+      <h3 id="myModalLabel"><i class="icon-edit"></i>Edit backlog</h3>
       <ul class="tabs">
         <li class="active">
           <a href="#tab-story-info-edit" data-toggle="tab">Story infomations</a>
@@ -27,7 +27,7 @@
               <div class="modal-body">
                 <input type="hidden" id="sid" name="sid" value="" />
                 <div class="control-group">
-                  <label for="name" class="control-label">Story name <small>Require</small></label>
+                  <label for="name" class="control-label">Backlog name <small>Require</small></label>
                   <div class="controls">
                     <input type="text" placeholder="Input story name here" name="name" id="name" class="span8" data-rule-required="true">
                   </div>

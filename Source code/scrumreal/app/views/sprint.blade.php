@@ -126,10 +126,10 @@
           <div class="box-title">
             <h3>
               <i class="glyphicon-notes"></i>
-              Stories
+              Product backlogs
             </h3>
             <div class="actions">
-              <a href="#modal-add-story" data-backdrop="static" id="btn-add-story" role="button" class="btn btn-primary mr10" data-toggle="modal"><i class="icon-plus"></i> Add story</a>
+              <a href="#modal-add-story" data-backdrop="static" id="btn-add-story" role="button" class="btn btn-primary mr10" data-toggle="modal"><i class="icon-plus"></i> Add backlog</a>
             </div>
           </div>
           <div class="box-content scrollable" data-height="520">
