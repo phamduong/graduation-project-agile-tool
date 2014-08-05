@@ -126,7 +126,7 @@
           <div class="box-title">
             <h3>
               <i class="glyphicon-notes"></i>
-              Product backlogs
+              Backlogs
             </h3>
             <div class="actions">
               <a href="#modal-add-story" data-backdrop="static" id="btn-add-story" role="button" class="btn btn-primary mr10" data-toggle="modal"><i class="icon-plus"></i> Add backlog</a>

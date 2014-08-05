@@ -55,6 +55,8 @@ function loadTask(taid) {
         getActivity("#modal-edit-task", 6, taid, 0, 10);
         $("#form-add-task input:submit").attr("disabled", false);
         $("#modal-edit-task").modal('show');
+      } else {
+        showAlertModal(response.message);
       }
     },
     error: function(response) {
@@ -453,7 +455,7 @@ function showAlertModal(message, status) {
 //        $("#modal-error-notice .modal-header #myModalLabel").css("color", "#000000");
         $("#modal-error-notice").css("border-color", "#FF9900");
         $("#modal-error-notice .modal-header #myModalLabel").html("Notice");
-        
+
         break;
       }
   }
@@ -605,6 +607,8 @@ function editStorySubmit(sid) {
         getActivity("#modal-edit-story", 2, sid, 0, 10);
 
         $("#modal-edit-story").modal("show");
+      } else {
+        showAlertModal(response.message);
       }
     }
   });
