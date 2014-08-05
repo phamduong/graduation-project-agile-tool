@@ -52,8 +52,9 @@ $(document).ready(function() {
           .ajaxComplete(function(event, jqxhr, settings, exception) {
             try {
               var response = jQuery.parseJSON(jqxhr.responseText);
-              if (response.status === 801) {
-                showAlertModal(response.message);
+//              console.log(response);
+              if (response.status == 801) {
+                showAlertModal(response.message, "error");                
               }
             } catch (e) {
               console.log(e);

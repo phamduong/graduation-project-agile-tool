@@ -122,6 +122,8 @@ $("#users_list_datatable").on("click", ".view_user", function(e) {
     success: function(response) {
       if (response.status === 200) {
         loadFormEditUserData(response);
+      } else {
+        showAlertModal(response.message);
       }
     }, error: function(response) {
       var err = jQuery.parseJSON(response.responseText);
@@ -132,6 +134,6 @@ $("#users_list_datatable").on("click", ".view_user", function(e) {
   });
 });
 
-$("#btn-add-user").click(function(){
+$("#btn-add-user").click(function() {
   $("#modal-add-user").modal("show");
 });

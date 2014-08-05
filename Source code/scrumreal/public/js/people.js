@@ -171,6 +171,8 @@ $(document).ready(function() {
       success: function(response) {
         if (response.status === 200) {
           loadFormEditUserData(response);
+        } else {
+          showAlertModal(response.message);
         }
       }, error: function(response) {
         var err = jQuery.parseJSON(response.responseText);
@@ -208,6 +210,8 @@ $(document).ready(function() {
           getActivity("#modal-edit-team", 3, tid, 0, 10);
 
           $("#modal-edit-team").modal('show');
+        } else {
+          showAlertModal(response.message);
         }
       }, error: function(response) {
         var err = jQuery.parseJSON(response.responseText);
@@ -418,6 +422,8 @@ function removeFromProject(select_uid, start_tid) {
         showAlert(1, true, response.message);
       } else if (response.status === 800) { //error
         showAlert(0, true, response.message);
+      } else {
+        showAlertModal(response.message);
       }
     },
     error: function() {
@@ -441,6 +447,8 @@ function addToProject(select_uid, end_tid) {
         showAlert(1, true, response.message);
       } else if (response.status === 800) { //error
         showAlert(0, true, response.message);
+      } else {
+        showAlertModal(response.message);
       }
     },
     error: function() {

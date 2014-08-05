@@ -236,25 +236,25 @@ class TaskController extends BaseController {
       foreach ($same_story as $t) {
         $num_day += $t->time_estimate;
       }
-      $story_contain = Story::find($task->sid);
-      if ($num_day != $story_contain->time_estimate) {
-        $story_contain->time_estimate = $num_day;
-      }
-      if ($story_contain->save()) {
-        $data = array('status' => 200, 'message' => '');
-        $task_model = new Task;
-        $broadcast_data = array(
-            'category' => 'scrum.realtime_' . Session::get('current_project') . '.task',
-            'type' => 'update_task',
-            'time' => date('H:i:s'),
-            'content' => array(
-                'taid' => $input['taid'],
-                'task_data' => $task_model->getTaskDetail($input['taid']
-                )
-            )
-        );
-        PushController::publishData($broadcast_data);
-      }
+//      $story_contain = Story::find($task->sid);
+//      if ($num_day != $story_contain->time_estimate) {
+//        $story_contain->time_estimate = $num_day;
+//      }
+//      if ($story_contain->save()) {
+//        $data = array('status' => 200, 'message' => '');
+//        $task_model = new Task;
+//        $broadcast_data = array(
+//            'category' => 'scrum.realtime_' . Session::get('current_project') . '.task',
+//            'type' => 'update_task',
+//            'time' => date('H:i:s'),
+//            'content' => array(
+//                'taid' => $input['taid'],
+//                'task_data' => $task_model->getTaskDetail($input['taid']
+//                )
+//            )
+//        );
+//        PushController::publishData($broadcast_data);
+//      }
     } else {
       $data = array('status' => 800, 'message' => 'Save task unsuccessfully!');
     }

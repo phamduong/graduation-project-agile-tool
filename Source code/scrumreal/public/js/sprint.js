@@ -34,17 +34,17 @@ var sprint_status = {
   3: "Completed"
 };
 
-function updateSprintDatetime(sprint_data){
+function updateSprintDatetime(sprint_data) {
   var spid = sprint_data.spid;
   var html = "";
-  if(sprint_data.status > 1 && sprint_data.start_date != ""){
+  if (sprint_data.status > 1 && sprint_data.start_date != "") {
     html += " (" + sprint_data.start_date + " - ";
-  }else{
+  } else {
     html += " (" + sprint_data.start_date_es + " - ";
   }
-  if(sprint_data.status == 3){ //if sprint completed show real end date
+  if (sprint_data.status == 3) { //if sprint completed show real end date
     html += sprint_data.end_date + ")";
-  }else{
+  } else {
     html += sprint_data.end_date_es + ")";
   }
   html = sprint_data.name + html;
@@ -133,7 +133,7 @@ $(document).ready(function() {
             $("#sprint_" + sid).attr("data-sprint-status", data.content.sprint_status);
             updateAllSprintStatus(data.content);
             destroyStoryDragDrop();
-            removeUncompletedStoryHTML(data.content);            
+            removeUncompletedStoryHTML(data.content);
             getTeamDayAll();
             updateSprintDatetime(data.content.sprint_data);
             initStoryDragDrop();
@@ -281,6 +281,8 @@ $(document).ready(function() {
           getActivity("#modal-edit-sprint", 4, spid, 0, 10);
 
           $("#modal-edit-sprint").modal('show');
+        } else {
+          showAlertModal(response.message);
         }
       },
       error: function(response) {
@@ -485,6 +487,8 @@ function addToSprint(select_sid, end_spid, end_tid, order) {
         updateEachTeamDay(end_spid, end_tid, num_day_1);
       } else if (response.status === 800) { //error
         showAlert(0, true, response.message);
+      } else {
+        showAlertModal(response.message);
       }
     },
     error: function() {
@@ -515,6 +519,8 @@ function moveToSprint(select_sid, start_spid, start_tid, end_spid, end_tid, orde
 
       } else if (response.status === 800) { //error
         showAlert(0, true, response.message);
+      } else {
+        showAlertModal(response.message);
       }
     },
     error: function() {
@@ -543,6 +549,8 @@ function removeFromSprint(select_sid, start_spid, start_tid) {
         //
       } else if (response.status === 800) { //error
         showAlert(0, true, response.message);
+      } else {
+        showAlertModal(response.message);
       }
     },
     error: function() {
