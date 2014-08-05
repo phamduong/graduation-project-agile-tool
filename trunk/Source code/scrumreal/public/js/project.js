@@ -447,7 +447,7 @@ function initProjectDatatable() {
                 return "<span class='label label-warning'>New</span>";
                 break;
               case 0:
-                return "<span class='label label-inverse'>Cancled</span>";
+                return "<span class='label label-inverse'>Cancelled</span>";
                 break;
               case 1:
                 return "<span class='label label-satgreen'>Active</span>";
@@ -534,7 +534,20 @@ function initProjectDatatable() {
         }, {
           type: "select",
           bCaseSensitive: false,
-          values: ['Cancled', 'Active', 'Completed']
+          values: [
+            "New",
+            "Cancelled",
+            "Active",
+            "Complete",
+            "Pause"
+          ]
+//          values: [
+//            {label: "New", value: -1},
+//            {label: "Cancelled", value: 0},
+//            {label: "Active", value: 1},
+//            {label: "Complete", value: 2},
+//            {label: "Pause", value: 3}
+//          ]
         },
         null
       ]

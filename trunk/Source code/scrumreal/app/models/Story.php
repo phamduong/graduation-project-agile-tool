@@ -160,7 +160,7 @@ SQL;
 SELECT SUM(story.point) AS point
 FROM story
 WHERE story.pid = ?
-	AND story.create_date < ? AND story.delete_flg = 0
+	AND DATE_FORMAT(story.create_date, '%Y-%m-%d') <= ? AND story.delete_flg = 0
 SQL;
     $result = DB::select($query, array($pid, $time));
     return $result[0]->point;

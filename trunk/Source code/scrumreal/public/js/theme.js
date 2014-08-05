@@ -20,7 +20,7 @@ var taskTable; //global object to easily reference
 $(document).ready(function() {
   if (typeof current_role !== "undefined") {
     updateHTMLFollowRole(current_role);
-  }else{
+  } else {
     $("#btn-add-project").css("display", "none");
     $("#permission_link").css("display", "none");
     $("#user_link").css("display", "none");
@@ -73,25 +73,28 @@ $(document).ready(function() {
           } else if (response.status === 200) {
             showAlert(1, true, response.message);
             var page = $(location).attr('pathname');
-            if (page === "/people") {
-              //in people page -> reload staff list
-//              $("#staff-list .box-content").html();
-//              $("#staff-list .box-content").load("/people/reload_list_staff");
-              setTimeout(function() {
-                $("#modal-add-user").modal('hide');
-              }, 1500);
-            } else {
-              if ($("#selected-role").val() != "") {
-//                var select = $("#modal-add-project " + "#" + $("#selected-role").val());
-//                var temp = '<option value="' + response.user.uid + '">' + response.user.full_name + '</option>';
-//                select.append(temp);
-//                select.select2("data", {id: response.user.uid, text: response.user.full_name});
-//                $("#selected-role").val("");
-                setTimeout(function() {
-                  $("#modal-add-project").modal('hide');
-                }, 1500);
-              }
-            }
+            setTimeout(function() {
+              $("#modal-add-user").modal('hide');
+            }, 1500);
+//            if (page === "/people") {
+//              //in people page -> reload staff list
+////              $("#staff-list .box-content").html();
+////              $("#staff-list .box-content").load("/people/reload_list_staff");
+//              setTimeout(function() {
+//                $("#modal-add-user").modal('hide');
+//              }, 1500);
+//            } else {
+//              if ($("#selected-role").val() != "") {
+////                var select = $("#modal-add-project " + "#" + $("#selected-role").val());
+////                var temp = '<option value="' + response.user.uid + '">' + response.user.full_name + '</option>';
+////                select.append(temp);
+////                select.select2("data", {id: response.user.uid, text: response.user.full_name});
+////                $("#selected-role").val("");
+//                setTimeout(function() {
+//                  $("#modal-add-project").modal('hide');
+//                }, 1500);
+//              }
+//            }
           }
         }
       });
@@ -419,6 +422,8 @@ $(document).on("click", '.delete-user', function(e) {
               var oTable = $('#users_list_datatable').dataTable();
               oTable.fnReloadAjax();
             }
+          } else {
+            showAlertModal(response.message, "error");
           }
         }
       });

@@ -79,22 +79,30 @@ class UserController extends \BaseController {
 
   public function delete() {
     $input = Input::all();
-    $user = User::find($input['uid']);
-    $user->delete_flg = 1;
-    if ($user->save()) {
-      $data = array('status' => 200, 'message' => 'Delete user successfully!');
-      $broadcast_data = array(
-          'category' => 'scrum.realtime_' . Session::get('current_project') . '.user',
-          'type' => 'remove_user',
-          'time' => date('H:i:s'),
-          'content' => array(
-              'uid' => $user->uid,
-              'fullname' => $user->fullname
-          )
-      );
-      PushController::publishData($broadcast_data);
+    $user_model = new User;
+    $uid = $input['uid'];
+    if ($user_model->checkUserInTeam($uid) > 0)  {
+      //If user in some working project -> can not delete
+      $data = array('staus' => 803, 'message' => 'User is currently in new or working project, please remove user from project to delete');
     } else {
-      $data = array('status' => 800, 'message' => 'Delete user unsuccessfully!');
+      $user = User::find($uid);
+      $user->delete_flg = 1;
+
+      if ($user->save()) {
+        $data = array('status' => 200, 'message' => 'Delete user successfully!');
+        $broadcast_data = array(
+            'category' => 'scrum.realtime.user',
+            'type' => 'remove_user',
+            'time' => date('H:i:s'),
+            'content' => array(
+                'uid' => $user->uid,
+                'fullname' => $user->fullname
+            )
+        );
+        PushController::publishData($broadcast_data);
+      } else {
+        $data = array('status' => 800, 'message' => 'Delete user unsuccessfully!');
+      }
     }
     return $data;
   }
@@ -442,7 +450,7 @@ class UserController extends \BaseController {
     $user->login_nm = $input['login_nm'];
     $date = date('Y-m-d', strtotime($input['birthday']));
     $user->birthday = $date;
-    $user->timezone = $input['timezone'];
+//    $user->timezone = $input['timezone'];
     $user->password = Hash::make($input['login_nm']);
     if ($user->save() == 1) {
       $data['status'] = 200;
@@ -451,7 +459,7 @@ class UserController extends \BaseController {
       $data['user']['full_name'] = $user->fullname;
 
       $broadcast_data = array(
-          'category' => 'scrum.realtime_' . Session::get('current_project') . '.user',
+          'category' => 'scrum.realtime.user',
           'type' => 'add_user',
           'time' => date('H:i:s'),
           'content' => array(

@@ -11,7 +11,7 @@ return array(
     'sign_out' => 'Sign out',
     'dashboard' => 'Dashboard',
     'project' => 'Project',
-    'user_story' => 'User story',
+    'user_story' => 'Product backlog',
     'release' => 'Release',
     'people' => 'People',
     'sprint' => 'Sprint',

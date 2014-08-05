@@ -9,7 +9,7 @@
     <table id="task-board">
       <thead>
         <tr>
-          <th class="span2"><h4>User stories</h4></th>
+          <th class="span2"><h4>Product backlogs</h4></th>
           <th class="span2-5"><h4>To do</h4></th>
           <th class="span2-5"><h4>In progress</h4></th>
           <th class="span2-5"><h4>To test</h4></th>

@@ -63,4 +63,9 @@ du lieu khi du an theo dung timeline
 	--9) add story nhung hien dang o trang task
 	--10) add sprint nhung hien dang o tyrang task
 	
+1) realtime chart
+2) hoàn chỉnh quản lý user
+3) neu da set permission o trinh duyet nay roi, sang trinh duyet khac, login vao thi sao?
+4) check lai phan quyen theo tung project
+	
 	

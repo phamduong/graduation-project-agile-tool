@@ -28,12 +28,12 @@
             </div>
           </div>
           <div class="control-group">
-            <label for="birthday" class="control-label">Birthday <small>Require</small></label>
+            <label for="birthday_2" class="control-label">Birthday <small>Require</small></label>
             <div class="controls">
-              <input type="text" placeholder="Pick user's birthday" name="birthday" id="birthday" class="span8 datepick" data-msg-required="Please pick user's birthday" data-rule-required="true">
+              <input type="text" placeholder="Pick user's birthday" name="birthday" id="birthday_2" class="span8 datepick" data-msg-required="Please pick user's birthday" data-rule-required="true">
             </div>
           </div>
-          <div class="control-group">
+<!--          <div class="control-group">
             <label for="timezone" class="control-label">Select Time zone <small>Require</small></label>
             <div class="controls">
               <div class="add-min-height">
@@ -71,9 +71,9 @@
                   <option value="11.0">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
                   <option value="12.0">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
                 </select></div>
-              <!--<span class="help-block"><a href="#modal-add-user" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="" data-toggle="modal"><i class="icon-plus"></i> Or add product owner here</a></span>-->
+              <span class="help-block"><a href="#modal-add-user" data-backdrop="static" data-keyboard="false" id="btn-add-user" role="button" class="" data-toggle="modal"><i class="icon-plus"></i> Or add product owner here</a></span>
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
       <div class="modal-footer">

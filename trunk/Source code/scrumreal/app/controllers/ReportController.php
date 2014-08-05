@@ -149,16 +149,38 @@ class ReportController extends BaseController {
     }
   }
 
+  protected function getDiffdate($start_date, $end_date) {
+    $date1 = new DateTime($start_date);
+    $date2 = new DateTime($end_date);
+    $interval = $date1->diff($date2);
+    $diff_date = $interval->days;
+    if ($diff_date > 150) {
+      $jump = 5;
+    } else if ($diff_date > 100 && $diff_date < 150) {
+      $jump = 4;
+    } else if ($diff_date > 50 && $diff_date < 100) {
+      $jump = 3;
+    } else {
+      $jump = 2;
+    }
+    return $jump;
+  }
+
   public function sprintBurnUpGetData() {
     $pid = Session::get('current_project');
     $project = Project::find($pid);
     $data = array();
     $project_start_str = strtotime($project->start_date);
+
     if ($project->end_date != null) {
       $project_end_str = strtotime($project->end_date);
+      $end_date = $project->end_date;
     } else {
       $project_end_str = strtotime($project->end_date_es);
+      $end_date = $project->end_date_es;
     }
+    $jump = $this->getDiffdate($project->start_date, $end_date);
+//    exit();
     //xaxis
     $data['xaxis']['project_start_date'] = $project_start_str;
     $data['xaxis']['project_end_date'] = $project_end_str;
@@ -168,7 +190,7 @@ class ReportController extends BaseController {
     //first day of project
     $data['yaxis'][] = array('time' => $project_start_str, 'points' => 0);
     $current_date = strtotime(date('Y-m-d H:i:s'));
-    for ($i = $project_start_str + (2 * 86400); $i <= $project_end_str; $i += (2 * 86400)) {
+    for ($i = $project_start_str + ($jump * 86400); $i <= $project_end_str; $i += ($jump * 86400)) {
       if ($i <= $current_date) {
         $temp = date('Y-m-d H:i:s', $i);
         $point = $story_model->getStoryPointDoneInTime($pid, $temp) == null ? 0 : $story_model->getStoryPointDoneInTime($pid, $temp);
@@ -183,10 +205,15 @@ class ReportController extends BaseController {
         'test' => date('Y-m-d H:i:s')
     );
     //get total line
-    for ($i = $project_start_str; $i <= $project_end_str; $i += (2 * 86400)) {
+    for ($i = $project_start_str; $i <= $project_end_str; $i += ($jump * 86400)) {
       $temp = date('Y-m-d H:i:s', $i);
-      $data['yaxis_total'][] = array('time' => $i, 'points' => $story_model->getTotalStoryPointAtTime($pid, $temp));
+      $data['yaxis_total'][] = array('time' => $i, 'points' => $story_model->getTotalStoryPointAtTime($pid, $temp), 'test' => $temp);
     }
+    //last date
+    $temp = date('Y-m-d H:i:s', $project_end_str);
+    $data['yaxis_total'][] = array('time' => $project_end_str, 'points' => $story_model->getTotalStoryPointAtTime($pid, $temp), 'test' => $temp);
+    //tick size
+    $data['tick_size'] = $jump;
     return $data;
   }
 

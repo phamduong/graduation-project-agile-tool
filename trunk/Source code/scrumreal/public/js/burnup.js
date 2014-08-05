@@ -34,6 +34,7 @@ function initializeBurnUpChart(selector, response) {
   data3[1][0] = response.xaxis.project_end_date * 1000;
   var len = response.yaxis_total.length - 1;
   data3[1][1] = response.yaxis_total[len].points;
+  var tick_size = response.tick_size;
   //Initialize flot chart
   $.plot($(selector), [
     {
@@ -58,8 +59,8 @@ function initializeBurnUpChart(selector, response) {
       min: response.xaxis.project_start_date * 1000,
       max: response.xaxis.project_end_date * 1000,
       mode: "time",
-      tickSize: [2, "day"],
-      timeformat: "%b%d",
+      tickSize: [tick_size, "day"],
+      timeformat: "%b%d"
     },
     yaxis: {
       min: 0
@@ -67,10 +68,10 @@ function initializeBurnUpChart(selector, response) {
     series: {
       lines: {
         show: true,
-        fill: false,
+        fill: false
       },
       points: {
-        show: true,
+        show: true
       },
     },
     grid: {

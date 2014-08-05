@@ -162,12 +162,12 @@ SQL;
     $result = DB::select($query, array($pid));
     return $result;
   }
-
+  
   public function getUserDataTables() {
     $query = <<<SQL
 SELECT `user`.uid, `user`.image, `user`.fullname AS user_name, `user`.birthday, prj.`name` AS project_name, COUNT(project_user.pid) AS count_project
 FROM `user` LEFT JOIN project_user ON `user`.uid = project_user.uid
-		LEFT JOIN ( SELECT project.* FROM project WHERE project.`status` = 1 ) AS prj ON project_user.pid = prj.pid
+		LEFT JOIN ( SELECT project.* FROM project WHERE project.`status` = 1 OR project.status = -1) AS prj ON project_user.pid = prj.pid
 WHERE user.delete_flg = 0
 GROUP BY `user`.uid
 SQL;
@@ -203,6 +203,20 @@ SQL;
       return $result[0]->rid;
     }
     return ROLE_NOT_IN_PROJECT;
+  }
+
+  public function checkUserInTeam($uid) {
+    $query = <<<SQL
+SELECT COUNT(*) AS count
+FROM project_user
+WHERE project_user.uid = ?
+AND project_user.pid IN (
+	SELECT project.pid
+	FROM project
+	WHERE project.`status` IN (-1, 1, 3))
+SQL;
+    $result = DB::select($query, array($uid));
+    return $result[0]->count;
   }
 
 }

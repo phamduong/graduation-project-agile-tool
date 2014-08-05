@@ -1,5 +1,17 @@
+var userDatatables;
 $(document).ready(function() {
-  initUsersDatatable();
+  userDatatables = initUsersDatatable();
+  var callback = function(topic, data) {
+    if (topic === "scrum.realtime.user") {
+      if (data.type === "remove_user") {
+        userDatatables.fnReloadAjax();
+      } else {
+        userDatatables.fnReloadAjax();
+      }
+    }
+  }
+
+  subscribeToTopic(['scrum.realtime.user'], 'localhost', '8080', callback);
 });
 function initUsersDatatable() {
   var oTable;
@@ -19,7 +31,7 @@ function initUsersDatatable() {
       {
         'bSortable': false,
         'aTargets': [4]
-      },      
+      },
       {
         "mRender": function(data, type, row) {
           var html = '<div id="user_' + row['uid'] + '_ac"><a href="' + row['uid'] + '" class="btn view_user" rel="tooltip" title="View detail"><i class="icon-edit"></i></a>'
@@ -99,23 +111,27 @@ function initUsersDatatable() {
 }
 
 //View user detail
-  $("#users_list_datatable").on("click", ".view_user", function(e) {
-   e.preventDefault();
-    var uid = $(this).attr("href");
-    $.ajax({
-      url: "/user/edit",
-      type: "POST",
-      data: {uid: uid},
-      global: false,
-      success: function(response) {
-        if (response.status === 200) {
-          loadFormEditUserData(response);
-        }
-      }, error: function(response) {
-        var err = jQuery.parseJSON(response.responseText);
-        showAlertModal(err.error.message);
+$("#users_list_datatable").on("click", ".view_user", function(e) {
+  e.preventDefault();
+  var uid = $(this).attr("href");
+  $.ajax({
+    url: "/user/edit",
+    type: "POST",
+    data: {uid: uid},
+    global: false,
+    success: function(response) {
+      if (response.status === 200) {
+        loadFormEditUserData(response);
+      }
+    }, error: function(response) {
+      var err = jQuery.parseJSON(response.responseText);
+      showAlertModal(err.error.message);
 //        $("#modal-error-notice .error-content").html(err.error.message);
 //        $("#modal-error-notice").modal('show');
-      }
-    });
+    }
   });
+});
+
+$("#btn-add-user").click(function(){
+  $("#modal-add-user").modal("show");
+});

@@ -121,7 +121,7 @@ function initUserStoryDatatable() {
       "sDom": "<'row-fluid well-search'<'span5'Ti><'span2'f><'span5'pl><'clear'><'container-processing'r>>t<'row-fluid'<'span6'i><'span6'p>>",
       "sPaginationType": "full_numbers",
       "aoColumns": [
-        {"mData": "sid"},
+//        {"mData": "sid"},
         {"mData": "story_name"},
         {"mData": "priority"},
         {"mData": "time_estimate"},
@@ -134,8 +134,12 @@ function initUserStoryDatatable() {
       'aoColumnDefs': [
         {
           'bSortable': false,
-          'aTargets': [8]
+          'aTargets': [7]
         },
+//        {
+//          "bVisible": false,
+//          'aTargets': [0]
+//        },
         {
           "mRender": function(data, type, row) {
             switch (row["priority"]) {
@@ -153,7 +157,7 @@ function initUserStoryDatatable() {
                 break;
             }
           },
-          'aTargets': [2]
+          'aTargets': [1]
         },
         {
           "mRender": function(data, type, row) {
@@ -187,7 +191,7 @@ function initUserStoryDatatable() {
                 break;
             }
           },
-          'aTargets': [5]
+          'aTargets': [4]
         },
         {
           "mRender": function(data, type, row) {
@@ -195,7 +199,7 @@ function initUserStoryDatatable() {
                     + '</div>';
             return html;
           },
-          'aTargets': [8]
+          'aTargets': [7]
         }
       ],
       "oLanguage": {
@@ -236,34 +240,66 @@ function initUserStoryDatatable() {
     oTable.columnFilter({
       "sPlaceHolder": "head:after",
       'aoColumns': [
+//        {
+//          type: "text"
+//        },
         {
-          type: "text",
+          type: "text"
         },
         {
           type: "select",
           bCaseSensitive: false,
-          values: ['Urgent', 'High', 'Medium', 'Low']
+          values: [
+            "Urgent",
+            "High",
+            "Medium",
+            "Low"
+          ]
+//          values: [
+//            {label: 'Urgent', value: 1},
+//            {label: 'High', value: 2},
+//            {label: 'Medium', value: 3},
+//            {label: 'Low', value: 4}
+//          ]
         },
         {
-          type: "text",
+          type: "text"
         },
         {
-          type: "text",
+          type: "text"
         },
         {
           type: "select",
-          bCaseSensitive: false,
-          values: ['New', 'Estimated', 'Asigned to sprint',
-            'To do', 'In progress', 'To test', 'Done',
-            'Sprint completed']
+          values: [
+            "New",
+            "Approved",
+            "Estimated",
+            "Asigned to sprint",
+            "To do",
+            "In progress",
+            "To test",
+            "Done",
+            "Sprint completed"
+          ]
+//          values: [
+//            {label: 'New', value: 1},
+//            {label: 'Approved', value: 2},
+//            {label: 'Estimated', value: 3},
+//            {label: 'Asigned', value: 4},
+//            {label: 'To do', value: 5},
+//            {label: 'In progress', value: 6},
+//            {label: 'To test', value: 7},
+//            {label: 'Done', value: 8},
+//            {label: 'Sprint completed', value: 9}
+//          ]
         },
         {
-          type: "text",
+          type: "text"
         },
         {
-          type: "text",
+          type: "text"
         },
-        null
+        //null
       ]
     });
     $("#user_story_datatable").css("width", '100%');
@@ -272,11 +308,13 @@ function initUserStoryDatatable() {
     var html = '<button id="advanceFilter" class="advance-filter mr10 pull-right"><i class="icon-filter"></i></button>';
     $('#user_story_datatable_wrapper > div.well-search > div:nth-child(3)').prepend(html);
 
-    $('#advanceFilter').click(function() {
-      $('table#user_story_datatable > thead > tr:last-child').toggle();
+    $('#user_story_datatable_wrapper #advanceFilter').click(function() {
+
+      $('#user_story_datatable > thead > tr:last-child').toggle();
       if ($('#advanceFilter').hasClass('advance-filter-active')) {
         $('#advanceFilter').removeClass('advance-filter-active');
         // reset_dt_view(oTable);
+        oTable.fnDraw();
       } else {
         $('#advanceFilter').addClass('advance-filter-active');
       }
