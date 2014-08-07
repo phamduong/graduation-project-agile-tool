@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2014-07-16 08:39:43
+Date: 2014-08-07 21:04:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,7 +25,7 @@ CREATE TABLE `access_link` (
   `type` tinyint(4) NOT NULL DEFAULT '0',
   `peid` int(11) NOT NULL,
   PRIMARY KEY (`lid`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of access_link
@@ -77,13 +77,13 @@ INSERT INTO `access_link` VALUES ('44', '/task/update_status', '0', '49');
 INSERT INTO `access_link` VALUES ('45', '/task\\/reload_task_detail\\/\\d+/', '1', '53');
 INSERT INTO `access_link` VALUES ('46', '/task\\/reload_story_progress\\/\\d+/', '1', '53');
 INSERT INTO `access_link` VALUES ('47', '/task\\/get_datatables\\/\\d+/', '1', '53');
-INSERT INTO `access_link` VALUES ('48', '/taskboard\\/\\d+\\/\\d+\\/\\d+/', '1', '53');
+INSERT INTO `access_link` VALUES ('48', '/taskboard.*/', '1', '53');
 INSERT INTO `access_link` VALUES ('49', '/activity/get', '0', '55');
 INSERT INTO `access_link` VALUES ('50', '/permission', '0', '57');
 INSERT INTO `access_link` VALUES ('51', '/permission/save', '0', '65');
 INSERT INTO `access_link` VALUES ('53', '/taskboard', '0', '53');
-INSERT INTO `access_link` VALUES ('54', '/project/get_leader', '0', '12');
-INSERT INTO `access_link` VALUES ('55', '/project/get_owner', '0', '12');
+INSERT INTO `access_link` VALUES ('54', '/project\\/get_leader.*/', '1', '12');
+INSERT INTO `access_link` VALUES ('55', '/project\\/get_owner.*/', '1', '12');
 INSERT INTO `access_link` VALUES ('56', '/project/complete', '0', '15');
 INSERT INTO `access_link` VALUES ('57', '/sprint/start_sprint', '0', '80');
 INSERT INTO `access_link` VALUES ('58', '/sprint/complete_sprint', '0', '65');
@@ -94,14 +94,26 @@ INSERT INTO `access_link` VALUES ('62', '/sprint/update_team_day', '0', '38');
 INSERT INTO `access_link` VALUES ('63', '/sprint/get_team_day_all', '0', '38');
 INSERT INTO `access_link` VALUES ('64', '/burndown/sprint_all_team_burndown', '0', '71');
 INSERT INTO `access_link` VALUES ('65', '/burndown/sprint_each_team_burndown', '0', '71');
-INSERT INTO `access_link` VALUES ('66', '/burndown\\/\\d+\\/\\d+/', '1', '71');
+INSERT INTO `access_link` VALUES ('66', '/burndown\\/\\d+\\/.*/', '1', '71');
 INSERT INTO `access_link` VALUES ('67', '/burnup', '0', '74');
 INSERT INTO `access_link` VALUES ('68', '/burnup/initialize', '0', '74');
-INSERT INTO `access_link` VALUES ('69', '/permission/check', '0', '82');
-INSERT INTO `access_link` VALUES ('70', '/attach\\/\\d+\\/\\d+/', '0', '82');
 INSERT INTO `access_link` VALUES ('71', '/public\\/data\\/attach\\/.*/', '1', '82');
 INSERT INTO `access_link` VALUES ('72', '/burndown', '0', '71');
 INSERT INTO `access_link` VALUES ('73', '/task/delete', '0', '77');
+INSERT INTO `access_link` VALUES ('74', '/task/update_order', '0', '49');
+INSERT INTO `access_link` VALUES ('75', '/user\\/datatables.*/', '1', '83');
+INSERT INTO `access_link` VALUES ('76', '/users', '0', '83');
+INSERT INTO `access_link` VALUES ('77', '/', '0', '82');
+INSERT INTO `access_link` VALUES ('78', '/project', '0', '82');
+INSERT INTO `access_link` VALUES ('79', '/login', '0', '82');
+INSERT INTO `access_link` VALUES ('80', '/logout', '0', '82');
+INSERT INTO `access_link` VALUES ('81', '/project\\/datatables\\?_=\\d+/', '1', '82');
+INSERT INTO `access_link` VALUES ('82', '/project/set_current', '0', '82');
+INSERT INTO `access_link` VALUES ('83', '/project/check_current', '0', '82');
+INSERT INTO `access_link` VALUES ('84', '/permission/check', '0', '82');
+INSERT INTO `access_link` VALUES ('85', '/attach\\/\\d+\\/\\d+/', '1', '82');
+INSERT INTO `access_link` VALUES ('86', '/attach/remove_attach', '0', '82');
+INSERT INTO `access_link` VALUES ('87', '/download_attach\\/\\d+/', '1', '82');
 
 -- ----------------------------
 -- Table structure for `activity`
@@ -116,207 +128,260 @@ CREATE TABLE `activity` (
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `uid` bigint(11) NOT NULL,
   PRIMARY KEY (`acid`)
-) ENGINE=InnoDB AUTO_INCREMENT=720 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=250 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of activity
 -- ----------------------------
-INSERT INTO `activity` VALUES ('522', '4', '1', '1', 'Name+Quan li nha hang+Quản tiệc cưới', '2014-06-24 00:45:50', '1');
-INSERT INTO `activity` VALUES ('523', '4', '1', '1', 'Name+Quản tiệc cưới+Quản lí tiệc cưới', '2014-06-24 00:46:21', '1');
-INSERT INTO `activity` VALUES ('524', '4', '1', '2', 'Name+story 1+Quán lí danh sách món ăn', '2014-06-24 00:54:04', '1');
-INSERT INTO `activity` VALUES ('525', '4', '1', '2', 'Story point+10+30', '2014-06-24 00:54:04', '1');
-INSERT INTO `activity` VALUES ('526', '4', '10', '2', 'Name+story 10+Quản lí đặt bàn', '2014-06-24 00:54:21', '1');
-INSERT INTO `activity` VALUES ('527', '4', '11', '2', 'Name+story 11+Quản lí đơn hàng', '2014-06-24 00:54:47', '1');
-INSERT INTO `activity` VALUES ('528', '4', '12', '2', 'Name+story 12+Quản lí dụng cụ', '2014-06-24 00:55:01', '1');
-INSERT INTO `activity` VALUES ('529', '4', '13', '2', 'Name+story 13+Thống kê', '2014-06-24 00:55:14', '1');
-INSERT INTO `activity` VALUES ('530', '3', '1', '1', '14+2', '2014-06-24 00:56:52', '1');
-INSERT INTO `activity` VALUES ('531', '3', '1', '1', '19+2', '2014-06-24 00:56:58', '1');
-INSERT INTO `activity` VALUES ('532', '3', '1', '1', '20+2', '2014-06-24 00:57:10', '1');
-INSERT INTO `activity` VALUES ('533', '3', '1', '1', '22+2', '2014-06-24 00:57:40', '1');
-INSERT INTO `activity` VALUES ('534', '3', '1', '1', '2+2', '2014-06-24 00:57:48', '1');
-INSERT INTO `activity` VALUES ('535', '3', '1', '1', '4+2', '2014-06-24 00:57:59', '1');
-INSERT INTO `activity` VALUES ('536', '3', '1', '1', '6+2', '2014-06-24 00:58:11', '1');
-INSERT INTO `activity` VALUES ('537', '3', '1', '1', '7+2', '2014-06-24 00:58:20', '1');
-INSERT INTO `activity` VALUES ('538', '3', '1', '1', '9+2', '2014-06-24 00:58:27', '1');
-INSERT INTO `activity` VALUES ('539', '3', '1', '1', '8+2', '2014-06-24 00:58:40', '1');
-INSERT INTO `activity` VALUES ('540', '3', '1', '1', '5+2', '2014-06-24 00:58:48', '1');
-INSERT INTO `activity` VALUES ('541', '4', '1', '2', 'Priority+1+3', '2014-06-24 00:59:04', '1');
-INSERT INTO `activity` VALUES ('542', '4', '12', '2', 'Priority+1+4', '2014-06-24 00:59:21', '1');
-INSERT INTO `activity` VALUES ('543', '4', '12', '2', 'Story point+34+5', '2014-06-24 00:59:21', '1');
-INSERT INTO `activity` VALUES ('544', '2', '9', '4', '13+2', '2014-06-24 01:03:07', '1');
-INSERT INTO `activity` VALUES ('545', '2', '18', '3', '13+2', '2014-06-24 01:03:07', '1');
-INSERT INTO `activity` VALUES ('546', '3', '9', '4', '13+2', '2014-06-24 01:03:07', '1');
-INSERT INTO `activity` VALUES ('547', '3', '19', '3', '13+2', '2014-06-24 01:03:07', '1');
-INSERT INTO `activity` VALUES ('548', '2', '8', '4', '13+2', '2014-06-24 01:03:10', '1');
-INSERT INTO `activity` VALUES ('549', '2', '18', '3', '13+2', '2014-06-24 01:03:10', '1');
-INSERT INTO `activity` VALUES ('550', '3', '9', '4', '13+2', '2014-06-24 01:03:10', '1');
-INSERT INTO `activity` VALUES ('551', '3', '18', '3', '13+2', '2014-06-24 01:03:10', '1');
-INSERT INTO `activity` VALUES ('552', '2', '8', '4', '11+2', '2014-06-24 01:03:11', '1');
-INSERT INTO `activity` VALUES ('553', '2', '19', '3', '11+2', '2014-06-24 01:03:11', '1');
-INSERT INTO `activity` VALUES ('554', '3', '9', '4', '11+2', '2014-06-24 01:03:11', '1');
-INSERT INTO `activity` VALUES ('555', '3', '19', '3', '11+2', '2014-06-24 01:03:11', '1');
-INSERT INTO `activity` VALUES ('556', '2', '9', '4', '10+2', '2014-06-24 01:03:15', '1');
-INSERT INTO `activity` VALUES ('557', '2', '17', '3', '10+2', '2014-06-24 01:03:15', '1');
-INSERT INTO `activity` VALUES ('558', '3', '10', '4', '10+2', '2014-06-24 01:03:15', '1');
-INSERT INTO `activity` VALUES ('559', '3', '17', '3', '10+2', '2014-06-24 01:03:15', '1');
-INSERT INTO `activity` VALUES ('560', '2', '9', '4', '12+2', '2014-06-24 01:03:16', '1');
-INSERT INTO `activity` VALUES ('561', '2', '18', '3', '12+2', '2014-06-24 01:03:16', '1');
-INSERT INTO `activity` VALUES ('562', '3', '10', '4', '12+2', '2014-06-24 01:03:17', '1');
-INSERT INTO `activity` VALUES ('563', '3', '19', '3', '12+2', '2014-06-24 01:03:17', '1');
-INSERT INTO `activity` VALUES ('564', '4', '13', '2', 'Name+Thống kê+Thống kê bán hàng', '2014-06-24 06:27:18', '1');
-INSERT INTO `activity` VALUES ('565', '2', '1', '1', '23+2', '2014-06-24 06:27:42', '1');
-INSERT INTO `activity` VALUES ('566', '2', '1', '1', '24+2', '2014-06-24 06:27:58', '1');
-INSERT INTO `activity` VALUES ('567', '2', '1', '1', '25+2', '2014-06-24 06:27:59', '1');
-INSERT INTO `activity` VALUES ('568', '3', '1', '1', '24+2', '2014-06-24 06:28:09', '1');
-INSERT INTO `activity` VALUES ('569', '2', '17', '3', '7+8', '2014-06-24 06:29:18', '1');
-INSERT INTO `activity` VALUES ('570', '2', '18', '3', '9+8', '2014-06-24 06:29:19', '1');
-INSERT INTO `activity` VALUES ('571', '2', '19', '3', '22+8', '2014-06-24 06:29:23', '1');
-INSERT INTO `activity` VALUES ('572', '4', '1', '1', 'Status+New+Approved', '2014-06-24 06:29:46', '1');
-INSERT INTO `activity` VALUES ('573', '4', '1', '1', 'Status+New+Approved', '2014-06-24 06:29:54', '1');
-INSERT INTO `activity` VALUES ('574', '4', '1', '1', 'Status+New+Approved', '2014-06-24 06:30:02', '1');
-INSERT INTO `activity` VALUES ('575', '4', '25', '2', 'Estimate time++10', '2014-06-24 06:30:26', '1');
-INSERT INTO `activity` VALUES ('576', '4', '25', '2', 'Story point++30', '2014-06-24 06:30:26', '1');
-INSERT INTO `activity` VALUES ('577', '4', '23', '2', 'Estimate time++5', '2014-06-24 06:30:38', '1');
-INSERT INTO `activity` VALUES ('578', '4', '23', '2', 'Story point++20', '2014-06-24 06:30:38', '1');
-INSERT INTO `activity` VALUES ('579', '2', '9', '4', '25+2', '2014-06-24 06:30:52', '1');
-INSERT INTO `activity` VALUES ('580', '2', '19', '3', '25+2', '2014-06-24 06:30:52', '1');
-INSERT INTO `activity` VALUES ('581', '2', '9', '4', '23+2', '2014-06-24 06:31:05', '1');
-INSERT INTO `activity` VALUES ('582', '2', '17', '3', '23+2', '2014-06-24 06:31:05', '1');
-INSERT INTO `activity` VALUES ('583', '2', '8', '4', '1+2', '2014-06-24 06:37:03', '1');
-INSERT INTO `activity` VALUES ('584', '2', '17', '3', '1+2', '2014-06-24 06:37:03', '1');
-INSERT INTO `activity` VALUES ('585', '2', '8', '4', '11+2', '2014-06-24 06:37:04', '1');
-INSERT INTO `activity` VALUES ('586', '2', '18', '3', '11+2', '2014-06-24 06:37:04', '1');
-INSERT INTO `activity` VALUES ('587', '2', '8', '4', '13+2', '2014-06-24 06:37:06', '1');
-INSERT INTO `activity` VALUES ('588', '2', '19', '3', '13+2', '2014-06-24 06:37:06', '1');
-INSERT INTO `activity` VALUES ('589', '2', '1', '1', '8+9', '2014-07-13 09:54:12', '1');
-INSERT INTO `activity` VALUES ('590', '2', '1', '1', '8+9', '2014-07-13 09:54:12', '1');
-INSERT INTO `activity` VALUES ('591', '3', '9', '4', '25+2', '2014-07-13 10:28:03', '1');
-INSERT INTO `activity` VALUES ('592', '3', '19', '3', '25+2', '2014-07-13 10:28:03', '1');
-INSERT INTO `activity` VALUES ('593', '3', '9', '4', '12+2', '2014-07-13 10:28:05', '1');
-INSERT INTO `activity` VALUES ('594', '3', '18', '3', '12+2', '2014-07-13 10:28:05', '1');
-INSERT INTO `activity` VALUES ('595', '2', '9', '4', '10+2', '2014-07-13 10:30:08', '1');
-INSERT INTO `activity` VALUES ('596', '2', '18', '3', '10+2', '2014-07-13 10:30:09', '1');
-INSERT INTO `activity` VALUES ('597', '3', '9', '4', '10+2', '2014-07-13 10:30:09', '1');
-INSERT INTO `activity` VALUES ('598', '3', '17', '3', '10+2', '2014-07-13 10:30:09', '1');
-INSERT INTO `activity` VALUES ('599', '2', '9', '4', '25+2', '2014-07-13 13:29:18', '1');
-INSERT INTO `activity` VALUES ('600', '2', '18', '3', '25+2', '2014-07-13 13:29:18', '1');
-INSERT INTO `activity` VALUES ('601', '2', '9', '4', '12+2', '2014-07-13 13:29:20', '1');
-INSERT INTO `activity` VALUES ('602', '2', '18', '3', '12+2', '2014-07-13 13:29:20', '1');
-INSERT INTO `activity` VALUES ('603', '3', '1', '1', '1+2', '2014-07-13 16:25:14', '1');
-INSERT INTO `activity` VALUES ('604', '3', '8', '4', '11+2', '2014-07-13 23:45:14', '1');
-INSERT INTO `activity` VALUES ('605', '3', '18', '3', '11+2', '2014-07-13 23:45:14', '1');
-INSERT INTO `activity` VALUES ('606', '2', '17', '3', '21+8', '2014-07-14 00:22:21', '1');
-INSERT INTO `activity` VALUES ('607', '2', '18', '3', '5+8', '2014-07-14 00:22:25', '1');
-INSERT INTO `activity` VALUES ('608', '2', '19', '3', '8+8', '2014-07-14 00:22:27', '1');
-INSERT INTO `activity` VALUES ('609', '2', '18', '3', '6+8', '2014-07-14 00:22:28', '1');
-INSERT INTO `activity` VALUES ('610', '2', '8', '4', '25+2', '2014-07-14 00:24:17', '1');
-INSERT INTO `activity` VALUES ('611', '2', '17', '3', '25+2', '2014-07-14 00:24:18', '1');
-INSERT INTO `activity` VALUES ('612', '3', '9', '4', '25+2', '2014-07-14 00:24:18', '1');
-INSERT INTO `activity` VALUES ('613', '3', '18', '3', '25+2', '2014-07-14 00:24:18', '1');
-INSERT INTO `activity` VALUES ('614', '2', '9', '4', '10+2', '2014-07-14 00:24:20', '1');
-INSERT INTO `activity` VALUES ('615', '2', '19', '3', '10+2', '2014-07-14 00:24:20', '1');
-INSERT INTO `activity` VALUES ('616', '3', '9', '4', '10+2', '2014-07-14 00:24:20', '1');
-INSERT INTO `activity` VALUES ('617', '3', '18', '3', '10+2', '2014-07-14 00:24:20', '1');
-INSERT INTO `activity` VALUES ('618', '2', '8', '4', '13+2', '2014-07-14 00:24:21', '1');
-INSERT INTO `activity` VALUES ('619', '2', '18', '3', '13+2', '2014-07-14 00:24:21', '1');
-INSERT INTO `activity` VALUES ('620', '3', '8', '4', '13+2', '2014-07-14 00:24:21', '1');
-INSERT INTO `activity` VALUES ('621', '3', '19', '3', '13+2', '2014-07-14 00:24:22', '1');
-INSERT INTO `activity` VALUES ('622', '4', '12', '6', 'Status+Done+To do', '2014-07-14 00:27:08', '1');
-INSERT INTO `activity` VALUES ('623', '4', '19', '6', 'Status+Done+In Progress', '2014-07-14 00:27:09', '1');
-INSERT INTO `activity` VALUES ('624', '4', '6', '6', 'Status+To test+In Progress', '2014-07-14 00:27:20', '1');
-INSERT INTO `activity` VALUES ('625', '4', '11', '6', 'Status+Done+To test', '2014-07-14 00:27:21', '1');
-INSERT INTO `activity` VALUES ('626', '4', '11', '6', 'Status+To test+In Progress', '2014-07-14 10:00:46', '1');
-INSERT INTO `activity` VALUES ('627', '4', '11', '6', 'Status+In Progress+To test', '2014-07-14 10:00:47', '1');
-INSERT INTO `activity` VALUES ('628', '4', '11', '6', 'Status+To test+In Progress', '2014-07-14 10:01:38', '1');
-INSERT INTO `activity` VALUES ('629', '4', '11', '6', 'Status+In Progress+To test', '2014-07-14 10:01:40', '1');
-INSERT INTO `activity` VALUES ('630', '2', '8', '4', '10+2', '2014-07-14 10:02:07', '1');
-INSERT INTO `activity` VALUES ('631', '2', '19', '3', '10+2', '2014-07-14 10:02:07', '1');
-INSERT INTO `activity` VALUES ('632', '3', '9', '4', '10+2', '2014-07-14 10:02:07', '1');
-INSERT INTO `activity` VALUES ('633', '3', '19', '3', '10+2', '2014-07-14 10:02:07', '1');
-INSERT INTO `activity` VALUES ('634', '2', '8', '4', '11+2', '2014-07-14 10:02:10', '1');
-INSERT INTO `activity` VALUES ('635', '2', '19', '3', '11+2', '2014-07-14 10:02:10', '1');
-INSERT INTO `activity` VALUES ('636', '2', '8', '4', '12+2', '2014-07-14 10:02:14', '1');
-INSERT INTO `activity` VALUES ('637', '2', '18', '3', '12+2', '2014-07-14 10:02:14', '1');
-INSERT INTO `activity` VALUES ('638', '3', '9', '4', '12+2', '2014-07-14 10:02:14', '1');
-INSERT INTO `activity` VALUES ('639', '3', '18', '3', '12+2', '2014-07-14 10:02:14', '1');
-INSERT INTO `activity` VALUES ('640', '2', '8', '4', '23+2', '2014-07-14 10:02:16', '1');
-INSERT INTO `activity` VALUES ('641', '2', '17', '3', '23+2', '2014-07-14 10:02:16', '1');
-INSERT INTO `activity` VALUES ('642', '3', '9', '4', '23+2', '2014-07-14 10:02:16', '1');
-INSERT INTO `activity` VALUES ('643', '3', '17', '3', '23+2', '2014-07-14 10:02:16', '1');
-INSERT INTO `activity` VALUES ('644', '4', '20', '6', 'Status+Done+To test', '2014-07-14 10:02:27', '1');
-INSERT INTO `activity` VALUES ('645', '4', '20', '6', 'Status+To test+Done', '2014-07-14 10:03:01', '1');
-INSERT INTO `activity` VALUES ('646', '4', '8', '6', 'Status+In Progress+Done', '2014-07-14 10:03:06', '1');
-INSERT INTO `activity` VALUES ('647', '4', '15', '6', 'Status+Done+To test', '2014-07-14 10:03:08', '1');
-INSERT INTO `activity` VALUES ('648', '4', '8', '6', 'Status+Done+In Progress', '2014-07-14 10:03:10', '1');
-INSERT INTO `activity` VALUES ('649', '4', '20', '6', 'Status+Done+To do', '2014-07-14 10:03:14', '1');
-INSERT INTO `activity` VALUES ('650', '4', '8', '6', 'Status+In Progress+To do', '2014-07-14 10:10:14', '1');
-INSERT INTO `activity` VALUES ('651', '4', '15', '6', 'Status+To test+To do', '2014-07-14 10:10:50', '1');
-INSERT INTO `activity` VALUES ('652', '4', '8', '6', 'Status+To do+In Progress', '2014-07-14 10:12:53', '1');
-INSERT INTO `activity` VALUES ('653', '3', '10', '2', '15+6', '2014-07-14 10:52:24', '1');
-INSERT INTO `activity` VALUES ('654', '3', '10', '2', '15+6', '2014-07-14 15:59:43', '1');
-INSERT INTO `activity` VALUES ('655', '3', '10', '2', '15+6', '2014-07-14 16:03:43', '1');
-INSERT INTO `activity` VALUES ('656', '3', '10', '2', '15+6', '2014-07-14 16:09:14', '1');
-INSERT INTO `activity` VALUES ('657', '3', '10', '2', '15+6', '2014-07-14 16:11:57', '1');
-INSERT INTO `activity` VALUES ('658', '3', '10', '2', '15+6', '2014-07-14 16:15:17', '1');
-INSERT INTO `activity` VALUES ('659', '3', '10', '2', '15+6', '2014-07-14 16:16:51', '1');
-INSERT INTO `activity` VALUES ('660', '3', '10', '2', '15+6', '2014-07-14 16:17:34', '1');
-INSERT INTO `activity` VALUES ('661', '5', '22', '1', '', '2014-07-14 17:25:09', '1');
-INSERT INTO `activity` VALUES ('662', '1', '22', '1', '168', '2014-07-14 17:28:05', '1');
-INSERT INTO `activity` VALUES ('663', '5', '23', '1', '', '2014-07-14 17:56:33', '1');
-INSERT INTO `activity` VALUES ('664', '5', '24', '1', '', '2014-07-14 17:58:01', '1');
-INSERT INTO `activity` VALUES ('665', '5', '25', '1', '', '2014-07-14 18:00:45', '1');
-INSERT INTO `activity` VALUES ('666', '5', '26', '1', '', '2014-07-14 18:01:01', '1');
-INSERT INTO `activity` VALUES ('667', '5', '27', '1', '', '2014-07-14 18:05:46', '1');
-INSERT INTO `activity` VALUES ('668', '2', '14', '1', '10+9', '2014-07-15 05:32:55', '1');
-INSERT INTO `activity` VALUES ('669', '2', '14', '1', '10+9', '2014-07-15 05:32:55', '1');
-INSERT INTO `activity` VALUES ('670', '3', '14', '1', '9+9', '2014-07-15 05:33:40', '1');
-INSERT INTO `activity` VALUES ('671', '3', '14', '1', '10+9', '2014-07-15 05:33:40', '1');
-INSERT INTO `activity` VALUES ('672', '2', '14', '1', '11+9', '2014-07-15 05:39:08', '1');
-INSERT INTO `activity` VALUES ('673', '2', '14', '1', '11+9', '2014-07-15 05:39:09', '1');
-INSERT INTO `activity` VALUES ('676', '3', '14', '1', '11+9', '2014-07-15 06:26:03', '1');
-INSERT INTO `activity` VALUES ('677', '2', '14', '1', '14+9', '2014-07-15 06:31:55', '1');
-INSERT INTO `activity` VALUES ('678', '2', '14', '1', '15+9', '2014-07-15 06:31:55', '1');
-INSERT INTO `activity` VALUES ('679', '2', '14', '1', '16+9', '2014-07-15 06:31:56', '1');
-INSERT INTO `activity` VALUES ('680', '2', '14', '1', '17+9', '2014-07-15 06:31:56', '1');
-INSERT INTO `activity` VALUES ('681', '2', '14', '1', '18+9', '2014-07-15 06:31:56', '1');
-INSERT INTO `activity` VALUES ('682', '3', '14', '1', '16+9', '2014-07-15 06:32:30', '1');
-INSERT INTO `activity` VALUES ('683', '3', '14', '1', '17+9', '2014-07-15 06:32:30', '1');
-INSERT INTO `activity` VALUES ('684', '2', '1', '1', '26+2', '2014-07-15 07:07:35', '1');
-INSERT INTO `activity` VALUES ('685', '5', '26', '2', '', '2014-07-15 07:07:35', '1');
-INSERT INTO `activity` VALUES ('686', '2', '1', '1', '27+2', '2014-07-15 07:11:03', '1');
-INSERT INTO `activity` VALUES ('687', '5', '27', '2', '', '2014-07-15 07:11:03', '1');
-INSERT INTO `activity` VALUES ('688', '2', '27', '1', '19+9', '2014-07-15 07:11:04', '1');
-INSERT INTO `activity` VALUES ('689', '2', '1', '1', '28+2', '2014-07-15 07:26:25', '1');
-INSERT INTO `activity` VALUES ('690', '5', '28', '2', '', '2014-07-15 07:26:25', '1');
-INSERT INTO `activity` VALUES ('691', '2', '28', '1', '20+9', '2014-07-15 07:26:26', '1');
-INSERT INTO `activity` VALUES ('692', '2', '1', '1', '29+2', '2014-07-15 07:27:18', '1');
-INSERT INTO `activity` VALUES ('693', '5', '29', '2', '', '2014-07-15 07:27:18', '1');
-INSERT INTO `activity` VALUES ('694', '2', '29', '1', '21+9', '2014-07-15 07:27:19', '1');
-INSERT INTO `activity` VALUES ('695', '2', '1', '1', '30+2', '2014-07-15 07:27:46', '1');
-INSERT INTO `activity` VALUES ('696', '5', '30', '2', '', '2014-07-15 07:27:46', '1');
-INSERT INTO `activity` VALUES ('697', '2', '30', '2', '22+9', '2014-07-15 07:27:47', '1');
-INSERT INTO `activity` VALUES ('698', '4', '30', '2', 'Estimate time++2', '2014-07-15 07:38:12', '1');
-INSERT INTO `activity` VALUES ('699', '4', '30', '2', 'Story point++1', '2014-07-15 07:38:12', '1');
-INSERT INTO `activity` VALUES ('700', '2', '30', '2', '23+9', '2014-07-15 07:38:13', '1');
-INSERT INTO `activity` VALUES ('701', '3', '30', '2', '22+9', '2014-07-15 07:38:27', '1');
-INSERT INTO `activity` VALUES ('702', '2', '30', '2', '24+9', '2014-07-15 07:38:43', '1');
-INSERT INTO `activity` VALUES ('703', '3', '30', '2', '23+9', '2014-07-15 07:38:44', '1');
-INSERT INTO `activity` VALUES ('704', '4', '1', '1', 'Status+1+0', '2014-07-15 09:32:54', '1');
-INSERT INTO `activity` VALUES ('705', '4', '1', '1', 'Status+0+1', '2014-07-15 09:33:05', '1');
-INSERT INTO `activity` VALUES ('706', '4', '1', '1', 'Status+1+2', '2014-07-15 09:34:09', '1');
-INSERT INTO `activity` VALUES ('707', '4', '1', '1', 'Estimate end date+2014-08-26+2014-08-27', '2014-07-15 09:34:38', '1');
-INSERT INTO `activity` VALUES ('708', '3', '8', '4', '10+2', '2014-07-15 09:47:07', '1');
-INSERT INTO `activity` VALUES ('709', '3', '19', '3', '10+2', '2014-07-15 09:47:07', '1');
-INSERT INTO `activity` VALUES ('710', '2', '8', '4', '10+2', '2014-07-15 10:01:01', '1');
-INSERT INTO `activity` VALUES ('711', '2', '19', '3', '10+2', '2014-07-15 10:01:01', '1');
-INSERT INTO `activity` VALUES ('712', '3', '8', '4', '10+2', '2014-07-15 10:01:03', '1');
-INSERT INTO `activity` VALUES ('713', '3', '19', '3', '10+2', '2014-07-15 10:01:03', '1');
-INSERT INTO `activity` VALUES ('714', '4', '26', '2', 'Name+aaaaaaaaaaaaa+Nâng cấp tính năng report', '2014-07-15 10:06:36', '1');
-INSERT INTO `activity` VALUES ('715', '4', '27', '2', 'Name+aaaaaaaaaaaaaaaa+Quản lí album ảnh', '2014-07-15 10:10:01', '1');
-INSERT INTO `activity` VALUES ('716', '4', '27', '2', 'Priority+3+2', '2014-07-15 10:10:01', '1');
-INSERT INTO `activity` VALUES ('717', '4', '30', '2', 'Name+dddddddddddddd+Quản lí tiền bạc', '2014-07-15 10:10:30', '1');
-INSERT INTO `activity` VALUES ('718', '4', '29', '2', 'Name+aaaaaaaaaaaaaaaaaa+Bổ sung quản lí món ăn', '2014-07-15 10:10:55', '1');
-INSERT INTO `activity` VALUES ('719', '4', '28', '2', 'Name+aaaaaaaaaaaaaaaaaa+Quản lí thực đơn', '2014-07-15 10:11:18', '1');
+INSERT INTO `activity` VALUES ('1', '2', '1', '1', '1+4', '2014-07-28 14:43:09', '1');
+INSERT INTO `activity` VALUES ('2', '5', '1', '4', '', '2014-07-28 14:43:09', '1');
+INSERT INTO `activity` VALUES ('3', '2', '1', '4', '29+2', '2014-07-28 14:43:14', '1');
+INSERT INTO `activity` VALUES ('4', '2', '17', '3', '29+2', '2014-07-28 14:43:14', '1');
+INSERT INTO `activity` VALUES ('5', '2', '1', '4', '26+2', '2014-07-28 14:43:16', '1');
+INSERT INTO `activity` VALUES ('6', '2', '18', '3', '26+2', '2014-07-28 14:43:16', '1');
+INSERT INTO `activity` VALUES ('7', '2', '1', '4', '10+2', '2014-07-28 14:43:20', '1');
+INSERT INTO `activity` VALUES ('8', '2', '45', '3', '10+2', '2014-07-28 14:43:20', '1');
+INSERT INTO `activity` VALUES ('9', '4', '29', '2', 'Estimate time+3+15', '2014-07-28 14:44:19', '1');
+INSERT INTO `activity` VALUES ('10', '4', '29', '2', 'Story point+2+30', '2014-07-28 14:44:19', '1');
+INSERT INTO `activity` VALUES ('11', '4', '10', '2', 'Estimate time+3+30', '2014-07-28 14:44:37', '1');
+INSERT INTO `activity` VALUES ('12', '4', '10', '2', 'Story point+100+80', '2014-07-28 14:44:38', '1');
+INSERT INTO `activity` VALUES ('13', '2', '1', '4', '34+2', '2014-07-28 14:44:52', '1');
+INSERT INTO `activity` VALUES ('14', '2', '18', '3', '34+2', '2014-07-28 14:44:52', '1');
+INSERT INTO `activity` VALUES ('15', '2', '1', '4', '12+2', '2014-07-28 14:45:03', '1');
+INSERT INTO `activity` VALUES ('16', '2', '17', '3', '12+2', '2014-07-28 14:45:03', '1');
+INSERT INTO `activity` VALUES ('17', '2', '1', '4', '31+2', '2014-07-28 14:45:04', '1');
+INSERT INTO `activity` VALUES ('18', '2', '45', '3', '31+2', '2014-07-28 14:45:04', '1');
+INSERT INTO `activity` VALUES ('19', '2', '29', '2', '1+6', '2014-07-28 14:45:40', '1');
+INSERT INTO `activity` VALUES ('20', '5', '1', '6', '', '2014-07-28 14:45:40', '1');
+INSERT INTO `activity` VALUES ('21', '2', '29', '2', '2+6', '2014-07-28 14:45:58', '1');
+INSERT INTO `activity` VALUES ('22', '5', '2', '6', '', '2014-07-28 14:45:58', '1');
+INSERT INTO `activity` VALUES ('23', '2', '29', '2', '3+6', '2014-07-28 14:46:21', '1');
+INSERT INTO `activity` VALUES ('24', '5', '3', '6', '', '2014-07-28 14:46:21', '1');
+INSERT INTO `activity` VALUES ('25', '2', '26', '2', '4+6', '2014-07-28 14:46:44', '1');
+INSERT INTO `activity` VALUES ('26', '5', '4', '6', '', '2014-07-28 14:46:44', '1');
+INSERT INTO `activity` VALUES ('27', '2', '26', '2', '5+6', '2014-07-28 14:46:57', '1');
+INSERT INTO `activity` VALUES ('28', '5', '5', '6', '', '2014-07-28 14:46:57', '1');
+INSERT INTO `activity` VALUES ('29', '2', '26', '2', '6+6', '2014-07-28 14:47:09', '1');
+INSERT INTO `activity` VALUES ('30', '5', '6', '6', '', '2014-07-28 14:47:09', '1');
+INSERT INTO `activity` VALUES ('31', '2', '10', '2', '7+6', '2014-07-28 14:47:48', '1');
+INSERT INTO `activity` VALUES ('32', '5', '7', '6', '', '2014-07-28 14:47:48', '1');
+INSERT INTO `activity` VALUES ('33', '2', '10', '2', '8+6', '2014-07-28 14:48:11', '1');
+INSERT INTO `activity` VALUES ('34', '5', '8', '6', '', '2014-07-28 14:48:11', '1');
+INSERT INTO `activity` VALUES ('35', '2', '10', '2', '9+6', '2014-07-28 14:48:32', '1');
+INSERT INTO `activity` VALUES ('36', '5', '9', '6', '', '2014-07-28 14:48:32', '1');
+INSERT INTO `activity` VALUES ('37', '2', '12', '2', '10+6', '2014-07-28 14:48:53', '1');
+INSERT INTO `activity` VALUES ('38', '5', '10', '6', '', '2014-07-28 14:48:53', '1');
+INSERT INTO `activity` VALUES ('39', '2', '12', '2', '11+6', '2014-07-28 14:49:07', '1');
+INSERT INTO `activity` VALUES ('40', '5', '11', '6', '', '2014-07-28 14:49:07', '1');
+INSERT INTO `activity` VALUES ('41', '3', '1', '4', '34+2', '2014-07-28 14:49:21', '1');
+INSERT INTO `activity` VALUES ('42', '3', '18', '3', '34+2', '2014-07-28 14:49:21', '1');
+INSERT INTO `activity` VALUES ('43', '4', '1', '4', 'End date estimate+2014-08-28+2014-08-14', '2014-07-28 14:50:01', '1');
+INSERT INTO `activity` VALUES ('44', '2', '31', '2', '12+6', '2014-07-28 14:50:23', '1');
+INSERT INTO `activity` VALUES ('45', '5', '12', '6', '', '2014-07-28 14:50:23', '1');
+INSERT INTO `activity` VALUES ('46', '2', '31', '2', '13+6', '2014-07-28 14:50:54', '1');
+INSERT INTO `activity` VALUES ('47', '5', '13', '6', '', '2014-07-28 14:50:54', '1');
+INSERT INTO `activity` VALUES ('48', '4', '1', '6', 'Status+To do+In Progress', '2014-07-28 14:53:21', '1');
+INSERT INTO `activity` VALUES ('49', '4', '1', '6', 'Status+In Progress+To test', '2014-07-28 14:53:22', '1');
+INSERT INTO `activity` VALUES ('50', '4', '3', '6', 'Status+To do+Done', '2014-07-28 14:53:25', '1');
+INSERT INTO `activity` VALUES ('51', '4', '11', '6', 'Status+To do+Done', '2014-07-28 14:53:28', '1');
+INSERT INTO `activity` VALUES ('52', '4', '10', '6', 'Status+To do+In Progress', '2014-07-28 14:53:29', '1');
+INSERT INTO `activity` VALUES ('53', '4', '10', '6', 'Time remain+0.5+0.5', '2014-07-28 14:53:35', '1');
+INSERT INTO `activity` VALUES ('54', '4', '4', '6', 'Status+To do+In Progress', '2014-07-28 14:53:39', '1');
+INSERT INTO `activity` VALUES ('55', '4', '6', '6', 'Status+To do+Done', '2014-07-28 14:53:41', '1');
+INSERT INTO `activity` VALUES ('56', '4', '5', '6', 'Status+To do+To test', '2014-07-28 14:53:42', '1');
+INSERT INTO `activity` VALUES ('57', '4', '4', '6', 'Time remain+0.5+0.5', '2014-07-28 14:53:48', '1');
+INSERT INTO `activity` VALUES ('58', '4', '8', '6', 'Status+To do+In Progress', '2014-07-28 14:53:53', '1');
+INSERT INTO `activity` VALUES ('59', '4', '8', '6', 'Time remain+2+2', '2014-07-28 14:53:59', '1');
+INSERT INTO `activity` VALUES ('60', '4', '12', '6', 'Status+To do+In Progress', '2014-07-28 14:54:03', '1');
+INSERT INTO `activity` VALUES ('61', '4', '9', '6', 'Status+To do+To test', '2014-07-28 14:54:09', '1');
+INSERT INTO `activity` VALUES ('62', '4', '1', '1', 'Start date+2014-06-10+2014-07-28', '2014-07-28 15:02:17', '1');
+INSERT INTO `activity` VALUES ('63', '4', '1', '1', 'Estimate end date+2014-08-27+2014-09-28', '2014-07-28 15:02:17', '1');
+INSERT INTO `activity` VALUES ('64', '4', '13', '6', 'User assign+Lê Đức Anh+Hoàng Văn Hiệu', '2014-07-28 15:11:16', '1');
+INSERT INTO `activity` VALUES ('65', '4', '12', '6', 'Status+In Progress+Done', '2014-07-28 15:11:19', '1');
+INSERT INTO `activity` VALUES ('66', '4', '13', '6', 'Status+To do+Done', '2014-07-28 15:11:21', '1');
+INSERT INTO `activity` VALUES ('67', '4', '12', '6', 'Status+Done+To test', '2014-07-28 15:17:28', '1');
+INSERT INTO `activity` VALUES ('68', '4', '13', '6', 'Status+Done+In Progress', '2014-07-28 15:17:31', '1');
+INSERT INTO `activity` VALUES ('69', '4', '12', '6', 'Status+To test+Done', '2014-07-28 15:17:33', '1');
+INSERT INTO `activity` VALUES ('70', '4', '13', '6', 'Status+In Progress+Done', '2014-07-28 15:17:34', '1');
+INSERT INTO `activity` VALUES ('71', '4', '1', '1', 'Start date+2014-07-28+2014-07-01', '2014-07-28 15:20:00', '1');
+INSERT INTO `activity` VALUES ('72', '4', '1', '1', 'Estimate end date+2014-09-28+2014-07-28', '2014-07-28 15:20:00', '1');
+INSERT INTO `activity` VALUES ('73', '4', '1', '1', 'Start date+2014-07-01+2014-07-28', '2014-07-28 15:20:44', '1');
+INSERT INTO `activity` VALUES ('74', '4', '1', '1', 'Estimate end date+2014-07-28+2014-08-30', '2014-07-28 15:20:44', '1');
+INSERT INTO `activity` VALUES ('75', '4', '1', '1', 'Start date+2014-07-28+2014-07-01', '2014-07-28 15:24:08', '1');
+INSERT INTO `activity` VALUES ('76', '4', '1', '4', 'Start date estimate+2014-07-28+2014-07-01', '2014-07-28 15:25:00', '1');
+INSERT INTO `activity` VALUES ('77', '4', '1', '4', 'End date estimate+2014-08-14+2014-07-30', '2014-07-28 15:25:00', '1');
+INSERT INTO `activity` VALUES ('78', '4', '4', '6', 'Status+In Progress+Done', '2014-07-28 15:25:16', '1');
+INSERT INTO `activity` VALUES ('79', '4', '5', '6', 'Status+To test+Done', '2014-07-28 15:25:18', '1');
+INSERT INTO `activity` VALUES ('80', '4', '10', '6', 'Status+In Progress+Done', '2014-07-28 15:25:20', '1');
+INSERT INTO `activity` VALUES ('81', '4', '2', '6', 'Status+To do+In Progress', '2014-07-28 15:26:06', '1');
+INSERT INTO `activity` VALUES ('82', '4', '1', '6', 'Status+To test+Done', '2014-07-28 15:26:08', '1');
+INSERT INTO `activity` VALUES ('83', '4', '2', '6', 'Status+In Progress+Done', '2014-07-28 15:26:12', '1');
+INSERT INTO `activity` VALUES ('84', '2', '1', '4', '23+2', '2014-07-28 15:32:37', '1');
+INSERT INTO `activity` VALUES ('85', '2', '18', '3', '23+2', '2014-07-28 15:32:37', '1');
+INSERT INTO `activity` VALUES ('86', '4', '23', '2', 'Estimate time+3+5', '2014-07-28 15:32:41', '1');
+INSERT INTO `activity` VALUES ('87', '2', '23', '2', '14+6', '2014-07-28 15:32:58', '1');
+INSERT INTO `activity` VALUES ('88', '5', '14', '6', '', '2014-07-28 15:32:58', '1');
+INSERT INTO `activity` VALUES ('89', '2', '23', '2', '15+6', '2014-07-28 15:34:42', '1');
+INSERT INTO `activity` VALUES ('90', '5', '15', '6', '', '2014-07-28 15:34:43', '1');
+INSERT INTO `activity` VALUES ('91', '2', '23', '2', '16+6', '2014-07-28 15:34:58', '1');
+INSERT INTO `activity` VALUES ('92', '5', '16', '6', '', '2014-07-28 15:34:58', '1');
+INSERT INTO `activity` VALUES ('93', '3', '23', '2', '16+6', '2014-07-28 15:35:08', '1');
+INSERT INTO `activity` VALUES ('94', '2', '23', '2', '17+6', '2014-07-28 15:35:29', '1');
+INSERT INTO `activity` VALUES ('95', '5', '17', '6', '', '2014-07-28 15:35:29', '1');
+INSERT INTO `activity` VALUES ('96', '4', '15', '6', 'Status+To do+To test', '2014-07-28 15:36:10', '1');
+INSERT INTO `activity` VALUES ('97', '4', '17', '6', 'User assign+Nguyễn Văn Hiếu+Lục Thị Hoa', '2014-07-28 15:36:17', '1');
+INSERT INTO `activity` VALUES ('98', '4', '17', '6', 'Status+To do+Done', '2014-07-28 15:36:20', '1');
+INSERT INTO `activity` VALUES ('99', '4', '7', '6', 'Status+To do+Done', '2014-07-28 15:43:01', '1');
+INSERT INTO `activity` VALUES ('100', '4', '8', '6', 'Status+In Progress+Done', '2014-07-28 15:43:03', '1');
+INSERT INTO `activity` VALUES ('101', '4', '9', '6', 'Status+To test+Done', '2014-07-28 15:43:05', '1');
+INSERT INTO `activity` VALUES ('102', '4', '2', '6', 'Status+Done+To do', '2014-07-28 15:47:45', '1');
+INSERT INTO `activity` VALUES ('103', '4', '2', '6', 'Status+To do+To test', '2014-07-28 15:48:43', '1');
+INSERT INTO `activity` VALUES ('104', '4', '2', '6', 'Status+To test+Done', '2014-07-28 15:48:48', '1');
+INSERT INTO `activity` VALUES ('105', '4', '1', '6', 'Status+Done+In Progress', '2014-07-28 15:51:09', '1');
+INSERT INTO `activity` VALUES ('106', '4', '1', '6', 'Status+In Progress+Done', '2014-07-28 15:51:43', '1');
+INSERT INTO `activity` VALUES ('107', '2', '17', '3', '34+8', '2014-08-01 20:49:03', '1');
+INSERT INTO `activity` VALUES ('108', '3', '17', '3', '34+8', '2014-08-01 20:49:07', '1');
+INSERT INTO `activity` VALUES ('109', '2', '18', '3', '34+8', '2014-08-01 20:49:07', '1');
+INSERT INTO `activity` VALUES ('110', '5', '43', '1', '', '2014-08-04 05:50:23', '1');
+INSERT INTO `activity` VALUES ('111', '2', '43', '1', '36+2', '2014-08-04 05:54:43', '25');
+INSERT INTO `activity` VALUES ('112', '5', '36', '2', '', '2014-08-04 05:54:43', '25');
+INSERT INTO `activity` VALUES ('113', '2', '43', '1', '37+2', '2014-08-04 05:57:29', '25');
+INSERT INTO `activity` VALUES ('114', '5', '37', '2', '', '2014-08-04 05:57:29', '25');
+INSERT INTO `activity` VALUES ('115', '2', '37', '2', '26+9', '2014-08-04 05:57:30', '25');
+INSERT INTO `activity` VALUES ('116', '4', '43', '1', 'Status+New+Approved', '2014-08-04 05:57:53', '25');
+INSERT INTO `activity` VALUES ('117', '4', '43', '1', 'Status+New+Approved', '2014-08-04 05:57:58', '25');
+INSERT INTO `activity` VALUES ('118', '2', '43', '1', '46+3', '2014-08-04 05:58:27', '25');
+INSERT INTO `activity` VALUES ('119', '5', '46', '3', '', '2014-08-04 05:58:28', '25');
+INSERT INTO `activity` VALUES ('120', '2', '46', '3', '15+8', '2014-08-04 05:58:30', '25');
+INSERT INTO `activity` VALUES ('121', '2', '46', '3', '14+8', '2014-08-04 05:58:33', '25');
+INSERT INTO `activity` VALUES ('122', '2', '46', '3', '9+8', '2014-08-04 05:58:36', '25');
+INSERT INTO `activity` VALUES ('123', '2', '46', '3', '33+8', '2014-08-04 05:58:40', '25');
+INSERT INTO `activity` VALUES ('124', '2', '46', '3', '26+8', '2014-08-04 05:58:44', '25');
+INSERT INTO `activity` VALUES ('125', '3', '46', '3', '9+8', '2014-08-04 05:59:13', '25');
+INSERT INTO `activity` VALUES ('126', '2', '46', '3', '30+8', '2014-08-04 05:59:22', '25');
+INSERT INTO `activity` VALUES ('127', '4', '37', '2', 'Estimate time++10', '2014-08-04 05:59:43', '25');
+INSERT INTO `activity` VALUES ('128', '4', '37', '2', 'Story point++40', '2014-08-04 05:59:43', '25');
+INSERT INTO `activity` VALUES ('129', '4', '36', '2', 'Estimate time++15', '2014-08-04 05:59:55', '25');
+INSERT INTO `activity` VALUES ('130', '4', '36', '2', 'Story point++60', '2014-08-04 05:59:55', '25');
+INSERT INTO `activity` VALUES ('131', '2', '43', '1', '2+4', '2014-08-04 06:00:14', '25');
+INSERT INTO `activity` VALUES ('132', '5', '2', '4', '', '2014-08-04 06:00:14', '25');
+INSERT INTO `activity` VALUES ('133', '2', '2', '4', '36+2', '2014-08-04 06:00:17', '25');
+INSERT INTO `activity` VALUES ('134', '2', '46', '3', '36+2', '2014-08-04 06:00:17', '25');
+INSERT INTO `activity` VALUES ('135', '2', '2', '4', '37+2', '2014-08-04 06:00:22', '25');
+INSERT INTO `activity` VALUES ('136', '2', '46', '3', '37+2', '2014-08-04 06:00:22', '25');
+INSERT INTO `activity` VALUES ('137', '2', '36', '2', '18+6', '2014-08-04 06:01:12', '25');
+INSERT INTO `activity` VALUES ('138', '5', '18', '6', '', '2014-08-04 06:01:12', '25');
+INSERT INTO `activity` VALUES ('139', '4', '18', '6', 'Status+To do+In Progress', '2014-08-04 06:01:32', '25');
+INSERT INTO `activity` VALUES ('140', '4', '18', '6', 'Status+In Progress+To test', '2014-08-04 06:01:33', '25');
+INSERT INTO `activity` VALUES ('141', '4', '18', '6', 'Status+To test+Done', '2014-08-04 06:01:35', '25');
+INSERT INTO `activity` VALUES ('142', '4', '43', '1', 'Allow user not in project to view this project+1+0', '2014-08-04 22:40:21', '1');
+INSERT INTO `activity` VALUES ('143', '4', '29', '2', 'Name+Bổ sung quản lí món ăn+Bổ sung quản lí món ăn s', '2014-08-05 06:07:20', '1');
+INSERT INTO `activity` VALUES ('144', '4', '26', '2', 'Name+Nâng cấp tính năng report hàng tuần+Nâng cấp tính năng report hàng tuần, hàng tháng', '2014-08-05 06:07:59', '1');
+INSERT INTO `activity` VALUES ('145', '3', '17', '3', '21+8', '2014-08-05 06:08:44', '1');
+INSERT INTO `activity` VALUES ('146', '2', '18', '3', '21+8', '2014-08-05 06:08:44', '1');
+INSERT INTO `activity` VALUES ('147', '3', '18', '3', '21+8', '2014-08-05 06:08:48', '1');
+INSERT INTO `activity` VALUES ('148', '2', '17', '3', '21+8', '2014-08-05 06:08:48', '1');
+INSERT INTO `activity` VALUES ('149', '3', '17', '3', '21+8', '2014-08-05 06:09:05', '1');
+INSERT INTO `activity` VALUES ('150', '3', '18', '3', '5+8', '2014-08-05 06:09:09', '1');
+INSERT INTO `activity` VALUES ('151', '3', '45', '3', '29+8', '2014-08-05 06:09:13', '1');
+INSERT INTO `activity` VALUES ('152', '4', '1', '1', 'Name+Quản lí tiệc cưới+Quản lí tiệc cưới a', '2014-08-05 19:16:46', '1');
+INSERT INTO `activity` VALUES ('153', '1', '1', '1', '1', '2014-08-05 19:17:34', '2');
+INSERT INTO `activity` VALUES ('154', '4', '29', '2', 'Name+Bổ sung quản lí món ăn s+Bổ sung quản lí món ăn', '2014-08-05 21:26:54', '1');
+INSERT INTO `activity` VALUES ('155', '4', '1', '1', 'Name+Quản lí tiệc cưới a+Quản lí tiệc cưới', '2014-08-05 21:35:35', '1');
+INSERT INTO `activity` VALUES ('156', '4', '1', '1', 'Start date+2014-07-01+2014-06-10', '2014-08-05 21:39:41', '1');
+INSERT INTO `activity` VALUES ('157', '4', '1', '1', 'Estimate end date+2014-08-30+2014-08-10', '2014-08-05 21:39:41', '1');
+INSERT INTO `activity` VALUES ('158', '4', '1', '1', 'Start date+2014-06-10+2014-07-10', '2014-08-05 21:53:01', '1');
+INSERT INTO `activity` VALUES ('159', '4', '1', '1', 'Estimate end date+2014-08-10+2014-09-10', '2014-08-05 21:53:01', '1');
+INSERT INTO `activity` VALUES ('160', '4', '1', '4', 'End date estimate+2014-07-30+2014-07-14', '2014-08-05 22:42:07', '1');
+INSERT INTO `activity` VALUES ('161', '4', '1', '1', 'Name+Quản lí tiệc cưới+Quản lí tiệc cưới a', '2014-08-05 22:56:22', '1');
+INSERT INTO `activity` VALUES ('162', '4', '1', '1', 'Name+Quản lí tiệc cưới a+Quản lí tiệc cưới', '2014-08-05 22:57:24', '1');
+INSERT INTO `activity` VALUES ('163', '1', '1', '1', '2', '2014-08-05 22:58:06', '1');
+INSERT INTO `activity` VALUES ('164', '4', '1', '1', 'Name+Quản lí tiệc cưới+Quản lí tiệc cướid', '2014-08-05 22:58:19', '1');
+INSERT INTO `activity` VALUES ('165', '2', '29', '2', '19+6', '2014-08-05 23:00:21', '1');
+INSERT INTO `activity` VALUES ('166', '5', '19', '6', '', '2014-08-05 23:00:21', '1');
+INSERT INTO `activity` VALUES ('167', '2', '17', '3', '9+8', '2014-08-05 23:01:57', '1');
+INSERT INTO `activity` VALUES ('168', '3', '17', '3', '9+8', '2014-08-05 23:02:40', '1');
+INSERT INTO `activity` VALUES ('169', '2', '17', '3', '8+8', '2014-08-05 23:02:46', '1');
+INSERT INTO `activity` VALUES ('170', '3', '17', '3', '8+8', '2014-08-05 23:02:51', '1');
+INSERT INTO `activity` VALUES ('171', '2', '1', '1', '3+4', '2014-08-05 23:03:25', '1');
+INSERT INTO `activity` VALUES ('172', '5', '3', '4', '', '2014-08-05 23:03:25', '1');
+INSERT INTO `activity` VALUES ('173', '2', '3', '4', '34+2', '2014-08-05 23:04:21', '1');
+INSERT INTO `activity` VALUES ('174', '2', '17', '3', '34+2', '2014-08-05 23:04:21', '1');
+INSERT INTO `activity` VALUES ('175', '2', '3', '4', '28+2', '2014-08-05 23:05:31', '1');
+INSERT INTO `activity` VALUES ('176', '2', '18', '3', '28+2', '2014-08-05 23:05:31', '1');
+INSERT INTO `activity` VALUES ('177', '2', '3', '4', '30+2', '2014-08-05 23:05:33', '1');
+INSERT INTO `activity` VALUES ('178', '2', '45', '3', '30+2', '2014-08-05 23:05:33', '1');
+INSERT INTO `activity` VALUES ('179', '4', '1', '6', 'Status+Done+To test', '2014-08-05 23:06:20', '1');
+INSERT INTO `activity` VALUES ('180', '2', '34', '2', '20+6', '2014-08-05 23:07:00', '2');
+INSERT INTO `activity` VALUES ('181', '5', '20', '6', '', '2014-08-05 23:07:00', '2');
+INSERT INTO `activity` VALUES ('182', '4', '20', '6', 'User assign+Lê Trung Kiên+Bùi Quang Huy Hoàng', '2014-08-05 23:07:28', '1');
+INSERT INTO `activity` VALUES ('183', '4', '20', '6', 'Status+To do+In Progress', '2014-08-05 23:08:28', '1');
+INSERT INTO `activity` VALUES ('184', '4', '20', '6', 'Status+In Progress+To test', '2014-08-05 23:08:29', '1');
+INSERT INTO `activity` VALUES ('185', '4', '20', '6', 'Status+To test+Done', '2014-08-05 23:08:31', '1');
+INSERT INTO `activity` VALUES ('186', '4', '20', '6', 'Status+Done+To do', '2014-08-05 23:08:34', '1');
+INSERT INTO `activity` VALUES ('187', '2', '34', '2', '21+6', '2014-08-05 23:09:41', '2');
+INSERT INTO `activity` VALUES ('188', '5', '21', '6', '', '2014-08-05 23:09:41', '2');
+INSERT INTO `activity` VALUES ('189', '2', '34', '2', '22+6', '2014-08-05 23:10:52', '2');
+INSERT INTO `activity` VALUES ('190', '5', '22', '6', '', '2014-08-05 23:10:52', '2');
+INSERT INTO `activity` VALUES ('191', '4', '22', '6', 'Status+To do+In Progress', '2014-08-05 23:11:07', '1');
+INSERT INTO `activity` VALUES ('192', '4', '20', '6', 'Status+To do+To test', '2014-08-05 23:11:09', '1');
+INSERT INTO `activity` VALUES ('193', '4', '22', '6', 'Status+In Progress+Done', '2014-08-05 23:11:11', '1');
+INSERT INTO `activity` VALUES ('194', '4', '20', '6', 'Status+To test+In Progress', '2014-08-05 23:11:13', '1');
+INSERT INTO `activity` VALUES ('195', '4', '20', '6', 'Status+In Progress+To do', '2014-08-05 23:11:14', '1');
+INSERT INTO `activity` VALUES ('196', '4', '20', '6', 'Status+To do+To test', '2014-08-05 23:11:17', '1');
+INSERT INTO `activity` VALUES ('197', '4', '21', '6', 'Status+To do+To test', '2014-08-05 23:11:19', '1');
+INSERT INTO `activity` VALUES ('198', '2', '42', '1', '39+2', '2014-08-06 05:54:24', '1');
+INSERT INTO `activity` VALUES ('199', '5', '39', '2', '', '2014-08-06 05:54:24', '1');
+INSERT INTO `activity` VALUES ('200', '4', '42', '1', 'Status+New+Approved', '2014-08-06 05:56:40', '1');
+INSERT INTO `activity` VALUES ('201', '2', '42', '1', '47+3', '2014-08-06 05:59:16', '1');
+INSERT INTO `activity` VALUES ('202', '5', '47', '3', '', '2014-08-06 05:59:16', '1');
+INSERT INTO `activity` VALUES ('203', '2', '47', '3', '37+8', '2014-08-06 05:59:27', '1');
+INSERT INTO `activity` VALUES ('204', '2', '42', '1', '4+4', '2014-08-06 05:59:52', '1');
+INSERT INTO `activity` VALUES ('205', '5', '4', '4', '', '2014-08-06 05:59:52', '1');
+INSERT INTO `activity` VALUES ('206', '4', '39', '2', 'Estimate time++8', '2014-08-06 06:00:15', '1');
+INSERT INTO `activity` VALUES ('207', '4', '39', '2', 'Story point++30', '2014-08-06 06:00:15', '1');
+INSERT INTO `activity` VALUES ('208', '2', '4', '4', '39+2', '2014-08-06 06:00:22', '1');
+INSERT INTO `activity` VALUES ('209', '2', '47', '3', '39+2', '2014-08-06 06:00:22', '1');
+INSERT INTO `activity` VALUES ('210', '2', '39', '2', '23+6', '2014-08-06 06:00:34', '1');
+INSERT INTO `activity` VALUES ('211', '5', '23', '6', '', '2014-08-06 06:00:34', '1');
+INSERT INTO `activity` VALUES ('212', '2', '39', '2', '24+6', '2014-08-06 06:00:50', '1');
+INSERT INTO `activity` VALUES ('213', '5', '24', '6', '', '2014-08-06 06:00:50', '1');
+INSERT INTO `activity` VALUES ('214', '4', '24', '6', 'Status+To do+In Progress', '2014-08-06 06:01:43', '29');
+INSERT INTO `activity` VALUES ('215', '4', '23', '6', 'Status+To do+To test', '2014-08-06 06:01:45', '29');
+INSERT INTO `activity` VALUES ('216', '4', '24', '6', 'Status+In Progress+Done', '2014-08-06 06:01:55', '29');
+INSERT INTO `activity` VALUES ('217', '4', '23', '6', 'Status+To test+Done', '2014-08-06 06:01:57', '29');
+INSERT INTO `activity` VALUES ('218', '4', '23', '6', 'Status+Done+To test', '2014-08-06 06:08:06', '1');
+INSERT INTO `activity` VALUES ('219', '4', '23', '6', 'Status+To test+Done', '2014-08-06 06:08:07', '1');
+INSERT INTO `activity` VALUES ('220', '4', '24', '6', 'Status+Done+In Progress', '2014-08-06 06:08:16', '1');
+INSERT INTO `activity` VALUES ('221', '4', '23', '6', 'Status+Done+To do', '2014-08-06 06:08:18', '1');
+INSERT INTO `activity` VALUES ('222', '4', '24', '6', 'Status+In Progress+Done', '2014-08-06 06:08:20', '1');
+INSERT INTO `activity` VALUES ('223', '4', '23', '6', 'Status+To do+To test', '2014-08-06 06:08:22', '1');
+INSERT INTO `activity` VALUES ('224', '2', '4', '4', '39+2', '2014-08-06 06:09:24', '1');
+INSERT INTO `activity` VALUES ('225', '2', '47', '3', '39+2', '2014-08-06 06:09:25', '1');
+INSERT INTO `activity` VALUES ('226', '4', '23', '6', 'Status+To test+Done', '2014-08-06 06:09:27', '1');
+INSERT INTO `activity` VALUES ('227', '2', '42', '1', '48+3', '2014-08-06 06:10:47', '29');
+INSERT INTO `activity` VALUES ('228', '5', '48', '3', '', '2014-08-06 06:10:47', '29');
+INSERT INTO `activity` VALUES ('229', '4', '1', '1', 'Name+Quản lí tiệc cướid+Quản lí tiệc cưới', '2014-08-06 06:22:30', '1');
+INSERT INTO `activity` VALUES ('230', '1', '1', '1', '3', '2014-08-06 06:23:11', '2');
+INSERT INTO `activity` VALUES ('231', '4', '1', '1', 'Desciption++mo ta du an', '2014-08-06 08:27:43', '1');
+INSERT INTO `activity` VALUES ('232', '4', '1', '1', 'Name+Quản lí tiệc cưới+Quản lí tiệc cưới abv', '2014-08-06 08:28:06', '1');
+INSERT INTO `activity` VALUES ('233', '1', '1', '1', '4', '2014-08-06 08:28:32', '1');
+INSERT INTO `activity` VALUES ('234', '2', '26', '2', '25+6', '2014-08-06 08:29:44', '1');
+INSERT INTO `activity` VALUES ('235', '5', '25', '6', '', '2014-08-06 08:29:44', '1');
+INSERT INTO `activity` VALUES ('236', '2', '17', '3', '21+8', '2014-08-06 08:30:07', '1');
+INSERT INTO `activity` VALUES ('237', '2', '18', '3', '38+8', '2014-08-06 08:30:33', '1');
+INSERT INTO `activity` VALUES ('238', '2', '3', '4', '33+2', '2014-08-06 08:31:11', '1');
+INSERT INTO `activity` VALUES ('239', '2', '17', '3', '33+2', '2014-08-06 08:31:11', '1');
+INSERT INTO `activity` VALUES ('240', '2', '3', '4', '13+2', '2014-08-06 08:31:21', '1');
+INSERT INTO `activity` VALUES ('241', '2', '18', '3', '13+2', '2014-08-06 08:31:21', '1');
+INSERT INTO `activity` VALUES ('242', '4', '1', '6', 'Status+To test+In Progress', '2014-08-06 08:31:49', '1');
+INSERT INTO `activity` VALUES ('243', '4', '1', '6', 'Status+In Progress+To test', '2014-08-06 08:31:52', '1');
+INSERT INTO `activity` VALUES ('244', '4', '3', '6', 'Status+Done+In Progress', '2014-08-06 08:31:57', '1');
+INSERT INTO `activity` VALUES ('245', '4', '19', '6', 'Status+To do+In Progress', '2014-08-06 08:32:13', '1');
+INSERT INTO `activity` VALUES ('246', '4', '19', '6', 'Status+In Progress+Done', '2014-08-06 08:32:17', '1');
+INSERT INTO `activity` VALUES ('247', '4', '1', '6', 'Status+To test+Done', '2014-08-06 08:32:19', '1');
+INSERT INTO `activity` VALUES ('248', '4', '3', '6', 'Status+In Progress+Done', '2014-08-06 08:32:22', '1');
+INSERT INTO `activity` VALUES ('249', '4', '25', '6', 'Status+To do+Done', '2014-08-06 08:32:45', '1');
 
 -- ----------------------------
 -- Table structure for `attach`
@@ -329,7 +394,7 @@ CREATE TABLE `attach` (
   `entity_type` int(11) NOT NULL,
   `delete_flg` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`atid`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of attach
@@ -358,6 +423,8 @@ INSERT INTO `attach` VALUES ('21', 'LAP_duongpa.docx', '29', '1', '0');
 INSERT INTO `attach` VALUES ('22', 'LAP_duongpa.docx', '30', '2', '1');
 INSERT INTO `attach` VALUES ('23', 'LAP.xlsx', '30', '2', '1');
 INSERT INTO `attach` VALUES ('24', 'LAP_duongpa.docx', '30', '2', '0');
+INSERT INTO `attach` VALUES ('25', 'Scrum Guide Official.pdf', '35', '2', '1');
+INSERT INTO `attach` VALUES ('26', 'Stored_Procedure.pdf', '37', '2', '0');
 
 -- ----------------------------
 -- Table structure for `comment`
@@ -372,76 +439,15 @@ CREATE TABLE `comment` (
   `parent_id` bigint(20) DEFAULT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`cid`)
-) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES ('1', '1', '1', '1', 'comment 1', null, '2014-05-14 11:48:36');
-INSERT INTO `comment` VALUES ('2', '2', '1', '1', 'comment 1.1', '1', '2014-05-14 16:54:27');
-INSERT INTO `comment` VALUES ('3', '1', '1', '1', 'comment 1.2', '1', '2014-05-14 14:40:47');
-INSERT INTO `comment` VALUES ('4', '1', '1', '1', 'comment 1.2.3', '1', '2014-05-14 22:17:39');
-INSERT INTO `comment` VALUES ('5', '2', '1', '1', 'comment 2', null, '2014-05-14 16:54:23');
-INSERT INTO `comment` VALUES ('6', '1', '1', '3', 'The shake animation is included in bootstrap-modal but any animation in animate.css is supported, just include the css file in your project.', null, '2014-05-22 15:39:32');
-INSERT INTO `comment` VALUES ('7', '1', '1', '3', 'The shake animation is included in bootstrap-modal but any animation in animate.css is supported, just include the css file in your project.', null, '2014-05-22 15:39:32');
-INSERT INTO `comment` VALUES ('8', '1', '1', '3', 'The shake animation is included in bootstrap-modal but any animation in animate.css is supported, just include the css file in your project.', null, '2014-05-22 15:39:32');
-INSERT INTO `comment` VALUES ('9', '2', '1', '3', 'The shake animation is included in bootstrap-modal but any animation in animate.css is supported, just include the css file in your project.', null, '2014-05-22 15:39:32');
-INSERT INTO `comment` VALUES ('10', '1', '1', '3', 'The shake animation is included in bootstrap-modal but any animation in animate.css is supported, just include the css file in your project.', null, '2014-05-22 15:39:32');
-INSERT INTO `comment` VALUES ('11', '2', '1', '3', 'The shake animation is included in bootstrap-modal but any animation in animate.css is supported, just include the css file in your project.', null, '2014-05-22 15:39:33');
-INSERT INTO `comment` VALUES ('12', '1', '1', '3', 'The shake animation is included in bootstrap-modal but any animation in animate.css is supported, just include the css file in your project.', null, '2014-05-22 15:39:33');
-INSERT INTO `comment` VALUES ('64', '1', '1', '3', 'The shake animation is included in bootstrap-modal but any animation in animate.css is supported, just include the css file in your project.', null, '2014-05-22 15:39:34');
-INSERT INTO `comment` VALUES ('65', '1', '1', '1', 'The shake animation is included in bootstrap-modal but any animation in animate.css is supported, just include the css file in your project.', '11', '2014-05-16 19:50:44');
-INSERT INTO `comment` VALUES ('66', '1', '1', '1', 'asdfasdasfasfasdf', '11', '2014-05-16 19:50:45');
-INSERT INTO `comment` VALUES ('67', '1', '1', '1', 'asdfasdasfasfasdf', '11', '2014-05-16 19:50:46');
-INSERT INTO `comment` VALUES ('68', '1', '1', '1', 'asdfsfsdfsadfasdfasdf', '67', '2014-05-16 19:52:10');
-INSERT INTO `comment` VALUES ('69', '1', '1', '1', 'asfdasfdasfdasfdasfdasfdasfdasfdasfdasfdasfdasfdasfdasfd', '67', '2014-05-16 20:50:50');
-INSERT INTO `comment` VALUES ('70', '1', '1', '1', 'abcabcabcabcabcabcabcabcabc', '69', '2014-05-16 20:59:20');
-INSERT INTO `comment` VALUES ('71', '1', '1', '1', '1234567890', '69', '2014-05-16 21:08:29');
-INSERT INTO `comment` VALUES ('72', '1', '1', '1', '1234567890', '69', '2014-05-16 21:08:36');
-INSERT INTO `comment` VALUES ('73', '1', '1', '1', '1234567890', '69', '2014-05-16 21:08:40');
-INSERT INTO `comment` VALUES ('74', '1', '1', '1', 'anqwertyuio', '68', '2014-05-16 21:10:03');
-INSERT INTO `comment` VALUES ('75', '1', '1', '1', 'asdfsfsdfsadfasdfasdf!111111', '74', '2014-05-16 21:10:24');
-INSERT INTO `comment` VALUES ('76', '1', '1', '1', 'asfasdfasdfasdf345354345', '65', '2014-05-16 21:14:33');
-INSERT INTO `comment` VALUES ('77', '1', '1', '1', '567457354sdfgdfg', '65', '2014-05-16 21:14:40');
-INSERT INTO `comment` VALUES ('78', '1', '1', '1', '1234123413412341234234', '11', '2014-05-16 21:15:18');
-INSERT INTO `comment` VALUES ('79', '1', '1', '1', 'abcdeded1234123412341234', '11', '2014-05-16 22:23:08');
-INSERT INTO `comment` VALUES ('80', '1', '1', '2', '1234123412341234123412341241234', '76', '2014-05-18 18:26:28');
-INSERT INTO `comment` VALUES ('81', '1', '1', '2', 'abgabdasdasdasdfasdf', '65', '2014-05-18 18:26:29');
-INSERT INTO `comment` VALUES ('82', '1', '1', '2', '123123123123', '81', '2014-05-18 18:26:29');
-INSERT INTO `comment` VALUES ('83', '1', '1', '2', 'asdfasdfasdf', null, '2014-05-18 18:26:29');
-INSERT INTO `comment` VALUES ('84', '1', '1', '2', 'asdfasdfasdfasdf', null, '2014-05-18 18:26:29');
-INSERT INTO `comment` VALUES ('85', '1', '1', '2', 'asdfasdfasdfasdfasdfasdf', null, '2014-05-18 18:26:29');
-INSERT INTO `comment` VALUES ('86', '1', '1', '2', 'asdfasdfasdfasdfsdafgdf345345', '84', '2014-05-18 18:26:30');
-INSERT INTO `comment` VALUES ('87', '1', '1', '2', '45756845674567', '86', '2014-05-18 18:26:30');
-INSERT INTO `comment` VALUES ('88', '1', '1', '2', '879087907890', '86', '2014-05-18 18:26:30');
-INSERT INTO `comment` VALUES ('89', '1', '1', '2', 'sdfasdfasdf', null, '2014-05-18 18:26:30');
-INSERT INTO `comment` VALUES ('90', '1', '1', '2', 'asdfasdfasdfasdfasdf', null, '2014-05-18 18:26:30');
-INSERT INTO `comment` VALUES ('91', '1', '1', '1', 'asdfasdfasdfasdfasdfw2234234', null, '2014-05-18 18:26:24');
-INSERT INTO `comment` VALUES ('92', '1', '1', '2', '242143123412412341234', null, '2014-05-18 18:26:31');
-INSERT INTO `comment` VALUES ('93', '1', '1', '2', '45645646545674567', null, '2014-05-18 18:26:31');
-INSERT INTO `comment` VALUES ('94', '1', '1', '2', '678456735673456', '93', '2014-05-18 18:26:33');
-INSERT INTO `comment` VALUES ('95', '1', '1', '2', '123123123123123123', null, '2014-05-18 18:28:36');
-INSERT INTO `comment` VALUES ('96', '1', '1', '3', 'asdfasdfasdfasdfasdfasdf', '64', '2014-05-22 16:02:14');
-INSERT INTO `comment` VALUES ('98', '1', '0', '0', 'asdASasdADS', null, '2014-05-27 19:55:09');
-INSERT INTO `comment` VALUES ('99', '1', '0', '0', 'asdASasdADS', null, '2014-05-27 19:55:10');
-INSERT INTO `comment` VALUES ('100', '1', '0', '0', 'ASDFASDFASDFASDF', null, '2014-05-27 19:55:14');
-INSERT INTO `comment` VALUES ('101', '1', '2', '1', 'qasdfasdfsdfasdf', null, '2014-05-27 20:08:28');
-INSERT INTO `comment` VALUES ('102', '1', '2', '1', 'asdfasdfasdfasdfasdf', null, '2014-05-27 20:08:35');
-INSERT INTO `comment` VALUES ('103', '1', '2', '1', 'asdfasdfasdfsdf', null, '2014-05-27 20:09:13');
-INSERT INTO `comment` VALUES ('104', '1', '2', '1', 'sdfasdfasdf', '103', '2014-05-27 20:09:18');
-INSERT INTO `comment` VALUES ('105', '1', '2', '1', 'asdfasdfasdfasdfasd1231234', '101', '2014-05-27 20:09:36');
-INSERT INTO `comment` VALUES ('106', '1', '2', '1', '3452363456745674574565', '105', '2014-05-27 20:09:40');
-INSERT INTO `comment` VALUES ('107', '1', '1', '1', 'comment 1.1.3.4', '2', '2014-05-27 20:11:34');
-INSERT INTO `comment` VALUES ('108', '1', '0', '0', 'asdfasdfasdfasdf123', null, '2014-05-27 20:14:11');
-INSERT INTO `comment` VALUES ('109', '1', '0', '0', 'awfasdfasdfasdfasdf02894q234wer', null, '2014-05-27 20:14:17');
-INSERT INTO `comment` VALUES ('110', '1', '0', '0', 'asdfasdfakshjdfkjahsdkjhgfjasdfasdfq34qwe', '109', '2014-05-27 20:14:22');
-INSERT INTO `comment` VALUES ('162', '1', '3', '3', 'aaaaaaaaaaaaaaa', null, '2014-05-27 21:02:30');
-INSERT INTO `comment` VALUES ('163', '1', '3', '3', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', null, '2014-05-27 21:02:54');
-INSERT INTO `comment` VALUES ('164', '1', '3', '3', 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq', '163', '2014-05-27 21:03:03');
-INSERT INTO `comment` VALUES ('165', '1', '3', '3', 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq', '162', '2014-05-27 21:03:09');
-INSERT INTO `comment` VALUES ('166', '1', '14', '2', 'sssssssssssssssssssssssssss', null, '2014-06-03 21:33:57');
-INSERT INTO `comment` VALUES ('167', '1', '1', '1', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', null, '2014-06-10 09:54:04');
-INSERT INTO `comment` VALUES ('168', '1', '22', '1', 'test asdf asf asdf asdf', null, '2014-07-14 17:28:05');
+INSERT INTO `comment` VALUES ('1', '2', '1', '1', 'comment sssssss', null, '2014-08-05 19:17:34');
+INSERT INTO `comment` VALUES ('2', '1', '1', '1', 'binh luan o day', '1', '2014-08-05 22:58:05');
+INSERT INTO `comment` VALUES ('3', '2', '1', '1', 'Test comment here', null, '2014-08-06 06:23:11');
+INSERT INTO `comment` VALUES ('4', '1', '1', '1', 'sfasdfasdf', null, '2014-08-06 08:28:32');
 
 -- ----------------------------
 -- Table structure for `permission`
@@ -451,7 +457,7 @@ CREATE TABLE `permission` (
   `peid` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`peid`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of permission
@@ -500,6 +506,7 @@ INSERT INTO `permission` VALUES ('78', 'Change language');
 INSERT INTO `permission` VALUES ('79', 'Delete user');
 INSERT INTO `permission` VALUES ('80', 'Start sprint');
 INSERT INTO `permission` VALUES ('82', 'General function');
+INSERT INTO `permission` VALUES ('83', 'User management');
 
 -- ----------------------------
 -- Table structure for `project`
@@ -515,24 +522,19 @@ CREATE TABLE `project` (
   `status` int(11) DEFAULT NULL,
   `description` text COLLATE utf8_unicode_ci,
   `delete_flg` tinyint(4) NOT NULL DEFAULT '0',
+  `allow_out_view` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of project
 -- ----------------------------
-INSERT INTO `project` VALUES ('1', 'Quản lí tiệc cưới', '2014-06-10', '2014-08-27', null, '', '2', '', '0');
-INSERT INTO `project` VALUES ('2', 'Quản lí nhân sự', '2014-04-02', '2014-05-30', null, '', '1', '', '0');
-INSERT INTO `project` VALUES ('6', 'Quản lí khách sạn', '2014-06-10', '2014-06-26', null, '', '1', '', '0');
-INSERT INTO `project` VALUES ('9', 'Game bắn súng', '2014-06-01', '2014-06-30', null, '', '1', '', '0');
-INSERT INTO `project` VALUES ('14', 'bbbbbbbbbbbb', '2014-07-12', '2014-07-12', null, '', '1', '', '0');
-INSERT INTO `project` VALUES ('15', 'bbbbbbbbbbbb', null, null, null, null, null, null, '1');
-INSERT INTO `project` VALUES ('16', 'bbbbbbbbbbbb', null, null, null, null, null, null, '1');
-INSERT INTO `project` VALUES ('17', 'bbbbbbbbbbbb', null, null, null, null, null, null, '1');
-INSERT INTO `project` VALUES ('18', 'bbbbbbbbbbbb', null, null, null, null, null, null, '1');
-INSERT INTO `project` VALUES ('19', 'bbbbbbbbbbbb', null, null, null, null, null, null, '1');
-INSERT INTO `project` VALUES ('20', 'bbbbbbbbbbbb', null, null, null, null, null, null, '1');
-INSERT INTO `project` VALUES ('21', 'bbbbbbbbbbbb', null, null, null, null, null, null, '1');
+INSERT INTO `project` VALUES ('1', 'Quản lí tiệc cưới abv', '2014-07-10', '2014-09-10', null, '', '1', 'mo ta du an', '0', '0');
+INSERT INTO `project` VALUES ('2', 'Quản lí nhân sự', '2014-04-02', '2014-05-30', null, '', '1', '', '1', '1');
+INSERT INTO `project` VALUES ('6', 'Quản lí khách sạn', '2014-06-10', '2014-06-26', null, '', '1', '', '1', '1');
+INSERT INTO `project` VALUES ('9', 'Game bắn súng', '2014-06-01', '2014-06-30', null, '', '1', '', '0', '0');
+INSERT INTO `project` VALUES ('42', 'Website bán hàng trực tuyến', '2014-07-26', '2014-10-23', '2014-07-26', '', '-1', '', '0', '1');
+INSERT INTO `project` VALUES ('43', 'Quản lí nghiệp vụ trường tiểu học', '2014-08-04', '2015-01-15', null, '', '-1', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `project_user`
@@ -542,22 +544,41 @@ CREATE TABLE `project_user` (
   `pid` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
   `tid` int(11) NOT NULL DEFAULT '0',
-  `rid` int(11) NOT NULL,
-  PRIMARY KEY (`pid`,`uid`)
+  `rid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of project_user
 -- ----------------------------
-INSERT INTO `project_user` VALUES ('1', '1', '0', '1');
 INSERT INTO `project_user` VALUES ('1', '2', '17', '2');
 INSERT INTO `project_user` VALUES ('1', '3', '18', '2');
-INSERT INTO `project_user` VALUES ('1', '4', '19', '2');
-INSERT INTO `project_user` VALUES ('1', '5', '18', '3');
 INSERT INTO `project_user` VALUES ('1', '6', '18', '3');
-INSERT INTO `project_user` VALUES ('1', '8', '19', '3');
+INSERT INTO `project_user` VALUES ('1', '12', '17', '3');
+INSERT INTO `project_user` VALUES ('1', '11', '17', '3');
+INSERT INTO `project_user` VALUES ('1', '22', '45', '2');
+INSERT INTO `project_user` VALUES ('1', '27', '45', '3');
+INSERT INTO `project_user` VALUES ('1', '13', '45', '3');
+INSERT INTO `project_user` VALUES ('1', '4', '18', '3');
+INSERT INTO `project_user` VALUES ('1', '28', '17', '3');
+INSERT INTO `project_user` VALUES ('1', '7', '18', '3');
+INSERT INTO `project_user` VALUES ('1', '31', '45', '3');
+INSERT INTO `project_user` VALUES ('42', '1', '0', '1');
+INSERT INTO `project_user` VALUES ('42', '23', '0', '4');
+INSERT INTO `project_user` VALUES ('43', '35', '46', '2');
+INSERT INTO `project_user` VALUES ('43', '15', '46', '3');
+INSERT INTO `project_user` VALUES ('43', '14', '46', '3');
+INSERT INTO `project_user` VALUES ('43', '33', '46', '3');
+INSERT INTO `project_user` VALUES ('43', '26', '46', '3');
+INSERT INTO `project_user` VALUES ('43', '30', '46', '3');
+INSERT INTO `project_user` VALUES ('43', '25', '0', '1');
+INSERT INTO `project_user` VALUES ('43', '36', '0', '4');
+INSERT INTO `project_user` VALUES ('42', '29', '47', '2');
+INSERT INTO `project_user` VALUES ('42', '37', '47', '3');
+INSERT INTO `project_user` VALUES ('42', '9', '48', '2');
+INSERT INTO `project_user` VALUES ('1', '1', '0', '1');
+INSERT INTO `project_user` VALUES ('1', '32', '0', '4');
 INSERT INTO `project_user` VALUES ('1', '21', '17', '3');
-INSERT INTO `project_user` VALUES ('2', '1', '0', '1');
+INSERT INTO `project_user` VALUES ('1', '38', '18', '3');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -572,6 +593,7 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
+INSERT INTO `role` VALUES ('0', 'Not in project');
 INSERT INTO `role` VALUES ('1', 'Project Leader');
 INSERT INTO `role` VALUES ('2', 'Scrum Master');
 INSERT INTO `role` VALUES ('3', 'Team member');
@@ -584,177 +606,558 @@ DROP TABLE IF EXISTS `role_permission`;
 CREATE TABLE `role_permission` (
   `rid` int(11) NOT NULL,
   `peid` bigint(20) NOT NULL,
-  PRIMARY KEY (`rid`,`peid`)
+  `pid` int(11) NOT NULL,
+  PRIMARY KEY (`rid`,`peid`,`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of role_permission
 -- ----------------------------
-INSERT INTO `role_permission` VALUES ('1', '1');
-INSERT INTO `role_permission` VALUES ('1', '2');
-INSERT INTO `role_permission` VALUES ('1', '3');
-INSERT INTO `role_permission` VALUES ('1', '4');
-INSERT INTO `role_permission` VALUES ('1', '5');
-INSERT INTO `role_permission` VALUES ('1', '6');
-INSERT INTO `role_permission` VALUES ('1', '7');
-INSERT INTO `role_permission` VALUES ('1', '8');
-INSERT INTO `role_permission` VALUES ('1', '9');
-INSERT INTO `role_permission` VALUES ('1', '10');
-INSERT INTO `role_permission` VALUES ('1', '11');
-INSERT INTO `role_permission` VALUES ('1', '12');
-INSERT INTO `role_permission` VALUES ('1', '13');
-INSERT INTO `role_permission` VALUES ('1', '14');
-INSERT INTO `role_permission` VALUES ('1', '15');
-INSERT INTO `role_permission` VALUES ('1', '16');
-INSERT INTO `role_permission` VALUES ('1', '19');
-INSERT INTO `role_permission` VALUES ('1', '20');
-INSERT INTO `role_permission` VALUES ('1', '21');
-INSERT INTO `role_permission` VALUES ('1', '22');
-INSERT INTO `role_permission` VALUES ('1', '23');
-INSERT INTO `role_permission` VALUES ('1', '24');
-INSERT INTO `role_permission` VALUES ('1', '25');
-INSERT INTO `role_permission` VALUES ('1', '26');
-INSERT INTO `role_permission` VALUES ('1', '27');
-INSERT INTO `role_permission` VALUES ('1', '28');
-INSERT INTO `role_permission` VALUES ('1', '29');
-INSERT INTO `role_permission` VALUES ('1', '30');
-INSERT INTO `role_permission` VALUES ('1', '31');
-INSERT INTO `role_permission` VALUES ('1', '32');
-INSERT INTO `role_permission` VALUES ('1', '33');
-INSERT INTO `role_permission` VALUES ('1', '34');
-INSERT INTO `role_permission` VALUES ('1', '35');
-INSERT INTO `role_permission` VALUES ('1', '36');
-INSERT INTO `role_permission` VALUES ('1', '37');
-INSERT INTO `role_permission` VALUES ('1', '38');
-INSERT INTO `role_permission` VALUES ('1', '39');
-INSERT INTO `role_permission` VALUES ('1', '40');
-INSERT INTO `role_permission` VALUES ('1', '41');
-INSERT INTO `role_permission` VALUES ('1', '42');
-INSERT INTO `role_permission` VALUES ('1', '43');
-INSERT INTO `role_permission` VALUES ('1', '44');
-INSERT INTO `role_permission` VALUES ('1', '45');
-INSERT INTO `role_permission` VALUES ('1', '46');
-INSERT INTO `role_permission` VALUES ('1', '47');
-INSERT INTO `role_permission` VALUES ('1', '48');
-INSERT INTO `role_permission` VALUES ('1', '49');
-INSERT INTO `role_permission` VALUES ('1', '50');
-INSERT INTO `role_permission` VALUES ('1', '51');
-INSERT INTO `role_permission` VALUES ('1', '52');
-INSERT INTO `role_permission` VALUES ('1', '53');
-INSERT INTO `role_permission` VALUES ('1', '54');
-INSERT INTO `role_permission` VALUES ('1', '55');
-INSERT INTO `role_permission` VALUES ('1', '56');
-INSERT INTO `role_permission` VALUES ('1', '57');
-INSERT INTO `role_permission` VALUES ('1', '58');
-INSERT INTO `role_permission` VALUES ('1', '59');
-INSERT INTO `role_permission` VALUES ('1', '60');
-INSERT INTO `role_permission` VALUES ('1', '61');
-INSERT INTO `role_permission` VALUES ('1', '62');
-INSERT INTO `role_permission` VALUES ('1', '63');
-INSERT INTO `role_permission` VALUES ('1', '64');
-INSERT INTO `role_permission` VALUES ('1', '65');
-INSERT INTO `role_permission` VALUES ('1', '66');
-INSERT INTO `role_permission` VALUES ('1', '67');
-INSERT INTO `role_permission` VALUES ('1', '68');
-INSERT INTO `role_permission` VALUES ('1', '69');
-INSERT INTO `role_permission` VALUES ('1', '70');
-INSERT INTO `role_permission` VALUES ('1', '71');
-INSERT INTO `role_permission` VALUES ('1', '72');
-INSERT INTO `role_permission` VALUES ('1', '73');
-INSERT INTO `role_permission` VALUES ('1', '74');
-INSERT INTO `role_permission` VALUES ('1', '75');
-INSERT INTO `role_permission` VALUES ('1', '76');
-INSERT INTO `role_permission` VALUES ('1', '77');
-INSERT INTO `role_permission` VALUES ('1', '78');
-INSERT INTO `role_permission` VALUES ('1', '79');
-INSERT INTO `role_permission` VALUES ('1', '80');
-INSERT INTO `role_permission` VALUES ('1', '82');
-INSERT INTO `role_permission` VALUES ('2', '3');
-INSERT INTO `role_permission` VALUES ('2', '4');
-INSERT INTO `role_permission` VALUES ('2', '5');
-INSERT INTO `role_permission` VALUES ('2', '6');
-INSERT INTO `role_permission` VALUES ('2', '7');
-INSERT INTO `role_permission` VALUES ('2', '8');
-INSERT INTO `role_permission` VALUES ('2', '9');
-INSERT INTO `role_permission` VALUES ('2', '12');
-INSERT INTO `role_permission` VALUES ('2', '19');
-INSERT INTO `role_permission` VALUES ('2', '22');
-INSERT INTO `role_permission` VALUES ('2', '23');
-INSERT INTO `role_permission` VALUES ('2', '24');
-INSERT INTO `role_permission` VALUES ('2', '25');
-INSERT INTO `role_permission` VALUES ('2', '27');
-INSERT INTO `role_permission` VALUES ('2', '28');
-INSERT INTO `role_permission` VALUES ('2', '29');
-INSERT INTO `role_permission` VALUES ('2', '30');
-INSERT INTO `role_permission` VALUES ('2', '38');
-INSERT INTO `role_permission` VALUES ('2', '47');
-INSERT INTO `role_permission` VALUES ('2', '48');
-INSERT INTO `role_permission` VALUES ('2', '49');
-INSERT INTO `role_permission` VALUES ('2', '53');
-INSERT INTO `role_permission` VALUES ('2', '55');
-INSERT INTO `role_permission` VALUES ('2', '59');
-INSERT INTO `role_permission` VALUES ('2', '60');
-INSERT INTO `role_permission` VALUES ('2', '70');
-INSERT INTO `role_permission` VALUES ('2', '71');
-INSERT INTO `role_permission` VALUES ('2', '72');
-INSERT INTO `role_permission` VALUES ('2', '73');
-INSERT INTO `role_permission` VALUES ('2', '74');
-INSERT INTO `role_permission` VALUES ('2', '75');
-INSERT INTO `role_permission` VALUES ('2', '77');
-INSERT INTO `role_permission` VALUES ('2', '78');
-INSERT INTO `role_permission` VALUES ('2', '82');
-INSERT INTO `role_permission` VALUES ('3', '3');
-INSERT INTO `role_permission` VALUES ('3', '4');
-INSERT INTO `role_permission` VALUES ('3', '5');
-INSERT INTO `role_permission` VALUES ('3', '6');
-INSERT INTO `role_permission` VALUES ('3', '7');
-INSERT INTO `role_permission` VALUES ('3', '8');
-INSERT INTO `role_permission` VALUES ('3', '12');
-INSERT INTO `role_permission` VALUES ('3', '19');
-INSERT INTO `role_permission` VALUES ('3', '22');
-INSERT INTO `role_permission` VALUES ('3', '23');
-INSERT INTO `role_permission` VALUES ('3', '24');
-INSERT INTO `role_permission` VALUES ('3', '25');
-INSERT INTO `role_permission` VALUES ('3', '27');
-INSERT INTO `role_permission` VALUES ('3', '28');
-INSERT INTO `role_permission` VALUES ('3', '29');
-INSERT INTO `role_permission` VALUES ('3', '30');
-INSERT INTO `role_permission` VALUES ('3', '38');
-INSERT INTO `role_permission` VALUES ('3', '47');
-INSERT INTO `role_permission` VALUES ('3', '48');
-INSERT INTO `role_permission` VALUES ('3', '49');
-INSERT INTO `role_permission` VALUES ('3', '53');
-INSERT INTO `role_permission` VALUES ('3', '55');
-INSERT INTO `role_permission` VALUES ('3', '59');
-INSERT INTO `role_permission` VALUES ('3', '71');
-INSERT INTO `role_permission` VALUES ('3', '74');
-INSERT INTO `role_permission` VALUES ('3', '77');
-INSERT INTO `role_permission` VALUES ('3', '78');
-INSERT INTO `role_permission` VALUES ('3', '82');
-INSERT INTO `role_permission` VALUES ('4', '3');
-INSERT INTO `role_permission` VALUES ('4', '4');
-INSERT INTO `role_permission` VALUES ('4', '5');
-INSERT INTO `role_permission` VALUES ('4', '12');
-INSERT INTO `role_permission` VALUES ('4', '20');
-INSERT INTO `role_permission` VALUES ('4', '21');
-INSERT INTO `role_permission` VALUES ('4', '22');
-INSERT INTO `role_permission` VALUES ('4', '23');
-INSERT INTO `role_permission` VALUES ('4', '24');
-INSERT INTO `role_permission` VALUES ('4', '26');
-INSERT INTO `role_permission` VALUES ('4', '27');
-INSERT INTO `role_permission` VALUES ('4', '28');
-INSERT INTO `role_permission` VALUES ('4', '29');
-INSERT INTO `role_permission` VALUES ('4', '30');
-INSERT INTO `role_permission` VALUES ('4', '38');
-INSERT INTO `role_permission` VALUES ('4', '48');
-INSERT INTO `role_permission` VALUES ('4', '53');
-INSERT INTO `role_permission` VALUES ('4', '54');
-INSERT INTO `role_permission` VALUES ('4', '55');
-INSERT INTO `role_permission` VALUES ('4', '59');
-INSERT INTO `role_permission` VALUES ('4', '71');
-INSERT INTO `role_permission` VALUES ('4', '74');
-INSERT INTO `role_permission` VALUES ('4', '78');
-INSERT INTO `role_permission` VALUES ('4', '82');
+INSERT INTO `role_permission` VALUES ('0', '3', '1');
+INSERT INTO `role_permission` VALUES ('0', '3', '42');
+INSERT INTO `role_permission` VALUES ('0', '3', '43');
+INSERT INTO `role_permission` VALUES ('0', '5', '1');
+INSERT INTO `role_permission` VALUES ('0', '5', '42');
+INSERT INTO `role_permission` VALUES ('0', '5', '43');
+INSERT INTO `role_permission` VALUES ('0', '12', '1');
+INSERT INTO `role_permission` VALUES ('0', '12', '42');
+INSERT INTO `role_permission` VALUES ('0', '12', '43');
+INSERT INTO `role_permission` VALUES ('0', '25', '1');
+INSERT INTO `role_permission` VALUES ('0', '25', '42');
+INSERT INTO `role_permission` VALUES ('0', '25', '43');
+INSERT INTO `role_permission` VALUES ('0', '26', '1');
+INSERT INTO `role_permission` VALUES ('0', '26', '42');
+INSERT INTO `role_permission` VALUES ('0', '26', '43');
+INSERT INTO `role_permission` VALUES ('0', '28', '1');
+INSERT INTO `role_permission` VALUES ('0', '28', '42');
+INSERT INTO `role_permission` VALUES ('0', '28', '43');
+INSERT INTO `role_permission` VALUES ('0', '30', '1');
+INSERT INTO `role_permission` VALUES ('0', '30', '42');
+INSERT INTO `role_permission` VALUES ('0', '30', '43');
+INSERT INTO `role_permission` VALUES ('0', '38', '1');
+INSERT INTO `role_permission` VALUES ('0', '38', '42');
+INSERT INTO `role_permission` VALUES ('0', '38', '43');
+INSERT INTO `role_permission` VALUES ('0', '40', '1');
+INSERT INTO `role_permission` VALUES ('0', '40', '42');
+INSERT INTO `role_permission` VALUES ('0', '40', '43');
+INSERT INTO `role_permission` VALUES ('0', '48', '1');
+INSERT INTO `role_permission` VALUES ('0', '48', '42');
+INSERT INTO `role_permission` VALUES ('0', '48', '43');
+INSERT INTO `role_permission` VALUES ('0', '53', '1');
+INSERT INTO `role_permission` VALUES ('0', '53', '42');
+INSERT INTO `role_permission` VALUES ('0', '53', '43');
+INSERT INTO `role_permission` VALUES ('0', '55', '1');
+INSERT INTO `role_permission` VALUES ('0', '55', '42');
+INSERT INTO `role_permission` VALUES ('0', '55', '43');
+INSERT INTO `role_permission` VALUES ('0', '71', '1');
+INSERT INTO `role_permission` VALUES ('0', '71', '42');
+INSERT INTO `role_permission` VALUES ('0', '71', '43');
+INSERT INTO `role_permission` VALUES ('0', '74', '1');
+INSERT INTO `role_permission` VALUES ('0', '74', '42');
+INSERT INTO `role_permission` VALUES ('0', '74', '43');
+INSERT INTO `role_permission` VALUES ('0', '78', '1');
+INSERT INTO `role_permission` VALUES ('0', '78', '42');
+INSERT INTO `role_permission` VALUES ('0', '78', '43');
+INSERT INTO `role_permission` VALUES ('0', '82', '1');
+INSERT INTO `role_permission` VALUES ('0', '82', '42');
+INSERT INTO `role_permission` VALUES ('0', '82', '43');
+INSERT INTO `role_permission` VALUES ('1', '1', '1');
+INSERT INTO `role_permission` VALUES ('1', '1', '42');
+INSERT INTO `role_permission` VALUES ('1', '1', '43');
+INSERT INTO `role_permission` VALUES ('1', '2', '1');
+INSERT INTO `role_permission` VALUES ('1', '2', '42');
+INSERT INTO `role_permission` VALUES ('1', '2', '43');
+INSERT INTO `role_permission` VALUES ('1', '3', '1');
+INSERT INTO `role_permission` VALUES ('1', '3', '42');
+INSERT INTO `role_permission` VALUES ('1', '3', '43');
+INSERT INTO `role_permission` VALUES ('1', '4', '1');
+INSERT INTO `role_permission` VALUES ('1', '4', '42');
+INSERT INTO `role_permission` VALUES ('1', '4', '43');
+INSERT INTO `role_permission` VALUES ('1', '5', '1');
+INSERT INTO `role_permission` VALUES ('1', '5', '42');
+INSERT INTO `role_permission` VALUES ('1', '5', '43');
+INSERT INTO `role_permission` VALUES ('1', '6', '1');
+INSERT INTO `role_permission` VALUES ('1', '6', '42');
+INSERT INTO `role_permission` VALUES ('1', '6', '43');
+INSERT INTO `role_permission` VALUES ('1', '7', '1');
+INSERT INTO `role_permission` VALUES ('1', '7', '42');
+INSERT INTO `role_permission` VALUES ('1', '7', '43');
+INSERT INTO `role_permission` VALUES ('1', '8', '1');
+INSERT INTO `role_permission` VALUES ('1', '8', '42');
+INSERT INTO `role_permission` VALUES ('1', '8', '43');
+INSERT INTO `role_permission` VALUES ('1', '9', '1');
+INSERT INTO `role_permission` VALUES ('1', '9', '42');
+INSERT INTO `role_permission` VALUES ('1', '9', '43');
+INSERT INTO `role_permission` VALUES ('1', '10', '1');
+INSERT INTO `role_permission` VALUES ('1', '10', '42');
+INSERT INTO `role_permission` VALUES ('1', '10', '43');
+INSERT INTO `role_permission` VALUES ('1', '11', '1');
+INSERT INTO `role_permission` VALUES ('1', '11', '42');
+INSERT INTO `role_permission` VALUES ('1', '11', '43');
+INSERT INTO `role_permission` VALUES ('1', '12', '1');
+INSERT INTO `role_permission` VALUES ('1', '12', '42');
+INSERT INTO `role_permission` VALUES ('1', '12', '43');
+INSERT INTO `role_permission` VALUES ('1', '13', '1');
+INSERT INTO `role_permission` VALUES ('1', '13', '42');
+INSERT INTO `role_permission` VALUES ('1', '13', '43');
+INSERT INTO `role_permission` VALUES ('1', '14', '1');
+INSERT INTO `role_permission` VALUES ('1', '14', '42');
+INSERT INTO `role_permission` VALUES ('1', '14', '43');
+INSERT INTO `role_permission` VALUES ('1', '15', '1');
+INSERT INTO `role_permission` VALUES ('1', '15', '42');
+INSERT INTO `role_permission` VALUES ('1', '15', '43');
+INSERT INTO `role_permission` VALUES ('1', '16', '1');
+INSERT INTO `role_permission` VALUES ('1', '16', '42');
+INSERT INTO `role_permission` VALUES ('1', '16', '43');
+INSERT INTO `role_permission` VALUES ('1', '19', '1');
+INSERT INTO `role_permission` VALUES ('1', '19', '42');
+INSERT INTO `role_permission` VALUES ('1', '19', '43');
+INSERT INTO `role_permission` VALUES ('1', '20', '1');
+INSERT INTO `role_permission` VALUES ('1', '20', '42');
+INSERT INTO `role_permission` VALUES ('1', '20', '43');
+INSERT INTO `role_permission` VALUES ('1', '21', '1');
+INSERT INTO `role_permission` VALUES ('1', '21', '42');
+INSERT INTO `role_permission` VALUES ('1', '21', '43');
+INSERT INTO `role_permission` VALUES ('1', '22', '1');
+INSERT INTO `role_permission` VALUES ('1', '22', '42');
+INSERT INTO `role_permission` VALUES ('1', '22', '43');
+INSERT INTO `role_permission` VALUES ('1', '23', '1');
+INSERT INTO `role_permission` VALUES ('1', '23', '42');
+INSERT INTO `role_permission` VALUES ('1', '23', '43');
+INSERT INTO `role_permission` VALUES ('1', '24', '1');
+INSERT INTO `role_permission` VALUES ('1', '24', '42');
+INSERT INTO `role_permission` VALUES ('1', '24', '43');
+INSERT INTO `role_permission` VALUES ('1', '25', '1');
+INSERT INTO `role_permission` VALUES ('1', '25', '42');
+INSERT INTO `role_permission` VALUES ('1', '25', '43');
+INSERT INTO `role_permission` VALUES ('1', '26', '1');
+INSERT INTO `role_permission` VALUES ('1', '26', '42');
+INSERT INTO `role_permission` VALUES ('1', '26', '43');
+INSERT INTO `role_permission` VALUES ('1', '27', '1');
+INSERT INTO `role_permission` VALUES ('1', '27', '42');
+INSERT INTO `role_permission` VALUES ('1', '27', '43');
+INSERT INTO `role_permission` VALUES ('1', '28', '1');
+INSERT INTO `role_permission` VALUES ('1', '28', '42');
+INSERT INTO `role_permission` VALUES ('1', '28', '43');
+INSERT INTO `role_permission` VALUES ('1', '29', '1');
+INSERT INTO `role_permission` VALUES ('1', '29', '42');
+INSERT INTO `role_permission` VALUES ('1', '29', '43');
+INSERT INTO `role_permission` VALUES ('1', '30', '1');
+INSERT INTO `role_permission` VALUES ('1', '30', '42');
+INSERT INTO `role_permission` VALUES ('1', '30', '43');
+INSERT INTO `role_permission` VALUES ('1', '31', '1');
+INSERT INTO `role_permission` VALUES ('1', '31', '42');
+INSERT INTO `role_permission` VALUES ('1', '31', '43');
+INSERT INTO `role_permission` VALUES ('1', '32', '1');
+INSERT INTO `role_permission` VALUES ('1', '32', '42');
+INSERT INTO `role_permission` VALUES ('1', '32', '43');
+INSERT INTO `role_permission` VALUES ('1', '33', '1');
+INSERT INTO `role_permission` VALUES ('1', '33', '42');
+INSERT INTO `role_permission` VALUES ('1', '33', '43');
+INSERT INTO `role_permission` VALUES ('1', '34', '1');
+INSERT INTO `role_permission` VALUES ('1', '34', '42');
+INSERT INTO `role_permission` VALUES ('1', '34', '43');
+INSERT INTO `role_permission` VALUES ('1', '35', '1');
+INSERT INTO `role_permission` VALUES ('1', '35', '42');
+INSERT INTO `role_permission` VALUES ('1', '35', '43');
+INSERT INTO `role_permission` VALUES ('1', '36', '1');
+INSERT INTO `role_permission` VALUES ('1', '36', '42');
+INSERT INTO `role_permission` VALUES ('1', '36', '43');
+INSERT INTO `role_permission` VALUES ('1', '37', '1');
+INSERT INTO `role_permission` VALUES ('1', '37', '42');
+INSERT INTO `role_permission` VALUES ('1', '37', '43');
+INSERT INTO `role_permission` VALUES ('1', '38', '1');
+INSERT INTO `role_permission` VALUES ('1', '38', '42');
+INSERT INTO `role_permission` VALUES ('1', '38', '43');
+INSERT INTO `role_permission` VALUES ('1', '39', '1');
+INSERT INTO `role_permission` VALUES ('1', '39', '42');
+INSERT INTO `role_permission` VALUES ('1', '39', '43');
+INSERT INTO `role_permission` VALUES ('1', '40', '1');
+INSERT INTO `role_permission` VALUES ('1', '40', '42');
+INSERT INTO `role_permission` VALUES ('1', '40', '43');
+INSERT INTO `role_permission` VALUES ('1', '41', '1');
+INSERT INTO `role_permission` VALUES ('1', '41', '42');
+INSERT INTO `role_permission` VALUES ('1', '41', '43');
+INSERT INTO `role_permission` VALUES ('1', '42', '1');
+INSERT INTO `role_permission` VALUES ('1', '42', '42');
+INSERT INTO `role_permission` VALUES ('1', '42', '43');
+INSERT INTO `role_permission` VALUES ('1', '43', '1');
+INSERT INTO `role_permission` VALUES ('1', '43', '42');
+INSERT INTO `role_permission` VALUES ('1', '43', '43');
+INSERT INTO `role_permission` VALUES ('1', '44', '1');
+INSERT INTO `role_permission` VALUES ('1', '44', '42');
+INSERT INTO `role_permission` VALUES ('1', '44', '43');
+INSERT INTO `role_permission` VALUES ('1', '45', '1');
+INSERT INTO `role_permission` VALUES ('1', '45', '42');
+INSERT INTO `role_permission` VALUES ('1', '45', '43');
+INSERT INTO `role_permission` VALUES ('1', '46', '1');
+INSERT INTO `role_permission` VALUES ('1', '46', '42');
+INSERT INTO `role_permission` VALUES ('1', '46', '43');
+INSERT INTO `role_permission` VALUES ('1', '47', '1');
+INSERT INTO `role_permission` VALUES ('1', '47', '42');
+INSERT INTO `role_permission` VALUES ('1', '47', '43');
+INSERT INTO `role_permission` VALUES ('1', '48', '1');
+INSERT INTO `role_permission` VALUES ('1', '48', '42');
+INSERT INTO `role_permission` VALUES ('1', '48', '43');
+INSERT INTO `role_permission` VALUES ('1', '49', '1');
+INSERT INTO `role_permission` VALUES ('1', '49', '42');
+INSERT INTO `role_permission` VALUES ('1', '49', '43');
+INSERT INTO `role_permission` VALUES ('1', '50', '1');
+INSERT INTO `role_permission` VALUES ('1', '50', '42');
+INSERT INTO `role_permission` VALUES ('1', '50', '43');
+INSERT INTO `role_permission` VALUES ('1', '51', '1');
+INSERT INTO `role_permission` VALUES ('1', '51', '42');
+INSERT INTO `role_permission` VALUES ('1', '51', '43');
+INSERT INTO `role_permission` VALUES ('1', '52', '1');
+INSERT INTO `role_permission` VALUES ('1', '52', '42');
+INSERT INTO `role_permission` VALUES ('1', '52', '43');
+INSERT INTO `role_permission` VALUES ('1', '53', '1');
+INSERT INTO `role_permission` VALUES ('1', '53', '42');
+INSERT INTO `role_permission` VALUES ('1', '53', '43');
+INSERT INTO `role_permission` VALUES ('1', '54', '1');
+INSERT INTO `role_permission` VALUES ('1', '54', '42');
+INSERT INTO `role_permission` VALUES ('1', '54', '43');
+INSERT INTO `role_permission` VALUES ('1', '55', '1');
+INSERT INTO `role_permission` VALUES ('1', '55', '42');
+INSERT INTO `role_permission` VALUES ('1', '55', '43');
+INSERT INTO `role_permission` VALUES ('1', '56', '1');
+INSERT INTO `role_permission` VALUES ('1', '56', '42');
+INSERT INTO `role_permission` VALUES ('1', '56', '43');
+INSERT INTO `role_permission` VALUES ('1', '57', '1');
+INSERT INTO `role_permission` VALUES ('1', '57', '42');
+INSERT INTO `role_permission` VALUES ('1', '57', '43');
+INSERT INTO `role_permission` VALUES ('1', '58', '1');
+INSERT INTO `role_permission` VALUES ('1', '58', '42');
+INSERT INTO `role_permission` VALUES ('1', '58', '43');
+INSERT INTO `role_permission` VALUES ('1', '59', '1');
+INSERT INTO `role_permission` VALUES ('1', '59', '42');
+INSERT INTO `role_permission` VALUES ('1', '59', '43');
+INSERT INTO `role_permission` VALUES ('1', '60', '1');
+INSERT INTO `role_permission` VALUES ('1', '60', '42');
+INSERT INTO `role_permission` VALUES ('1', '60', '43');
+INSERT INTO `role_permission` VALUES ('1', '61', '1');
+INSERT INTO `role_permission` VALUES ('1', '61', '42');
+INSERT INTO `role_permission` VALUES ('1', '61', '43');
+INSERT INTO `role_permission` VALUES ('1', '62', '1');
+INSERT INTO `role_permission` VALUES ('1', '62', '42');
+INSERT INTO `role_permission` VALUES ('1', '62', '43');
+INSERT INTO `role_permission` VALUES ('1', '63', '1');
+INSERT INTO `role_permission` VALUES ('1', '63', '42');
+INSERT INTO `role_permission` VALUES ('1', '63', '43');
+INSERT INTO `role_permission` VALUES ('1', '64', '1');
+INSERT INTO `role_permission` VALUES ('1', '64', '42');
+INSERT INTO `role_permission` VALUES ('1', '64', '43');
+INSERT INTO `role_permission` VALUES ('1', '65', '1');
+INSERT INTO `role_permission` VALUES ('1', '65', '42');
+INSERT INTO `role_permission` VALUES ('1', '65', '43');
+INSERT INTO `role_permission` VALUES ('1', '66', '1');
+INSERT INTO `role_permission` VALUES ('1', '66', '42');
+INSERT INTO `role_permission` VALUES ('1', '66', '43');
+INSERT INTO `role_permission` VALUES ('1', '67', '1');
+INSERT INTO `role_permission` VALUES ('1', '67', '42');
+INSERT INTO `role_permission` VALUES ('1', '67', '43');
+INSERT INTO `role_permission` VALUES ('1', '68', '1');
+INSERT INTO `role_permission` VALUES ('1', '68', '42');
+INSERT INTO `role_permission` VALUES ('1', '68', '43');
+INSERT INTO `role_permission` VALUES ('1', '69', '1');
+INSERT INTO `role_permission` VALUES ('1', '69', '42');
+INSERT INTO `role_permission` VALUES ('1', '69', '43');
+INSERT INTO `role_permission` VALUES ('1', '70', '1');
+INSERT INTO `role_permission` VALUES ('1', '70', '42');
+INSERT INTO `role_permission` VALUES ('1', '70', '43');
+INSERT INTO `role_permission` VALUES ('1', '71', '1');
+INSERT INTO `role_permission` VALUES ('1', '71', '42');
+INSERT INTO `role_permission` VALUES ('1', '71', '43');
+INSERT INTO `role_permission` VALUES ('1', '72', '1');
+INSERT INTO `role_permission` VALUES ('1', '72', '42');
+INSERT INTO `role_permission` VALUES ('1', '72', '43');
+INSERT INTO `role_permission` VALUES ('1', '73', '1');
+INSERT INTO `role_permission` VALUES ('1', '73', '42');
+INSERT INTO `role_permission` VALUES ('1', '73', '43');
+INSERT INTO `role_permission` VALUES ('1', '74', '1');
+INSERT INTO `role_permission` VALUES ('1', '74', '42');
+INSERT INTO `role_permission` VALUES ('1', '74', '43');
+INSERT INTO `role_permission` VALUES ('1', '75', '1');
+INSERT INTO `role_permission` VALUES ('1', '75', '42');
+INSERT INTO `role_permission` VALUES ('1', '75', '43');
+INSERT INTO `role_permission` VALUES ('1', '76', '1');
+INSERT INTO `role_permission` VALUES ('1', '76', '42');
+INSERT INTO `role_permission` VALUES ('1', '76', '43');
+INSERT INTO `role_permission` VALUES ('1', '77', '1');
+INSERT INTO `role_permission` VALUES ('1', '77', '42');
+INSERT INTO `role_permission` VALUES ('1', '77', '43');
+INSERT INTO `role_permission` VALUES ('1', '78', '1');
+INSERT INTO `role_permission` VALUES ('1', '78', '42');
+INSERT INTO `role_permission` VALUES ('1', '78', '43');
+INSERT INTO `role_permission` VALUES ('1', '79', '1');
+INSERT INTO `role_permission` VALUES ('1', '79', '42');
+INSERT INTO `role_permission` VALUES ('1', '79', '43');
+INSERT INTO `role_permission` VALUES ('1', '80', '1');
+INSERT INTO `role_permission` VALUES ('1', '80', '42');
+INSERT INTO `role_permission` VALUES ('1', '80', '43');
+INSERT INTO `role_permission` VALUES ('1', '82', '1');
+INSERT INTO `role_permission` VALUES ('1', '82', '42');
+INSERT INTO `role_permission` VALUES ('1', '82', '43');
+INSERT INTO `role_permission` VALUES ('1', '83', '1');
+INSERT INTO `role_permission` VALUES ('1', '83', '42');
+INSERT INTO `role_permission` VALUES ('1', '83', '43');
+INSERT INTO `role_permission` VALUES ('2', '3', '1');
+INSERT INTO `role_permission` VALUES ('2', '3', '42');
+INSERT INTO `role_permission` VALUES ('2', '3', '43');
+INSERT INTO `role_permission` VALUES ('2', '4', '1');
+INSERT INTO `role_permission` VALUES ('2', '4', '42');
+INSERT INTO `role_permission` VALUES ('2', '4', '43');
+INSERT INTO `role_permission` VALUES ('2', '5', '1');
+INSERT INTO `role_permission` VALUES ('2', '5', '42');
+INSERT INTO `role_permission` VALUES ('2', '5', '43');
+INSERT INTO `role_permission` VALUES ('2', '6', '1');
+INSERT INTO `role_permission` VALUES ('2', '6', '42');
+INSERT INTO `role_permission` VALUES ('2', '6', '43');
+INSERT INTO `role_permission` VALUES ('2', '7', '1');
+INSERT INTO `role_permission` VALUES ('2', '7', '42');
+INSERT INTO `role_permission` VALUES ('2', '7', '43');
+INSERT INTO `role_permission` VALUES ('2', '8', '1');
+INSERT INTO `role_permission` VALUES ('2', '8', '42');
+INSERT INTO `role_permission` VALUES ('2', '8', '43');
+INSERT INTO `role_permission` VALUES ('2', '9', '1');
+INSERT INTO `role_permission` VALUES ('2', '9', '42');
+INSERT INTO `role_permission` VALUES ('2', '9', '43');
+INSERT INTO `role_permission` VALUES ('2', '12', '1');
+INSERT INTO `role_permission` VALUES ('2', '12', '42');
+INSERT INTO `role_permission` VALUES ('2', '12', '43');
+INSERT INTO `role_permission` VALUES ('2', '19', '1');
+INSERT INTO `role_permission` VALUES ('2', '19', '42');
+INSERT INTO `role_permission` VALUES ('2', '19', '43');
+INSERT INTO `role_permission` VALUES ('2', '22', '1');
+INSERT INTO `role_permission` VALUES ('2', '22', '42');
+INSERT INTO `role_permission` VALUES ('2', '22', '43');
+INSERT INTO `role_permission` VALUES ('2', '23', '1');
+INSERT INTO `role_permission` VALUES ('2', '23', '42');
+INSERT INTO `role_permission` VALUES ('2', '23', '43');
+INSERT INTO `role_permission` VALUES ('2', '24', '1');
+INSERT INTO `role_permission` VALUES ('2', '24', '42');
+INSERT INTO `role_permission` VALUES ('2', '24', '43');
+INSERT INTO `role_permission` VALUES ('2', '25', '1');
+INSERT INTO `role_permission` VALUES ('2', '25', '42');
+INSERT INTO `role_permission` VALUES ('2', '25', '43');
+INSERT INTO `role_permission` VALUES ('2', '26', '1');
+INSERT INTO `role_permission` VALUES ('2', '27', '42');
+INSERT INTO `role_permission` VALUES ('2', '27', '43');
+INSERT INTO `role_permission` VALUES ('2', '28', '1');
+INSERT INTO `role_permission` VALUES ('2', '28', '42');
+INSERT INTO `role_permission` VALUES ('2', '28', '43');
+INSERT INTO `role_permission` VALUES ('2', '29', '1');
+INSERT INTO `role_permission` VALUES ('2', '29', '43');
+INSERT INTO `role_permission` VALUES ('2', '30', '1');
+INSERT INTO `role_permission` VALUES ('2', '30', '42');
+INSERT INTO `role_permission` VALUES ('2', '30', '43');
+INSERT INTO `role_permission` VALUES ('2', '38', '1');
+INSERT INTO `role_permission` VALUES ('2', '38', '42');
+INSERT INTO `role_permission` VALUES ('2', '38', '43');
+INSERT INTO `role_permission` VALUES ('2', '47', '1');
+INSERT INTO `role_permission` VALUES ('2', '47', '42');
+INSERT INTO `role_permission` VALUES ('2', '47', '43');
+INSERT INTO `role_permission` VALUES ('2', '48', '1');
+INSERT INTO `role_permission` VALUES ('2', '48', '42');
+INSERT INTO `role_permission` VALUES ('2', '48', '43');
+INSERT INTO `role_permission` VALUES ('2', '49', '1');
+INSERT INTO `role_permission` VALUES ('2', '49', '42');
+INSERT INTO `role_permission` VALUES ('2', '49', '43');
+INSERT INTO `role_permission` VALUES ('2', '53', '1');
+INSERT INTO `role_permission` VALUES ('2', '53', '42');
+INSERT INTO `role_permission` VALUES ('2', '53', '43');
+INSERT INTO `role_permission` VALUES ('2', '55', '1');
+INSERT INTO `role_permission` VALUES ('2', '55', '42');
+INSERT INTO `role_permission` VALUES ('2', '55', '43');
+INSERT INTO `role_permission` VALUES ('2', '59', '1');
+INSERT INTO `role_permission` VALUES ('2', '59', '42');
+INSERT INTO `role_permission` VALUES ('2', '59', '43');
+INSERT INTO `role_permission` VALUES ('2', '60', '1');
+INSERT INTO `role_permission` VALUES ('2', '60', '42');
+INSERT INTO `role_permission` VALUES ('2', '60', '43');
+INSERT INTO `role_permission` VALUES ('2', '70', '1');
+INSERT INTO `role_permission` VALUES ('2', '70', '42');
+INSERT INTO `role_permission` VALUES ('2', '70', '43');
+INSERT INTO `role_permission` VALUES ('2', '71', '42');
+INSERT INTO `role_permission` VALUES ('2', '71', '43');
+INSERT INTO `role_permission` VALUES ('2', '72', '1');
+INSERT INTO `role_permission` VALUES ('2', '72', '42');
+INSERT INTO `role_permission` VALUES ('2', '72', '43');
+INSERT INTO `role_permission` VALUES ('2', '73', '1');
+INSERT INTO `role_permission` VALUES ('2', '73', '42');
+INSERT INTO `role_permission` VALUES ('2', '73', '43');
+INSERT INTO `role_permission` VALUES ('2', '74', '42');
+INSERT INTO `role_permission` VALUES ('2', '74', '43');
+INSERT INTO `role_permission` VALUES ('2', '75', '1');
+INSERT INTO `role_permission` VALUES ('2', '75', '42');
+INSERT INTO `role_permission` VALUES ('2', '75', '43');
+INSERT INTO `role_permission` VALUES ('2', '77', '1');
+INSERT INTO `role_permission` VALUES ('2', '77', '42');
+INSERT INTO `role_permission` VALUES ('2', '77', '43');
+INSERT INTO `role_permission` VALUES ('2', '78', '1');
+INSERT INTO `role_permission` VALUES ('2', '78', '42');
+INSERT INTO `role_permission` VALUES ('2', '78', '43');
+INSERT INTO `role_permission` VALUES ('2', '82', '1');
+INSERT INTO `role_permission` VALUES ('2', '82', '42');
+INSERT INTO `role_permission` VALUES ('2', '82', '43');
+INSERT INTO `role_permission` VALUES ('3', '3', '1');
+INSERT INTO `role_permission` VALUES ('3', '3', '42');
+INSERT INTO `role_permission` VALUES ('3', '3', '43');
+INSERT INTO `role_permission` VALUES ('3', '4', '1');
+INSERT INTO `role_permission` VALUES ('3', '4', '42');
+INSERT INTO `role_permission` VALUES ('3', '4', '43');
+INSERT INTO `role_permission` VALUES ('3', '5', '1');
+INSERT INTO `role_permission` VALUES ('3', '5', '42');
+INSERT INTO `role_permission` VALUES ('3', '5', '43');
+INSERT INTO `role_permission` VALUES ('3', '6', '1');
+INSERT INTO `role_permission` VALUES ('3', '6', '42');
+INSERT INTO `role_permission` VALUES ('3', '6', '43');
+INSERT INTO `role_permission` VALUES ('3', '7', '1');
+INSERT INTO `role_permission` VALUES ('3', '7', '42');
+INSERT INTO `role_permission` VALUES ('3', '7', '43');
+INSERT INTO `role_permission` VALUES ('3', '8', '1');
+INSERT INTO `role_permission` VALUES ('3', '8', '42');
+INSERT INTO `role_permission` VALUES ('3', '8', '43');
+INSERT INTO `role_permission` VALUES ('3', '12', '1');
+INSERT INTO `role_permission` VALUES ('3', '12', '42');
+INSERT INTO `role_permission` VALUES ('3', '12', '43');
+INSERT INTO `role_permission` VALUES ('3', '19', '1');
+INSERT INTO `role_permission` VALUES ('3', '19', '42');
+INSERT INTO `role_permission` VALUES ('3', '19', '43');
+INSERT INTO `role_permission` VALUES ('3', '22', '1');
+INSERT INTO `role_permission` VALUES ('3', '22', '42');
+INSERT INTO `role_permission` VALUES ('3', '22', '43');
+INSERT INTO `role_permission` VALUES ('3', '23', '1');
+INSERT INTO `role_permission` VALUES ('3', '23', '42');
+INSERT INTO `role_permission` VALUES ('3', '23', '43');
+INSERT INTO `role_permission` VALUES ('3', '24', '1');
+INSERT INTO `role_permission` VALUES ('3', '24', '42');
+INSERT INTO `role_permission` VALUES ('3', '24', '43');
+INSERT INTO `role_permission` VALUES ('3', '25', '1');
+INSERT INTO `role_permission` VALUES ('3', '25', '42');
+INSERT INTO `role_permission` VALUES ('3', '25', '43');
+INSERT INTO `role_permission` VALUES ('3', '26', '1');
+INSERT INTO `role_permission` VALUES ('3', '27', '1');
+INSERT INTO `role_permission` VALUES ('3', '27', '42');
+INSERT INTO `role_permission` VALUES ('3', '27', '43');
+INSERT INTO `role_permission` VALUES ('3', '28', '1');
+INSERT INTO `role_permission` VALUES ('3', '28', '42');
+INSERT INTO `role_permission` VALUES ('3', '28', '43');
+INSERT INTO `role_permission` VALUES ('3', '29', '1');
+INSERT INTO `role_permission` VALUES ('3', '29', '42');
+INSERT INTO `role_permission` VALUES ('3', '29', '43');
+INSERT INTO `role_permission` VALUES ('3', '30', '1');
+INSERT INTO `role_permission` VALUES ('3', '30', '42');
+INSERT INTO `role_permission` VALUES ('3', '30', '43');
+INSERT INTO `role_permission` VALUES ('3', '38', '1');
+INSERT INTO `role_permission` VALUES ('3', '38', '42');
+INSERT INTO `role_permission` VALUES ('3', '38', '43');
+INSERT INTO `role_permission` VALUES ('3', '47', '1');
+INSERT INTO `role_permission` VALUES ('3', '47', '42');
+INSERT INTO `role_permission` VALUES ('3', '47', '43');
+INSERT INTO `role_permission` VALUES ('3', '48', '1');
+INSERT INTO `role_permission` VALUES ('3', '48', '42');
+INSERT INTO `role_permission` VALUES ('3', '48', '43');
+INSERT INTO `role_permission` VALUES ('3', '49', '1');
+INSERT INTO `role_permission` VALUES ('3', '49', '42');
+INSERT INTO `role_permission` VALUES ('3', '49', '43');
+INSERT INTO `role_permission` VALUES ('3', '53', '1');
+INSERT INTO `role_permission` VALUES ('3', '53', '42');
+INSERT INTO `role_permission` VALUES ('3', '53', '43');
+INSERT INTO `role_permission` VALUES ('3', '55', '1');
+INSERT INTO `role_permission` VALUES ('3', '55', '42');
+INSERT INTO `role_permission` VALUES ('3', '55', '43');
+INSERT INTO `role_permission` VALUES ('3', '59', '1');
+INSERT INTO `role_permission` VALUES ('3', '59', '42');
+INSERT INTO `role_permission` VALUES ('3', '59', '43');
+INSERT INTO `role_permission` VALUES ('3', '71', '1');
+INSERT INTO `role_permission` VALUES ('3', '71', '42');
+INSERT INTO `role_permission` VALUES ('3', '71', '43');
+INSERT INTO `role_permission` VALUES ('3', '74', '1');
+INSERT INTO `role_permission` VALUES ('3', '74', '42');
+INSERT INTO `role_permission` VALUES ('3', '74', '43');
+INSERT INTO `role_permission` VALUES ('3', '77', '1');
+INSERT INTO `role_permission` VALUES ('3', '77', '42');
+INSERT INTO `role_permission` VALUES ('3', '77', '43');
+INSERT INTO `role_permission` VALUES ('3', '78', '1');
+INSERT INTO `role_permission` VALUES ('3', '78', '42');
+INSERT INTO `role_permission` VALUES ('3', '78', '43');
+INSERT INTO `role_permission` VALUES ('3', '82', '1');
+INSERT INTO `role_permission` VALUES ('3', '82', '42');
+INSERT INTO `role_permission` VALUES ('3', '82', '43');
+INSERT INTO `role_permission` VALUES ('4', '3', '1');
+INSERT INTO `role_permission` VALUES ('4', '3', '42');
+INSERT INTO `role_permission` VALUES ('4', '3', '43');
+INSERT INTO `role_permission` VALUES ('4', '4', '1');
+INSERT INTO `role_permission` VALUES ('4', '4', '42');
+INSERT INTO `role_permission` VALUES ('4', '4', '43');
+INSERT INTO `role_permission` VALUES ('4', '5', '1');
+INSERT INTO `role_permission` VALUES ('4', '5', '42');
+INSERT INTO `role_permission` VALUES ('4', '5', '43');
+INSERT INTO `role_permission` VALUES ('4', '12', '1');
+INSERT INTO `role_permission` VALUES ('4', '12', '42');
+INSERT INTO `role_permission` VALUES ('4', '12', '43');
+INSERT INTO `role_permission` VALUES ('4', '20', '1');
+INSERT INTO `role_permission` VALUES ('4', '20', '42');
+INSERT INTO `role_permission` VALUES ('4', '20', '43');
+INSERT INTO `role_permission` VALUES ('4', '21', '1');
+INSERT INTO `role_permission` VALUES ('4', '21', '42');
+INSERT INTO `role_permission` VALUES ('4', '21', '43');
+INSERT INTO `role_permission` VALUES ('4', '22', '1');
+INSERT INTO `role_permission` VALUES ('4', '22', '42');
+INSERT INTO `role_permission` VALUES ('4', '22', '43');
+INSERT INTO `role_permission` VALUES ('4', '23', '1');
+INSERT INTO `role_permission` VALUES ('4', '23', '42');
+INSERT INTO `role_permission` VALUES ('4', '23', '43');
+INSERT INTO `role_permission` VALUES ('4', '24', '1');
+INSERT INTO `role_permission` VALUES ('4', '24', '42');
+INSERT INTO `role_permission` VALUES ('4', '24', '43');
+INSERT INTO `role_permission` VALUES ('4', '25', '43');
+INSERT INTO `role_permission` VALUES ('4', '26', '1');
+INSERT INTO `role_permission` VALUES ('4', '26', '42');
+INSERT INTO `role_permission` VALUES ('4', '26', '43');
+INSERT INTO `role_permission` VALUES ('4', '27', '1');
+INSERT INTO `role_permission` VALUES ('4', '27', '42');
+INSERT INTO `role_permission` VALUES ('4', '27', '43');
+INSERT INTO `role_permission` VALUES ('4', '28', '1');
+INSERT INTO `role_permission` VALUES ('4', '28', '42');
+INSERT INTO `role_permission` VALUES ('4', '28', '43');
+INSERT INTO `role_permission` VALUES ('4', '29', '1');
+INSERT INTO `role_permission` VALUES ('4', '29', '42');
+INSERT INTO `role_permission` VALUES ('4', '29', '43');
+INSERT INTO `role_permission` VALUES ('4', '30', '1');
+INSERT INTO `role_permission` VALUES ('4', '30', '42');
+INSERT INTO `role_permission` VALUES ('4', '30', '43');
+INSERT INTO `role_permission` VALUES ('4', '38', '1');
+INSERT INTO `role_permission` VALUES ('4', '38', '42');
+INSERT INTO `role_permission` VALUES ('4', '38', '43');
+INSERT INTO `role_permission` VALUES ('4', '48', '1');
+INSERT INTO `role_permission` VALUES ('4', '48', '42');
+INSERT INTO `role_permission` VALUES ('4', '48', '43');
+INSERT INTO `role_permission` VALUES ('4', '53', '1');
+INSERT INTO `role_permission` VALUES ('4', '53', '42');
+INSERT INTO `role_permission` VALUES ('4', '53', '43');
+INSERT INTO `role_permission` VALUES ('4', '54', '1');
+INSERT INTO `role_permission` VALUES ('4', '54', '42');
+INSERT INTO `role_permission` VALUES ('4', '54', '43');
+INSERT INTO `role_permission` VALUES ('4', '55', '1');
+INSERT INTO `role_permission` VALUES ('4', '55', '42');
+INSERT INTO `role_permission` VALUES ('4', '55', '43');
+INSERT INTO `role_permission` VALUES ('4', '59', '1');
+INSERT INTO `role_permission` VALUES ('4', '59', '42');
+INSERT INTO `role_permission` VALUES ('4', '59', '43');
+INSERT INTO `role_permission` VALUES ('4', '71', '1');
+INSERT INTO `role_permission` VALUES ('4', '71', '42');
+INSERT INTO `role_permission` VALUES ('4', '71', '43');
+INSERT INTO `role_permission` VALUES ('4', '74', '1');
+INSERT INTO `role_permission` VALUES ('4', '74', '42');
+INSERT INTO `role_permission` VALUES ('4', '74', '43');
+INSERT INTO `role_permission` VALUES ('4', '78', '1');
+INSERT INTO `role_permission` VALUES ('4', '78', '42');
+INSERT INTO `role_permission` VALUES ('4', '78', '43');
+INSERT INTO `role_permission` VALUES ('4', '82', '1');
+INSERT INTO `role_permission` VALUES ('4', '82', '42');
+INSERT INTO `role_permission` VALUES ('4', '82', '43');
 
 -- ----------------------------
 -- Table structure for `sprint`
@@ -765,21 +1168,22 @@ CREATE TABLE `sprint` (
   `pid` int(11) NOT NULL,
   `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `start_date` date NOT NULL,
-  `end_date` date NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
   `status` int(11) NOT NULL,
   `delete_flg` tinyint(4) NOT NULL DEFAULT '0',
   `start_date_es` date NOT NULL,
   `end_date_es` date NOT NULL,
   PRIMARY KEY (`spid`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of sprint
 -- ----------------------------
-INSERT INTO `sprint` VALUES ('8', '1', 'Sprint 1', '', '2014-06-24', '2014-06-24', '2', '0', '2014-06-10', '2014-07-10');
-INSERT INTO `sprint` VALUES ('9', '1', 'Sprint 2', '', '0000-00-00', '0000-00-00', '1', '0', '2014-07-21', '2014-08-21');
-INSERT INTO `sprint` VALUES ('10', '1', 'Sprint 3', '', '0000-00-00', '0000-00-00', '1', '0', '2014-08-21', '2014-09-21');
+INSERT INTO `sprint` VALUES ('1', '1', 'Sprint 1', '', '2014-07-01', null, '2', '0', '2014-07-01', '2014-07-14');
+INSERT INTO `sprint` VALUES ('2', '43', 'Sprint 1', '', null, null, '1', '0', '2014-08-04', '2014-09-04');
+INSERT INTO `sprint` VALUES ('3', '1', 'Sprint 2', '', null, null, '1', '0', '2014-08-15', '2014-08-31');
+INSERT INTO `sprint` VALUES ('4', '42', 'Sprint 1', '', '2014-08-06', '2014-08-06', '2', '0', '2014-08-06', '2014-08-18');
 
 -- ----------------------------
 -- Table structure for `sprint_team`
@@ -795,15 +1199,24 @@ CREATE TABLE `sprint_team` (
 -- ----------------------------
 -- Records of sprint_team
 -- ----------------------------
+INSERT INTO `sprint_team` VALUES ('1', '17', '37');
+INSERT INTO `sprint_team` VALUES ('1', '18', '35');
+INSERT INTO `sprint_team` VALUES ('1', '45', '35');
+INSERT INTO `sprint_team` VALUES ('2', '46', '30');
+INSERT INTO `sprint_team` VALUES ('3', '17', '39');
+INSERT INTO `sprint_team` VALUES ('3', '18', '39');
+INSERT INTO `sprint_team` VALUES ('3', '45', '36');
+INSERT INTO `sprint_team` VALUES ('4', '47', '10');
+INSERT INTO `sprint_team` VALUES ('4', '48', '0');
 INSERT INTO `sprint_team` VALUES ('8', '17', '15');
-INSERT INTO `sprint_team` VALUES ('8', '18', '6');
-INSERT INTO `sprint_team` VALUES ('8', '19', '19');
+INSERT INTO `sprint_team` VALUES ('8', '18', '20');
+INSERT INTO `sprint_team` VALUES ('8', '45', '10');
 INSERT INTO `sprint_team` VALUES ('9', '17', '10');
 INSERT INTO `sprint_team` VALUES ('9', '18', '10');
-INSERT INTO `sprint_team` VALUES ('9', '19', '9');
-INSERT INTO `sprint_team` VALUES ('10', '17', '4');
-INSERT INTO `sprint_team` VALUES ('10', '18', '2');
-INSERT INTO `sprint_team` VALUES ('10', '19', '9');
+INSERT INTO `sprint_team` VALUES ('9', '45', '2');
+INSERT INTO `sprint_team` VALUES ('23', '17', '0');
+INSERT INTO `sprint_team` VALUES ('23', '18', '0');
+INSERT INTO `sprint_team` VALUES ('23', '45', '0');
 
 -- ----------------------------
 -- Table structure for `story`
@@ -824,36 +1237,32 @@ CREATE TABLE `story` (
   `finish_date` datetime DEFAULT NULL,
   `create_date` datetime DEFAULT NULL,
   PRIMARY KEY (`sid`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of story
 -- ----------------------------
-INSERT INTO `story` VALUES ('1', '1', '1', 'Quán lí danh sách món ăn', '3', '11', '30', 'demoaddd', 'description', '6', '1', '2014-06-15 09:45:47', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('2', '1', '1', 'story 2', '1', '12', '20', 'demoa', 'description', '8', '1', '2014-06-16 09:39:41', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('4', '1', '1', 'story 4', '2', '19', '40', 'asdfa', 'asdf', '8', '1', '2014-06-17 09:39:49', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('5', '1', '1', 'story 5', '2', '15', '50', 'asdfff', 'asdf', '6', '1', '2014-06-18 09:39:58', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('6', '1', '1', 'story 6', '2', '4', '60', 'asfdd', 'sadfasdfsdf', '2', '1', '2014-06-19 09:40:31', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('7', '1', '1', 'story 7', '2', '2', '10', 'asfd', 'sadfasdfsdf', '8', '1', '2014-06-20 09:38:41', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('8', '1', '1', 'story 8', '1', '2', '90', 'asdf', 'sf', '1', '1', '2014-06-25 22:50:59', '2014-06-19 22:51:09');
-INSERT INTO `story` VALUES ('9', '1', '1', 'story 9', '1', '12', '40', 'asdf', 'sf', '1', '1', '2014-07-03 22:51:04', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('10', '1', '1', 'Quản lí đặt bàn', '1', '3', '100', 'asdfasdfw', 'asdfasdf', '5', '0', '2014-06-22 09:42:37', '2014-06-13 22:51:09');
-INSERT INTO `story` VALUES ('11', '1', '1', 'Quản lí đơn hàng', '1', '3', '23', 'asf', 'asf', '2', '0', '2014-06-20 22:51:06', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('12', '1', '1', 'Quản lí dụng cụ', '4', '4', '5', 'asf', 'asf', '2', '0', '2014-06-10 22:51:09', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('13', '1', '1', 'Thống kê bán hàng', '2', '5', '54', 'asf', 'asf', '5', '0', '2014-06-18 22:51:11', '2014-06-11 22:51:09');
-INSERT INTO `story` VALUES ('14', '1', '1', 'story 14', '4', '2', '34', 'asfd', 'sdfsaf', '1', '1', '2014-06-28 22:51:16', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('15', '2', '1', 'story 15', '2', '4', '56', 'asdf', 'asdf', '1', '0', '2014-06-27 22:51:19', '2014-06-27 22:51:09');
-INSERT INTO `story` VALUES ('19', '1', '1', 'story 16', '1', '4', '4', 'a', 'a', '1', '1', '2014-06-19 22:51:22', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('20', '1', '1', 'story 17', '2', '2', '11', 'a', 'a', '1', '1', '2014-06-10 22:51:24', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('22', '1', '1', 'story 18', '2', '5', '5', 'asdfasdf', 'asdfasdf', '2', '1', '2014-06-22 09:51:08', '2014-06-10 22:51:09');
-INSERT INTO `story` VALUES ('23', '1', '1', 'Quản lí khách hàng', '1', '5', '20', 'a', 'a', '2', '0', null, null);
-INSERT INTO `story` VALUES ('24', '1', '1', 'Tính năng report', '3', '0', '0', 'a', 'a', '1', '1', null, null);
-INSERT INTO `story` VALUES ('25', '1', '1', 'Tính năng report', '3', '10', '30', 'a', 'a', '2', '0', null, null);
-INSERT INTO `story` VALUES ('26', '1', '1', 'Nâng cấp tính năng report', '1', '0', '0', 'aaaaaaa', 'aaaaaaaaaaaa', '1', '0', null, null);
-INSERT INTO `story` VALUES ('27', '1', '1', 'Quản lí album ảnh', '2', '0', '0', 'aaaaaaa', 'aaaaaaaaaaaaaa', '1', '0', null, null);
-INSERT INTO `story` VALUES ('28', '1', '1', 'Quản lí thực đơn', '2', '0', '0', 'aaaa', 'aaaaaaaaaaaa', '1', '0', null, null);
-INSERT INTO `story` VALUES ('29', '1', '1', 'Bổ sung quản lí món ăn', '2', '0', '0', 'aaaa', 'aaaaaaaaaaaa', '1', '0', null, null);
-INSERT INTO `story` VALUES ('30', '1', '1', 'Quản lí tiền bạc', '2', '2', '1', 'ddddddddddd', 'ddddddddddddd', '1', '0', null, null);
+INSERT INTO `story` VALUES ('1', '1', '1', 'Quán lí danh sách món ăn', '3', '11', '30', 'Cach demo', 'Mo ta ve story', '2', '1', '2014-07-16 21:49:44', '2014-07-10 22:51:09');
+INSERT INTO `story` VALUES ('10', '1', '1', 'Quản lí đặt bàn ăn', '1', '9', '80', 'Cach demo', 'Mo ta ve story', '8', '0', '2014-07-28 15:43:05', '2014-07-11 22:51:09');
+INSERT INTO `story` VALUES ('11', '1', '1', 'Quản lí đơn hàng hóa', '1', '3', '20', 'Cach demo', 'Mo ta ve story', '2', '0', null, '2014-07-10 22:51:09');
+INSERT INTO `story` VALUES ('12', '1', '1', 'Quản lí dụng cụ nhà bếp nấu ăn', '3', '3', '10', 'Cach demo', 'Mo ta ve story', '8', '0', '2014-07-09 15:25:20', '2014-07-10 22:51:09');
+INSERT INTO `story` VALUES ('13', '1', '1', 'Thống kê bán hàng hàng tuần', '2', '12', '54', 'Cach demo', 'Mo ta ve story', '4', '0', null, '2014-07-10 22:51:09');
+INSERT INTO `story` VALUES ('15', '2', '1', 'Quản lí phòng ban', '2', '4', '56', 'Cach demo', 'Mo ta ve story', '2', '0', null, '2014-06-30 22:51:09');
+INSERT INTO `story` VALUES ('23', '1', '1', 'Quản lí khách hàng', '1', '7', '20', 'Cach demo', 'Mo ta ve story', '5', '0', null, '2014-08-15 22:51:09');
+INSERT INTO `story` VALUES ('24', '1', '1', 'Tính năng report', '3', '0', '0', 'Cach demo', 'Mo ta ve story', '2', '0', null, '2014-07-10 22:51:09');
+INSERT INTO `story` VALUES ('25', '1', '1', 'Tính năng report', '3', '10', '30', 'Cach demo', 'Mo ta ve story', '2', '1', null, '2014-07-10 22:51:09');
+INSERT INTO `story` VALUES ('26', '1', '1', 'Nâng cấp tính năng report hàng tuần, hàng tháng', '1', '6', '20', 'Cach demo', 'Mo ta ve story', '8', '0', '2014-08-06 08:32:45', '2014-07-10 22:51:09');
+INSERT INTO `story` VALUES ('27', '1', '1', 'Quản lí album ảnh', '2', '0', '0', 'Cach demo', 'Mo ta ve story', '2', '0', null, '2014-07-11 22:51:09');
+INSERT INTO `story` VALUES ('28', '1', '1', 'Quản lí thực đơn', '2', '5', '30', 'Cach demo', 'Mo ta ve story', '4', '0', null, '2014-07-26 22:51:09');
+INSERT INTO `story` VALUES ('29', '1', '1', 'Bổ sung quản lí món ăn', '2', '8', '30', 'Cach demo', 'Mo ta ve story', '8', '0', '2014-08-06 08:32:22', '2014-07-11 22:51:09');
+INSERT INTO `story` VALUES ('30', '1', '1', 'Quản lí tiền bạc', '2', '2', '1', 'Cach demo', 'Mo ta ve story', '4', '0', null, '2014-07-13 22:51:09');
+INSERT INTO `story` VALUES ('31', '1', '1', 'Quản li kho địa điểm', '3', '3', '10', 'Cach demo', 'Mo ta ve story', '8', '0', '2014-07-30 15:17:34', '2014-07-11 22:51:09');
+INSERT INTO `story` VALUES ('33', '1', '1', 'Quản lí dụng cụ nấu ăn', '2', '10', '20', 'Cach demo', 'Mo ta ve story', '4', '0', null, '2014-07-11 22:51:09');
+INSERT INTO `story` VALUES ('34', '1', '1', 'Quản lí đặt xe chở cô dâu', '2', '10', '50', 'Cach demo', 'Mo ta ve story', '7', '0', '2014-08-05 23:08:31', '2014-07-14 22:51:09');
+INSERT INTO `story` VALUES ('35', '1', '1', 'Xuất file excel', '3', '2', '10', 'Cach demo', 'Mo ta ve story', '2', '1', null, '2014-07-11 22:51:09');
+INSERT INTO `story` VALUES ('36', '43', '25', 'Quản lí học sinh', '3', '1', '60', 'demo ', 'mo ta', '8', '0', '2014-08-04 06:01:35', '2014-08-04 05:54:43');
+INSERT INTO `story` VALUES ('37', '43', '25', 'Quản lí điểm', '2', '10', '40', 'a', 'a', '4', '0', null, '2014-08-13 05:57:29');
+INSERT INTO `story` VALUES ('39', '42', '1', 'Chức năng đăng nhập', '2', '8', '30', 'a', 'a', '8', '0', '2014-08-06 06:09:28', '2014-08-06 05:54:24');
 
 -- ----------------------------
 -- Table structure for `story_team`
@@ -863,23 +1272,26 @@ CREATE TABLE `story_team` (
   `sid` bigint(20) NOT NULL,
   `tid` int(11) NOT NULL,
   `spid` int(11) NOT NULL,
-  `order` tinyint(4) NOT NULL,
-  PRIMARY KEY (`sid`,`tid`)
+  `order` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of story_team
 -- ----------------------------
-INSERT INTO `story_team` VALUES ('1', '17', '8', '0');
-INSERT INTO `story_team` VALUES ('6', '18', '9', '1');
-INSERT INTO `story_team` VALUES ('9', '17', '9', '1');
-INSERT INTO `story_team` VALUES ('11', '19', '8', '1');
-INSERT INTO `story_team` VALUES ('12', '18', '8', '2');
-INSERT INTO `story_team` VALUES ('13', '18', '8', '1');
-INSERT INTO `story_team` VALUES ('14', '18', '10', '1');
-INSERT INTO `story_team` VALUES ('19', '18', '9', '1');
-INSERT INTO `story_team` VALUES ('23', '17', '8', '2');
-INSERT INTO `story_team` VALUES ('25', '17', '8', '1');
+INSERT INTO `story_team` VALUES ('29', '17', '1', '0');
+INSERT INTO `story_team` VALUES ('26', '18', '1', '1');
+INSERT INTO `story_team` VALUES ('10', '45', '1', '1');
+INSERT INTO `story_team` VALUES ('12', '17', '1', '0');
+INSERT INTO `story_team` VALUES ('31', '45', '1', '2');
+INSERT INTO `story_team` VALUES ('23', '18', '1', '0');
+INSERT INTO `story_team` VALUES ('36', '46', '2', '0');
+INSERT INTO `story_team` VALUES ('37', '46', '2', '0');
+INSERT INTO `story_team` VALUES ('34', '17', '3', '0');
+INSERT INTO `story_team` VALUES ('28', '18', '3', '1');
+INSERT INTO `story_team` VALUES ('30', '45', '3', '0');
+INSERT INTO `story_team` VALUES ('39', '47', '4', '0');
+INSERT INTO `story_team` VALUES ('33', '17', '3', '0');
+INSERT INTO `story_team` VALUES ('13', '18', '3', '0');
 
 -- ----------------------------
 -- Table structure for `task`
@@ -898,33 +1310,38 @@ CREATE TABLE `task` (
   `sid` bigint(20) DEFAULT NULL,
   `finish_date` datetime DEFAULT NULL,
   `delete_flg` tinyint(4) NOT NULL DEFAULT '0',
+  `order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`taid`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of task
 -- ----------------------------
-INSERT INTO `task` VALUES ('1', 'task 1', '1', '0', '4', '2014-06-02 00:00:00', '1', 'task description here', '7', '1', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('2', 'task 2', '44', '0', '4', '2014-06-02 00:00:00', '1', 'task description here', '1', '1', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('3', 'task 3', '1', '0', '4', '2014-06-03 05:12:30', '1', 'task description here', '7', '10', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('4', 'task 4 ', '3', '0', '4', '2014-06-03 05:12:30', '1', 'task description here', '7', '11', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('5', 'task 5', '1', '0', '4', '2014-06-03 05:12:48', '1', 'task description here', '7', '12', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('6', 'task 6', '5', '0', '2', '2014-06-03 05:12:48', '1', 'task description here', '15', '13', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('7', 'task 7', '1', '0', '4', '2014-06-03 05:14:19', '1', 'task description here', '15', '1', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('8', 'task 8', '5', '0', '2', '2014-06-03 05:14:20', '1', 'task description here', '15', '10', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('9', 'task 9', '2', '0', '2', '2014-06-03 05:18:12', '1', 'task description here', '7', '11', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('10', 'task 10', '2', '2', '1', '2014-06-03 05:18:12', '1', 'task description here', null, '12', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('11', 'task 11', '7', '0', '3', '2014-06-03 05:19:04', '1', 'task description here', '13', '13', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('12', 'task 12', '6', '0', '1', '2014-06-03 05:19:04', '1', 'task description here', '1', '13', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('13', 'task 13', '3', '0', '4', '2014-06-03 05:27:53', '1', 'task description here', '7', '12', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('14', 'task 14', '3', '0', '4', '2014-06-03 05:27:53', '1', 'task description here', '1', '11', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('15', 'task 15', '5', '0', '1', '2014-06-03 14:21:30', '1', 'task description here', '13', '10', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('16', 'task 16', '1', '0', '4', '2014-06-03 14:21:30', '1', 'task description here', '12', '1', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('17', 'task 17', '6', '0', '4', '2014-06-03 21:35:57', '1', 'task description here', '13', '11', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('18', 'task 18', '1', '0', '4', '2014-06-03 21:35:58', '1', 'task description here', '1', '12', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('19', 'task 19', '1', '0', '2', '2014-06-03 21:45:10', '1', 'task description here', '12', '13', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('20', 'task 20', '1', '0', '1', '2014-06-03 21:45:11', '1', 'task description here', '23', '10', '2014-07-14 10:03:07', '0');
-INSERT INTO `task` VALUES ('27', 'Task 19', '4', '0', '4', '2014-06-21 20:38:49', '1', '', '12', '1', '2014-07-14 10:03:07', '0');
+INSERT INTO `task` VALUES ('1', 'Tạo mẫu nhập món ăn', '2', '0', '4', '2014-07-28 14:45:40', '1', '', '2', '29', '2014-08-06 08:32:19', '0', '3');
+INSERT INTO `task` VALUES ('2', 'Xử lí thêm món ăn', '2', '0', '4', '2014-07-28 14:45:58', '1', '', '11', '29', '2014-07-08 15:48:49', '0', '4');
+INSERT INTO `task` VALUES ('3', 'Cập nhật thông tin món ăn', '4', '0', '4', '2014-07-28 14:46:21', '1', '', '28', '29', '2014-08-06 08:32:22', '0', '1');
+INSERT INTO `task` VALUES ('4', 'Xuất file Excel', '2', '0', '4', '2014-07-28 14:46:44', '1', '', '3', '26', '2014-07-28 15:48:49', '0', '1');
+INSERT INTO `task` VALUES ('5', 'Xuất file CSV', '1', '0', '4', '2014-07-28 14:46:57', '1', '', '4', '26', '2014-07-14 15:48:49', '0', '3');
+INSERT INTO `task` VALUES ('6', 'Tạo biểu đồ', '2.5', '0', '4', '2014-07-28 14:47:08', '1', '', '7', '26', '2014-07-17 15:48:49', '0', '4');
+INSERT INTO `task` VALUES ('7', 'FORM danh sách đặt bàn', '2', '0', '4', '2014-07-28 14:47:48', '1', '', '27', '10', '2014-07-28 15:48:49', '0', '3');
+INSERT INTO `task` VALUES ('8', 'Xử lí cập nhật danh sách đặt bàn', '4', '0', '4', '2014-07-28 14:48:11', '1', '', '29', '10', '2014-07-03 15:48:49', '0', '1');
+INSERT INTO `task` VALUES ('9', 'Thông kê tình trạng đặt bàn', '3', '0', '4', '2014-07-28 14:48:32', '1', '', '27', '10', '2014-07-28 15:48:49', '0', '2');
+INSERT INTO `task` VALUES ('10', 'Số lường dụng cụ cần mua', '1', '0', '4', '2014-07-28 14:48:53', '1', '', '11', '12', '2014-07-14 15:48:49', '0', '1');
+INSERT INTO `task` VALUES ('11', 'FORM quản lí dụng cụ', '2', '0', '4', '2014-07-28 14:49:07', '1', '', '28', '12', '2014-07-17 15:48:49', '0', '2');
+INSERT INTO `task` VALUES ('12', 'Địa điểm đặt tiệc', '2', '0', '4', '2014-07-28 14:50:23', '1', '', '13', '31', '2014-07-14 15:48:49', '0', '1');
+INSERT INTO `task` VALUES ('13', 'Thống kê đặt tiệc tại 1 địa điểm', '1', '0', '4', '2014-07-28 14:50:54', '1', '', '27', '31', '2014-07-20 15:48:49', '0', '2');
+INSERT INTO `task` VALUES ('14', 'Form quản lí', '3', '3', '1', '2014-07-28 15:32:57', '1', '', '5', '23', '2014-07-25 15:48:49', '0', '0');
+INSERT INTO `task` VALUES ('15', 'Xử lí dữ liệu', '3', '0', '3', '2014-07-28 15:34:42', '1', '', '7', '23', '2014-07-23 15:48:49', '0', '1');
+INSERT INTO `task` VALUES ('16', 'Xử lí dữ liệu', '3', '3', '1', '2014-07-28 15:34:58', '1', '', null, '23', '2014-07-28 15:48:49', '1', '0');
+INSERT INTO `task` VALUES ('17', 'Thêm bảng khachang vao db', '1', '0', '4', '2014-07-28 15:35:28', '1', '', '6', '23', '2014-07-28 15:48:49', '0', '1');
+INSERT INTO `task` VALUES ('18', 'Tạo giao diện nhập học sinh', '0.5', '0', '4', '2014-08-04 06:01:12', '25', '\r\n', '26', '36', '2014-08-04 06:01:35', '0', '1');
+INSERT INTO `task` VALUES ('19', 'Tạo giao diện mockup', '0.5', '0', '4', '2014-08-05 23:00:21', '1', '', '11', '29', '2014-08-06 08:32:17', '0', '2');
+INSERT INTO `task` VALUES ('20', 'Tạo UI', '2', '0', '3', '2014-08-05 23:07:00', '2', '', '28', '34', '2014-08-05 23:08:31', '0', '1');
+INSERT INTO `task` VALUES ('21', 'Xử lí cập nhật', '3', '0', '3', '2014-08-05 23:09:41', '2', '', '2', '34', null, '0', '2');
+INSERT INTO `task` VALUES ('22', 'Cập nhật db', '3', '0', '4', '2014-08-05 23:10:52', '2', '', '2', '34', '2014-08-05 23:11:11', '0', '1');
+INSERT INTO `task` VALUES ('23', 'Tạo UI', '2', '0', '4', '2014-08-06 06:00:34', '1', '', '29', '39', '2014-08-06 06:09:28', '0', '1');
+INSERT INTO `task` VALUES ('24', 'Tạo db', '2', '0', '4', '2014-08-06 06:00:50', '1', '', '37', '39', '2014-08-06 06:08:20', '0', '2');
+INSERT INTO `task` VALUES ('25', 'Toa giao dien', '2', '0', '4', '2014-08-06 08:29:43', '1', '', '4', '26', '2014-08-06 08:32:45', '0', '2');
 
 -- ----------------------------
 -- Table structure for `team`
@@ -937,14 +1354,17 @@ CREATE TABLE `team` (
   `description` tinytext COLLATE utf8_unicode_ci,
   `delete_flg` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of team
 -- ----------------------------
-INSERT INTO `team` VALUES ('17', 'team 1', '1', '', '0');
-INSERT INTO `team` VALUES ('18', 'team 2', '1', '', '0');
-INSERT INTO `team` VALUES ('19', 'team 3', '1', '', '0');
+INSERT INTO `team` VALUES ('17', 'Team 1', '1', '', '0');
+INSERT INTO `team` VALUES ('18', 'Team 2', '1', '', '0');
+INSERT INTO `team` VALUES ('45', 'Team 3', '1', '', '0');
+INSERT INTO `team` VALUES ('46', 'Team 1', '43', '', '0');
+INSERT INTO `team` VALUES ('47', 'Team 1', '42', '', '0');
+INSERT INTO `team` VALUES ('48', 'Team 2', '42', '', '0');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -963,29 +1383,40 @@ CREATE TABLE `user` (
   `country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `delete_flg` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`uid`,`birthday`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'leader 1', '2014-05-10', 'avatar-meo-396882118.jpg', null, '7UPmq26xSTh8ThP846ofZzD9IdBExt0xCOKEYOlRtJ8wK3CfDOwb2jOKUJSh', 'en', 'US', '0');
-INSERT INTO `user` VALUES ('2', 'owner1', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'owner 1', '2014-05-20', 'default-avatar.jpg', '-8.0', 'MlzrZC0FtvRjy04Bi4CO7w4q6FdyRxpdRRUhEXA36kFUBNkPvpMTNomz7NM8', 'en', null, '0');
-INSERT INTO `user` VALUES ('3', 'master1', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'scrum master', '2014-05-08', 'default-avatar.jpg', '-8.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('4', 'mem1', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'mem 1', '2014-05-08', 'default-avatar.jpg', '-8.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('5', 'mem2', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'mem 2', '2014-05-08', 'default-avatar.jpg', '-7.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('6', 'mem3', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'mem 3', '2014-05-15', 'default-avatar.jpg', '-7.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('7', 'mem4', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'mem 4', '2014-05-09', 'default-avatar.jpg', '-8.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('8', 'owner2', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'owner 2', '0000-00-00', 'default-avatar.jpg', null, null, 'en', null, '0');
-INSERT INTO `user` VALUES ('9', 'mem2', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'mem 5', '0000-00-00', 'default-avatar.jpg', null, null, 'en', null, '0');
-INSERT INTO `user` VALUES ('11', 'leader3', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'leader 3', '2014-05-22', 'default-avatar.jpg', '-8.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('12', 'leader4', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'leader 4', '2014-05-15', 'default-avatar.jpg', '-5.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('13', 'leader5', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'leader 5', '2014-05-30', 'default-avatar.jpg', '-5.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('14', 'leader7', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'leader 7', '2014-05-23', 'default-avatar.jpg', '-5.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('15', 'leader8', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'leader 8', '2014-05-28', 'default-avatar.jpg', '-6.0', null, 'en', null, '1');
-INSERT INTO `user` VALUES ('21', 'duong', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Duong', '2014-05-16', 'default-avatar.jpg', '-5.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('22', 'yoko', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Yoko', '2014-05-14', 'default-avatar.jpg', '-7.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('23', 'mika', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Mika', '2014-05-14', 'default-avatar.jpg', '-7.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('24', '222', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', '11111', '2014-06-12', 'default-avatar.jpg', '-10.0', null, 'en', null, '1');
-INSERT INTO `user` VALUES ('25', 'cccc', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'cvccc', '2014-06-18', 'default-avatar.jpg', '-11.0', null, 'en', null, '1');
-INSERT INTO `user` VALUES ('26', 'aaaa', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'testaaa', '2014-06-06', 'default-avatar.jpg', '-10.0', null, 'en', null, '0');
-INSERT INTO `user` VALUES ('27', 'aaa', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'testa', '2014-06-05', 'default-avatar.jpg', '-12.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('1', 'anhhc', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Hoàng Chung Anh', '2014-07-25', 'avatar-meo-396882118.jpg', null, 'LanCGyB9uMBnOTsH7DtshCVHGcTzodKuDfn7XPreYVzVkBvHaPnXjblKmJvI', 'en', 'US', '0');
+INSERT INTO `user` VALUES ('2', 'sangdx', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Đào Xuân Sáng', '1970-01-01', 'bao-762953481.jpg', '-8.0', 'kHF3QV9ghNzKcrJAyUtUfntKYziH1SEUSX8lGhWPOMQGQUo8MzNZbPXT5T2m', 'en', 'AF', '0');
+INSERT INTO `user` VALUES ('3', 'thoadk', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Dương Thị Kim Thoa', '2014-05-08', 'default-avatar.jpg', '-8.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('4', 'cuhq', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Hoàng Quốc Cừ', '2014-05-08', 'default-avatar.jpg', '-8.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('5', 'hieunv', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Nguyễn Văn Hiếu', '2014-05-08', 'default-avatar.jpg', '-7.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('6', 'thoalt', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Lục Thị Hoa', '2014-05-15', 'default-avatar.jpg', '-7.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('7', 'hoatbk', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Bùi Khắc Hoạt', '2014-05-09', 'default-avatar.jpg', '-8.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('8', 'huannv', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Nguyễn Văn Huân', '2014-05-09', 'default-avatar.jpg', null, null, 'en', null, '0');
+INSERT INTO `user` VALUES ('9', 'huydv', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Đoàn Văn Huy', '2014-05-09', 'default-avatar.jpg', null, null, 'en', null, '0');
+INSERT INTO `user` VALUES ('11', 'hungnv', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Nguyễn Việt Hùng', '2014-05-22', 'default-avatar.jpg', '-8.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('12', 'kienlt', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Lê Trung Kiên', '2014-05-15', 'default-avatar.jpg', '-5.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('13', 'anhld', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Lê Đức Anh', '2014-05-30', 'default-avatar.jpg', '-5.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('14', 'thuanpt', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Phùng Thị Thuận', '2014-05-23', 'default-avatar.jpg', '-5.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('15', 'anhch', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Chu Hoàng Anh', '2014-05-28', 'default-avatar.jpg', '-6.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('21', 'chinhnv', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Nguyễn Văn Chinh', '2014-05-16', 'default-avatar.jpg', '-5.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('22', 'duongna', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Nguyễn ánh Dương', '2014-05-14', 'default-avatar.jpg', '-7.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('23', 'dungnv', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Nguyễn Văn Dụng', '2014-05-14', 'default-avatar.jpg', '-7.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('24', 'daidv', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Đỗ Văn Đại', '2014-06-12', 'default-avatar.jpg', '-10.0', null, 'en', null, '1');
+INSERT INTO `user` VALUES ('25', 'hanhnt', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Nguyễn Thị Phương Hạnh', '2014-06-18', 'default-avatar.jpg', '-11.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('26', 'hiepnt', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Nguyễn Thiện Hiệp', '2014-06-06', 'default-avatar.jpg', '-10.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('27', 'hieuhv', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Hoàng Văn Hiệu', '2014-06-05', 'default-avatar.jpg', '-12.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('28', 'hoanbq', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Bùi Quang Huy Hoàng', '2014-07-16', 'default-avatar.jpg', '-8.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('29', 'huent', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Nguyễn Thị Huệ', '2014-07-16', 'default-avatar.jpg', '-8.0', '66Oq2dQoh6M2NCYTvDp2HAZDm3Eeo0hgcnE9OXQZkSU1PwusPnZVihed1kwh', 'en', null, '0');
+INSERT INTO `user` VALUES ('30', 'huynt', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Nguyễn Trọng Huy', '2014-07-09', 'default-avatar.jpg', '-6.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('31', 'huyenltm', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Lê Thị Minh Huyền', '2014-07-10', 'default-avatar.jpg', '-7.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('32', 'huonglth', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Lã Thị Thu Hường', '2014-07-04', 'default-avatar.jpg', '-7.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('33', 'namld', '$2y$10$TAwoAmHfmXBdCCThigqxIeqdB9N32cRlp0J.jFjblZ6EwDibEIt1O', 'Lê Đình Nam', '2014-07-03', 'default-avatar.jpg', '-5.0', null, 'en', null, '0');
+INSERT INTO `user` VALUES ('34', 'tuanpv', '$2y$10$DD9rMGw/HVOU4.j1pQKW8uyJqVvbSD74GET1e2ofJVqpbONRtzsLu', 'Phạm Văn Tuấn', '2014-08-26', 'default-avatar.jpg', '-9.0', null, 'en', null, '1');
+INSERT INTO `user` VALUES ('35', 'namdv', '$2y$10$EHBzfiNVq6HX7oWj2n5oT.lLjDFryA83iHDRAHLc05spIuHArb8Qi', 'Đàm Văn Nam', '2014-03-21', 'default-avatar.jpg', null, null, 'en', null, '0');
+INSERT INTO `user` VALUES ('36', 'chuonglv', '$2y$10$Awk2pto7MSKlT0CZz.M4T.E4gjCn4JklJniawr1Ka1K8u0ISRXt4C', 'Lê Văn Chương', '2014-08-05', 'default-avatar.jpg', null, 'AdvdvupKmpoNIMY5tIHB6GcW3O4c0BhD0LB4BOpAx4NCbCYYRC4ZJMiFowGY', 'en', null, '0');
+INSERT INTO `user` VALUES ('37', 'avannv', '$2y$10$/fWrAVhbVKEcwAoOFGWZh.1pPdMyBXgabREN3d.xjRfUezo/y86Iq', 'Nguyễn Văn A', '2014-08-04', 'default-avatar.jpg', null, null, 'en', null, '0');
+INSERT INTO `user` VALUES ('38', 'vanb', '$2y$10$x7aqZHxdDcjtfaqAXaA.5.D6DGP7SZnrU5ENUacWZyVxbBAR7XNge', 'nguye van b', '2014-08-12', 'default-avatar.jpg', null, null, 'en', null, '0');

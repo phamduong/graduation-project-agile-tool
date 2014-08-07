@@ -64,6 +64,26 @@ class UserController extends \BaseController {
     $input = Input::all();
     $user = User::find($input['uid']);
     $user_model = new User;
+    $at_proj = $user_model->getAttendProject($input['uid']);
+    foreach ($at_proj as $p) {
+      switch ($p->status) {
+        case -1:
+          $p->status = "New";
+          break;
+        case 0:
+          $p->status = "Cancelled";
+          break;
+        case 1:
+          $p->status = "Active";
+          break;
+        case 2:
+          $p->status = "Complete";
+          break;
+        case 3:
+          $p->status = "Pause";
+          break;
+      }
+    }
     $data = array(
         'status' => 200,
         'user_info' => array(
@@ -72,7 +92,8 @@ class UserController extends \BaseController {
             'birthday' => $user->birthday,
             'user_image' => asset('data/image/user/' . $user->image)
         ),
-        'attended_project' => $user_model->getAttendProject($input['uid'])
+        //'attended_project' => $user_model->getAttendProject($input['uid'])
+        'attended_project' => $at_proj
     );
     return $data;
   }
@@ -81,7 +102,7 @@ class UserController extends \BaseController {
     $input = Input::all();
     $user_model = new User;
     $uid = $input['uid'];
-    if ($user_model->checkUserInTeam($uid) > 0)  {
+    if ($user_model->checkUserInTeam($uid) > 0) {
       //If user in some working project -> can not delete
       $data = array('staus' => 803, 'message' => 'User is currently in new or working project, please remove user from project to delete');
     } else {
