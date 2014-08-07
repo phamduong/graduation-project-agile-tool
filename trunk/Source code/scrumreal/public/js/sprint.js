@@ -179,6 +179,7 @@ $(document).ready(function() {
       switch (data.type) {
         case "update_task":
         case "delete_task":
+        case "move_task":
         case "add_task":
           {
 //            var table = $.fn.dataTable.fnTables(true);

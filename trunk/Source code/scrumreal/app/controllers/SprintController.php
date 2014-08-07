@@ -298,7 +298,7 @@ class SprintController extends BaseController {
     $sprint_model = new Sprint;
     $data = array('status' => 800, 'message' => 'Error!');
     //Check are there any sprint in progress
-    if (count($sprint_model->getSprintByStatus(SPRINT_STATUS_IN_PROGRESS)) == 0) {
+    if (count($sprint_model->getSprintByStatus(SPRINT_STATUS_IN_PROGRESS, Session::get('current_project'))) == 0) {
       $sprint->status = SPRINT_STATUS_IN_PROGRESS;
       $sprint->start_date = date('Y-m-d');
       if ($sprint->save()) {
@@ -375,7 +375,7 @@ class SprintController extends BaseController {
     $sprint_model = new Sprint;
     $data = array('status' => 800, 'message' => 'Error!');
     //Check are there any sprint in progress
-    if (count($sprint_model->getSprintByStatus(SPRINT_STATUS_IN_PROGRESS)) == 0) {
+    if (count($sprint_model->getSprintByStatus(SPRINT_STATUS_IN_PROGRESS, Session::get('current_project'))) == 0) {
       $sprint->status = SPRINT_STATUS_IN_PROGRESS;
       if ($sprint->save()) {
         $data = array('status' => 200, 'message' => 'Resume sprint successfully');

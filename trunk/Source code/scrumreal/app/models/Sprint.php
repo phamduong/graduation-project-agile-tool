@@ -126,13 +126,15 @@ SQL;
     return $result;
   }
 
-  public function getSprintByStatus($status) {
+  public function getSprintByStatus($status, $pid) {
     $query = <<<SQL
   SELECT *
   FROM sprint
-  WHERE sprint.status = ? AND delete_flg = 0
+  WHERE sprint.status = ?
+    AND delete_flg = 0
+    AND pid = ?
 SQL;
-    $result = DB::select($query, array($status));
+    $result = DB::select($query, array($status, $pid));
     return $result;
   }
 

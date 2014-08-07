@@ -11,3 +11,6 @@
 		+ Tạo MySql database tên là scrumreal2 và import file scrumreal2.sql từ thư mục 'SCRUMTOOL\SOURCE\Database'
 		+ Giải nén file scrumreal.rar trong thư mục 'SCRUMTOOL\SOURCE\Source code' vào thư mục chứa source của Apache
 		+ Tạo đường dẫn virtual host đến thư mục 'scrumreal\public'
+		+ Copy file php_zmq.dll trong thư mục 'SCRUMTOOL\SETUP\Zeromq for PHP in windows' vào thu mục 'php\ext' (thư mục extension của PHP)
+		+ Thêm dòng sau vào file php.ini (trong thư mục của PHP): extension=php_zmq.dll
+		+ Khởi động lại Apache

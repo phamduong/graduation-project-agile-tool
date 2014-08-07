@@ -8,9 +8,11 @@ $(document).ready(function() {
         data: $(this).serialize(),
         success: function(response) {
           if (response.status == 800) { //error
-            showAlert(0, true, response.message);
+            alert(response.message);
           } else if (response.status === 200) {
             window.location = "/project";
+          } else {
+            alert(response.message);
           }
         }
       });
